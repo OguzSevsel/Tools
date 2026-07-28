@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f8cc710963ef8248a9eda957e2b1a4d, type: 3}
+  m_Name: Default Animation Settings
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationSettingsSO
+  Ease: 27
+  Duration: 0.5
+  FadeInValue: 1
+  FadeOutValue: 0
+  DefaultColor: {r: 1, g: 1, b: 1, a: 1}
+  EndColor: {r: 0, g: 0, b: 0, a: 1}
+  ScaleUpVector: {x: 1.1, y: 1.1, z: 0}
+  ScaleDownVector: {x: 1, y: 1, z: 0}
+  RotationVector: {x: 0, y: 0, z: 90}
+  ShakeStrength: {x: 0, y: 0, z: 5}
+  ShakeFrequency: 5
+  RollInDirection: 1
+  RollOutDirection: 1
+  SlideInDirection: 3
+  SlideOutDirection: 2
+  SlideDistance: 500

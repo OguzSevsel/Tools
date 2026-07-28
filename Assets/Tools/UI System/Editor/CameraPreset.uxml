@@ -1,0 +1,7 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Tools/UI%20System/Editor/UISystemStyleSheets.uss?fileID=7433441132597879392&amp;guid=f8918c2e6f2db8e4496dd600722e093e&amp;type=3#UISystemStyleSheets"/>
+    <ui:Foldout text="Camera" name="CameraFoldout" view-data-key="CameraFoldoutView" class="FoldOut">
+        <ui:FloatField label="Target Ortho Size" value="42.2" name="TargetOrthoSize" binding-path="TargetOrthoSize" class="Float"/>
+        <ui:FloatField label="Aspect Ratio" value="2" name="AspectRatio" binding-path="AspectRatio" class="Float"/>
+    </ui:Foldout>
+</ui:UXML>

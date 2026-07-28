@@ -1,0 +1,8 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Tools/UI%20System/Editor/UISystemStyleSheets.uss?fileID=7433441132597879392&amp;guid=f8918c2e6f2db8e4496dd600722e093e&amp;type=3#UISystemStyleSheets"/>
+    <ui:Foldout text="Interactable" name="InteractableFoldout" view-data-key="InteractableFoldoutView" class="FoldOut">
+        <ui:Toggle label="Interactable" name="Interactable" binding-path="Interactable" class="Toggle"/>
+        <ui:Toggle label="Selectable" name="Selectable" binding-path="Selectable" class="Toggle"/>
+        <ui:Toggle label="On Value Changed" name="OnValueChanged" binding-path="OnValueChanged" class="Toggle"/>
+    </ui:Foldout>
+</ui:UXML>
