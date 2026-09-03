@@ -1,6 +1,6 @@
 {
     "name": "Tools.ObjectPoolSystem.Runtime",
-    "rootNamespace": "",
+    "rootNamespace": "Tools",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],

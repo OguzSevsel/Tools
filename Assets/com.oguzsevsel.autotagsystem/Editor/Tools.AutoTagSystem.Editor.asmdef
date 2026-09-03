@@ -1,6 +1,6 @@
 {
     "name": "Tools.AutoTagSystem.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "Tools",
     "references": [],
     "includePlatforms": [
         "Editor"

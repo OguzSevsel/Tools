@@ -1,6 +1,6 @@
 {
     "name": "Tools.AudioSystem.Runtime",
-    "rootNamespace": "",
+    "rootNamespace": "Tools",
     "references": [
         "GUID:ef9bbf8e60e15cc4eaca9fecad75cc9d"
     ],

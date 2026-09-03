@@ -1,6 +1,6 @@
 {
     "name": "Tools.AudioSystem.Editor",
-    "rootNamespace": "",
+    "rootNamespace": "Tools",
     "references": [],
     "includePlatforms": [
         "Editor"

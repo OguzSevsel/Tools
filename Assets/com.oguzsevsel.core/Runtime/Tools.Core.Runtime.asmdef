@@ -1,6 +1,6 @@
 {
     "name": "Tools.Core.Runtime",
-    "rootNamespace": "",
+    "rootNamespace": "Tools",
     "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
