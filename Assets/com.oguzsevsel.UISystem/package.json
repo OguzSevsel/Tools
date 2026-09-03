@@ -1,13 +1,13 @@
 {
-  "name": "com.tools.UISystem",
+  "name": "com.oguzsevsel.UISystem",
   "version": "1.0.0",
   "displayName": "UI Framework",
   "description": "UI Framework developed by Oguz Sevsel.",
   "unity": "2022.3",
   "dependencies": {
     "com.kyrylokuzyk.primetween": "1.4.12",
-    "com.tools.Core": "1.0.0",
-    "com.tools.ObjectPoolSystem": "1.0.0"
+    "com.oguzsevsel.Core": "1.0.0",
+    "com.oguzsevsel.ObjectPoolSystem": "1.0.0"
   },
   "author": {
     "name": "Oguz Sevsel"

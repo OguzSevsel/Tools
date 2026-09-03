@@ -1,11 +1,11 @@
 {
-  "name": "com.tools.AudioSystem",
+  "name": "com.oguzsevsel.AudioSystem",
   "version": "1.0.0",
   "displayName": "Audio System",
   "description": "Audio System developed by Oguz Sevsel.",
   "unity": "2022.3",
   "dependencies": {
-    "com.tools.Core": "1.0.0"
+    "com.oguzsevsel.Core": "1.0.0"
   },
   "author": {
     "name": "Oguz Sevsel"
