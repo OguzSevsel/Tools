@@ -10,6 +10,6 @@
     "url": "https://github.com/OguzSevsel"
   },
   "dependencies": {
-    "com.oguzsevsel.Core": "1.0.0"
+    "com.oguzsevsel.core": "1.0.0"
   }
 }

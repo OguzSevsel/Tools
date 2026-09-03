@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "com.kyrylokuzyk.primetween": "1.4.12",
-    "com.oguzsevsel.Core": "1.0.0",
-    "com.oguzsevsel.ObjectPoolSystem": "1.0.0"
+    "com.oguzsevsel.core": "1.0.0",
+    "com.oguzsevsel.objectpoolsystem": "1.0.0"
   }
 }

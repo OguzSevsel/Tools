@@ -10,6 +10,6 @@
     "url": "https://github.com/OguzSevsel"
   },
   "dependencies": {
-    "com.oguzsevsel.UISystem": "1.0.0"
+    "com.oguzsevsel.uisystem": "1.0.0"
   }
 }
