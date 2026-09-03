@@ -1,0 +1,13 @@
+{
+  "name": "com.loveflood.ui",
+  "version": "1.0.0",
+  "displayName": "UI Framework",
+  "description": "UI framework and tools developed by Love Flood Games.",
+  "unity": "6000.3.7f1",
+  "dependencies": {
+    "com.kyrylokuzyk.primetween": "1.4.12"
+  },
+  "author": {
+    "name": "Love Flood Games"
+  }
+}
