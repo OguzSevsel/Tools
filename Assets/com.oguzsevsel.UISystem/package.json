@@ -8,10 +8,5 @@
     "name": "Oguz Sevsel",
     "email": "you@example.com",
     "url": "https://github.com/OguzSevsel"
-  },
-  "dependencies": {
-    "com.kyrylokuzyk.primetween": "1.4.12",
-    "com.oguzsevsel.core": "1.0.0",
-    "com.oguzsevsel.objectpoolsystem": "1.0.0"
   }
 }
