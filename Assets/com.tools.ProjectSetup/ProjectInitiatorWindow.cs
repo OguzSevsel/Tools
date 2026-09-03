@@ -26,9 +26,13 @@ public class ProjectInitiatorWindow : EditorWindow
     // ---- Package installation state ----
     private List<string> packageUrls = new List<string>
     {
-        "https://github.com/yourname/your-package.git",
-        "https://github.com/LoveFloodGames/LoveFloodPackages.git?path=/DialogueSystem"
-
+        "https://github.com/OguzSevsel/Tools.git?path=/Assets/com.tools.AudioSystem",
+        "https://github.com/OguzSevsel/Tools.git?path=/Assets/com.tools.AutoTagSystem",
+        "https://github.com/OguzSevsel/Tools.git?path=/Assets/com.tools.Core",
+        "https://github.com/OguzSevsel/Tools.git?path=/Assets/com.tools.DialogueSystem",
+        "https://github.com/OguzSevsel/Tools.git?path=/Assets/com.tools.ObjectPoolSystem",
+        "https://github.com/OguzSevsel/Tools.git?path=/Assets/com.tools.SaveSystem",
+        "https://github.com/OguzSevsel/Tools.git?path=/Assets/com.tools.UISystem"
     };
 
     private bool addOpenUpmRegistry = false;
