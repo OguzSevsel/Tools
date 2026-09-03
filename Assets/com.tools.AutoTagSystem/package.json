@@ -1,0 +1,10 @@
+{
+  "name": "com.tools.AutoTagSystem",
+  "version": "1.0.0",
+  "displayName": "Auto Tag System",
+  "description": "Auto Tag System developed by Oguz Sevsel.",
+  "unity": "2022.3",
+  "author": {
+    "name": "Oguz Sevsel"
+  }
+}

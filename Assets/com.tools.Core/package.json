@@ -1,0 +1,10 @@
+{
+  "name": "com.tools.Core",
+  "version": "1.0.0",
+  "displayName": "Core",
+  "description": "Core developed by Oguz Sevsel.",
+  "unity": "2022.3",
+  "author": {
+    "name": "Oguz Sevsel"
+  }
+}

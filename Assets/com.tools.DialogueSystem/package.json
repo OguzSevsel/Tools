@@ -1,0 +1,13 @@
+{
+  "name": "com.tools.DialogueSystem",
+  "version": "1.0.0",
+  "displayName": "Dialogue System",
+  "description": "Dialogue System developed by Oguz Sevsel.",
+  "unity": "2022.3",
+  "dependencies": {
+    "com.tools.UISystem": "1.0.0"
+  },
+  "author": {
+    "name": "Oguz Sevsel"
+  }
+}
