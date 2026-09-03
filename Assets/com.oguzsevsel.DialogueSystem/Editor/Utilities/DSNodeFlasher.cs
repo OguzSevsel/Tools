@@ -1,7 +1,8 @@
 using UnityEditor;
 using UnityEngine;
+using Tools.DialogueSystem.Elements;
 
-namespace Tools.DialogueSystem
+namespace Tools.DialogueSystem.Utilities
 {
     public class DSNodeFlasher
     {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Tools.DialogueSystem.Elements;
+using Tools.DialogueSystem.Utilities;
 
 namespace Tools.DialogueSystem
 {

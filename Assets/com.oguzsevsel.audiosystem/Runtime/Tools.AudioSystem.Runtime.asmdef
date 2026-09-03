@@ -1,0 +1,16 @@
+{
+    "name": "Tools.AudioSystem.Runtime",
+    "rootNamespace": "",
+    "references": [
+        "GUID:ef9bbf8e60e15cc4eaca9fecad75cc9d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,8 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Tools.UISystem.Elements;
 
-namespace Tools.DialogueSystem
+namespace Tools.DialogueSystem.Elements
 {
     public class DialogManager : MonoBehaviour
     {

@@ -1,0 +1,17 @@
+{
+    "name": "Tools.SaveSystem.Runtime",
+    "rootNamespace": "Tools.SaveSystem",
+    "references": [
+        "GUID:2cf8d9074e380fb408e75461b3d3e78b",
+        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

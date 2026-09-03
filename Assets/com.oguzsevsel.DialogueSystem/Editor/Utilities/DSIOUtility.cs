@@ -3,8 +3,9 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using Tools.DialogueSystem.Elements;
 
-namespace Tools.DialogueSystem
+namespace Tools.DialogueSystem.Utilities
 {
     public static class DSIOUtility
     {

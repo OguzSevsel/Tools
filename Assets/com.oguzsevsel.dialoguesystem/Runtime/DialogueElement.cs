@@ -7,9 +7,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Tools.UISystem.Interfaces;
-using Tools.DialogueSystem;
+using Tools.UISystem.Elements;
 
-namespace Tools.UISystem.Elements
+namespace Tools.DialogueSystem.Elements
 {
     public class DialogueElement : UIElement, IMouseInteractable
     {

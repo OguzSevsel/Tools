@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace Tools.DialogueSystem
+namespace Tools.DialogueSystem.Utilities
 {
     public static class DSStyleUtility
     {

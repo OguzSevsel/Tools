@@ -1,9 +1,9 @@
 using PrimeTween;
 using UnityEngine;
 using Tools.UISystem.Utilities;
-using Tools.UISystem.Elements;
+using Tools.DialogueSystem.Elements;
 
-namespace Tools.UISystem.Extensions
+namespace Tools.DialogueSystem.Extensions
 {
     public static class DialogueElementExtensions
     {

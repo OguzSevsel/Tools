@@ -2,8 +2,9 @@ using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
+using Tools.DialogueSystem.Elements;
 
-namespace Tools.DialogueSystem
+namespace Tools.DialogueSystem.Utilities
 {
     public static class DSElementUtility
     {

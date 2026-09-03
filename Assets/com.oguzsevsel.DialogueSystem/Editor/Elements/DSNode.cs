@@ -5,8 +5,9 @@ using UnityEngine.UIElements;
 using System;
 using System.Linq;
 using UnityEditor.UIElements;
+using Tools.DialogueSystem.Utilities;
 
-namespace Tools.DialogueSystem
+namespace Tools.DialogueSystem.Elements
 {
     public class DSNode : Node
     {
@@ -110,7 +111,7 @@ namespace Tools.DialogueSystem
 
         private void CreateActorSpriteField(VisualElement customDataContainer)
         {
-            spriteField = DSElementUtility.CreateObjectField("Actor Sprite", typeof(Sprite), "Sprite", (evt) =>
+            spriteField = Tools.DialogueSystem.Utilities.DSElementUtility.CreateObjectField("Actor Sprite", typeof(Sprite), "Sprite", (evt) =>
             {
                 ActorSprite = evt.newValue as Sprite;
             });

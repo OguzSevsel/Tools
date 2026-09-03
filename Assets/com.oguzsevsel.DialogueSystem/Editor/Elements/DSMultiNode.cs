@@ -1,8 +1,9 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Tools.DialogueSystem.Utilities;
 
-namespace Tools.DialogueSystem
+namespace Tools.DialogueSystem.Elements
 {
     public class DSMultiNode : DSNode
     {
