@@ -97,7 +97,7 @@ namespace Tools
         [MenuItem("GameObject/Tools/Tooltip System", false, priority = 0)]
         public static void CreateToolTipElement(MenuCommand menuCommand)
         {
-            CreateWorldElement(menuCommand, "Tooltip System Element");
+            CreateWorldElement(menuCommand, "Tooltip Element");
         }
 
         [MenuItem("GameObject/Tools/Auto Tag System", false, priority = 0)]

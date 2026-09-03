@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
+using Utilities;
 
 namespace Tools.AudioSystem
 {
@@ -28,22 +29,22 @@ namespace Tools.AudioSystem
             var data = _library.Get(key);
             if (data == null) { Debug.LogWarning($"Sound '{key}' not found."); return null; }
 
-            var src = _pool.Get();
+            var source = _pool.Get();
 
-            src.spatialBlend = data.spatialSound;
-            src.clip = data.clip;
-            src.volume = data.volume;
-            src.pitch = data.randomizePitch
+            source.spatialBlend = data.spatialSound;
+            source.clip = data.clip;
+            source.volume = data.volume;
+            source.pitch = data.randomizePitch
                                ? data.pitch + Random.Range(-data.pitchVariance, data.pitchVariance)
                                : data.pitch;
-            src.loop = data.loop;
-            src.outputAudioMixerGroup = data.mixerGroup;
+            source.loop = data.loop;
+            source.outputAudioMixerGroup = data.mixerGroup;
 
-            if (position.HasValue) src.transform.position = position.Value;
+            if (position.HasValue) source.transform.position = position.Value;
 
-            src.Play();
-            if (!data.loop) StartCoroutine(ReturnWhenDone(src, data.clip.length / src.pitch));
-            return src;
+            source.Play();
+            if (!data.loop) StartCoroutine(ReturnWhenDone(source, data.clip.length / source.pitch));
+            return source;
         }
 
         public void Stop(AudioSource src) => _pool.Return(src);
@@ -56,10 +57,10 @@ namespace Tools.AudioSystem
             _masterMixer.SetFloat(group, db);
         }
 
-        private IEnumerator ReturnWhenDone(AudioSource src, float delay)
+        private IEnumerator ReturnWhenDone(AudioSource source, float delay)
         {
-            yield return Tools.Utilities.Helpers.GetWait(delay);
-            if (src.gameObject.activeSelf) _pool.Return(src);
+            yield return Helpers.GetWait(delay);
+            if (source.gameObject.activeSelf) _pool.Return(source);
         }
     } 
 }
