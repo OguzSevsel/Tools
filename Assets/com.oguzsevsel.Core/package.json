@@ -5,6 +5,8 @@
   "description": "Core developed by Oguz Sevsel.",
   "unity": "2022.3",
   "author": {
-    "name": "Oguz Sevsel"
+    "name": "Oguz Sevsel",
+    "email": "you@example.com",
+    "url": "https://github.com/OguzSevsel"
   }
 }

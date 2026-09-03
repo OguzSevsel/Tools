@@ -1,13 +1,15 @@
 {
   "name": "com.oguzsevsel.DialogueSystem",
   "version": "1.0.0",
-  "displayName": "Dialogue System",
-  "description": "Dialogue System developed by Oguz Sevsel.",
+  "displayName": "DialogueSystem",
+  "description": "DialogueSystem developed by Oguz Sevsel.",
   "unity": "2022.3",
+  "author": {
+    "name": "Oguz Sevsel",
+    "email": "you@example.com",
+    "url": "https://github.com/OguzSevsel"
+  },
   "dependencies": {
     "com.oguzsevsel.UISystem": "1.0.0"
-  },
-  "author": {
-    "name": "Oguz Sevsel"
   }
 }

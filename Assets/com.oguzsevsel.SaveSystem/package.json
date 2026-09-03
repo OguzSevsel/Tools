@@ -4,11 +4,13 @@
   "displayName": "Save System",
   "description": "Save System developed by Oguz Sevsel.",
   "unity": "2022.3",
+  "author": {
+    "name": "Oguz Sevsel",
+    "email": "you@example.com",
+    "url": "https://github.com/OguzSevsel"
+  },
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.0.2",
     "com.oguzsevsel.UISystem": "1.0.0"
-  },
-  "author": {
-    "name": "Oguz Sevsel"
   }
 }

@@ -4,12 +4,14 @@
   "displayName": "UI Framework",
   "description": "UI Framework developed by Oguz Sevsel.",
   "unity": "2022.3",
+  "author": {
+    "name": "Oguz Sevsel",
+    "email": "you@example.com",
+    "url": "https://github.com/OguzSevsel"
+  },
   "dependencies": {
     "com.kyrylokuzyk.primetween": "1.4.12",
     "com.oguzsevsel.Core": "1.0.0",
     "com.oguzsevsel.ObjectPoolSystem": "1.0.0"
-  },
-  "author": {
-    "name": "Oguz Sevsel"
   }
 }
