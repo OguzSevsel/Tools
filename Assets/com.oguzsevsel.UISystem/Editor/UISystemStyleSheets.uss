@@ -7,7 +7,6 @@
     border-bottom-left-radius: 5px;
     color: rgb(255, 255, 255);
     -unity-font-style: bold;
-    -unity-font-definition: url("project://database/Assets/Tools/UI%20System/Resources/Example/Font/Font.ttf?fileID=12800000&guid=379a0f964e6e47048b3ac21b3f16df9c&type=3#Font");
     background-color: rgb(11, 12, 13);
     border-top-width: 2px;
     border-right-width: 2px;
@@ -25,6 +24,7 @@
     padding-right: 0;
     padding-bottom: 0;
     padding-left: 0;
+    font-size: 15px;
 }
 
 .FoldOut {
@@ -41,9 +41,8 @@
     border-right-color: rgb(107, 100, 89);
     border-top-color: rgb(107, 100, 89);
     border-bottom-color: rgb(107, 100, 89);
-    font-size: 14px;
+    font-size: 15px;
     -unity-font-style: bold;
-    -unity-font-definition: url("project://database/Assets/Tools/UI%20System/Resources/Example/Font/Font.ttf?fileID=12800000&guid=379a0f964e6e47048b3ac21b3f16df9c&type=3#Font");
     color: rgb(223, 220, 216);
     margin-top: 10px;
     margin-right: 10px;
@@ -62,8 +61,6 @@
     -unity-background-image-tint-color: rgb(255, 255, 255);
 }
 
-
-
 .Button:hover {
     scale: 1.1 1.1;
 }
@@ -71,7 +68,6 @@
 .Toggle {
     background-color: rgb(22, 23, 24);
     color: rgb(223, 220, 216);
-    -unity-font-definition: url("project://database/Assets/Tools/UI%20System/Resources/Example/Font/Font.ttf?fileID=12800000&guid=379a0f964e6e47048b3ac21b3f16df9c&type=3#Font");
     margin-top: 5px;
     margin-right: 5px;
     margin-bottom: 5px;
@@ -81,7 +77,7 @@
     padding-bottom: 7px;
     padding-left: 7px;
     -unity-font-style: bold;
-    font-size: 12px;
+    font-size: 15px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
@@ -134,8 +130,7 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
-    font-size: 12px;
-    -unity-font-definition: url("project://database/Assets/Tools/UI%20System/Resources/Example/Font/Font.ttf?fileID=12800000&guid=379a0f964e6e47048b3ac21b3f16df9c&type=3#Font");
+    font-size: 15px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
     padding-top: 5px;
@@ -185,7 +180,6 @@
     padding-bottom: 0;
     padding-left: 0;
     -unity-text-align: middle-center;
-    -unity-font-definition: url("project://database/Assets/Tools/UI%20System/Resources/Example/Font/Font.ttf?fileID=12800000&guid=379a0f964e6e47048b3ac21b3f16df9c&type=3#Font");
     -unity-font-style: bold;
     height: 100%;
 }
@@ -196,10 +190,9 @@
 
 .Float {
     background-color: rgb(22, 23, 24);
-    -unity-font-definition: url("project://database/Assets/Tools/UI%20System/Resources/Example/Font/Font.ttf?fileID=12800000&guid=379a0f964e6e47048b3ac21b3f16df9c&type=3#Font");
     color: rgb(223, 220, 216);
     -unity-font-style: bold;
-    font-size: 12px;
+    font-size: 15px;
     -unity-text-align: middle-center;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -219,10 +212,9 @@
 
 .Float > #unity-text-input {
     background-color: rgb(22, 23, 24);
-    -unity-font-definition: url("project://database/Assets/Tools/UI%20System/Resources/Example/Font/Font.ttf?fileID=12800000&guid=379a0f964e6e47048b3ac21b3f16df9c&type=3#Font");
     color: rgb(223, 220, 216);
     -unity-font-style: bold;
-    font-size: 12px;
+    font-size: 15px;
     -unity-text-align: middle-center;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -241,9 +233,8 @@
 
 .Vector3 {
     color: rgb(223, 220, 216);
-    font-size: 12px;
+    font-size: 15px;
     -unity-font-style: bold;
-    -unity-font-definition: url("project://database/Assets/Tools/UI%20System/Resources/Example/Font/Font.ttf?fileID=12800000&guid=379a0f964e6e47048b3ac21b3f16df9c&type=3#Font");
     -unity-text-align: middle-center;
     background-color: rgb(22, 23, 24);
     margin-top: 5px;
@@ -284,7 +275,7 @@
     margin-bottom: 0;
     margin-left: 0;
     -unity-font-style: bold;
-    font-size: 12px;
+    font-size: 15px;
     -unity-text-align: middle-center;
 }
 
@@ -293,7 +284,7 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
-    font-size: 12px;
+    font-size: 15px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
 }
@@ -314,37 +305,33 @@
 
 .unity-vector3-field__input > #unity-x-input > #unity-text-input {
     -unity-text-align: middle-center;
-    font-size: 12px;
+    font-size: 15px;
     -unity-font-style: bold;
-    -unity-font-definition: url("project://database/Assets/Tools/UI%20System/Resources/Example/Font/Font.ttf?fileID=12800000&guid=379a0f964e6e47048b3ac21b3f16df9c&type=3#Font");
     color: rgb(223, 220, 216);
     background-color: rgb(107, 100, 89);
 }
 
 .unity-vector3-field__input > #unity-y-input > #unity-text-input {
     -unity-text-align: middle-center;
-    font-size: 12px;
+    font-size: 15px;
     -unity-font-style: bold;
-    -unity-font-definition: url("project://database/Assets/Tools/UI%20System/Resources/Example/Font/Font.ttf?fileID=12800000&guid=379a0f964e6e47048b3ac21b3f16df9c&type=3#Font");
     color: rgb(223, 220, 216);
     background-color: rgb(107, 100, 89);
 }
 
 .unity-vector3-field__input > #unity-z-input > #unity-text-input {
     -unity-text-align: middle-center;
-    font-size: 12px;
+    font-size: 15px;
     -unity-font-style: bold;
-    -unity-font-definition: url("project://database/Assets/Tools/UI%20System/Resources/Example/Font/Font.ttf?fileID=12800000&guid=379a0f964e6e47048b3ac21b3f16df9c&type=3#Font");
     color: rgb(223, 220, 216);
     background-color: rgb(107, 100, 89);
 }
 
 .Int {
     background-color: rgb(22, 23, 24);
-    -unity-font-definition: url("project://database/Assets/Tools/UI%20System/Resources/Example/Font/Font.ttf?fileID=12800000&guid=379a0f964e6e47048b3ac21b3f16df9c&type=3#Font");
     color: rgb(223, 220, 216);
     -unity-font-style: bold;
-    font-size: 12px;
+    font-size: 15px;
     -unity-text-align: middle-center;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -364,10 +351,9 @@
 
 .Int > #unity-text-input {
     background-color: rgb(22, 23, 24);
-    -unity-font-definition: url("project://database/Assets/Tools/UI%20System/Resources/Example/Font/Font.ttf?fileID=12800000&guid=379a0f964e6e47048b3ac21b3f16df9c&type=3#Font");
     color: rgb(223, 220, 216);
     -unity-font-style: bold;
-    font-size: 12px;
+    font-size: 15px;
     -unity-text-align: middle-center;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
@@ -388,40 +374,48 @@
     width: 30%;
     min-width: 10%;
     max-width: 50%;
-    font-size: 8px;
+    font-size: 15px;
     -unity-font-style: bold;
     color: rgb(255, 255, 255);
     -unity-text-align: middle-center;
+    -unity-text-auto-size: best-fit 8px 100px;
+    -unity-text-generator: advanced;
 }
 
 .unity-enum-field__label {
     width: 30%;
     min-width: 10%;
     max-width: 50%;
-    font-size: 8px;
+    font-size: 15px;
     -unity-font-style: bold;
     color: rgb(255, 255, 255);
     -unity-text-align: middle-center;
+    -unity-text-auto-size: best-fit 8px 100px;
+    -unity-text-generator: advanced;
 }
 
 .unity-base-field__label--with-dragger {
     width: 30%;
     min-width: 10%;
     max-width: 50%;
-    font-size: 8px;
+    font-size: 15px;
     -unity-font-style: bold;
     color: rgb(255, 255, 255);
     -unity-text-align: middle-center;
+    -unity-text-auto-size: best-fit 8px 100px;
+    -unity-text-generator: advanced;
 }
 
 .unity-toggle__label {
     width: 30%;
     min-width: 10%;
     max-width: 50%;
-    font-size: 8px;
+    font-size: 15px;
     -unity-font-style: bold;
     color: rgb(255, 255, 255);
     -unity-text-align: middle-center;
+    -unity-text-generator: advanced;
+    -unity-text-auto-size: best-fit 8px 100px;
 }
 
 .Color {
@@ -431,8 +425,7 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
-    font-size: 12px;
-    -unity-font-definition: url("project://database/Assets/Tools/UI%20System/Resources/Example/Font/Font.ttf?fileID=12800000&guid=379a0f964e6e47048b3ac21b3f16df9c&type=3#Font");
+    font-size: 15px;
     -unity-font-style: bold;
     -unity-text-align: middle-center;
     padding-top: 5px;
@@ -445,6 +438,8 @@
     margin-left: 5px;
     flex-grow: 1;
     height: 40px;
+    -unity-text-auto-size: best-fit 8px 100px;
+    -unity-text-generator: advanced;
 }
 
 #unity-content {
@@ -460,16 +455,17 @@
     height: 100%;
     flex-grow: 1;
     -unity-text-auto-size: none;
+    font-size: 15px;
 }
-
-
 
 .unity-color-field__label {
     width: 30%;
     min-width: 10%;
     max-width: 50%;
-    font-size: 8px;
+    font-size: 15px;
     -unity-font-style: bold;
     color: rgb(255, 255, 255);
     -unity-text-align: middle-center;
+    -unity-text-auto-size: best-fit 8px 100px;
+    -unity-text-generator: advanced;
 }
