@@ -16,8 +16,8 @@
         <ui:FloatField label="Shake Frequency" value="10" name="ShakeFrequency" binding-path="ShakeFrequency" class="Float"/>
     </ui:Foldout>
     <ui:Foldout text="Roll" name="RollFoldout" view-data-key="RollFoldoutView" class="FoldOut">
-        <ui:EnumField label="Roll In Direction" value="Center" type="Tools.UISystem.SlideDirection, Assembly-CSharp" name="RollInDirection" binding-path="RollInDirection" class="Enum"/>
-        <ui:EnumField label="Roll Out Direction" value="Right" type="Tools.UISystem.SlideDirection, Assembly-CSharp" name="RollOutDirection" binding-path="RollOutDirection" class="Enum"/>
+        <ui:EnumField label="Roll In Direction" value="Center" type="Tools.UISystem.Utilities.SlideDirection, Tools.UISystem.Runtime" name="RollInDirection" binding-path="RollInDirection" class="Enum"/>
+        <ui:EnumField label="Roll Out Direction" value="Right" type="Tools.UISystem.Utilities.SlideDirection, Tools.UISystem.Runtime" name="RollOutDirection" binding-path="RollOutDirection" class="Enum"/>
     </ui:Foldout>
     <ui:Foldout text="Slide" name="SlideFoldout" view-data-key="SlideFoldoutView" focusable="true" class="FoldOut">
         <ui:EnumField label="Slide In Direction" value="Center" type="Tools.UISystem.Utilities.SlideDirection, Tools.UISystem.Runtime" name="SlideInDirection" binding-path="SlideInDirection" class="Enum"/>
