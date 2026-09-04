@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Tools.UISystem.Elements;
+using Tools.TweenSystem.Elements;
 
-namespace Tools.UISystem.Utilities
+namespace Tools.TweenSystem.Utilities
 {
     public class MenuNavigation : MonoBehaviour
     {

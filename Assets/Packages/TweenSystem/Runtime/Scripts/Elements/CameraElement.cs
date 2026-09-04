@@ -1,8 +1,8 @@
 using PrimeTween;
 using UnityEngine;
-using Tools.UISystem.Settings;
+using Tools.TweenSystem.Settings;
 
-namespace Tools.UISystem.Elements
+namespace Tools.TweenSystem.Elements
 {
     [RequireComponent(typeof(Camera))]
     public class CameraElement : WorldElement

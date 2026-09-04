@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Tools.UISystem.Settings
+namespace Tools.TweenSystem.Settings
 {
     [CreateAssetMenu(fileName = "New Event Settings", menuName = "Animations/Event Settings", order = 1)]
     public class EventSettingsSO : ScriptableObject

@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Tools.UISystem.Elements;
+using Tools.TweenSystem.Elements;
 
-namespace Tools.UISystem.Utilities
+namespace Tools.TweenSystem.Utilities
 {
     public class CameraController : CameraElement
     {

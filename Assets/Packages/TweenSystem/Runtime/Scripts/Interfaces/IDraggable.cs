@@ -1,6 +1,6 @@
 using UnityEngine.EventSystems;
 
-namespace Tools.UISystem.Interfaces
+namespace Tools.TweenSystem.Interfaces
 {
     public interface IDraggable : IDragHandler, IBeginDragHandler, IEndDragHandler
     {

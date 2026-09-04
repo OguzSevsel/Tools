@@ -2,9 +2,9 @@ using PrimeTween;
 using System;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Tools.UISystem.Interfaces;
+using Tools.TweenSystem.Interfaces;
 
-namespace Tools.UISystem.Elements
+namespace Tools.TweenSystem.Elements
 {
     public class PanelElement : UIElement, IMouseInteractable
     {

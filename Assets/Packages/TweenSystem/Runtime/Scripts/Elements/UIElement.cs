@@ -3,11 +3,11 @@ using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Tools.UISystem.Interfaces;
-using Tools.UISystem.Utilities;
-using Tools.UISystem.Settings;
+using Tools.TweenSystem.Interfaces;
+using Tools.TweenSystem.Utilities;
+using Tools.TweenSystem.Settings;
 
-namespace Tools.UISystem.Elements
+namespace Tools.TweenSystem.Elements
 {
     [RequireComponent(typeof(CanvasGroup))]
     [RequireComponent(typeof(RectTransform))]

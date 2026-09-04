@@ -1,5 +1,5 @@
 {
-    "name": "Tools.UISystem.Runtime",
+    "name": "Tools.TweenSystem.Runtime",
     "rootNamespace": "Tools",
     "references": [
         "GUID:80ecb87cae9c44d19824e70ea7229748",

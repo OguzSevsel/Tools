@@ -1,8 +1,8 @@
 {
-    "name": "Tools.UISystem.Editor",
+    "name": "Tools.TweenSystem.Editor",
     "rootNamespace": "Tools",
     "references": [
-        "GUID:2cf8d9074e380fb408e75461b3d3e78b"
+        "Tools.TweenSystem.Runtime"
     ],
     "includePlatforms": [
         "Editor"

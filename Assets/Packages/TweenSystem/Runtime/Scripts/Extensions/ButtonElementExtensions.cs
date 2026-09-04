@@ -1,8 +1,8 @@
 using PrimeTween;
-using Tools.UISystem.Elements;
-using Tools.UISystem.Utilities;
+using Tools.TweenSystem.Elements;
+using Tools.TweenSystem.Utilities;
 
-namespace Tools.UISystem.Extensions
+namespace Tools.TweenSystem.Extensions
 {
     public static class ButtonElementExtensions
     {

@@ -6,8 +6,8 @@ using Tools.AutoTagSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Tools.UISystem.Interfaces;
-using Tools.UISystem.Elements;
+using Tools.TweenSystem.Interfaces;
+using Tools.TweenSystem.Elements;
 
 namespace Tools.DialogueSystem.Elements
 {

@@ -1,9 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Tools.UISystem.Interfaces;
+using Tools.TweenSystem.Interfaces;
 
-namespace Tools.UISystem.Elements
+namespace Tools.TweenSystem.Elements
 {
     public class Draggable : MonoBehaviour, IDraggable
     {

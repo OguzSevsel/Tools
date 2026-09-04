@@ -1,9 +1,9 @@
 using PrimeTween;
 using UnityEngine;
-using Tools.UISystem.Utilities;
-using Tools.UISystem.Elements;
+using Tools.TweenSystem.Utilities;
+using Tools.TweenSystem.Elements;
 
-namespace Tools.UISystem.Extensions
+namespace Tools.TweenSystem.Extensions
 {
     public static class PanelElementExtensions
     {

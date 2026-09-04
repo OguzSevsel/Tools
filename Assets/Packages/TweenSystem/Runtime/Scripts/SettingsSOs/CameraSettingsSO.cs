@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Tools.UISystem.Settings
+namespace Tools.TweenSystem.Settings
 {
 	[CreateAssetMenu(fileName = "New Camera Settings", menuName = "Animations/Camera Settings", order = 2)]
 	public class CameraSettingsSO : ScriptableObject

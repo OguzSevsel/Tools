@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Tools.UISystem.Elements;
+using Tools.TweenSystem.Elements;
 
 public class DialogOptionButton : ButtonElement
 {

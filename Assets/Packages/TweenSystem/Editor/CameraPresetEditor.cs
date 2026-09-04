@@ -1,8 +1,8 @@
 using UnityEditor;
 using UnityEngine.UIElements;
-using Tools.UISystem.Settings;
+using Tools.TweenSystem.Settings;
 
-namespace Tools.UISystem.EditorTools
+namespace Tools.TweenSystem.EditorTools
 {
     [CustomEditor(typeof(CameraSettingsSO))]
     public class CameraPresetEditor : Editor

@@ -1,8 +1,8 @@
 using PrimeTween;
 using UnityEngine;
-using Tools.UISystem.Utilities;
+using Tools.TweenSystem.Utilities;
 
-namespace Tools.UISystem.Settings
+namespace Tools.TweenSystem.Settings
 {
     [CreateAssetMenu(fileName = "New Animation Settings", menuName = "Animations/Animation Settings", order = 0)]
     public class AnimationSettingsSO : ScriptableObject

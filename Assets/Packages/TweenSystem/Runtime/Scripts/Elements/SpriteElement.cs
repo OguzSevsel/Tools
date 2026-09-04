@@ -2,10 +2,10 @@ using PrimeTween;
 using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Tools.UISystem.Interfaces;
-using Tools.UISystem.Settings;
+using Tools.TweenSystem.Interfaces;
+using Tools.TweenSystem.Settings;
 
-namespace Tools.UISystem.Elements
+namespace Tools.TweenSystem.Elements
 {
     [RequireComponent(typeof(Collider2D))]
     [RequireComponent(typeof(SpriteRenderer))]

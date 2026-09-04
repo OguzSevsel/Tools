@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Tools.UISystem.Elements
+namespace Tools.TweenSystem.Elements
 {
     [RequireComponent(typeof(Slider))]
     public class SliderElement : UIElement

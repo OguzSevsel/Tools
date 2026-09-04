@@ -1,6 +1,6 @@
 using PrimeTween;
 
-namespace Tools.UISystem.Utilities
+namespace Tools.TweenSystem.Utilities
 {
     public class AnimSequence
     {

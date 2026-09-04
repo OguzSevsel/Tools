@@ -4,9 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Tools.UISystem.Interfaces;
+using Tools.TweenSystem.Interfaces;
 
-namespace Tools.UISystem.Elements
+namespace Tools.TweenSystem.Elements
 {
     public class ToggleElement : UIElement
     {

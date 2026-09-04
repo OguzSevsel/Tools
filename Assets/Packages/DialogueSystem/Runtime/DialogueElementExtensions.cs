@@ -1,6 +1,6 @@
 using PrimeTween;
 using UnityEngine;
-using Tools.UISystem.Utilities;
+using Tools.TweenSystem.Utilities;
 using Tools.DialogueSystem.Elements;
 
 namespace Tools.DialogueSystem.Extensions

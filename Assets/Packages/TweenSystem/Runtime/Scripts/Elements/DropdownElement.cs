@@ -5,11 +5,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Tools.UISystem.Interfaces;
-using Tools.UISystem.Extensions;
+using Tools.TweenSystem.Interfaces;
+using Tools.TweenSystem.Extensions;
 using Tools.Core;
 
-namespace Tools.UISystem.Elements
+namespace Tools.TweenSystem.Elements
 {
     public class DropdownElement : UIElement, IMouseInteractable
     {

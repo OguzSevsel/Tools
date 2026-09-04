@@ -1,7 +1,7 @@
 using UnityEngine;
-using Tools.UISystem.Elements;
+using Tools.TweenSystem.Elements;
 
-namespace Tools.UISystem.TooltipSystem
+namespace Tools.TweenSystem.TooltipSystem
 {
     public class TooltipSystem : MonoBehaviour
     {

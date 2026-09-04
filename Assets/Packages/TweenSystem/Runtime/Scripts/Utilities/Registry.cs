@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Tools.UISystem.Elements;
+using Tools.TweenSystem.Elements;
 
-namespace Tools.UISystem.Utilities
+namespace Tools.TweenSystem.Utilities
 {
     public static class Registry
     {

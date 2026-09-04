@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace Tools.UISystem.Elements
+namespace Tools.TweenSystem.Elements
 {
     [RequireComponent(typeof(Image))]
     public class TooltipElement : UIElement

@@ -1,8 +1,8 @@
-using Tools.UISystem.Elements;
+using Tools.TweenSystem.Elements;
 using PrimeTween;
-using Tools.UISystem.Utilities;
+using Tools.TweenSystem.Utilities;
 
-namespace Tools.UISystem.Extensions
+namespace Tools.TweenSystem.Extensions
 {
     public static class SpriteElementExtensions
     {

@@ -1,9 +1,9 @@
 using PrimeTween;
 using UnityEngine;
-using Tools.UISystem.Utilities;
-using Tools.UISystem.Settings;
+using Tools.TweenSystem.Utilities;
+using Tools.TweenSystem.Settings;
 
-namespace Tools.UISystem.Elements
+namespace Tools.TweenSystem.Elements
 {
     public abstract class Element : MonoBehaviour
     {

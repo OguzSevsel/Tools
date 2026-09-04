@@ -2,7 +2,7 @@ using PrimeTween;
 using System;
 using TMPro;
 
-namespace Tools.UISystem.Elements
+namespace Tools.TweenSystem.Elements
 {
     public class TextElement : UIElement
     {
