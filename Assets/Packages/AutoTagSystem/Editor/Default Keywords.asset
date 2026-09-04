@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3651e0f5d89c7845a8f6b675a88082d, type: 3}
   m_Name: Default Keywords
   m_EditorClassIdentifier: Assembly-CSharp::Tools.AutoTagSystem.KeywordsToTag
-  Keywords: []
+  Keywords:
+  - Deneme
