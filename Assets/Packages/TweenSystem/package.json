@@ -1,8 +1,8 @@
 {
-  "name": "com.oguzsevsel.uisystem",
+  "name": "com.oguzsevsel.tween",
   "version": "1.0.0",
-  "displayName": "UI Framework",
-  "description": "UI Framework developed by Oguz Sevsel.",
+  "displayName": "Tween Framework",
+  "description": "Tween Framework developed by Oguz Sevsel.",
   "unity": "2022.3",
   "author": {
     "name": "Oguz Sevsel",
