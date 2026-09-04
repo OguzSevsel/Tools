@@ -1,5 +1,5 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Assets/com.oguzsevsel.uisystem/Editor/UISystemStyleSheets.uss?fileID=7433441132597879392&amp;guid=f8918c2e6f2db8e4496dd600722e093e&amp;type=3#UISystemStyleSheets"/>
+    <Style src="project://database/Assets/Packages/TweenSystem/Editor/UISystemStyleSheets.uss?fileID=7433441132597879392&amp;guid=f8918c2e6f2db8e4496dd600722e093e&amp;type=3#UISystemStyleSheets"/>
     <ui:Foldout text="General" name="GeneralFoldout" view-data-key="GeneralFoldoutView" class="FoldOut">
         <ui:EnumField label="Ease" value="Center" type="PrimeTween.Ease, PrimeTween.Runtime" name="Ease" binding-path="Ease" class="Enum" style="-unity-text-auto-size: none;"/>
         <ui:FloatField label="Duration" value="42.2" name="Duration" binding-path="Duration" class="Float"/>
@@ -20,8 +20,8 @@
         <ui:EnumField label="Roll Out Direction" value="Right" type="Tools.UISystem.SlideDirection, Assembly-CSharp" name="RollOutDirection" binding-path="RollOutDirection" class="Enum"/>
     </ui:Foldout>
     <ui:Foldout text="Slide" name="SlideFoldout" view-data-key="SlideFoldoutView" focusable="true" class="FoldOut">
-        <ui:EnumField label="Slide In Direction" value="Center" type="Tools.UISystem.SlideDirection, Assembly-CSharp" name="SlideInDirection" binding-path="SlideInDirection" class="Enum"/>
-        <ui:EnumField label="Slide Out Direction" value="Right" type="Tools.UISystem.SlideDirection, Assembly-CSharp" name="SlideOutDIrection" binding-path="SlideOutDirection" class="Enum"/>
+        <ui:EnumField label="Slide In Direction" value="Center" type="Tools.UISystem.Utilities.SlideDirection, Tools.UISystem.Runtime" name="SlideInDirection" binding-path="SlideInDirection" class="Enum"/>
+        <ui:EnumField label="Slide Out Direction" value="Right" type="Tools.UISystem.Utilities.SlideDirection, Tools.UISystem.Runtime" name="SlideOutDIrection" binding-path="SlideOutDirection" class="Enum"/>
         <ui:FloatField label="Slide Distance" value="42.2" name="SlideDistance" binding-path="SlideDistance" class="Float"/>
     </ui:Foldout>
     <ui:Foldout text="Color" name="ColorFoldout" view-data-key="ColorFoldoutView" class="FoldOut">
