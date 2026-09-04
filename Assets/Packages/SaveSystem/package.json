@@ -11,6 +11,6 @@
   },
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.0.2",
-    "com.oguzsevsel.uisystem": "1.0.0"
+    "com.oguzsevsel.tweensystem": "1.0.0"
   }
 }
