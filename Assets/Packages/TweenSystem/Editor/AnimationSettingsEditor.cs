@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine.UIElements;
 using Tools.TweenSystem.Settings;
+using System;
 
 namespace Tools.TweenSystem.EditorTools
 {
@@ -8,11 +9,10 @@ namespace Tools.TweenSystem.EditorTools
     public class AnimationSettingsEditor : Editor
     {
         public VisualTreeAsset visualTreeAsset;
-        public VisualElement Root;
-        
-        public Foldout FadeFoldout;
-        public FloatField FadeInFloatField;
-        public FloatField FadeOutFloatField;
+        [System.NonSerialized] public VisualElement Root;
+        [System.NonSerialized] public Foldout FadeFoldout;
+        [System.NonSerialized] public FloatField FadeInFloatField;
+        [System.NonSerialized] public FloatField FadeOutFloatField;
 
         public override UnityEngine.UIElements.VisualElement CreateInspectorGUI()
         {

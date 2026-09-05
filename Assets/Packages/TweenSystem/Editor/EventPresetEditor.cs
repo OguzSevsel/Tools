@@ -8,7 +8,7 @@ namespace Tools.TweenSystem.EditorTools
     public class EventPresetEditor : Editor
     {
         public VisualTreeAsset visualTreeAsset;
-        public VisualElement Root;
+        [System.NonSerialized] public VisualElement Root;
 
         public override UnityEngine.UIElements.VisualElement CreateInspectorGUI()
         {

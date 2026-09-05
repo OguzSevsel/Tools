@@ -1,15 +1,15 @@
 ﻿<Solution>
   <Project Path="Tools.DialogueSystem.Runtime.csproj" />
-  <Project Path="PrimeTween.Debug.csproj" />
-  <Project Path="Tools.TweenSystem.Runtime.csproj" />
   <Project Path="Tools.SaveSystem.Runtime.csproj" />
   <Project Path="PrimeTween.Demo.csproj" />
+  <Project Path="Tools.TweenSystem.Runtime.csproj" />
   <Project Path="Tools.Core.Runtime.csproj" />
   <Project Path="Tools.DialogueSystem.Editor.csproj" />
-  <Project Path="Tools.AudioSystem.Runtime.csproj" />
   <Project Path="Tools.TweenSystem.Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
-  <Project Path="PrimeTween.Installer.csproj" />
   <Project Path="Tools.AutoTagSystem.Runtime.csproj" />
   <Project Path="Tools.ObjectPoolSystem.Runtime.csproj" />
+  <Project Path="PrimeTween.Debug.csproj" />
+  <Project Path="Tools.AudioSystem.Runtime.csproj" />
+  <Project Path="PrimeTween.Installer.csproj" />
 </Solution>
