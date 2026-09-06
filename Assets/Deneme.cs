@@ -1,28 +1,25 @@
-using System;
+using Alchemy;
+using Alchemy.Inspector;
 using UnityEngine;
-using Tools.AutoTagSystem;
-using TMPro;
+using UnityEngine.UIElements;
 
 namespace Game
 {
+    enum DenemeEnum
+    {
+        World,
+        Moon,
+        Mars,
+        Jupiter,
+        Mercury,
+    }
     public class Deneme : MonoBehaviour
     {
-        private string WordDeneme { get; set; }
-        
+        [SerializeField, EnumButtons] private DenemeEnum deneme;
+
         private void Awake()
         {
-            var textComp = GetComponent<TextMeshProUGUI>();
-            var word = AutoTag.Instance.SetAutoTags(textComp.text);
-            textComp.text = word;
-            textComp.fontSize = 20;
+            
         }
-        
-        private void DenemeMethod()
-        {
-            WordDeneme = "deneme";
-            var textComp = GetComponent<TextMeshProUGUI>();
-            textComp.text = WordDeneme;
-        }
-        
     }
 }
