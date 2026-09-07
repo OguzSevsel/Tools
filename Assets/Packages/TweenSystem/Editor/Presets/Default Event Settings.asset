@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EventSettingsSO
   Interactable: 1
   Selectable: 1
-  OnValueChanged: 0
+  OnValueChanged: 1

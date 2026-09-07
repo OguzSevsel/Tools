@@ -318,15 +318,11 @@ namespace Tools.DialogueSystem
 
         #endregion
 
-        #region Events
-
-        #endregion
-
         #region Creation
 
         public DSNode CreateNode(DialogueType type, Vector2 position, bool isStartNode, string dialogueId, string actorName, AudioClip audioClip, Sprite actorSprite, string dialogueText, bool isPasting = false, bool isLoading = false)
         {
-            Type nodeType = Type.GetType($"Tools.DialogueSystem.DS{type}Node");
+            Type nodeType = Type.GetType($"Tools.DialogueSystem.Elements.DS{type}Node");
 
             DSNode node = (DSNode)Activator.CreateInstance(nodeType);
 

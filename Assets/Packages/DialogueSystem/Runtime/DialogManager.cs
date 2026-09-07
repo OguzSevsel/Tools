@@ -26,7 +26,7 @@ namespace Tools.DialogueSystem.Elements
         private void Start()
         {
             dialogUI = GameObject.FindGameObjectWithTag("Dialogue Element").GetComponent<DialogueElement>();
-            StartDialogueByName("New Dialogue");
+            StartDialogueByName("Deneme");
         }
 
         public void StartDialogueByName(string name)

@@ -1,0 +1,193 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8776381280639105560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3285e25e8be8b6479560cfc3f3492bf, type: 3}
+  m_Name: Dialogue ID
+  m_EditorClassIdentifier: Tools.DialogueSystem.Runtime::Tools.DialogueSystem.DSNodeSO
+  DialogueId: Dialogue ID
+  DialogueText: Dialogue Text
+  ActorName: Oguz
+  Position: {x: 185, y: 441}
+  DialogueType: 0
+  AudioClip: {fileID: 0}
+  ActorSprite: {fileID: 1340442107928082101, guid: 8bbb6cfb284da944895eabfcc9fca998, type: 3}
+  IsStartNode: 1
+  Choices:
+  - Title: Next Dialogue
+    TargetNodeId: MultiDialogue
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995d652f892b32246be21918141ba6c9, type: 3}
+  m_Name: Deneme
+  m_EditorClassIdentifier: Tools.DialogueSystem.Runtime::Tools.DialogueSystem.DSGraphSO
+  Nodes:
+  - {fileID: -8776381280639105560}
+  - {fileID: 5256154045386337726}
+  - {fileID: 4341347860949181658}
+  - {fileID: 487277471887817242}
+  - {fileID: 191406657316097089}
+  - {fileID: 7439593557877933006}
+  Connections:
+  - InNodeId: MultiDialogue
+    OutNodeId: Dialogue ID
+    PortName: Next Dialogue
+  - InNodeId: 1 Ismet
+    OutNodeId: MultiDialogue
+    PortName: 1
+  - InNodeId: 2 Emre
+    OutNodeId: MultiDialogue
+    PortName: 2
+  - InNodeId: 3 Ates
+    OutNodeId: MultiDialogue
+    PortName: 3
+  - InNodeId: 4 Oguz
+    OutNodeId: MultiDialogue
+    PortName: 4
+  - InNodeId: 
+    OutNodeId: 1 Ismet
+    PortName: Next Dialogue
+  - InNodeId: 
+    OutNodeId: 2 Emre
+    PortName: Next Dialogue
+  - InNodeId: 
+    OutNodeId: 3 Ates
+    PortName: Next Dialogue
+  - InNodeId: 
+    OutNodeId: 4 Oguz
+    PortName: Next Dialogue
+--- !u!114 &191406657316097089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3285e25e8be8b6479560cfc3f3492bf, type: 3}
+  m_Name: 3 Ates
+  m_EditorClassIdentifier: Tools.DialogueSystem.Runtime::Tools.DialogueSystem.DSNodeSO
+  DialogueId: 3 Ates
+  DialogueText: Choice Text 3
+  ActorName: Ates
+  Position: {x: 1261, y: 579}
+  DialogueType: 0
+  AudioClip: {fileID: 0}
+  ActorSprite: {fileID: 837933277571000220, guid: bfea0090693457f4591d895edd788d84, type: 3}
+  IsStartNode: 0
+  Choices:
+  - Title: Next Dialogue
+    TargetNodeId: 
+--- !u!114 &487277471887817242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3285e25e8be8b6479560cfc3f3492bf, type: 3}
+  m_Name: 2 Emre
+  m_EditorClassIdentifier: Tools.DialogueSystem.Runtime::Tools.DialogueSystem.DSNodeSO
+  DialogueId: 2 Emre
+  DialogueText: Choice Text 2
+  ActorName: Emre
+  Position: {x: 1217, y: 308}
+  DialogueType: 0
+  AudioClip: {fileID: 0}
+  ActorSprite: {fileID: -9140402990634219881, guid: 353ab5108c07a0d44a8d454af8a9aa50, type: 3}
+  IsStartNode: 0
+  Choices:
+  - Title: Next Dialogue
+    TargetNodeId: 
+--- !u!114 &4341347860949181658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3285e25e8be8b6479560cfc3f3492bf, type: 3}
+  m_Name: 1 Ismet
+  m_EditorClassIdentifier: Tools.DialogueSystem.Runtime::Tools.DialogueSystem.DSNodeSO
+  DialogueId: 1 Ismet
+  DialogueText: Choice Text 1
+  ActorName: Ismet
+  Position: {x: 1217, y: 15}
+  DialogueType: 0
+  AudioClip: {fileID: 0}
+  ActorSprite: {fileID: -1387151819714550007, guid: cdfb9623ac07a4448b9616c68820695d, type: 3}
+  IsStartNode: 0
+  Choices:
+  - Title: Next Dialogue
+    TargetNodeId: 
+--- !u!114 &5256154045386337726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3285e25e8be8b6479560cfc3f3492bf, type: 3}
+  m_Name: MultiDialogue
+  m_EditorClassIdentifier: Tools.DialogueSystem.Runtime::Tools.DialogueSystem.DSNodeSO
+  DialogueId: MultiDialogue
+  DialogueText: Dialogue Text 1
+  ActorName: Aydan
+  Position: {x: 668, y: 414}
+  DialogueType: 1
+  AudioClip: {fileID: 0}
+  ActorSprite: {fileID: -2898002648302925651, guid: 9c2602ab685e1ee4683a7783482bf38e, type: 3}
+  IsStartNode: 0
+  Choices:
+  - Title: 1
+    TargetNodeId: 1 Ismet
+  - Title: 2
+    TargetNodeId: 2 Emre
+  - Title: 3
+    TargetNodeId: 3 Ates
+  - Title: 4
+    TargetNodeId: 4 Oguz
+--- !u!114 &7439593557877933006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3285e25e8be8b6479560cfc3f3492bf, type: 3}
+  m_Name: 4 Oguz
+  m_EditorClassIdentifier: Tools.DialogueSystem.Runtime::Tools.DialogueSystem.DSNodeSO
+  DialogueId: 4 Oguz
+  DialogueText: Choice Text 4
+  ActorName: Oguz
+  Position: {x: 1217, y: 891}
+  DialogueType: 0
+  AudioClip: {fileID: 0}
+  ActorSprite: {fileID: -94504699634928325, guid: bfea0090693457f4591d895edd788d84, type: 3}
+  IsStartNode: 0
+  Choices:
+  - Title: Next Dialogue
+    TargetNodeId: 
