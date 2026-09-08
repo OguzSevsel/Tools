@@ -6,13 +6,13 @@ namespace Tools.DialogueSystem.Utilities
 {
     public class DSNodeFlasher
     {
-        private DSNode node;
+        private DSDialogueNode node;
         private float delay;
         private int remaining;
         private bool isRed;
         private double lastTime;
 
-        public void Flash(DSNode node, float delaySeconds, int loopCount)
+        public void Flash(DSDialogueNode node, float delaySeconds, int loopCount)
         {
             this.node = node;
             delay = delaySeconds;

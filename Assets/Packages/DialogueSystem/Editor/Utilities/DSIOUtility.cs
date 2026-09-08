@@ -44,9 +44,9 @@ namespace Tools.DialogueSystem.Utilities
             return AssetDatabase.LoadAssetAtPath<DSGraphSO>(relativePath);
         }
 
-        private static void SaveNodeSO(DSNodeSO nodeSO, DSNode node)
+        private static void SaveNodeSO(DSNodeSO nodeSO, DSDialogueNode node)
         {
-            nodeSO.DialogueId = node.DialogueId;
+            nodeSO.DialogueId = node.Id;
             nodeSO.IsStartNode = node.isStartNode;
             nodeSO.DialogueType = node.DialogueType;
             nodeSO.DialogueText = node.DialogueText;
@@ -54,7 +54,7 @@ namespace Tools.DialogueSystem.Utilities
             nodeSO.ActorName = node.ActorName;
             nodeSO.AudioClip = node.AudioClip;
             nodeSO.ActorSprite = node.ActorSprite;
-            nodeSO.name = node.DialogueId;
+            nodeSO.name = node.Id;
         }
 
         public static void Save(DSGraphView graphView, string path, string assetName)
@@ -69,7 +69,7 @@ namespace Tools.DialogueSystem.Utilities
             string assetPath = AssetDatabase.GetAssetPath(graphSO);
             AssetDatabase.RenameAsset(assetPath, assetName);
 
-            foreach (DSNode node in graphView.Nodes)
+            foreach (DSDialogueNode node in graphView.Nodes)
             {
                 DSNodeSO nodeSO = ScriptableObject.CreateInstance<DSNodeSO>();
 
@@ -104,7 +104,7 @@ namespace Tools.DialogueSystem.Utilities
             string assetPath = AssetDatabase.GetAssetPath(graphSO);
             AssetDatabase.RenameAsset(assetPath, assetName);
 
-            foreach (DSNode node in graphView.Nodes)
+            foreach (DSDialogueNode node in graphView.Nodes)
             {
                 DSNodeSO nodeSO = ScriptableObject.CreateInstance<DSNodeSO>();
 
@@ -136,7 +136,7 @@ namespace Tools.DialogueSystem.Utilities
             }
         }
 
-        public static void SaveConnections(DSGraphView graphView, DSGraphSO graphSO, DSNode node, DSNodeSO nodeSO)
+        public static void SaveConnections(DSGraphView graphView, DSGraphSO graphSO, DSDialogueNode node, DSNodeSO nodeSO)
         {
             foreach (var port in node.Choices.Keys)
             {
@@ -144,7 +144,7 @@ namespace Tools.DialogueSystem.Utilities
                 {
                     DSPortData portData = (DSPortData)port.userData;
                     portData.InNodeId = "";
-                    portData.OutNodeId = node.DialogueId;
+                    portData.OutNodeId = node.Id;
                     DSChoice choice = new DSChoice(portData.PortName, portData.InNodeId);
                     nodeSO.Choices.Add(choice);
                     graphSO.Connections.Add((DSPortData)port.userData);
@@ -153,13 +153,13 @@ namespace Tools.DialogueSystem.Utilities
                 {
                     foreach (var edge in port.connections)
                     {
-                        DSNode inNode = edge.input.node as DSNode;
+                        DSDialogueNode inNode = edge.input.node as DSDialogueNode;
                         if (inNode == null)
                             continue;
-                        DSNode outNode = edge.output.node as DSNode;
+                        DSDialogueNode outNode = edge.output.node as DSDialogueNode;
                         DSPortData portData = (DSPortData)edge.output.userData;
-                        portData.InNodeId = inNode.DialogueId;
-                        portData.OutNodeId = outNode.DialogueId;
+                        portData.InNodeId = inNode.Id;
+                        portData.OutNodeId = outNode.Id;
                         DSChoice choice = new DSChoice(portData.PortName, portData.InNodeId);
                         nodeSO.Choices.Add(choice);
                         graphSO.Connections.Add(portData);
@@ -185,27 +185,27 @@ namespace Tools.DialogueSystem.Utilities
         {
             if (nodeSO.IsStartNode)
             {
-                DSNode node = graphView.CreateNode(nodeSO.DialogueType, nodeSO.Position, isStartNode: true, nodeSO.DialogueId, nodeSO.ActorName, nodeSO.AudioClip, nodeSO.ActorSprite, nodeSO.DialogueText, isPasting: false, isLoading: true);
+                DSDialogueNode node = graphView.CreateNode(nodeSO.DialogueType, nodeSO.Position, isStartNode: true, nodeSO.DialogueId, nodeSO.ActorName, nodeSO.AudioClip, nodeSO.ActorSprite, nodeSO.DialogueText, isPasting: false, isLoading: true);
                 graphView.AddElement(node);
             }
             else
             {
-                DSNode node = graphView.CreateNode(nodeSO.DialogueType, nodeSO.Position, isStartNode: false, nodeSO.DialogueId, nodeSO.ActorName, nodeSO.AudioClip, nodeSO.ActorSprite, nodeSO.DialogueText, isPasting: false, isLoading: true);
+                DSDialogueNode node = graphView.CreateNode(nodeSO.DialogueType, nodeSO.Position, isStartNode: false, nodeSO.DialogueId, nodeSO.ActorName, nodeSO.AudioClip, nodeSO.ActorSprite, nodeSO.DialogueText, isPasting: false, isLoading: true);
                 graphView.AddElement(node);
             }
         }
 
         public static void LoadConnections(DSGraphSO graph, DSGraphView graphView)
         {
-            Dictionary<string, DSNode> nodeLookUp = graphView.Nodes.OfType<DSNode>().ToDictionary(n => n.DialogueId, n => n);
+            Dictionary<string, DSDialogueNode> nodeLookUp = graphView.Nodes.OfType<DSDialogueNode>().ToDictionary(n => n.Id, n => n);
 
             foreach (var conn in graph.Connections)
             {
-                if (!nodeLookUp.TryGetValue(conn.OutNodeId, out DSNode OutputNode)) return;
-                if (!nodeLookUp.TryGetValue(conn.InNodeId, out DSNode InputNode))
+                if (!nodeLookUp.TryGetValue(conn.OutNodeId, out DSDialogueNode OutputNode)) return;
+                if (!nodeLookUp.TryGetValue(conn.InNodeId, out DSDialogueNode InputNode))
                 {
                     Port port = null;
-                    DSPortData portData = new DSPortData("", OutputNode.DialogueId, conn.PortName);
+                    DSPortData portData = new DSPortData("", OutputNode.Id, conn.PortName);
                     port = OutputNode.CreateChoicePort(conn.PortName, portData);
                     OutputNode.outputContainer.Add(port);
                     OutputNode.RefreshExpandedState();
@@ -213,7 +213,7 @@ namespace Tools.DialogueSystem.Utilities
                 }
 
                 Port outputPort = null;
-                DSPortData data = new DSPortData(InputNode.DialogueId, OutputNode.DialogueId, conn.PortName);
+                DSPortData data = new DSPortData(InputNode.Id, OutputNode.Id, conn.PortName);
 
                 outputPort = OutputNode.CreateChoicePort(conn.PortName, data);
                 OutputNode.outputContainer.Add(outputPort);

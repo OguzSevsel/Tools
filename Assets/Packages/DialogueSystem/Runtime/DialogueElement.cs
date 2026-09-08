@@ -65,12 +65,14 @@ namespace Tools.DialogueSystem.Elements
 
             speakerNameText.SetText(actorName);
             speakerImage.sprite = actorSprite;
-            dialogueTween = this.dialogueText.TypeText(dialogueText, onComplete: onComplete);
 
             if (AutoTag.Instance != null)
             {
+                //TODO: This line can create issues later because we are tweening the type of the text but also removing that text and replacing it with this autotag one.
                 this.dialogueText.Text.text = AutoTag.Instance.SetAutoTags(this.dialogueText.Text.text);
             }
+
+            dialogueTween = this.dialogueText.TypeText(dialogueText, onComplete: onComplete);
         }
 
         public void ShowChoicesText(List<DSChoice> choices, System.Action<DSChoice> onComplete = null)

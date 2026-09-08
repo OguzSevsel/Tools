@@ -233,12 +233,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1254933108394559750, guid: 1fa72b5d70489374d94b97c72420b968, type: 3}
       propertyPath: dialogues.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1254933108394559750, guid: 1fa72b5d70489374d94b97c72420b968, type: 3}
       propertyPath: 'dialogues.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: 8886108c75fef304eb4e4fd898bc74eb, type: 2}
+    - target: {fileID: 1254933108394559750, guid: 1fa72b5d70489374d94b97c72420b968, type: 3}
+      propertyPath: 'dialogues.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: c89e93e928c533c4a83fa9fd12ad643e, type: 2}
     - target: {fileID: 8382433047221487056, guid: 1fa72b5d70489374d94b97c72420b968, type: 3}
       propertyPath: m_LocalPosition.x
       value: 386.2946

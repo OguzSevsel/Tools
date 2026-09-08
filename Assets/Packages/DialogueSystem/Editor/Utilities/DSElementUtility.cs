@@ -55,7 +55,7 @@ namespace Tools.DialogueSystem.Utilities
             return port;
         }
 
-        public static TextField CreateTextField(string value = null, string label = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
+        public static TextField CreateTextField(string value = null, string label = null, bool isMultiLine = false, EventCallback<ChangeEvent<string>> onValueChanged = null)
         {
             TextField textField = new TextField()
             {
@@ -68,16 +68,9 @@ namespace Tools.DialogueSystem.Utilities
                 textField.RegisterValueChangedCallback(onValueChanged);
             }
 
+            textField.multiline = isMultiLine;
+
             return textField;
-        }
-
-        public static TextField CreateTextArea(string value = null, string label = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
-        {
-            TextField textArea = CreateTextField(value, label, onValueChanged);
-
-            textArea.multiline = true;
-
-            return textArea;
         }
     }
 }

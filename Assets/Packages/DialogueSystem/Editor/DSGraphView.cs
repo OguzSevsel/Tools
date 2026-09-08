@@ -39,6 +39,8 @@ namespace Tools.DialogueSystem
         private DSGraphSO loadedGraph;
         private MiniMap miniMap;
         private DialogueCopyBuffer copyBuffer;
+        
+        
 
         public Vector2 LastMousePosition { get; private set; }
 
@@ -151,7 +153,7 @@ namespace Tools.DialogueSystem
         void Copy()
         {
             var selectedNodes = selection
-                .OfType<DSNode>()
+                .OfType<DSDialogueNode>()
                 .ToList();
 
             copyBuffer = new DialogueCopyBuffer();
@@ -161,7 +163,7 @@ namespace Tools.DialogueSystem
                 NodeCopyData data = new NodeCopyData
                 {
                     DialogueType = node.DialogueType,
-                    DialogueId = node.DialogueId,
+                    DialogueId = node.Id,
                     ActorName = node.ActorName,
                     ActorSprite = node.ActorSprite,
                     AudioClip = node.AudioClip,
@@ -183,12 +185,12 @@ namespace Tools.DialogueSystem
         {
             deleteSelection = (operationName, askUser) => {
 
-                List<DSNode> deletedNodes = new List<DSNode>();
+                List<DSDialogueNode> deletedNodes = new List<DSDialogueNode>();
                 List<UnityEditor.Experimental.GraphView.Edge> deletedEdges = new List<UnityEditor.Experimental.GraphView.Edge>();
 
                 foreach (GraphElement element in selection)
                 {
-                    if (element is DSNode node)
+                    if (element is DSDialogueNode node)
                     {
                         deletedNodes.Add(node);
 
@@ -287,7 +289,7 @@ namespace Tools.DialogueSystem
         {
             foreach (var node in Nodes)
             {
-                node.OnDialogueIdChanged -= NodeIdChangedHandler;
+                node.OnNodeIdChanged -= NodeIdChangedHandler;
             }
 
             this.NodeErrorCount = 0;
@@ -320,18 +322,18 @@ namespace Tools.DialogueSystem
 
         #region Creation
 
-        public DSNode CreateNode(DialogueType type, Vector2 position, bool isStartNode, string dialogueId, string actorName, AudioClip audioClip, Sprite actorSprite, string dialogueText, bool isPasting = false, bool isLoading = false)
+        public DSDialogueNode CreateNode(DialogueType type, Vector2 position, bool isStartNode, string dialogueId, string actorName, AudioClip audioClip, Sprite actorSprite, string dialogueText, bool isPasting = false, bool isLoading = false)
         {
             Type nodeType = Type.GetType($"Tools.DialogueSystem.Elements.DS{type}Node");
 
-            DSNode node = (DSNode)Activator.CreateInstance(nodeType);
+            DSDialogueNode node = (DSDialogueNode)Activator.CreateInstance(nodeType);
 
             node.Initialize(position, isStartNode, dialogueId, actorName, audioClip, actorSprite, dialogueText, isPasting, isLoading);
             node.Draw();
             this.Nodes.Add(node);
 
-            node.OnDialogueIdChanged += NodeIdChangedHandler;
-            SetNodeError(node.DialogueId, node, this.Nodes);
+            node.OnNodeIdChanged += NodeIdChangedHandler;
+            SetNodeError(node.Id, node, this.Nodes);
 
             node.OnEdgeDeleted += (edge) => 
             {
@@ -438,7 +440,7 @@ namespace Tools.DialogueSystem
 
             foreach (var item in nodes)
             {
-                if (item.DialogueId == title && node != item)
+                if (item.Id == title && node != item)
                 {
                     errorCount++;
                     isError = true;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Tools.DialogueSystem.Elements
 {
-	public class DSSingleNode : DSNode
+	public class DSSingleNode : DSDialogueNode
 	{
 		public override void Initialize(Vector2 position, bool isStartNode, string dialogueId, string actorName, AudioClip audioClip, Sprite actorSprite, string dialogueText, bool isPasting = false, bool isLoading = false)
 		{

@@ -1,0 +1,156 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8345842528888408780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3285e25e8be8b6479560cfc3f3492bf, type: 3}
+  m_Name: ID3
+  m_EditorClassIdentifier: Tools.DialogueSystem.Runtime::Tools.DialogueSystem.DSNodeSO
+  DialogueId: ID3
+  DialogueText: Text3
+  ActorName: Actor Name
+  Position: {x: 1097, y: 209}
+  DialogueType: 1
+  AudioClip: {fileID: 0}
+  ActorSprite: {fileID: 0}
+  IsStartNode: 0
+  Choices:
+  - Title: ID4
+    TargetNodeId: ID4
+  - Title: ID5
+    TargetNodeId: ID5
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995d652f892b32246be21918141ba6c9, type: 3}
+  m_Name: Deneme1
+  m_EditorClassIdentifier: Tools.DialogueSystem.Runtime::Tools.DialogueSystem.DSGraphSO
+  Nodes:
+  - {fileID: 1321630984308809892}
+  - {fileID: 4874366006311394865}
+  - {fileID: -8345842528888408780}
+  - {fileID: 3873056595928375599}
+  - {fileID: 627008989883511765}
+  Connections:
+  - InNodeId: ID2
+    OutNodeId: ID1
+    PortName: Next Dialogue
+  - InNodeId: ID3
+    OutNodeId: ID2
+    PortName: Next Dialogue
+  - InNodeId: ID4
+    OutNodeId: ID3
+    PortName: ID4
+  - InNodeId: ID5
+    OutNodeId: ID3
+    PortName: ID5
+  - InNodeId: 
+    OutNodeId: ID4
+    PortName: Next Dialogue
+  - InNodeId: 
+    OutNodeId: ID5
+    PortName: Next Dialogue
+--- !u!114 &627008989883511765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3285e25e8be8b6479560cfc3f3492bf, type: 3}
+  m_Name: ID5
+  m_EditorClassIdentifier: Tools.DialogueSystem.Runtime::Tools.DialogueSystem.DSNodeSO
+  DialogueId: ID5
+  DialogueText: Text 5
+  ActorName: Actor Name
+  Position: {x: 1525, y: 473}
+  DialogueType: 0
+  AudioClip: {fileID: 0}
+  ActorSprite: {fileID: 0}
+  IsStartNode: 0
+  Choices:
+  - Title: Next Dialogue
+    TargetNodeId: 
+--- !u!114 &1321630984308809892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3285e25e8be8b6479560cfc3f3492bf, type: 3}
+  m_Name: ID1
+  m_EditorClassIdentifier: Tools.DialogueSystem.Runtime::Tools.DialogueSystem.DSNodeSO
+  DialogueId: ID1
+  DialogueText: Text 1
+  ActorName: Actor Name
+  Position: {x: 301, y: 209}
+  DialogueType: 0
+  AudioClip: {fileID: 0}
+  ActorSprite: {fileID: 0}
+  IsStartNode: 1
+  Choices:
+  - Title: Next Dialogue
+    TargetNodeId: ID2
+--- !u!114 &3873056595928375599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3285e25e8be8b6479560cfc3f3492bf, type: 3}
+  m_Name: ID4
+  m_EditorClassIdentifier: Tools.DialogueSystem.Runtime::Tools.DialogueSystem.DSNodeSO
+  DialogueId: ID4
+  DialogueText: Text 4
+  ActorName: Actor Name
+  Position: {x: 1525, y: 175}
+  DialogueType: 0
+  AudioClip: {fileID: 0}
+  ActorSprite: {fileID: 0}
+  IsStartNode: 0
+  Choices:
+  - Title: Next Dialogue
+    TargetNodeId: 
+--- !u!114 &4874366006311394865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3285e25e8be8b6479560cfc3f3492bf, type: 3}
+  m_Name: ID2
+  m_EditorClassIdentifier: Tools.DialogueSystem.Runtime::Tools.DialogueSystem.DSNodeSO
+  DialogueId: ID2
+  DialogueText: Text 2
+  ActorName: Actor Name
+  Position: {x: 668, y: 209}
+  DialogueType: 0
+  AudioClip: {fileID: 0}
+  ActorSprite: {fileID: 0}
+  IsStartNode: 0
+  Choices:
+  - Title: Next Dialogue
+    TargetNodeId: ID3
