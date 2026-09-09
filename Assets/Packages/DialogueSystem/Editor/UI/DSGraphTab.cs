@@ -1,12 +1,12 @@
+using Tools.DialogueSystem.Utilities;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Tools.DialogueSystem.Utilities;
 
 namespace Tools.DialogueSystem
 {
-    public class DSEditorWindow : EditorWindow
+    public class DSGraphTab : VisualElement
     {
         DSGraphView graphView;
         Button saveButton;
@@ -14,33 +14,21 @@ namespace Tools.DialogueSystem
         Button miniMapButton;
 
         public TextField FileNameTextField { get; set; }
-
         private string fileName;
 
-        [MenuItem("Tools/Dialogue Graph")]
-        public static void Open()
+        public DSGraphTab()
         {
-            var window = GetWindow<DSEditorWindow>();
-            window.titleContent = new GUIContent("Dialogue Graph");
+            this.style.flexGrow = 1;
+            this.style.position = Position.Relative;
+            this.style.backgroundColor = Color.red;
+            Create();
         }
 
-        private void OnEnable()
+        public void Create()
         {
             AddGraphView();
             AddToolBar();
-            AddStyles();
             SetFileName("New Dialogue");
-        }
-
-        public void SetFileName(string newFileName)
-        {
-            fileName = newFileName;
-            FileNameTextField.value = fileName;
-        }
-
-        public string GetFileName()
-        {
-            return fileName;
         }
 
         private void AddToolBar()
@@ -52,21 +40,16 @@ namespace Tools.DialogueSystem
                 fileName = evt.newValue;
             });
 
-            saveButton = DSElementUtility.CreateButton("Save");
-            saveButton.clicked += SaveButtonClickHandler;
-
-            loadButton = DSElementUtility.CreateButton("Load");
-            loadButton.clicked += LoadButtonClickHandler;
-
-            miniMapButton = DSElementUtility.CreateButton("Mini Map");
-            miniMapButton.clicked += MiniMapButtonClickHandler;
+            saveButton = DSElementUtility.CreateButton("Save", SaveButtonClickHandler);
+            loadButton = DSElementUtility.CreateButton("Load", LoadButtonClickHandler);
+            miniMapButton = DSElementUtility.CreateButton("Mini Map", MiniMapButtonClickHandler);
 
             toolbar.Add(FileNameTextField);
             toolbar.Add(saveButton);
             toolbar.Add(loadButton);
             toolbar.Add(miniMapButton);
 
-            rootVisualElement.Add(toolbar);
+            graphView.Add(toolbar);
         }
 
         private void MiniMapButtonClickHandler()
@@ -84,18 +67,11 @@ namespace Tools.DialogueSystem
             graphView.Save();
         }
 
-        private void AddStyles()
-        {
-            rootVisualElement.AddStyleSheets("DialogueSystem/DSVariables.uss");
-        }
-
         private void AddGraphView()
         {
             graphView = new DSGraphView(this);
-
+            this.Add(graphView);
             graphView.StretchToParentSize();
-
-            rootVisualElement.Add(graphView);   
         }
 
         public void EnableSaving()
@@ -109,5 +85,16 @@ namespace Tools.DialogueSystem
             saveButton.SetEnabled(false);
             loadButton.SetEnabled(false);
         }
-    } 
+
+        public void SetFileName(string newFileName)
+        {
+            fileName = newFileName;
+            FileNameTextField.value = fileName;
+        }
+
+        public string GetFileName()
+        {
+            return fileName;
+        }
+    }
 }

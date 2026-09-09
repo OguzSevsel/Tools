@@ -8,6 +8,17 @@ namespace Tools.DialogueSystem.Utilities
 {
     public static class DSElementUtility
     {
+        public static VisualElement CreateVisualElement(VisualElement parent)
+        {
+            VisualElement element = new VisualElement();
+            element.style.flexGrow = 1;
+            element.style.alignContent = Align.Stretch;
+            element.style.position = Position.Relative;
+
+            parent.Add(element);
+            return element;
+        }
+
         public static Button CreateButton(string text, Action onClick = null)
         {
             Button button = new Button(onClick)

@@ -34,21 +34,19 @@ namespace Tools.DialogueSystem
     public class DSGraphView : GraphView
     {
         public List<DSNode> Nodes;
-        private DSEditorWindow window;
+        private DSGraphTab tab;
         public int NodeErrorCount;
         private DSGraphSO loadedGraph;
         private MiniMap miniMap;
         private DialogueCopyBuffer copyBuffer;
-        
-        
 
         public Vector2 LastMousePosition { get; private set; }
 
-        public DSGraphView(DSEditorWindow editorWindow)
+        public DSGraphView(DSGraphTab tab)
         {
             NodeErrorCount = 0;
             Nodes = new List<DSNode>();
-            this.window = editorWindow;
+            this.tab = tab;
 
             AddManipulators();
             AddGridBackground();
@@ -260,7 +258,7 @@ namespace Tools.DialogueSystem
             DSGraphSO graph = DSIOUtility.PromptAndLoad();
             this.loadedGraph = graph;
             if (graph != null)
-                window.SetFileName(graph.name);
+                tab.SetFileName(graph.name);
             DSIOUtility.Load(graph, this);
         }
 
@@ -274,12 +272,12 @@ namespace Tools.DialogueSystem
 
                 if (loadedGraph != null)
                 {
-                    DSIOUtility.SaveLoadedGraph(this, loadedGraph, window.GetFileName());
+                    DSIOUtility.SaveLoadedGraph(this, loadedGraph, tab.GetFileName());
                     ClearGraph();
                 }
                 else
                 {
-                    DSIOUtility.Save(this, parentPath + "/" + folderName, window.GetFileName());
+                    DSIOUtility.Save(this, parentPath + "/" + folderName, tab.GetFileName());
                     ClearGraph();
                 }
             }
@@ -298,7 +296,7 @@ namespace Tools.DialogueSystem
             this.DeleteElements(this.nodes.ToList());
             Nodes.Clear();
             this.loadedGraph = null;
-            window.EnableSaving();
+            tab.EnableSaving();
         }
 
         #endregion
@@ -401,7 +399,7 @@ namespace Tools.DialogueSystem
 
             if (isSearchWindow)
             {
-                worldMousePosition = window.rootVisualElement.ChangeCoordinatesTo(window.rootVisualElement.parent, mousePosition - window.position.position);
+                worldMousePosition = tab.ChangeCoordinatesTo(tab, mousePosition);
             }
 
             Vector2 localMousePosition = contentViewContainer.WorldToLocal(worldMousePosition);
@@ -456,10 +454,10 @@ namespace Tools.DialogueSystem
         {
             if (NodeErrorCount <= 0)
             {
-                window.EnableSaving();
+                tab.EnableSaving();
                 return;
             }
-            window.DisableSaving();
+            tab.DisableSaving();
         }
 
         #endregion

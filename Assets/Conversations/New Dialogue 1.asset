@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7365647446258241656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3285e25e8be8b6479560cfc3f3492bf, type: 3}
+  m_Name: Dialogue ID
+  m_EditorClassIdentifier: Tools.DialogueSystem.Runtime::Tools.DialogueSystem.DSNodeSO
+  DialogueId: Dialogue ID
+  DialogueText: Dialogue Text
+  ActorName: Actor Name
+  Position: {x: 542, y: 306}
+  DialogueType: 0
+  AudioClip: {fileID: 0}
+  ActorSprite: {fileID: 0}
+  IsStartNode: 1
+  Choices:
+  - Title: Next Dialogue
+    TargetNodeId: 1
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995d652f892b32246be21918141ba6c9, type: 3}
+  m_Name: New Dialogue 1
+  m_EditorClassIdentifier: Tools.DialogueSystem.Runtime::Tools.DialogueSystem.DSGraphSO
+  Nodes:
+  - {fileID: -7365647446258241656}
+  - {fileID: 990721957957127416}
+  Connections:
+  - InNodeId: 1
+    OutNodeId: Dialogue ID
+    PortName: Next Dialogue
+  - InNodeId: 
+    OutNodeId: 1
+    PortName: Next Dialogue
+--- !u!114 &990721957957127416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3285e25e8be8b6479560cfc3f3492bf, type: 3}
+  m_Name: 1
+  m_EditorClassIdentifier: Tools.DialogueSystem.Runtime::Tools.DialogueSystem.DSNodeSO
+  DialogueId: 1
+  DialogueText: Dialogue Text
+  ActorName: Actor Name
+  Position: {x: 1249, y: 306}
+  DialogueType: 1
+  AudioClip: {fileID: 0}
+  ActorSprite: {fileID: 0}
+  IsStartNode: 0
+  Choices:
+  - Title: Next Dialogue
+    TargetNodeId: 

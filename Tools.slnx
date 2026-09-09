@@ -1,9 +1,9 @@
 ﻿<Solution>
   <Project Path="Tools.DialogueSystem.Runtime.csproj" />
   <Project Path="Tools.SaveSystem.Runtime.csproj" />
+  <Project Path="Tools.DialogueSystem.Editor.csproj" />
   <Project Path="Tools.TweenSystem.Runtime.csproj" />
   <Project Path="Tools.Core.Runtime.csproj" />
-  <Project Path="Tools.DialogueSystem.Editor.csproj" />
   <Project Path="Tools.TweenSystem.Editor.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Tools.AutoTagSystem.Runtime.csproj" />
