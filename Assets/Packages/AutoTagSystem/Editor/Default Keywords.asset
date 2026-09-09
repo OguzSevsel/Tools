@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Default Keywords
   m_EditorClassIdentifier: Assembly-CSharp::Tools.AutoTagSystem.KeywordsToTag
   Keywords:
-  - Deneme
+  - H1
