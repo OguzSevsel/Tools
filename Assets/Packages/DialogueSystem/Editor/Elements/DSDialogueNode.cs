@@ -77,9 +77,7 @@ namespace Tools.DialogueSystem.Elements
 
             Foldout textFoldout = DSElementUtility.CreateFoldout("Dialogue Text", false);
             dialogueTextField = CreateTextField(DialogueText, null, true, textFoldout, DialogueTextChangedHandler);
-
-            dialogueTextField.textSelection.OnCursorIndexChange += OnSelectionChanged;
-            dialogueTextField.textSelection.OnSelectIndexChange += OnSelectionChanged;
+            dialogueTextField.RegisterSelectionChangedCallback(OnSelectionChanged);
 
             customDataContainer.Add(textFoldout);
 
@@ -90,24 +88,8 @@ namespace Tools.DialogueSystem.Elements
 
         #region Events
 
-        void OnSelectionChanged()
+        public void OnSelectionChanged(string selectedText)
         {
-            if (!dialogueTextField.textSelection.HasSelection())
-                return;
-
-            int start = Mathf.Min(
-                dialogueTextField.textSelection.cursorIndex,
-                dialogueTextField.textSelection.selectIndex
-            );
-
-            int end = Mathf.Max(
-                dialogueTextField.textSelection.cursorIndex,
-                dialogueTextField.textSelection.selectIndex
-            );
-
-            string selectedText = dialogueTextField.text.Substring(start, end - start);
-
-            Debug.Log($"Selected: {selectedText}");
         }
 
         private void DialogueTextChangedHandler(ChangeEvent<string> evt)
