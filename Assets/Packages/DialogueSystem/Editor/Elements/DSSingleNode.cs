@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Tools.DialogueSystem.Elements
+namespace Tools.DialogueSystem.UI
 {
 	public class DSSingleNode : DSDialogueNode
 	{

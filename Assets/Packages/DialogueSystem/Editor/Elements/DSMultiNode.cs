@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Tools.DialogueSystem.Utilities;
 
-namespace Tools.DialogueSystem.Elements
+namespace Tools.DialogueSystem.UI
 {
     public class DSMultiNode : DSDialogueNode
     {

@@ -4,17 +4,22 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using Tools.DialogueSystem.Utilities;
+using Tools.DialogueSystem.Elements;
 
-namespace Tools.DialogueSystem.Elements
+namespace Tools.DialogueSystem.UI
 {
     public class DSDialogueNode : DSNode
     {
         //Fields
         private TextField dialogueIdTextField;
         private TextField actorNameField;
+        private Button createNewActorButton;
         private ObjectField spriteField;
         private ObjectField audioClipField;
         private TextField dialogueTextField;
+
+
+        public DSActor Actor = null;
 
         //Values
         public string ActorName { get; set; } = "Actor Name";
@@ -71,8 +76,14 @@ namespace Tools.DialogueSystem.Elements
             VisualElement customDataContainer = new VisualElement();
             customDataContainer.AddToClassList("ds-node__custom-data-container");
 
+            VisualElement actorContainer = new VisualElement();
+            actorContainer.AddToClassList("ds-node__custom-data-container");
+
             actorNameField = CreateTextField(ActorName, null, false, customDataContainer, onValueChanged: (evt) => ActorName = evt.newValue);
             spriteField = CreateObjectField("Actor Sprite", "Sprite", typeof(Sprite), customDataContainer, (evt) => ActorSprite = evt.newValue as Sprite);
+
+            
+
             audioClipField = CreateObjectField("Dialogue Audio", "Audio Clip", typeof(AudioClip), customDataContainer, (evt) => AudioClip = evt.newValue as AudioClip);
 
             Foldout textFoldout = DSElementUtility.CreateFoldout("Dialogue Text", false);

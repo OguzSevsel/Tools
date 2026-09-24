@@ -3,6 +3,8 @@ using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 using Tools.DialogueSystem.Elements;
+using Tools.DialogueSystem.UI;
+using UnityEngine;
 
 namespace Tools.DialogueSystem.Utilities
 {
@@ -82,6 +84,11 @@ namespace Tools.DialogueSystem.Utilities
             textField.multiline = isMultiLine;
 
             return textField;
+        }
+
+        public static void CreateDialogueNode(VisualElement mainContainer, VisualElement extensionContainer, Color defaultBackgroundColor)
+        {
+
         }
     }
 }

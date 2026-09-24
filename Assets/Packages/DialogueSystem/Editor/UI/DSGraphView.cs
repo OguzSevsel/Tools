@@ -6,10 +6,12 @@ using UnityEngine.UIElements;
 using Tools.DialogueSystem.Elements;
 using Tools.DialogueSystem.Utilities;
 
-namespace Tools.DialogueSystem
+namespace Tools.DialogueSystem.UI
 {
     using System.Linq;
     using UnityEditor;
+
+    #region Copy Data
 
     [Serializable]
     public class DialogueCopyBuffer
@@ -28,8 +30,10 @@ namespace Tools.DialogueSystem
         public DialogueType DialogueType;
         public Vector2 Position;
         public List<DSPortData> Ports = new List<DSPortData>();
-        public List<string> PortNames = new List<string>(); 
+        public List<string> PortNames = new List<string>();
     }
+
+    #endregion
 
     public class DSGraphView : GraphView
     {
@@ -41,6 +45,8 @@ namespace Tools.DialogueSystem
         private DialogueCopyBuffer copyBuffer;
 
         public Vector2 LastMousePosition { get; private set; }
+
+        #region Initialization
 
         public DSGraphView(DSGraphTab tab)
         {
@@ -64,6 +70,36 @@ namespace Tools.DialogueSystem
                 LastMousePosition = GetLocalMousePosition(evt.localMousePosition);
             });
         }
+
+        private void AddStyles()
+        {
+            this.AddStyleSheets("DialogueSystem/DSGraphViewStyles.uss",
+                "DialogueSystem/DSNodeStyles.uss");
+        }
+
+        private void AddGridBackground()
+        {
+            GridBackground gridBackground = new GridBackground();
+            gridBackground.StretchToParentSize();
+            Insert(0, gridBackground);
+        }
+
+        private void AddManipulators()
+        {
+            this.AddManipulator(new SelectionDragger());
+            this.AddManipulator(new RectangleSelector());
+
+            this.AddManipulator(CreateNodeContextualMenu(DialogueType.Single, "Add Single Choice Node"));
+            this.AddManipulator(CreateNodeContextualMenu(DialogueType.Multi, "Add Multi Choice Node"));
+
+            this.AddManipulator(new MousePan());
+            this.AddManipulator(new ContentDragger());
+            SetupZoom(0.5f, 3f);
+
+            //this.AddManipulator(new ContentDragger());
+        }
+
+        #endregion
 
         #region Copy/Paste/Duplicate/Delete
 
@@ -363,35 +399,9 @@ namespace Tools.DialogueSystem
             return manipulator;
         }
 
-        private void AddGridBackground()
-        {
-            GridBackground gridBackground = new GridBackground();
-            gridBackground.StretchToParentSize();
-            Insert(0, gridBackground);
-        }
-
-        private void AddManipulators()
-        {
-            SetupZoom(0.5f, 3f);
-
-            this.AddManipulator(new SelectionDragger());
-            this.AddManipulator(new RectangleSelector());
-
-            this.AddManipulator(CreateNodeContextualMenu(DialogueType.Single, "Add Single Choice Node"));
-            this.AddManipulator(CreateNodeContextualMenu(DialogueType.Multi, "Add Multi Choice Node"));
-
-            this.AddManipulator(new ContentDragger());
-        }
-
         #endregion
 
         #region Utils
-
-        private void AddStyles()
-        {
-            this.AddStyleSheets("DialogueSystem/DSGraphViewStyles.uss",
-                "DialogueSystem/DSNodeStyles.uss");
-        }
 
         public Vector2 GetLocalMousePosition(Vector2 mousePosition, bool isSearchWindow = false)
         {

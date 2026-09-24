@@ -1,10 +1,11 @@
 using Tools.DialogueSystem.Utilities;
 using UnityEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Tools.DialogueSystem
+namespace Tools.DialogueSystem.UI
 {
     public class DSGraphTab : VisualElement
     {
@@ -48,7 +49,6 @@ namespace Tools.DialogueSystem
             toolbar.Add(saveButton);
             toolbar.Add(loadButton);
             toolbar.Add(miniMapButton);
-
             graphView.Add(toolbar);
         }
 

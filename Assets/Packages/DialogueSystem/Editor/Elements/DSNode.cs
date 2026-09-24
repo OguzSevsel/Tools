@@ -8,7 +8,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Tools
+namespace Tools.DialogueSystem.UI
 {
     public class DSNode : Node
     {

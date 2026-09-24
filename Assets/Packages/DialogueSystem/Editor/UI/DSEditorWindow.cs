@@ -3,10 +3,8 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Tools.DialogueSystem.Utilities;
-using System;
-using System.Linq;
 
-namespace Tools.DialogueSystem
+namespace Tools.DialogueSystem.UI
 {
     public class DSEditorWindow : EditorWindow
     {
