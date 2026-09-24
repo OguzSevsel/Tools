@@ -1,11 +1,20 @@
+using System;
 using UnityEngine;
 
 namespace Tools.DialogueSystem.Elements
 {
-    public class DSActor : ScriptableObject
+    [Serializable]
+    public class DSActor
     {
-        [SerializeField] private string Name;
-        [TextArea, SerializeField] private string background;
-        [SerializeField] private Sprite sprite;
+        public string Name;
+        [TextArea] public string background;
+        public Sprite sprite;
+
+        public DSActor(string name, string background, Sprite sprite)
+        {
+            this.Name = name;
+            this.background = background;
+            this.sprite = sprite;
+        }
     }
 }

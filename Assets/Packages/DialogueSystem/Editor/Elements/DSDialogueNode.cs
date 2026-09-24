@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using Tools.DialogueSystem.Utilities;
 using Tools.DialogueSystem.Elements;
+using Tools.DialogueSystem.Data;
 
 namespace Tools.DialogueSystem.UI
 {
@@ -17,15 +18,7 @@ namespace Tools.DialogueSystem.UI
         private ObjectField spriteField;
         private ObjectField audioClipField;
         private TextField dialogueTextField;
-
-
-        public DSActor Actor = null;
-
-        //Values
-        public string ActorName { get; set; } = "Actor Name";
-        public string DialogueText { get; set; } = "Dialogue Text";
-        public AudioClip AudioClip { get; set; } = null;
-        public Sprite ActorSprite { get; set; } = null;
+        public DSDialogueNodeData Data = null;
 
         //Events
 
@@ -38,7 +31,10 @@ namespace Tools.DialogueSystem.UI
             this.isLoading = isLoading;
             this.isPasting = isPasting;
 
-            LoadFields(dialogueId, dialogueText, actorName, actorSprite, audioClip);
+            DSDialogueNodeData data = new DSDialogueNodeData(dialogueId, dialogueText, position, this.DialogueType, audioClip, new DSActor(actorName, "actorBackground", actorSprite), new List<DSChoice>());
+            this.Id = dialogueId;
+            this.Data = data;
+
             SetPosition(new Rect(position, Vector2.zero));
 
             defaultBackgroundColor = new Color(29f / 255f, 29f / 255f, 30f / 255f);
@@ -67,7 +63,7 @@ namespace Tools.DialogueSystem.UI
             }
 
             CreateCustomDataContainer();
-            LoadFields(Id, DialogueText, ActorName, ActorSprite, AudioClip);
+            LoadFields(Data.Guid, Data.DialogueText, Data.GetPosition(), Data.DialogueType, Data.Actor.Name, Data.Actor.background, Data.Actor.sprite, Data.AudioClip);
             RefreshExpandedState();
         }
 
@@ -79,15 +75,14 @@ namespace Tools.DialogueSystem.UI
             VisualElement actorContainer = new VisualElement();
             actorContainer.AddToClassList("ds-node__custom-data-container");
 
-            actorNameField = CreateTextField(ActorName, null, false, customDataContainer, onValueChanged: (evt) => ActorName = evt.newValue);
-            spriteField = CreateObjectField("Actor Sprite", "Sprite", typeof(Sprite), customDataContainer, (evt) => ActorSprite = evt.newValue as Sprite);
-
+            actorNameField = CreateTextField(Data.Actor.Name, null, false, customDataContainer, onValueChanged: (evt) => Data.Actor.Name = evt.newValue);
+            spriteField = CreateObjectField("Actor Sprite", "Sprite", typeof(Sprite), customDataContainer, (evt) => Data.Actor.sprite = evt.newValue as Sprite);
             
 
-            audioClipField = CreateObjectField("Dialogue Audio", "Audio Clip", typeof(AudioClip), customDataContainer, (evt) => AudioClip = evt.newValue as AudioClip);
+            audioClipField = CreateObjectField("Dialogue Audio", "Audio Clip", typeof(AudioClip), customDataContainer, (evt) => Data.AudioClip = evt.newValue as AudioClip);
 
             Foldout textFoldout = DSElementUtility.CreateFoldout("Dialogue Text", false);
-            dialogueTextField = CreateTextField(DialogueText, null, true, textFoldout, DialogueTextChangedHandler);
+            dialogueTextField = CreateTextField(Data.DialogueText, null, true, textFoldout, DialogueTextChangedHandler);
             dialogueTextField.RegisterSelectionChangedCallback(OnSelectionChanged);
 
             customDataContainer.Add(textFoldout);
@@ -105,29 +100,23 @@ namespace Tools.DialogueSystem.UI
 
         private void DialogueTextChangedHandler(ChangeEvent<string> evt)
         {
-            DialogueText = evt.newValue;
+            Data.DialogueText = evt.newValue;
         }
 
         #endregion
 
         #region Utils
 
-        public void LoadFields(string id, string dialogueText, string actorName, Sprite actorSprite, AudioClip audioClip)
+        public void LoadFields(string id, string dialogueText, Vector2 position, DialogueType type, string actorName, string actorBackground, Sprite actorSprite, AudioClip audioClip)
         {
-            if (dialogueIdTextField != null)
+            if (dialogueIdTextField != null && Data != null)
             {
-                this.dialogueIdTextField.value = id;
-                this.dialogueTextField.value = dialogueText;
-                this.actorNameField.value = actorName;
-                this.spriteField.value = actorSprite;
-                this.audioClipField.value = audioClip;
+                this.dialogueIdTextField.value = Data.Guid;
+                this.dialogueTextField.value = Data.DialogueText;
+                this.actorNameField.value = Data.Actor.Name;
+                this.spriteField.value = Data.Actor.sprite;
+                this.audioClipField.value = Data.AudioClip;
             }
-
-            this.Id = id;
-            this.ActorName = actorName;
-            this.DialogueText = dialogueText;
-            this.ActorSprite = actorSprite;
-            this.AudioClip = audioClip;
         }
 
         public List<string> GetTextsBetweenCharacters(string text, char startCharacter, char endCharacter)
@@ -200,7 +189,7 @@ namespace Tools.DialogueSystem.UI
                             if (startIndex > -1 && endIndex > -1)
                             {
                                 dialogueTextField.value = dialogueTextField.value.Remove(startIndex, endIndex - startIndex + 1);
-                                DialogueText = dialogueTextField.value;
+                                Data.DialogueText = dialogueTextField.value;
                                 dialogueTextField.cursorIndex = startIndex;
                                 dialogueTextField.selectIndex = dialogueTextField.cursorIndex;
                                 evt.StopImmediatePropagation();

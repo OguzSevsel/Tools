@@ -198,10 +198,10 @@ namespace Tools.DialogueSystem.UI
                 {
                     DialogueType = node.DialogueType,
                     DialogueId = node.Id,
-                    ActorName = node.ActorName,
-                    ActorSprite = node.ActorSprite,
-                    AudioClip = node.AudioClip,
-                    DialogueText = node.DialogueText,
+                    ActorName = node.Data.Actor.Name,
+                    ActorSprite = node.Data.Actor.sprite,
+                    AudioClip = node.Data.AudioClip,
+                    DialogueText = node.Data.DialogueText,
                     Position = node.GetPosition().position,
                 };
 

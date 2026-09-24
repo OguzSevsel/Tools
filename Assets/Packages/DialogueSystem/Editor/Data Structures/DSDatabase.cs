@@ -9,11 +9,10 @@ using Tools.DialogueSystem.Data;
 namespace Tools.DialogueSystem
 {
     [CreateAssetMenu(menuName = "Dialogue/Dialogue Database")]
-    public class DialogueDatabase : ScriptableObject
+    public class DSDatabase : ScriptableObject
     {
-        [SerializeField]
-        private List<DSDialogueNodeData> nodes = new();
-
+        public string Name;
+        [SerializeField] private List<DSDialogueNodeData> nodes = new();
         private HashSet<string> _guidLookup;
 
         private void OnEnable()
@@ -30,6 +29,42 @@ namespace Tools.DialogueSystem
                 if (!string.IsNullOrEmpty(node.Guid))
                     _guidLookup.Add(node.Guid);
             }
+        }
+
+        public HashSet<AudioClip> GetAudioClips()
+        {
+            HashSet<AudioClip> audioClips = new HashSet<AudioClip>();
+
+            foreach (var node in nodes)
+            {
+                audioClips.Add(node.AudioClip);    
+            }
+
+            return audioClips;
+        }
+
+        public HashSet<string> GetDialogueTexts()
+        {
+            HashSet<string> dialogueTexts = new HashSet<string>();
+
+            foreach (var node in nodes)
+            {
+                dialogueTexts.Add(node.DialogueText);
+            }
+
+            return dialogueTexts;
+        }
+
+        public HashSet<DSActor> GetActors()
+        {
+            HashSet<DSActor> actors = new HashSet<DSActor>();
+
+            foreach (var node in nodes)
+            {
+                actors.Add(node.Actor);
+            }
+
+            return actors;
         }
 
         public bool Contains(string guid)
