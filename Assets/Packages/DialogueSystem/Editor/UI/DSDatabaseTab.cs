@@ -11,7 +11,5 @@ namespace Tools.DialogueSystem
             this.style.flexGrow = 1;
             this.style.position = Position.Relative;
         }
-
-
     }
 }

@@ -42,6 +42,16 @@ namespace Tools.DialogueSystem.Utilities
             return foldout;
         }
 
+        public static Label CreateLabel(string text)
+        {
+            Label label = new Label()
+            {
+                text = text,
+            };
+
+            return label;
+        }
+
         public static ObjectField CreateObjectField(string title, Type type, string label = null,  EventCallback<ChangeEvent<UnityEngine.Object>> onValueChanged = null)
         {
             ObjectField objectField = new ObjectField()

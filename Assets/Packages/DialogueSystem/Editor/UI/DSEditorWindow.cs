@@ -1,8 +1,10 @@
+using GluonGui.WorkspaceWindow.Views.WorkspaceExplorer;
+using System;
+using Tools.DialogueSystem.Utilities;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Tools.DialogueSystem.Utilities;
 
 namespace Tools.DialogueSystem.UI
 {
@@ -12,10 +14,15 @@ namespace Tools.DialogueSystem.UI
         DSGraphTab graphTab;
         DSActorsTab actorsTab;
         DSDatabaseTab databaseTab;
+        DSDatabase database;
         
         Button actorsTabButton;
         Button databaseTabButton;
         Button graphTabButton;
+
+        Toolbar toolbar;
+        DSDialogElement databaseDialog;
+
 
         [MenuItem("Tools/Dialogue Graph")]
         public static void Open()
@@ -27,15 +34,21 @@ namespace Tools.DialogueSystem.UI
         private void OnEnable()
         {
             rootVisualElement.style.flexGrow = 1;
-            AddTabs();
+            rootVisualElement.style.justifyContent = Justify.Center;
             mainView = DSElementUtility.CreateVisualElement(rootVisualElement);
             mainView.style.backgroundColor = Color.red;
+
+            DSIOUtility.CreateFolderIfNotExists("Assets", "DialogueSystem");
+            DSIOUtility.CreateFolderIfNotExists("Assets/DialogueSystem", "Conversations");
+            DSIOUtility.CreateFolderIfNotExists("Assets/DialogueSystem", "Databases");
+
+            CreateDatabaseDialog();
             AddStyles();
         }
         
-        private void AddTabs()
+        private void CreateUIElements()
         {
-            Toolbar toolbar = new Toolbar();
+            toolbar = new Toolbar();
 
             actorsTabButton = DSElementUtility.CreateButton("Actors", OnActorsTabButtonClicked);
             databaseTabButton = DSElementUtility.CreateButton(text: "Database", OnDatabaseTabButtonClicked);
@@ -45,7 +58,48 @@ namespace Tools.DialogueSystem.UI
             toolbar.Add(databaseTabButton);
             toolbar.Add(graphTabButton);
             
-            rootVisualElement.Add(toolbar);
+            rootVisualElement.Insert(0,toolbar);
+        }
+
+        private void CreateDatabaseDialog()
+        {
+            VisualElement dialogRoot = new VisualElement();
+
+            databaseDialog = new DSDialogElement(dialogRoot);
+
+            rootVisualElement.Add(dialogRoot);
+            
+            databaseDialog.Show("", "", "Create New Database", "Load Database", OnCreateDatabaseTabButtonClicked, OnLoadDatabaseTabButtonClicked);
+        }
+
+        private void OnCreateDatabaseTabButtonClicked()
+        {
+            database = OpenDatabaseFileDialog();
+
+            if (database != null)
+            {
+                CreateUIElements();
+                return;
+            }
+            else
+            {
+                databaseDialog.Show("", "", "Create New Database", "Load Database", OnCreateDatabaseTabButtonClicked, OnLoadDatabaseTabButtonClicked);
+            }
+        }
+
+        private void OnLoadDatabaseTabButtonClicked()
+        {
+            database = OpenDatabaseFileDialog(true);
+
+            if (database != null)
+            {
+                CreateUIElements();
+                return;
+            }
+            else
+            {
+                databaseDialog.Show("", "", "Create New Database", "Load Database", OnCreateDatabaseTabButtonClicked, OnLoadDatabaseTabButtonClicked);
+            }
         }
 
         private void OnActorsTabButtonClicked()
@@ -73,5 +127,58 @@ namespace Tools.DialogueSystem.UI
         {
             rootVisualElement.AddStyleSheets("DialogueSystem/DSVariables.uss");
         }
-    } 
+
+        public DSDatabase OpenDatabaseFileDialog(bool isLoad = false)
+        {
+            string path = "";
+
+            if (isLoad)
+            {
+                path = EditorUtility.OpenFilePanel(
+                    "Load Database",
+                    Application.dataPath + "/DialogueSystem/Databases",
+                    "asset"
+                );
+            }
+            else
+            {
+                path = EditorUtility.SaveFilePanel(
+                    "Create Database",
+                    Application.dataPath + "/DialogueSystem/Databases",
+                    "NewDatabase",
+                    "asset"
+                );
+            }
+
+            if (string.IsNullOrEmpty(path))
+                return null;
+
+            if (!path.StartsWith(Application.dataPath))
+            {
+                Debug.LogError("Selected file must be inside Assets folder.");
+                return null;
+            }
+
+            string relativePath =
+                "Assets" + path.Substring(Application.dataPath.Length);
+
+            if (isLoad)
+            {
+                return AssetDatabase.LoadAssetAtPath<DSDatabase>(relativePath);
+            }
+
+            DSDatabase database = ScriptableObject.CreateInstance<DSDatabase>();
+
+            string uniquePath =
+                AssetDatabase.GenerateUniqueAssetPath(relativePath);
+
+            AssetDatabase.CreateAsset(database, uniquePath);
+
+            EditorUtility.SetDirty(database);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            return database;
+        }
+    }
 }

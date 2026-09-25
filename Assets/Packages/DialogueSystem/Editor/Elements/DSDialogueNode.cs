@@ -77,7 +77,6 @@ namespace Tools.DialogueSystem.UI
 
             actorNameField = CreateTextField(Data.Actor.Name, null, false, customDataContainer, onValueChanged: (evt) => Data.Actor.Name = evt.newValue);
             spriteField = CreateObjectField("Actor Sprite", "Sprite", typeof(Sprite), customDataContainer, (evt) => Data.Actor.sprite = evt.newValue as Sprite);
-            
 
             audioClipField = CreateObjectField("Dialogue Audio", "Audio Clip", typeof(AudioClip), customDataContainer, (evt) => Data.AudioClip = evt.newValue as AudioClip);
 
