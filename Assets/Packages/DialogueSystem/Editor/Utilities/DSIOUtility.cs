@@ -50,10 +50,10 @@ namespace Tools.DialogueSystem.Utilities
             nodeSO.DialogueId = node.Id;
             nodeSO.IsStartNode = node.isStartNode;
             nodeSO.DialogueType = node.DialogueType;
-            nodeSO.DialogueText = node.Data.Dialogue;
+            nodeSO.DialogueText = node.Data.Dialogue.Text;
             nodeSO.Position = node.GetPosition().position;
             nodeSO.ActorName = node.Data.Actor.Name;
-            nodeSO.AudioClip = node.Data.AudioClip;
+            nodeSO.AudioClip = node.Data.AudioClip.Clip;
             nodeSO.ActorSprite = node.Data.Actor.Sprite;
             nodeSO.name = node.Id;
         }

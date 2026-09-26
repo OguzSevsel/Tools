@@ -201,8 +201,8 @@ namespace Tools.DialogueSystem.UI
                     DialogueId = node.Id,
                     ActorName = node.Data.Actor.Name,
                     ActorSprite = node.Data.Actor.Sprite,
-                    AudioClip = node.Data.AudioClip,
-                    DialogueText = node.Data.Dialogue,
+                    AudioClip = node.Data.AudioClip.Clip,
+                    DialogueText = node.Data.Dialogue.Text,
                     Position = node.GetPosition().position,
                 };
 
@@ -367,7 +367,7 @@ namespace Tools.DialogueSystem.UI
             DSActor actor = new DSActor(actorName, "", actorSprite);
             DSAudioClip clip = new DSAudioClip("audioClip", audioClip);
 
-            node.Initialize(position, type, text, actor, audioClip, isStartNode, isPasting, isLoading);
+            node.Initialize(position, type, text, actor, clip, isStartNode, isPasting, isLoading);
             node.Draw();
             this.Nodes.Add(node);
 

@@ -192,7 +192,7 @@ namespace Tools.DialogueSystem.UI
                             if (startIndex > -1 && endIndex > -1)
                             {
                                 dialogueTextField.value = dialogueTextField.value.Remove(startIndex, endIndex - startIndex + 1);
-                                Data.Dialogue = dialogueTextField.value;
+                                Data.Dialogue.Text = dialogueTextField.value;
                                 dialogueTextField.cursorIndex = startIndex;
                                 dialogueTextField.selectIndex = dialogueTextField.cursorIndex;
                                 evt.StopImmediatePropagation();
