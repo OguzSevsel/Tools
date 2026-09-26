@@ -1,10 +1,9 @@
-using System.Collections.Generic;
-using Tools.DialogueSystem.Elements;
-using Tools.DialogueSystem.UI;
-using UnityEngine;
 using System;
-using UnityEditor;
+using System.Collections.Generic;
+using System.Linq;
 using Tools.DialogueSystem.Data;
+using UnityEditor;
+using UnityEngine;
 
 namespace Tools.DialogueSystem
 {
@@ -12,7 +11,10 @@ namespace Tools.DialogueSystem
     public class DSDatabase : ScriptableObject
     {
         public string Name;
-        [SerializeField] private List<DSDialogueNodeData> nodes = new();
+        public HashSet<DSConversationData> Conversations { get; private set; } = new();
+        public HashSet<DSActor> Actors { get; private set; } = new();
+        public HashSet<DSAudioClip> AudioClips { get; private set; } = new();
+        public HashSet<DSDialogueText> DialogueTexts { get; private set; } = new();
         private HashSet<string> _guidLookup;
 
         private void OnEnable()
@@ -24,47 +26,29 @@ namespace Tools.DialogueSystem
         {
             _guidLookup = new HashSet<string>();
 
-            foreach (var node in nodes)
+            foreach (var actor in Actors)
             {
-                if (!string.IsNullOrEmpty(node.Guid))
-                    _guidLookup.Add(node.Guid);
-            }
-        }
-
-        public HashSet<AudioClip> GetAudioClips()
-        {
-            HashSet<AudioClip> audioClips = new HashSet<AudioClip>();
-
-            foreach (var node in nodes)
-            {
-                audioClips.Add(node.AudioClip);    
+                if (!string.IsNullOrEmpty(actor.Guid))
+                    _guidLookup.Add(actor.Guid);
             }
 
-            return audioClips;
-        }
-
-        public HashSet<string> GetDialogueTexts()
-        {
-            HashSet<string> dialogueTexts = new HashSet<string>();
-
-            foreach (var node in nodes)
+            foreach (var audio in AudioClips)
             {
-                dialogueTexts.Add(node.DialogueText);
+                if (!string.IsNullOrEmpty(audio.Guid))
+                    _guidLookup.Add(audio.Guid);
             }
 
-            return dialogueTexts;
-        }
-
-        public HashSet<DSActor> GetActors()
-        {
-            HashSet<DSActor> actors = new HashSet<DSActor>();
-
-            foreach (var node in nodes)
+            foreach (var dialogue in DialogueTexts)
             {
-                actors.Add(node.Actor);
+                if (!string.IsNullOrEmpty(dialogue.Guid))
+                    _guidLookup.Add(dialogue.Guid);
             }
 
-            return actors;
+            foreach (var conversation in Conversations)
+            {
+                if (!string.IsNullOrEmpty(conversation.Guid))
+                    _guidLookup.Add(conversation.Guid);
+            }
         }
 
         public bool Contains(string guid)
@@ -85,29 +69,75 @@ namespace Tools.DialogueSystem
             return guid;
         }
 
-        public void Register(DSDialogueNodeData node)
+        public string Register<T>(T item) where T : DSData
         {
-            if (Contains(node.Guid))
+            string guid = GenerateUniqueGuid();
+            item.Guid = guid;
+            _guidLookup.Add(guid);
+
+            if (item is DSActor actor)
             {
-                throw new InvalidOperationException(
-                    $"Dialogue node GUID already exists: {node.Guid}"
-                );
+                Actors.Add(actor);
+            }
+            else if (item is DSDialogueText text)
+            {
+                DialogueTexts.Add(text);
+            }
+            else if (item is DSAudioClip clip)
+            {
+                AudioClips.Add(clip);
+            }
+            else if (item is DSConversationData conversation)
+            {
+                Conversations.Add(conversation);
             }
 
-            nodes.Add(node);
-            _guidLookup.Add(node.Guid);
-
             EditorUtility.SetDirty(this);
+            return guid;
         }
 
-        public void Unregister(DSDialogueNodeData node)
+        public void Unregister<T>(T item) where T : DSData
         {
-            if (!nodes.Remove(node))
-                return;
+            bool removed = false;
 
-            _guidLookup.Remove(node.Guid);
+            if (item is DSDialogueText text)
+            {
+                if (DialogueTexts.Contains(text))
+                {
+                    DialogueTexts.Remove(text);
+                    removed = true;
+                }
+            }
+            else if (item is DSActor actor)
+            {
+                if (Actors.Contains(actor))
+                {
+                    Actors.Remove(actor);
+                    removed = true;
+                }
+            }
+            else if (item is DSAudioClip clip)
+            {
+                if (AudioClips.Contains(clip))
+                {
+                    AudioClips.Remove(clip);
+                    removed = true;
+                }
+            }
+            else if (item is DSConversationData conversation)
+            {
+                if (Conversations.Contains(conversation))
+                {
+                    Conversations.Remove(conversation);
+                    removed = true;
+                }
+            }
 
-            EditorUtility.SetDirty(this);
+            if (removed && _guidLookup.Contains(item.Guid))
+            {
+                _guidLookup.Remove(item.Guid);
+                EditorUtility.SetDirty(this);
+            }
         }
     }
 }

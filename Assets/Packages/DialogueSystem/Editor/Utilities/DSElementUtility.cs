@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 using Tools.DialogueSystem.Elements;
 using Tools.DialogueSystem.UI;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Tools.DialogueSystem.Utilities
 {
@@ -42,12 +43,38 @@ namespace Tools.DialogueSystem.Utilities
             return foldout;
         }
 
-        public static Label CreateLabel(string text)
+        public static DropdownField CreateDropdown(string title, List<string> choices = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
+        {
+            DropdownField dropdown = new DropdownField()
+            {
+                choices = choices,
+                label = title
+            };
+            
+            if (dropdown.choices.Count > 0)
+            {
+                dropdown.value = choices[0];
+            }
+
+            if (onValueChanged != null)
+            {
+                dropdown.RegisterValueChangedCallback(onValueChanged);
+            }
+
+            return dropdown;
+        }
+
+        public static Label CreateLabel(string text, EventCallback<ChangeEvent<string>> onValueChanged = null)
         {
             Label label = new Label()
             {
                 text = text,
             };
+
+            if (onValueChanged != null)
+            {
+                label.RegisterValueChangedCallback(onValueChanged);
+            }
 
             return label;
         }

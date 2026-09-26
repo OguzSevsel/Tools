@@ -1,20 +1,18 @@
 using System;
 using UnityEngine;
 
-namespace Tools.DialogueSystem.Elements
+namespace Tools.DialogueSystem.Data
 {
-    [Serializable]
-    public class DSActor
+    public class DSActor : DSData
     {
-        public string Name;
-        [TextArea] public string background;
-        public Sprite sprite;
+        [TextArea] public string Background;
+        public Sprite Sprite;
 
         public DSActor(string name, string background, Sprite sprite)
         {
             this.Name = name;
-            this.background = background;
-            this.sprite = sprite;
+            this.Background = background;
+            this.Sprite = sprite;
         }
     }
 }

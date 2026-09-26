@@ -1,5 +1,6 @@
 using GluonGui.WorkspaceWindow.Views.WorkspaceExplorer;
 using System;
+using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -14,7 +15,6 @@ namespace Tools.DialogueSystem.UI
         DSGraphTab graphTab;
         DSActorsTab actorsTab;
         DSDatabaseTab databaseTab;
-        DSDatabase database;
         
         Button actorsTabButton;
         Button databaseTabButton;
@@ -71,13 +71,14 @@ namespace Tools.DialogueSystem.UI
             
             databaseDialog.Show("", "", "Create New Database", "Load Database", OnCreateDatabaseTabButtonClicked, OnLoadDatabaseTabButtonClicked);
         }
-
+                                                  
         private void OnCreateDatabaseTabButtonClicked()
         {
-            database = OpenDatabaseFileDialog();
+            DSDatabase database = OpenDatabaseFileDialog();
 
             if (database != null)
             {
+                DSDatabaseManager.Open(database);
                 CreateUIElements();
                 return;
             }
@@ -89,10 +90,11 @@ namespace Tools.DialogueSystem.UI
 
         private void OnLoadDatabaseTabButtonClicked()
         {
-            database = OpenDatabaseFileDialog(true);
+            DSDatabase database = OpenDatabaseFileDialog(true);
 
             if (database != null)
             {
+                DSDatabaseManager.Open(database);
                 CreateUIElements();
                 return;
             }

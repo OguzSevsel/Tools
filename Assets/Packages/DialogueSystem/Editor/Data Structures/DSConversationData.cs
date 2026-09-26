@@ -4,10 +4,10 @@ using UnityEngine;
 
 namespace Tools.DialogueSystem.Data
 {
-    public class DSConversationData
+    public class DSConversationData : DSData
     {
-        //TODO: This is going to be individual graphs of the Conversations and we will show the one big graph for all of the conversations.
-        private List<DSDialogueNodeData> nodes;
+        //TODO: This is going to be individual graphs of the Conversations and we will show the conversations on database tab.
+        public List<DSDialogueNodeData> Nodes { get; private set; }
 
 
 

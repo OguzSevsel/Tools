@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Tools.DialogueSystem;
+using Tools.DialogueSystem.Data;
+using Tools.DialogueSystem.Elements;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
@@ -20,7 +22,6 @@ namespace Tools.DialogueSystem.UI
         public bool isPasting = false;
         public bool isLoading = false;
         public Color defaultBackgroundColor;
-
         public DialogueType DialogueType { get; set; }
 
         public event Action<Edge> OnEdgeDeleted;
@@ -48,6 +49,33 @@ namespace Tools.DialogueSystem.UI
             }
 
             return textField;
+        }
+
+        public Label CreateLabel(string text = null, VisualElement customDataContainer = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
+        {
+            Label label = Tools.DialogueSystem.Utilities.DSElementUtility.CreateLabel(text, onValueChanged);
+
+            if (customDataContainer != null)
+            {
+                customDataContainer.Add(label);
+            }
+
+            label.AddClasses("ds-node__text-field",
+              "ds-node__quote-text-field");
+
+            return label;
+        }
+
+        public DropdownField CreateDropdown(List<string> choices, string text = null, VisualElement customDataContainer = null,  EventCallback<ChangeEvent<string>> onValueChanged = null)
+        {
+            DropdownField dropdown = Tools.DialogueSystem.Utilities.DSElementUtility.CreateDropdown(text, choices, onValueChanged);
+
+            if (customDataContainer != null)
+            {
+                customDataContainer.Add(dropdown);
+            }
+
+            return dropdown;
         }
 
         public ObjectField CreateObjectField(string title, string label, Type type, VisualElement customDataContainer, EventCallback<ChangeEvent<UnityEngine.Object>> onValueChanged)

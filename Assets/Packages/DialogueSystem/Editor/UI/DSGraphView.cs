@@ -9,6 +9,7 @@ using Tools.DialogueSystem.Utilities;
 namespace Tools.DialogueSystem.UI
 {
     using System.Linq;
+    using Tools.DialogueSystem.Data;
     using UnityEditor;
 
     #region Copy Data
@@ -199,9 +200,9 @@ namespace Tools.DialogueSystem.UI
                     DialogueType = node.DialogueType,
                     DialogueId = node.Id,
                     ActorName = node.Data.Actor.Name,
-                    ActorSprite = node.Data.Actor.sprite,
+                    ActorSprite = node.Data.Actor.Sprite,
                     AudioClip = node.Data.AudioClip,
-                    DialogueText = node.Data.DialogueText,
+                    DialogueText = node.Data.Dialogue,
                     Position = node.GetPosition().position,
                 };
 
@@ -358,11 +359,15 @@ namespace Tools.DialogueSystem.UI
 
         public DSDialogueNode CreateNode(DialogueType type, Vector2 position, bool isStartNode, string dialogueId, string actorName, AudioClip audioClip, Sprite actorSprite, string dialogueText, bool isPasting = false, bool isLoading = false)
         {
-            Type nodeType = Type.GetType($"Tools.DialogueSystem.Elements.DS{type}Node");
+            Type nodeType = Type.GetType($"Tools.DialogueSystem.UI.DS{type}Node");
 
             DSDialogueNode node = (DSDialogueNode)Activator.CreateInstance(nodeType);
 
-            node.Initialize(position, isStartNode, dialogueId, actorName, audioClip, actorSprite, dialogueText, isPasting, isLoading);
+            DSDialogueText text = new DSDialogueText("dialogueName", dialogueText);
+            DSActor actor = new DSActor(actorName, "", actorSprite);
+            DSAudioClip clip = new DSAudioClip("audioClip", audioClip);
+
+            node.Initialize(position, type, text, actor, audioClip, isStartNode, isPasting, isLoading);
             node.Draw();
             this.Nodes.Add(node);
 

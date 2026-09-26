@@ -6,6 +6,8 @@ using UnityEditor.UIElements;
 using Tools.DialogueSystem.Utilities;
 using Tools.DialogueSystem.Elements;
 using Tools.DialogueSystem.Data;
+using System;
+using System.Linq;
 
 namespace Tools.DialogueSystem.UI
 {
@@ -13,26 +15,23 @@ namespace Tools.DialogueSystem.UI
     {
         //Fields
         private TextField dialogueIdTextField;
-        private TextField actorNameField;
-        private Button createNewActorButton;
-        private ObjectField spriteField;
         private ObjectField audioClipField;
         private TextField dialogueTextField;
+        private DSDropdown<DSActor> actorSelectionDropdown;
         public DSDialogueNodeData Data = null;
 
         //Events
 
         #region Initialize and Draw
 
-        public virtual void Initialize(Vector2 position, bool isStartNode, string dialogueId, string actorName, AudioClip audioClip, Sprite actorSprite, string dialogueText, bool isPasting = false, bool isLoading = false)
+        public virtual void Initialize(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSAudioClip audioClip, bool isStartNode, bool isPasting = false, bool isLoading = false)
         {
             Choices = new Dictionary<Port, string>();
             this.isStartNode = isStartNode;
             this.isLoading = isLoading;
             this.isPasting = isPasting;
 
-            DSDialogueNodeData data = new DSDialogueNodeData(dialogueId, dialogueText, position, this.DialogueType, audioClip, new DSActor(actorName, "actorBackground", actorSprite), new List<DSChoice>());
-            this.Id = dialogueId;
+            DSDialogueNodeData data = new DSDialogueNodeData(position, type, dialogueText, actor, audioClip, new List<DSChoice>());
             this.Data = data;
 
             SetPosition(new Rect(position, Vector2.zero));
@@ -63,7 +62,7 @@ namespace Tools.DialogueSystem.UI
             }
 
             CreateCustomDataContainer();
-            LoadFields(Data.Guid, Data.DialogueText, Data.GetPosition(), Data.DialogueType, Data.Actor.Name, Data.Actor.background, Data.Actor.sprite, Data.AudioClip);
+            LoadFields(Data.Guid, Data.GetPosition(), Data.DialogueType, Data.Dialogue, Data.Actor, Data.AudioClip);
             RefreshExpandedState();
         }
 
@@ -72,21 +71,26 @@ namespace Tools.DialogueSystem.UI
             VisualElement customDataContainer = new VisualElement();
             customDataContainer.AddToClassList("ds-node__custom-data-container");
 
-            VisualElement actorContainer = new VisualElement();
-            actorContainer.AddToClassList("ds-node__custom-data-container");
+            DropdownField dropdown = CreateDropdown(new List<string>(), "Actor");
+            actorSelectionDropdown = new DSDropdown<DSActor>(dropdown, character => character.Name);
+            actorSelectionDropdown.SetItems(DSDatabaseManager.Current.Actors);
+            actorSelectionDropdown.ValueChanged += onActorChanged;
 
-            actorNameField = CreateTextField(Data.Actor.Name, null, false, customDataContainer, onValueChanged: (evt) => Data.Actor.Name = evt.newValue);
-            spriteField = CreateObjectField("Actor Sprite", "Sprite", typeof(Sprite), customDataContainer, (evt) => Data.Actor.sprite = evt.newValue as Sprite);
-
-            audioClipField = CreateObjectField("Dialogue Audio", "Audio Clip", typeof(AudioClip), customDataContainer, (evt) => Data.AudioClip = evt.newValue as AudioClip);
+            audioClipField = CreateObjectField("Dialogue Audio", "Audio Clip", typeof(AudioClip), customDataContainer, (evt) => Data.AudioClip.Clip = evt.newValue as AudioClip);
 
             Foldout textFoldout = DSElementUtility.CreateFoldout("Dialogue Text", false);
-            dialogueTextField = CreateTextField(Data.DialogueText, null, true, textFoldout, DialogueTextChangedHandler);
+            dialogueTextField = CreateTextField(Data.Dialogue.Text, null, true, textFoldout, DialogueTextChangedHandler);
             dialogueTextField.RegisterSelectionChangedCallback(OnSelectionChanged);
 
+            customDataContainer.Add(dropdown);
             customDataContainer.Add(textFoldout);
 
             extensionContainer.Add(customDataContainer);
+        }
+
+        private void onActorChanged(DSActor newActor)
+        {
+            Data.Actor = newActor;
         }
 
         #endregion
@@ -95,26 +99,26 @@ namespace Tools.DialogueSystem.UI
 
         public void OnSelectionChanged(string selectedText)
         {
+
         }
 
         private void DialogueTextChangedHandler(ChangeEvent<string> evt)
         {
-            Data.DialogueText = evt.newValue;
+            Data.Dialogue.Text = evt.newValue;
         }
 
         #endregion
 
         #region Utils
 
-        public void LoadFields(string id, string dialogueText, Vector2 position, DialogueType type, string actorName, string actorBackground, Sprite actorSprite, AudioClip audioClip)
+        public void LoadFields(string id, Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSAudioClip audioClip)
         {
             if (dialogueIdTextField != null && Data != null)
             {
                 this.dialogueIdTextField.value = Data.Guid;
-                this.dialogueTextField.value = Data.DialogueText;
-                this.actorNameField.value = Data.Actor.Name;
-                this.spriteField.value = Data.Actor.sprite;
-                this.audioClipField.value = Data.AudioClip;
+                this.dialogueTextField.value = Data.Dialogue.Text;
+                this.actorSelectionDropdown.SetValue(Data.Actor);
+                this.audioClipField.value = Data.AudioClip.Clip;
             }
         }
 
@@ -188,7 +192,7 @@ namespace Tools.DialogueSystem.UI
                             if (startIndex > -1 && endIndex > -1)
                             {
                                 dialogueTextField.value = dialogueTextField.value.Remove(startIndex, endIndex - startIndex + 1);
-                                Data.DialogueText = dialogueTextField.value;
+                                Data.Dialogue = dialogueTextField.value;
                                 dialogueTextField.cursorIndex = startIndex;
                                 dialogueTextField.selectIndex = dialogueTextField.cursorIndex;
                                 evt.StopImmediatePropagation();

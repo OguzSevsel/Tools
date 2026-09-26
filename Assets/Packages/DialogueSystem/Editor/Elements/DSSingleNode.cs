@@ -1,14 +1,15 @@
+using Tools.DialogueSystem.Data;
 using UnityEngine;
 
 namespace Tools.DialogueSystem.UI
 {
 	public class DSSingleNode : DSDialogueNode
 	{
-		public override void Initialize(Vector2 position, bool isStartNode, string dialogueId, string actorName, AudioClip audioClip, Sprite actorSprite, string dialogueText, bool isPasting = false, bool isLoading = false)
+		public override void Initialize(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSAudioClip audioClip, bool isStartNode, bool isPasting = false, bool isLoading = false)
 		{
-			base.Initialize(position, isStartNode, dialogueId, actorName, audioClip, actorSprite, dialogueText, isPasting, isLoading);
+            DialogueType = DialogueType.Single;
 
-			DialogueType = DialogueType.Single;
+            base.Initialize(position, DialogueType, dialogueText, actor, audioClip, isStartNode, isPasting, isLoading);
         }
 
 		public override void Draw()

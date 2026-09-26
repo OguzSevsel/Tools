@@ -5,27 +5,27 @@ using UnityEngine;
 
 namespace Tools.DialogueSystem.Data
 {
-    [Serializable]
-    public class DSDialogueNodeData
+    public class DSDialogueNodeData : DSData
     {
-        public string Guid;
-        public string DialogueText;
-        private Vector2 position;
-        public DialogueType DialogueType;
-        public AudioClip AudioClip;
+        public DSDialogueText Dialogue;
+        public DSAudioClip AudioClip;
         public DSActor Actor;
 
+        private Vector2 position;
+        public DialogueType DialogueType;
         public bool IsStartNode;
         public List<DSChoice> Choices = new();
 
-        public DSDialogueNodeData(string guid, string dialogueText, Vector2 position, DialogueType type, AudioClip audioClip, DSActor actor, List<DSChoice> choices)
+        public DSDialogueNodeData(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSAudioClip audioClip, List<DSChoice> choices)
         {
-            this.Guid = guid;
-            this.DialogueText = dialogueText;
             this.position = position;
             this.DialogueType = type;
+            this.Dialogue = dialogueText;
             this.AudioClip = audioClip;
             this.Actor = actor;
+
+            string guid = DSDatabaseManager.Current.Register(this);
+            this.Guid = guid;
         }
 
         public DSChoice GetTargetById(string choiceTargetId)
