@@ -14,7 +14,6 @@ namespace Tools.DialogueSystem
         private VisualElement actorGrid;
         private VisualElement toolbar;
         private Button createNewActorButton;
-        private Button deleteActorButton;
 
         public Dictionary<DSActorElement, DSActor> Actors { get; set; }
         private DSActor selectedActor { get; set; }
@@ -45,6 +44,22 @@ namespace Tools.DialogueSystem
             this.contentContainer.Insert(0, toolbar);
             contentContainer.Insert(1, actorScrollView);
         }
+        
+        private void CreateActor()
+        {
+            DSActorElement element = new DSActorElement();
+            this.actorGrid.Insert(0,element);
+        }
+
+        private void DeleteActor()
+        {
+
+        }
+
+        private void ChangeActor()
+        {
+
+        }
 
         private void AddBorder(VisualElement element, Color color = default)
         {
@@ -61,21 +76,6 @@ namespace Tools.DialogueSystem
             element.style.borderLeftColor = color;
             element.style.borderBottomColor = color;
             element.style.borderTopColor = color;
-        }
-        private void CreateActor()
-        {
-            DSActorElement element = new DSActorElement();
-            this.actorGrid.Insert(0,element);
-        }
-
-        private void DeleteActor()
-        {
-
-        }
-
-        private void ChangeActor()
-        {
-
         }
     }
 }
