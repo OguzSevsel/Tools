@@ -23,9 +23,18 @@
 	--ds-metrics-window-pixels-16: 16px;
 	--ds-metrics-window-pixels-25: 25px;
 	--ds-metrics-window-pixels-35: 35px;
+	--ds-metrics-window-pixels-60: 60px;
+	--ds-metrics-window-pixels-80: 80px;
 	--ds-metrics-window-pixels-120: 120px;
-	--ds-metrics-window-pixels-160: 100px;
+	--ds-metrics-window-pixels-160: 160px;
+	--ds-metrics-window-pixels-200: 200px;
 	--ds-metrics-window-pixels-240: 240px;
+	--ds-metrics-window-pixels-300: 300px;
+	--ds-metrics-window-pixels-310: 310px;
+	--ds-metrics-window-pixels-320: 320px;
+	--ds-metrics-window-pixels-400: 400px;
+	--ds-metrics-window-pixels-500: 500px;
 	--ds-metrics-window-pixels-600: 600px;
+	--ds-metrics-window-pixels-628: 635px;
 	--ds-metrics-window-pixels-1000: 1000px;
 }

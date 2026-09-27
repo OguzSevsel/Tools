@@ -44,14 +44,24 @@ namespace Tools.DialogueSystem.UI
 
         public virtual void Draw()
         {
-            dialogueIdTextField = CreateTextField(Id, null, false, null, OnIdChanged);
-            titleContainer.Insert(0, dialogueIdTextField);
-            dialogueIdTextField.RegisterCallback<KeyDownEvent>(DialogueTextFieldKeyDownHandler, TrickleDown.TrickleDown);
-
             if (!this.isStartNode)
             {
                 InputPort = this.CreatePort("Input", Orientation.Horizontal, Direction.Input, Port.Capacity.Multi);
                 inputContainer.Add(InputPort);
+            }
+            else
+            {
+                var label = DSElementUtility.CreateLabel("Start");
+                titleContainer.Insert(0, label);
+                label.style.unityTextAlign = TextAnchor.MiddleCenter;
+                label.style.fontSize = 15;
+                label.style.unityFontStyleAndWeight = FontStyle.Bold;
+                label.style.alignSelf = Align.Center;
+                label.style.alignContent = Align.Center;
+                label.style.flexGrow = 1;
+                
+                titleContainer.style.alignItems = Align.Center;
+                titleContainer.style.alignContent = Align.Center;
             }
             
             if (!isLoading && !isPasting)
@@ -74,6 +84,7 @@ namespace Tools.DialogueSystem.UI
             DropdownField dropdown = CreateDropdown(new List<string>(), "Actor");
             actorSelectionDropdown = new DSDropdown<DSActor>(dropdown, character => character.Name);
             actorSelectionDropdown.SetItems(DSDatabaseManager.Current.Actors);
+            Debug.Log($"database actors count: {DSDatabaseManager.Current.Actors.Count}");
             actorSelectionDropdown.ValueChanged += onActorChanged;
 
             audioClipField = CreateObjectField("Dialogue Audio", "Audio Clip", typeof(AudioClip), customDataContainer, (evt) => Data.AudioClip.Clip = evt.newValue as AudioClip);

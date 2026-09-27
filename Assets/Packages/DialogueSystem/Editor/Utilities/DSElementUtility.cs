@@ -127,6 +127,11 @@ namespace Tools.DialogueSystem.Utilities
         {
 
         }
+
+        internal static ObjectField CreateObjectField(string v, Type type, object onActorSpriteChanged)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

@@ -15,10 +15,16 @@ namespace Tools.DialogueSystem.UI
         DSGraphTab graphTab;
         DSActorsTab actorsTab;
         DSDatabaseTab databaseTab;
+        DSConversationsTab conversationsTab;
+        DSAudioClipsTab audioClipsTab;
+        DSDialoguesTab dialoguesTab;
         
         Button actorsTabButton;
         Button databaseTabButton;
         Button graphTabButton;
+        Button conversationsTabButton;
+        Button dialoguesTabButton;
+        Button audioClipsTabButton;
 
         Toolbar toolbar;
         DSDialogElement databaseDialog;
@@ -44,8 +50,14 @@ namespace Tools.DialogueSystem.UI
 
             CreateDatabaseDialog();
             AddStyles();
+            conversationsTab = new DSConversationsTab();
+            actorsTab = new DSActorsTab();
+            databaseTab = new DSDatabaseTab();
+            graphTab = new DSGraphTab();
+            audioClipsTab = new DSAudioClipsTab();
+            dialoguesTab = new DSDialoguesTab();
         }
-        
+
         private void CreateUIElements()
         {
             toolbar = new Toolbar();
@@ -53,13 +65,21 @@ namespace Tools.DialogueSystem.UI
             actorsTabButton = DSElementUtility.CreateButton("Actors", OnActorsTabButtonClicked);
             databaseTabButton = DSElementUtility.CreateButton(text: "Database", OnDatabaseTabButtonClicked);
             graphTabButton = DSElementUtility.CreateButton("Graph", OnGraphTabButtonClicked);
+            audioClipsTabButton = DSElementUtility.CreateButton("Audio Clips", OnAudioClipsTabButtonClicked);
+            dialoguesTabButton = DSElementUtility.CreateButton("Dialogues", OnDialoguesTabButtonClicked);
+            conversationsTabButton = DSElementUtility.CreateButton("Conversations", OnConversationsTabButtonClicked);
 
-            toolbar.Add(actorsTabButton);
             toolbar.Add(databaseTabButton);
+            toolbar.Add(conversationsTabButton);
+            toolbar.Add(dialoguesTabButton);
+            toolbar.Add(actorsTabButton);
+            toolbar.Add(audioClipsTabButton);
             toolbar.Add(graphTabButton);
             
             rootVisualElement.Insert(0,toolbar);
         }
+
+        
 
         private void CreateDatabaseDialog()
         {
@@ -104,24 +124,39 @@ namespace Tools.DialogueSystem.UI
             }
         }
 
+        private void OnConversationsTabButtonClicked()
+        {
+            mainView.Clear();
+            mainView.Add(conversationsTab);
+        }
+
+        private void OnDialoguesTabButtonClicked()
+        {
+            mainView.Clear();
+            mainView.Add(dialoguesTab);
+        }
+
+        private void OnAudioClipsTabButtonClicked()
+        {
+            mainView.Clear();
+            mainView.Add(audioClipsTab);
+        }
+
         private void OnActorsTabButtonClicked()
         {
             mainView.Clear();
-            actorsTab = new DSActorsTab();
             mainView.Add(actorsTab);
         }
 
         private void OnDatabaseTabButtonClicked()
         {
             mainView.Clear();
-            databaseTab = new DSDatabaseTab();
             mainView.Add(databaseTab);
         }
 
         private void OnGraphTabButtonClicked()
         {
             mainView.Clear();
-            graphTab = new DSGraphTab();
             mainView.Add(graphTab);
         }
 

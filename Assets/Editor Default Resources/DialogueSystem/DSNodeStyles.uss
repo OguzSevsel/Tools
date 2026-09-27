@@ -18,7 +18,78 @@
 	padding: var(--ds-metrics-window-pixels-8);
 }
 
+.ds-actor-data-container
+{
+	background-color: var(--ds-colors-window-dark-grey-1);
+	border-radius: var(--ds-metrics-window-pixels-4);
+	padding: var(--ds-metrics-window-pixels-4);
+	margin: var(--ds-metrics-window-pixels-2);
+	flex-grow: 1;
+	max-width: var(--ds-metrics-window-pixels-628);
+	min-width: var(--ds-metrics-window-pixels-160);
+	min-height: var(--ds-metrics-window-pixels-160);
+	max-height: var(--ds-metrics-window-pixels-320);
+}
+
+.flex-grow-shrink-0
+{
+	flex-grow: 0;
+	flex-shrink: 0;
+}
+
+.flex-grow-shrink-1
+{
+	flex-grow: 1;
+	flex-shrink: 1;
+}
+
+.flex-direction-column
+{
+	flex-direction: column;
+}
+
+.height-25
+{
+	height: 25;
+}
+
+.width-25
+{
+	width: 25;
+}
+
+
+
 /* INPUTS */
+
+.ds-actor__text-field
+{
+	background-color: var(--ds-colors-window-dark-grey-1);
+	border-color: var(--ds-colors-window-dark-grey-6);
+	border-radius: var(--ds-metrics-window-pixels-4);
+	width: Auto;
+	height: Auto;
+	max-width: var(--ds-metrics-window-pixels-1000);
+	min-width: var(--ds-metrics-window-pixels-160);
+	max-height: var(--ds-metrics-window-pixels-120);
+	padding: var(--ds-metrics-window-pixels-8);
+	white-space: normal;
+}
+
+.ds-actorbg__text-field
+{
+	background-color: var(--ds-colors-window-dark-grey-1);
+	border-color: var(--ds-colors-window-dark-grey-6);
+	border-radius: var(--ds-metrics-window-pixels-4);
+	flex-grow: 1;
+	width: Auto;
+	height: Auto;
+	max-width: var(--ds-metrics-window-pixels-1000);
+	min-width: var(--ds-metrics-window-pixels-160);
+	max-height: var(--ds-metrics-window-pixels-120);
+	padding: var(--ds-metrics-window-pixels-8);
+	white-space: normal;
+}
 
 .ds-node__text-field > .unity-text-field__input
 {
@@ -27,6 +98,7 @@
 	border-radius: var(--ds-metrics-window-pixels-4);
 	max-width: var(--ds-metrics-window-pixels-240);
 	min-width: var(--ds-metrics-window-pixels-160);
+	max-height: var(--ds-metrics-window-pixels-120);
 	padding: var(--ds-metrics-window-pixels-8);
 	white-space: normal;
 }
@@ -127,6 +199,11 @@ TextField
 }
 
 /* BUILT IN */
+
+.unity-text-field__input
+{
+	background-color: var(--ds-colors-window-dark-grey-6);
+}
 
 .unity-toggle__text
 {

@@ -13,24 +13,3 @@ MonoBehaviour:
   m_Name: NewDatabase
   m_EditorClassIdentifier: Tools.DialogueSystem.Editor::Tools.DialogueSystem.DSDatabase
   Name: 
-  nodes:
-  - Guid: 12315
-    DialogueText: asdgasdgasdg
-    DialogueType: 0
-    AudioClip: {fileID: 0}
-    Actor:
-      Name: Oguz
-      background: "Oguz biridir\t"
-      sprite: {fileID: -8094906819550451540, guid: 8f5d79f7a660514428c673a83bdab549, type: 3}
-    IsStartNode: 0
-    Choices: []
-  - Guid: 12315
-    DialogueText: asdgasdgasdg
-    DialogueType: 0
-    AudioClip: {fileID: 0}
-    Actor:
-      Name: Ismet
-      background: Ismet biridir
-      sprite: {fileID: -8094906819550451540, guid: 8f5d79f7a660514428c673a83bdab549, type: 3}
-    IsStartNode: 0
-    Choices: []
