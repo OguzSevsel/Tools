@@ -21,7 +21,6 @@ namespace Tools.DialogueSystem.UI
             dialogues = new Dictionary<DSDialogueText, DSDialogueElement>();
             CreateUIElements();
             RegisterEvents();
-            
 
         }
 
