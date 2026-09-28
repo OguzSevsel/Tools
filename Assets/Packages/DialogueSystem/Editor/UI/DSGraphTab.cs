@@ -21,7 +21,6 @@ namespace Tools.DialogueSystem.UI
         {
             this.style.flexGrow = 1;
             this.style.position = Position.Relative;
-            this.style.backgroundColor = Color.red;
             Create();
         }
 

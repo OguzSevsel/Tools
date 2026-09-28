@@ -8,7 +8,6 @@ namespace Tools.DialogueSystem.UI
     {
         public DSConversationsTab()
         {
-            this.style.backgroundColor = Color.purple;
             this.style.flexGrow = 1;
             this.style.position = Position.Relative;
         }

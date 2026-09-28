@@ -8,7 +8,7 @@ namespace Tools.DialogueSystem.Data
     public abstract class DSData
     {
         public string Guid { get; internal set; } = "UniqueID";
-        public string Name { get; internal set; } = "Data";
+        [field: SerializeField] public string Name { get; internal set; } = "Data";
 
         public void SetName(string name)
         {

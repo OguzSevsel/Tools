@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Tools.DialogueSystem.Data
 {
+    [Serializable]
     public class DSAudioClip : DSData
     {
         public AudioClip Clip;

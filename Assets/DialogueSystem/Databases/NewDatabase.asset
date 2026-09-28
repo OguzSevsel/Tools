@@ -13,3 +13,19 @@ MonoBehaviour:
   m_Name: NewDatabase
   m_EditorClassIdentifier: Tools.DialogueSystem.Editor::Tools.DialogueSystem.DSDatabase
   Name: 
+  <Conversations>k__BackingField: []
+  <Actors>k__BackingField:
+  - <Name>k__BackingField: Deneme
+    Background: Deneme
+    Sprite: {fileID: -2898002648302925651, guid: 9c2602ab685e1ee4683a7783482bf38e, type: 3}
+  - <Name>k__BackingField: Oguz Sevsel
+    Background: Bucada yasayan bi mal
+    Sprite: {fileID: 21300000, guid: 125772fa577f22c42971097edbeefae9, type: 3}
+  <AudioClips>k__BackingField: []
+  <DialogueTexts>k__BackingField:
+  - <Name>k__BackingField: Default Text
+    Text: Deneme
+  - <Name>k__BackingField: Default Text
+    Text: "Hello\t"
+  - <Name>k__BackingField: Default Text
+    Text: Darling

@@ -3,6 +3,7 @@ using System;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor;
+using UnityEditor.PackageManager.UI;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -34,7 +35,19 @@ namespace Tools.DialogueSystem.UI
         public static void Open()
         {
             var window = GetWindow<DSEditorWindow>();
-            window.titleContent = new GUIContent("Dialogue Graph");
+            DSDatabaseManager.DatabaseClosed += OnDatabaseClosed;
+            DSDatabaseManager.DatabaseOpened += OnDatabaseOpened;
+        }
+
+        private static void OnDatabaseClosed(DSDatabase database)
+        {
+
+        }
+
+        private static void OnDatabaseOpened(DSDatabase database)
+        {
+            var window = GetWindow<DSEditorWindow>();
+            window.titleContent = new GUIContent(database.name);
         }
 
         private void OnEnable()
@@ -42,7 +55,6 @@ namespace Tools.DialogueSystem.UI
             rootVisualElement.style.flexGrow = 1;
             rootVisualElement.style.justifyContent = Justify.Center;
             mainView = DSElementUtility.CreateVisualElement(rootVisualElement);
-            mainView.style.backgroundColor = Color.red;
 
             conversationsTab = new DSConversationsTab();
             actorsTab = new DSActorsTab();
@@ -61,6 +73,8 @@ namespace Tools.DialogueSystem.UI
 
         private void OnDisable()
         {
+            DSDatabaseManager.DatabaseClosed -= OnDatabaseClosed;
+            DSDatabaseManager.DatabaseOpened -= OnDatabaseOpened;
             DSDatabaseManager.Close();
         }
 
@@ -95,10 +109,10 @@ namespace Tools.DialogueSystem.UI
 
             rootVisualElement.Add(dialogRoot);
             
-            databaseDialog.Show("", "", "Create New Database", "Load Database", OnCreateDatabaseTabButtonClicked, OnLoadDatabaseTabButtonClicked);
+            databaseDialog.Show("", "", "Create New Database", "Load Database", OnCreateDatabaseButtonClicked, OnLoadDatabaseButtonClicked);
         }
                                                   
-        private void OnCreateDatabaseTabButtonClicked()
+        private void OnCreateDatabaseButtonClicked()
         {
             DSDatabase database = OpenDatabaseFileDialog();
 
@@ -110,11 +124,11 @@ namespace Tools.DialogueSystem.UI
             }
             else
             {
-                databaseDialog.Show("", "", "Create New Database", "Load Database", OnCreateDatabaseTabButtonClicked, OnLoadDatabaseTabButtonClicked);
+                databaseDialog.Show("", "", "Create New Database", "Load Database", OnCreateDatabaseButtonClicked, OnLoadDatabaseButtonClicked);
             }
         }
 
-        private void OnLoadDatabaseTabButtonClicked()
+        private void OnLoadDatabaseButtonClicked()
         {
             DSDatabase database = OpenDatabaseFileDialog(true);
 
@@ -126,7 +140,7 @@ namespace Tools.DialogueSystem.UI
             }
             else
             {
-                databaseDialog.Show("", "", "Create New Database", "Load Database", OnCreateDatabaseTabButtonClicked, OnLoadDatabaseTabButtonClicked);
+                databaseDialog.Show("", "", "Create New Database", "Load Database", OnCreateDatabaseButtonClicked, OnLoadDatabaseButtonClicked);
             }
         }
 

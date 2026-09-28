@@ -8,7 +8,6 @@ namespace Tools.DialogueSystem.UI
     {
         public DSAudioClipsTab()
         {
-            this.style.backgroundColor = Color.rosyBrown;
             this.style.flexGrow = 1;
             this.style.position = Position.Relative;
         }

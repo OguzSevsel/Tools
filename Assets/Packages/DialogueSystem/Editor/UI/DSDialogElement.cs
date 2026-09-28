@@ -24,7 +24,6 @@ namespace Tools.DialogueSystem.UI
             root.style.height = 300;
             root.style.alignSelf = Align.Center;
             root.style.justifyContent = Justify.Center;
-            root.style.backgroundColor = Color.firebrick;
             root.style.flexGrow = 1;
 
             title = DSElementUtility.CreateLabel("title");

@@ -21,7 +21,6 @@ namespace Tools.DialogueSystem.UI
             dialogues = new Dictionary<DSDialogueText, DSDialogueElement>();
             CreateUIElements();
             RegisterEvents();
-
         }
 
         private void OnDatabaseOpened(DSDatabase database)
@@ -97,7 +96,6 @@ namespace Tools.DialogueSystem.UI
 
         private void CreateUIElements()
         {
-            this.style.backgroundColor = Color.snow;
             this.style.flexGrow = 1;
             this.style.position = Position.Relative;
 

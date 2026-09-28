@@ -11,16 +11,16 @@ namespace Tools.DialogueSystem
     public class DSDatabase : ScriptableObject
     {
         public string Name;
-        public HashSet<DSConversationData> Conversations { get; private set; } = new();
-        public HashSet<DSActor> Actors { get; private set; }
-        public HashSet<DSAudioClip> AudioClips { get; private set; } = new();
-        public HashSet<DSDialogueText> DialogueTexts { get; private set; } = new();
+        [field: SerializeField] public List<DSConversationData> Conversations { get; private set; } = new();
+        [field: SerializeField] public List<DSActor> Actors { get; private set; }
+        [field: SerializeField] public List<DSAudioClip> AudioClips { get; private set; } = new();
+        [field: SerializeField] public List<DSDialogueText> DialogueTexts { get; private set; } = new();
         private HashSet<string> _guidLookup;
 
         private void OnEnable()
         {
-            Actors ??= new HashSet<DSActor>();
-            DialogueTexts ??= new HashSet<DSDialogueText>();
+            Actors ??= new List<DSActor>();
+            DialogueTexts ??= new List<DSDialogueText>();
             BuildLookup();
         }
 

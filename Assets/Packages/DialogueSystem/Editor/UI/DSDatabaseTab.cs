@@ -7,7 +7,6 @@ namespace Tools.DialogueSystem
     {
         public DSDatabaseTab()
         {
-            this.style.backgroundColor = Color.aliceBlue;
             this.style.flexGrow = 1;
             this.style.position = Position.Relative;
         }
