@@ -1,0 +1,57 @@
+/* Containers */
+
+.ds-dialogue-data-container
+{
+	background-color: var(--ds-colors-window-dark-grey-1);
+	border-radius: var(--ds-metrics-window-pixels-4);
+	padding: var(--ds-metrics-window-pixels-4);
+	margin: var(--ds-metrics-window-pixels-2);
+	flex-grow: 1;
+	max-width: var(--ds-metrics-window-pixels-628);
+	min-width: var(--ds-metrics-window-pixels-160);
+	min-height: var(--ds-metrics-window-pixels-120);
+	max-height: var(--ds-metrics-window-pixels-160);
+}
+
+.ds-dialogue-data-container
+{
+	background-color: var(--ds-colors-window-dark-grey-1);
+	border-radius: var(--ds-metrics-window-pixels-4);
+}
+
+/* Buttons */
+
+.ds-dialogue_deleteButton-field
+{
+	border-radius: var(--ds-metrics-window-pixels-4);
+	width: 25px;
+	height: 25px;
+	align-self: center;
+}
+
+/* Text Fields */
+
+.ds-dialoguetitle__text-field
+{
+	background-color: var(--ds-colors-window-dark-grey-1);
+	border-color: var(--ds-colors-window-dark-grey-6);
+	border-radius: var(--ds-metrics-window-pixels-4);
+	flex-grow: 1;
+	-unity-text-align: middle-center;
+	width: Auto;
+	height: 30px;
+}
+
+.ds-dialogue__text-field
+{
+	background-color: var(--ds-colors-window-dark-grey-1);
+	border-color: var(--ds-colors-window-dark-grey-6);
+	border-radius: var(--ds-metrics-window-pixels-4);
+	flex-grow: 1;
+	width: Auto;
+	height: Auto;
+	max-width: var(--ds-metrics-window-pixels-1000);
+	min-width: var(--ds-metrics-window-pixels-160);
+	max-height: var(--ds-metrics-window-pixels-160);
+	white-space: normal;
+}

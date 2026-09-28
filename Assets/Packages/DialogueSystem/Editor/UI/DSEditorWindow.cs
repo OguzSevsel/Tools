@@ -44,18 +44,24 @@ namespace Tools.DialogueSystem.UI
             mainView = DSElementUtility.CreateVisualElement(rootVisualElement);
             mainView.style.backgroundColor = Color.red;
 
-            DSIOUtility.CreateFolderIfNotExists("Assets", "DialogueSystem");
-            DSIOUtility.CreateFolderIfNotExists("Assets/DialogueSystem", "Conversations");
-            DSIOUtility.CreateFolderIfNotExists("Assets/DialogueSystem", "Databases");
-
-            CreateDatabaseDialog();
-            AddStyles();
             conversationsTab = new DSConversationsTab();
             actorsTab = new DSActorsTab();
             databaseTab = new DSDatabaseTab();
             graphTab = new DSGraphTab();
             audioClipsTab = new DSAudioClipsTab();
             dialoguesTab = new DSDialoguesTab();
+
+            DSIOUtility.CreateFolderIfNotExists("Assets", "DialogueSystem");
+            DSIOUtility.CreateFolderIfNotExists("Assets/DialogueSystem", "Conversations");
+            DSIOUtility.CreateFolderIfNotExists("Assets/DialogueSystem", "Databases");
+
+            CreateDatabaseDialog();
+            AddStyles();
+        }
+
+        private void OnDisable()
+        {
+            DSDatabaseManager.Close();
         }
 
         private void CreateUIElements()

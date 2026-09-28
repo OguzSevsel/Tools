@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Tools.DialogueSystem.Data
 {
+    [Serializable]
     public class DSActor : DSData
     {
         [TextArea] public string Background;
