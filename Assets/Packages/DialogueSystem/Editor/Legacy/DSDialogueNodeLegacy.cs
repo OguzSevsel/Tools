@@ -4,14 +4,12 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using Tools.DialogueSystem.Utilities;
-using Tools.DialogueSystem.Elements;
 using Tools.DialogueSystem.Data;
-using System;
-using System.Linq;
+using Tools.DialogueSystem.UI;
 
-namespace Tools.DialogueSystem.UI
+namespace Tools.DialogueSystem.Elements
 {
-    public class DSDialogueNode : DSNode
+    public class DSDialogueNodeLegacy : DSNodeLegacy
     {
         //Fields
         private TextField dialogueIdTextField;
@@ -31,7 +29,7 @@ namespace Tools.DialogueSystem.UI
             this.isLoading = isLoading;
             this.isPasting = isPasting;
 
-            DSDialogueNodeData data = new DSDialogueNodeData(position, type, dialogueText, actor, audioClip, new List<DSChoice>());
+            DSDialogueNodeData data = new DSDialogueNodeData(position, type, dialogueText, actor, audioClip);
             this.Data = data;
 
             SetPosition(new Rect(position, Vector2.zero));
@@ -46,7 +44,7 @@ namespace Tools.DialogueSystem.UI
         {
             if (!this.isStartNode)
             {
-                InputPort = this.CreatePort("Input", Orientation.Horizontal, Direction.Input, Port.Capacity.Multi);
+                InputPort = this.CreatePort("Input", Orientation.Vertical, Direction.Input, Port.Capacity.Multi);
                 inputContainer.Add(InputPort);
             }
             else
@@ -70,6 +68,9 @@ namespace Tools.DialogueSystem.UI
                 this.outputContainer.Add(port);
                 RefreshExpandedState();
             }
+
+            mainContainer.Insert(0, inputContainer);
+            mainContainer.Insert(3, outputContainer);
 
             CreateCustomDataContainer();
             LoadFields(Data.Guid, Data.GetPosition(), Data.DialogueType, Data.Dialogue, Data.Actor, Data.AudioClip);
@@ -96,7 +97,8 @@ namespace Tools.DialogueSystem.UI
             customDataContainer.Add(dropdown);
             customDataContainer.Add(textFoldout);
 
-            extensionContainer.Add(customDataContainer);
+            mainContainer.Insert(2,customDataContainer);
+            mainContainer.Insert(1,titleContainer);
         }
 
         private void onActorChanged(DSActor newActor)

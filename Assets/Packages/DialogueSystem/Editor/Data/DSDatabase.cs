@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Tools.DialogueSystem.Data;
 using UnityEditor;
 using UnityEngine;
 
-namespace Tools.DialogueSystem
+namespace Tools.DialogueSystem.Data
 {
     [CreateAssetMenu(menuName = "Dialogue/Dialogue Database")]
     public class DSDatabase : ScriptableObject

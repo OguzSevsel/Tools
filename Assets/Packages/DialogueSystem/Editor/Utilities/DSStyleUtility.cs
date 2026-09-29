@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.Utilities
@@ -23,6 +24,45 @@ namespace Tools.DialogueSystem.Utilities
 
                 element.styleSheets.Add(styleSheet);
             }
+
+            return element;
+        }
+
+        public static VisualElement Padding(this VisualElement element, int padding)
+        {
+            element.style.paddingLeft = padding;
+            element.style.paddingRight = padding;
+            element.style.paddingTop = padding;
+            element.style.paddingBottom = padding;
+
+            return element;
+        }
+
+        public static VisualElement Align(this VisualElement element, Align alignment)
+        {
+            element.style.alignContent = alignment;
+            element.style.alignItems = alignment;
+            element.style.alignSelf = alignment;
+
+            return element;
+        }
+
+        public static VisualElement Margin(this VisualElement element, int margin)
+        {
+            element.style.marginLeft = margin;
+            element.style.marginRight = margin;
+            element.style.marginTop = margin;
+            element.style.marginBottom = margin;
+
+            return element;
+        }
+
+        public static VisualElement TextSettings(this VisualElement element, TextAnchor alignment, FontStyle fontStyle, int fontSize)
+        {
+            element.style.flexGrow = 1;
+            element.style.unityTextAlign = alignment;
+            element.style.fontSize = fontSize;
+            element.style.unityFontStyleAndWeight = fontStyle;
 
             return element;
         }

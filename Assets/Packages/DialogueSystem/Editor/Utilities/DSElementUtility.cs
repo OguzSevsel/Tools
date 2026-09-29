@@ -6,6 +6,7 @@ using Tools.DialogueSystem.Elements;
 using Tools.DialogueSystem.UI;
 using UnityEngine;
 using System.Collections.Generic;
+using Tools.DialogueSystem.UI.Elements;
 
 namespace Tools.DialogueSystem.Utilities
 {
@@ -96,7 +97,16 @@ namespace Tools.DialogueSystem.Utilities
             return objectField;
         }
 
-        public static Port CreatePort(this DSNode node, string portName = "", Orientation orientation = Orientation.Horizontal, Direction direction = Direction.Output, Port.Capacity capacity = Port.Capacity.Single)
+        public static Port CreatePort(this DSNode node, string portName = "", Orientation orientation = Orientation.Vertical, Direction direction = Direction.Output, Port.Capacity capacity = Port.Capacity.Multi)
+        {
+            Port port = node.InstantiatePort(orientation, direction, capacity, typeof(bool));
+
+            port.portName = portName;
+
+            return port;
+        }
+
+        public static Port CreatePort(this DSNodeLegacy node, string portName = "", Orientation orientation = Orientation.Vertical, Direction direction = Direction.Output, Port.Capacity capacity = Port.Capacity.Multi)
         {
             Port port = node.InstantiatePort(orientation, direction, capacity, typeof(bool));
 
@@ -121,16 +131,6 @@ namespace Tools.DialogueSystem.Utilities
             textField.multiline = isMultiLine;
 
             return textField;
-        }
-
-        public static void CreateDialogueNode(VisualElement mainContainer, VisualElement extensionContainer, Color defaultBackgroundColor)
-        {
-
-        }
-
-        internal static ObjectField CreateObjectField(string v, Type type, object onActorSpriteChanged)
-        {
-            throw new NotImplementedException();
         }
     }
 }

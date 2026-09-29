@@ -1,18 +1,18 @@
 using UnityEditor;
 using UnityEngine;
-using Tools.DialogueSystem.UI;
+using Tools.DialogueSystem.Elements;
 
 namespace Tools.DialogueSystem.Utilities
 {
     public class DSNodeFlasher
     {
-        private DSDialogueNode node;
+        private DSDialogueNodeLegacy node;
         private float delay;
         private int remaining;
         private bool isRed;
         private double lastTime;
 
-        public void Flash(DSDialogueNode node, float delaySeconds, int loopCount)
+        public void Flash(DSDialogueNodeLegacy node, float delaySeconds, int loopCount)
         {
             this.node = node;
             delay = delaySeconds;

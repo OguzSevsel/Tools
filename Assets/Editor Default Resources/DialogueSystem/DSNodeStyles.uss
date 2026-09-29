@@ -18,6 +18,36 @@
 	padding: var(--ds-metrics-window-pixels-8);
 }
 
+#type {
+    margin: 0px;
+    padding: 0px;
+}
+
+.port {
+    min-width: 20px;
+    min-height: 20px;
+}
+
+.port.ds-node__input-port {
+	align-items: center;
+	align-self: center;
+	justify-content: center;
+}
+
+.ds-input-port .port__name {
+    margin: 0;
+}
+
+.ds-output-port .port__name {
+    margin: 0;
+}
+
+.port.ds-node__output-port {
+	align-items: center;
+	align-self: center;
+	justify-content: center;
+}
+
 /* INPUTS */
 
 .ds-node__text-field > .unity-text-field__input

@@ -10,9 +10,9 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Tools.DialogueSystem.UI
+namespace Tools.DialogueSystem.Elements
 {
-    public class DSNode : Node
+    public class DSNodeLegacy : Node
     {
         public string Id { get; set; } = "Node ID";
         public Dictionary<Port, string> Choices { get; set; }
@@ -23,9 +23,8 @@ namespace Tools.DialogueSystem.UI
         public bool isLoading = false;
         public Color defaultBackgroundColor;
         public DialogueType DialogueType { get; set; }
-
         public event Action<Edge> OnEdgeDeleted;
-        public event Action<DSNode, ChangeEvent<string>> OnNodeIdChanged;
+        public event Action<DSNodeLegacy, ChangeEvent<string>> OnNodeIdChanged;
 
         public TextField CreateTextField(string title = null, string label = null, bool isMultiLine = false, VisualElement customDataContainer = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
         {
@@ -87,7 +86,7 @@ namespace Tools.DialogueSystem.UI
 
         public Port CreateChoicePort(string choice, DSPortData portData)
         {
-            Port choicePort = this.CreatePort("", Orientation.Horizontal, Direction.Output, Port.Capacity.Single);
+            Port choicePort = this.CreatePort("", Orientation.Vertical, Direction.Output, Port.Capacity.Single);
             choicePort.userData = portData;
             this.Choices.Add(choicePort, portData.PortName);
             Button deletePortButton = null;

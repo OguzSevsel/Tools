@@ -4,9 +4,9 @@ using UnityEngine.UIElements;
 using Tools.DialogueSystem.Utilities;
 using Tools.DialogueSystem.Data;
 
-namespace Tools.DialogueSystem.UI
+namespace Tools.DialogueSystem.Elements
 {
-    public class DSMultiNode : DSDialogueNode
+    public class DSMultiNodeLegacy : DSDialogueNodeLegacy
     {
         public override void Initialize(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSAudioClip audioClip, bool isStartNode, bool isPasting = false, bool isLoading = false)
         {

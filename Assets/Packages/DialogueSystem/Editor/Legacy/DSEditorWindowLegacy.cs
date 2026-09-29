@@ -1,16 +1,13 @@
-using GluonGui.WorkspaceWindow.Views.WorkspaceExplorer;
-using System;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor;
-using UnityEditor.PackageManager.UI;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
 {
-    public class DSEditorWindow : EditorWindow
+    public class DSEditorWindowLegacy : EditorWindow
     {
         VisualElement mainView;
         DSGraphTab graphTab;
@@ -31,10 +28,10 @@ namespace Tools.DialogueSystem.UI
         DSDialogElement databaseDialog;
 
 
-        [MenuItem("Tools/Dialogue Graph")]
+        //[MenuItem("Tools/Dialogue Graph")]
         public static void Open()
         {
-            var window = GetWindow<DSEditorWindow>();
+            var window = GetWindow<DSEditorWindowLegacy>();
             DSDatabaseManager.DatabaseClosed += OnDatabaseClosed;
             DSDatabaseManager.DatabaseOpened += OnDatabaseOpened;
         }
@@ -46,7 +43,7 @@ namespace Tools.DialogueSystem.UI
 
         private static void OnDatabaseOpened(DSDatabase database)
         {
-            var window = GetWindow<DSEditorWindow>();
+            var window = GetWindow<DSEditorWindowLegacy>();
             window.titleContent = new GUIContent(database.name);
         }
 

@@ -14,23 +14,14 @@ namespace Tools.DialogueSystem.Data
         private Vector2 position;
         public DialogueType DialogueType;
         public bool IsStartNode;
-        public List<DSChoice> Choices = new();
 
-        public DSDialogueNodeData(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSAudioClip audioClip, List<DSChoice> choices)
+        public DSDialogueNodeData(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSAudioClip audioClip)
         {
             this.position = position;
             this.DialogueType = type;
             this.Dialogue = dialogueText;
             this.AudioClip = audioClip;
             this.Actor = actor;
-
-            string guid = DSDatabaseManager.Current.Register(this);
-            this.Guid = guid;
-        }
-
-        public DSChoice GetTargetById(string choiceTargetId)
-        {
-            return Choices.Find(choice => choice.TargetNodeId == choiceTargetId);
         }
 
         public Vector2 GetPosition()

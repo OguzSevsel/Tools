@@ -53,17 +53,17 @@ namespace Tools.DialogueSystem.UI
 
         private void MiniMapButtonClickHandler()
         {
-            graphView.ToggleMiniMap();
+            //graphView.ToggleMiniMap();
         }
 
         private void LoadButtonClickHandler()
         {
-            graphView.Load();
+            //graphView.Load();
         }
 
         private void SaveButtonClickHandler()
         {
-            graphView.Save();
+            //graphView.Save();
         }
 
         private void AddGraphView()

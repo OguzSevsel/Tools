@@ -1,9 +1,9 @@
 using Tools.DialogueSystem.Data;
 using UnityEngine;
 
-namespace Tools.DialogueSystem.UI
+namespace Tools.DialogueSystem.Elements
 {
-	public class DSSingleNode : DSDialogueNode
+	public class DSSingleNodeLegacy : DSDialogueNodeLegacy
 	{
 		public override void Initialize(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSAudioClip audioClip, bool isStartNode, bool isPasting = false, bool isLoading = false)
 		{
