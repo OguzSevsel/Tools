@@ -14,7 +14,6 @@ namespace Tools.DialogueSystem.Utilities
             {
                 element.AddToClassList(className);
             }
-
             return element;
         }
 
@@ -26,7 +25,6 @@ namespace Tools.DialogueSystem.Utilities
 
                 element.styleSheets.Add(styleSheet);
             }
-
             return element;
         }
 
@@ -36,17 +34,15 @@ namespace Tools.DialogueSystem.Utilities
             element.style.paddingRight = allPadding ?? paddingRight;
             element.style.paddingTop = allPadding ?? paddingTop;
             element.style.paddingBottom = allPadding ?? paddingBottom;
-
             return element;
         }
 
-        public static VisualElement SetAlignment(this VisualElement element, Align alignContent = Align.Center, Align alignItems = Align.Center, Align alignSelf = Align.Center, Justify justifyContent = Justify.Center)
+        public static VisualElement SetAlignment(this VisualElement element, Align alignContent = Align.Auto, Align alignItems = Align.Auto, Align alignSelf = Align.Auto, Justify justifyContent = Justify.Center)
         {
             element.style.alignContent = alignContent;
             element.style.alignItems = alignItems;
             element.style.alignSelf = alignSelf;
             element.style.justifyContent = justifyContent;
-
             return element;
         }
 
@@ -56,7 +52,12 @@ namespace Tools.DialogueSystem.Utilities
             element.style.marginRight = allMargin ?? marginRight;
             element.style.marginTop = allMargin ?? marginTop;
             element.style.marginBottom = allMargin ?? marginBottom;
+            return element;
+        }
 
+        public static VisualElement SetBackgroundColor(this VisualElement element, Color color)
+        {
+            element.style.backgroundColor = color;
             return element;
         }
 
@@ -65,7 +66,6 @@ namespace Tools.DialogueSystem.Utilities
             element.style.width = width;
             element.style.maxWidth = maxWidth;
             element.style.minWidth = minWidth;
-
             return element;
         }
 
@@ -74,7 +74,6 @@ namespace Tools.DialogueSystem.Utilities
             element.style.height = height;
             element.style.maxHeight = maxHeight;
             element.style.minHeight = minHeight;
-
             return element;
         }
 
@@ -89,7 +88,6 @@ namespace Tools.DialogueSystem.Utilities
             element.style.borderRightColor = borderColor;
             element.style.borderTopColor = borderColor;
             element.style.borderBottomColor = borderColor;
-
             return element;
         }
 
@@ -100,7 +98,6 @@ namespace Tools.DialogueSystem.Utilities
             element.style.flexDirection = flexDirection;
             element.style.flexShrink = flexShrink;
             element.style.flexWrap = flexWrap;
-
             return element;
         }
 
@@ -109,7 +106,6 @@ namespace Tools.DialogueSystem.Utilities
             element.style.unityTextAlign = alignment;
             element.style.fontSize = fontSize;
             element.style.unityFontStyleAndWeight = fontStyle;
-
             return element;
         }
 
@@ -119,7 +115,6 @@ namespace Tools.DialogueSystem.Utilities
             PropertyInfo fields = typeof(UnityEngine.UIElements.Cursor).GetProperty("defaultCursorId", BindingFlags.NonPublic | BindingFlags.Instance);
             fields.SetValue(objCursor, (int)cursor);
             element.style.cursor = new StyleCursor((UnityEngine.UIElements.Cursor)objCursor);
-
             return element;
         }
     }

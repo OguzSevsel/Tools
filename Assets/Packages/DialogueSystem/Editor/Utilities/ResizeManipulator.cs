@@ -73,7 +73,7 @@ namespace Tools.DialogueSystem.Utilities
             float delta = evt.mousePosition.x - startMousePosition.x;
 
             width = startWidth - delta;
-            targetElement.style.width = Mathf.Clamp(width, 200, 400);
+            targetElement.style.width = Mathf.Clamp(width, targetElement.style.minWidth.value.value, targetElement.style.maxWidth.value.value);
         }
 
         private void OnMouseUp(MouseUpEvent evt)

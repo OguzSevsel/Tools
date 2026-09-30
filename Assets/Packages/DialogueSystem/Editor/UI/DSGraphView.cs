@@ -15,59 +15,31 @@ namespace Tools.DialogueSystem.UI
 {
     public class DSGraphView : GraphView
     {
+        //Nodes
         public List<DSNode> Nodes;
-        public VisualElement sideBar;
 
-        private DSNode selectedNode;
+        //UI Elements
         private DSGraphTab tab;
+        private VisualElement sideBar;
+        private VisualElement inspectorContainer;
         private IDSNodeInspector inspector;
+
+        //Utils
+        private DSNode selectedNode;
 
         public DSGraphView(DSGraphTab tab)
         {
             this.tab = tab;
             Nodes = new List<DSNode>();
-            sideBar = new VisualElement();
-            VisualElement element = new VisualElement();
 
-            element.style.width = 10;
-            element.style.flexGrow = 1;
-            element.style.backgroundColor = Color.green;
-            element.AddManipulator(new ResizeManipulator(sideBar));
-            element.style.alignSelf = Align.FlexStart;
-
-            sideBar.style.flexDirection = FlexDirection.Column;
-            sideBar.Add(element);
-            sideBar.SetAlignment(Align.FlexEnd);
-            sideBar.style.width = 300;
-            sideBar.style.flexGrow = 1;
-            sideBar.style.backgroundColor = Color.red;
-
-            this.contentContainer.Add(sideBar);
-
+            AddSideBar();
             AddGridBackground();
             AddManipulators();
             AddStyles();
             RegisterCallback<MouseDownEvent>(OnMouseDown, TrickleDown.TrickleDown);
         }
 
-        private void OnMouseDown(MouseDownEvent evt)
-        {
-            if (evt.button != 0)
-                return;
-
-            if (evt.target != this)
-                return;
-
-            CloseInspector();
-        }
-
-        private void CloseInspector()
-        {
-            if (inspector is DSNodeInspector nodeInspector)
-            {
-                nodeInspector.RemoveFromHierarchy();
-            }
-        }
+        #region Initialization
 
         private void AddManipulators()
         {
@@ -123,6 +95,58 @@ namespace Tools.DialogueSystem.UI
             return node;
         }
 
+        private void AddSideBar()
+        {
+            sideBar = new VisualElement();
+            inspectorContainer = new VisualElement();
+            VisualElement resizeElement = new VisualElement();
+
+            resizeElement.SetBackgroundColor(Color.green);
+            resizeElement.SetWidth(10, 10, 10);
+            resizeElement.SetFlex();
+
+            inspectorContainer.SetFlex();
+            inspectorContainer.SetBackgroundColor(Color.blue);
+
+            sideBar.SetAlignment(alignSelf: Align.FlexEnd, alignItems: Align.Stretch);
+            sideBar.SetFlex(flexGrow: 1, flexShrink: 1, flexDirection: FlexDirection.Row);
+            sideBar.SetWidth(300, 600, 200);
+            sideBar.SetBackgroundColor(Color.red);
+
+            sideBar.Add(resizeElement);
+            sideBar.Add(inspectorContainer);
+            resizeElement.AddManipulator(new ResizeManipulator(sideBar));
+            this.contentContainer.Add(sideBar);
+        }
+
+        private void AddGridBackground()
+        {
+            GridBackground gridBackground = new GridBackground();
+            gridBackground.StretchToParentSize();
+            Insert(0, gridBackground);
+        }
+
+        private void AddStyles()
+        {
+            this.AddStyleSheets("DialogueSystem/DSGraphViewStyles.uss",
+                "DialogueSystem/DSNodeStyles.uss");
+        }
+
+        #endregion
+
+        #region Events
+
+        private void OnMouseDown(MouseDownEvent evt)
+        {
+            if (evt.button != 0)
+                return;
+
+            if (evt.target != this)
+                return;
+
+            CloseInspector();
+        }
+
         private void OnNodeSelected(DSNode selectedNode)
         {
             this.selectedNode = selectedNode;
@@ -130,11 +154,23 @@ namespace Tools.DialogueSystem.UI
             if (selectedNode is DSNode node && inspector == null)
             {
                 inspector = new DSNodeInspector(node.Data);
-                this.contentContainer.Add(inspector as DSNodeInspector);
+                this.inspectorContainer.Add(inspector as DSNodeInspector);
                 return;
             }
 
-            this.contentContainer.Add(inspector as DSNodeInspector);
+            this.inspectorContainer.Add(inspector as DSNodeInspector);
+        }
+
+        #endregion
+
+        #region Utils
+
+        private void CloseInspector()
+        {
+            if (inspector is DSNodeInspector nodeInspector)
+            {
+                nodeInspector.RemoveFromHierarchy();
+            }
         }
 
         public Vector2 GetLocalMousePosition(Vector2 mousePosition, bool isSearchWindow = false)
@@ -151,18 +187,9 @@ namespace Tools.DialogueSystem.UI
             return localMousePosition;
         }
 
-        private void AddGridBackground()
-        {
-            GridBackground gridBackground = new GridBackground();
-            gridBackground.StretchToParentSize();
-            Insert(0, gridBackground);
-        }
-
-        private void AddStyles()
-        {
-            this.AddStyleSheets("DialogueSystem/DSGraphViewStyles.uss",
-                "DialogueSystem/DSNodeStyles.uss");
-        }
+        #endregion
+        
+        #region Overrides
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
         {
@@ -179,5 +206,7 @@ namespace Tools.DialogueSystem.UI
 
             return compatiblePorts;
         }
+
+        #endregion
     }
 }

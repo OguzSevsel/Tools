@@ -26,8 +26,9 @@ namespace Tools.DialogueSystem.UI
 
         public void Create()
         {
-            AddGraphView();
+            this.contentContainer.style.flexDirection = FlexDirection.Column;
             AddToolBar();
+            AddGraphView();
             SetFileName("New Dialogue");
         }
 
@@ -48,7 +49,7 @@ namespace Tools.DialogueSystem.UI
             toolbar.Add(saveButton);
             toolbar.Add(loadButton);
             toolbar.Add(miniMapButton); 
-            this.Add(toolbar);
+            this.contentContainer.Add(toolbar);
         }
 
         private void MiniMapButtonClickHandler()
@@ -69,8 +70,8 @@ namespace Tools.DialogueSystem.UI
         private void AddGraphView()
         {
             graphView = new DSGraphView(this);
-            this.Add(graphView);
-            graphView.StretchToParentSize();
+            this.contentContainer.Add(graphView);
+            graphView.style.flexGrow = 1;
         }
 
         public void EnableSaving()

@@ -18,7 +18,6 @@ namespace Tools.DialogueSystem.UI.Elements
         private DSDropdown<DSActor> actorDropdown;
         private DSDropdown<DSAudioClip> audioDropdown;
 
-
         public DSNodeInspector(DSDialogueNodeData data)
         {
             this.data = data;
