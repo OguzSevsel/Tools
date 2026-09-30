@@ -47,8 +47,8 @@ namespace Tools.DialogueSystem.UI
             toolbar.Add(FileNameTextField);
             toolbar.Add(saveButton);
             toolbar.Add(loadButton);
-            toolbar.Add(miniMapButton);
-            graphView.Add(toolbar);
+            toolbar.Add(miniMapButton); 
+            this.Add(toolbar);
         }
 
         private void MiniMapButtonClickHandler()

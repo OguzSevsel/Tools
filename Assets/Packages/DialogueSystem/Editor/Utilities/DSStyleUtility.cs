@@ -1,3 +1,4 @@
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -12,6 +13,16 @@ namespace Tools.DialogueSystem.Utilities
             {
                 element.AddToClassList(className);
             }
+
+            return element;
+        }
+
+        public static VisualElement SetCursor(this VisualElement element, MouseCursor cursor)
+        {
+            object objCursor = new UnityEngine.UIElements.Cursor();
+            PropertyInfo fields = typeof(UnityEngine.UIElements.Cursor).GetProperty("defaultCursorId", BindingFlags.NonPublic | BindingFlags.Instance);
+            fields.SetValue(objCursor, (int)cursor);
+            element.style.cursor = new StyleCursor((UnityEngine.UIElements.Cursor)objCursor);
 
             return element;
         }

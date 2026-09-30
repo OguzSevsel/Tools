@@ -15,6 +15,7 @@ namespace Tools.DialogueSystem.UI.Elements
         public Port InputPort { get; set; }
         public Port OutputPort { get; set; }
         public DSDialogueNodeData Data = null;
+        public event Action<DSNode> OnNodeSelect;
 
         public virtual void Initialize(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSAudioClip audioClip, bool isStartNode)
         {
@@ -28,6 +29,12 @@ namespace Tools.DialogueSystem.UI.Elements
             extensionContainer.AddToClassList("ds-node__extension-container");
             mainContainer.Clear();
             Draw();
+        }
+
+        public override void OnSelected()
+        {
+            base.OnSelected();
+            OnNodeSelect?.Invoke(this);
         }
 
         public virtual void Draw()
