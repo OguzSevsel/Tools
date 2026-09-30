@@ -1,3 +1,4 @@
+using PlasticPipe.PlasticProtocol.Messages;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
@@ -17,16 +18,6 @@ namespace Tools.DialogueSystem.Utilities
             return element;
         }
 
-        public static VisualElement SetCursor(this VisualElement element, MouseCursor cursor)
-        {
-            object objCursor = new UnityEngine.UIElements.Cursor();
-            PropertyInfo fields = typeof(UnityEngine.UIElements.Cursor).GetProperty("defaultCursorId", BindingFlags.NonPublic | BindingFlags.Instance);
-            fields.SetValue(objCursor, (int)cursor);
-            element.style.cursor = new StyleCursor((UnityEngine.UIElements.Cursor)objCursor);
-
-            return element;
-        }
-
         public static VisualElement AddStyleSheets(this VisualElement element, params string[] styleSheetNames)
         {
             foreach (string styleSheetName in styleSheetNames)
@@ -39,41 +30,95 @@ namespace Tools.DialogueSystem.Utilities
             return element;
         }
 
-        public static VisualElement Padding(this VisualElement element, int padding)
+        public static VisualElement SetPaddings(this VisualElement element, int? allPadding = null, int paddingLeft = 0, int paddingRight = 0, int paddingTop = 0, int paddingBottom = 0)
         {
-            element.style.paddingLeft = padding;
-            element.style.paddingRight = padding;
-            element.style.paddingTop = padding;
-            element.style.paddingBottom = padding;
+            element.style.paddingLeft = allPadding ?? paddingLeft;
+            element.style.paddingRight = allPadding ?? paddingRight;
+            element.style.paddingTop = allPadding ?? paddingTop;
+            element.style.paddingBottom = allPadding ?? paddingBottom;
 
             return element;
         }
 
-        public static VisualElement Align(this VisualElement element, Align alignment)
+        public static VisualElement SetAlignment(this VisualElement element, Align alignContent = Align.Center, Align alignItems = Align.Center, Align alignSelf = Align.Center, Justify justifyContent = Justify.Center)
         {
-            element.style.alignContent = alignment;
-            element.style.alignItems = alignment;
-            element.style.alignSelf = alignment;
+            element.style.alignContent = alignContent;
+            element.style.alignItems = alignItems;
+            element.style.alignSelf = alignSelf;
+            element.style.justifyContent = justifyContent;
 
             return element;
         }
 
-        public static VisualElement Margin(this VisualElement element, int margin)
+        public static VisualElement SetMargins(this VisualElement element, int? allMargin = null, int marginLeft = 0, int marginRight = 0, int marginTop = 0, int marginBottom = 0)
         {
-            element.style.marginLeft = margin;
-            element.style.marginRight = margin;
-            element.style.marginTop = margin;
-            element.style.marginBottom = margin;
+            element.style.marginLeft = allMargin ?? marginLeft;
+            element.style.marginRight = allMargin ?? marginRight;
+            element.style.marginTop = allMargin ?? marginTop;
+            element.style.marginBottom = allMargin ?? marginBottom;
 
             return element;
         }
 
-        public static VisualElement TextSettings(this VisualElement element, TextAnchor alignment, FontStyle fontStyle, int fontSize)
+        public static VisualElement SetWidth(this VisualElement element, int width = 200, int maxWidth = 500, int minWidth = 200)
         {
-            element.style.flexGrow = 1;
+            element.style.width = width;
+            element.style.maxWidth = maxWidth;
+            element.style.minWidth = minWidth;
+
+            return element;
+        }
+
+        public static VisualElement SetHeight(this VisualElement element, int height = 200, int maxHeight = 500, int minHeight = 200)
+        {
+            element.style.height = height;
+            element.style.maxHeight = maxHeight;
+            element.style.minHeight = minHeight;
+
+            return element;
+        }
+
+        public static VisualElement SetBorder(this VisualElement element, Color borderColor, int? allBorder = null, int borderLeft = 3, int borderRight = 3, int borderTop = 3, int borderBottom = 3)
+        {
+            element.style.borderLeftWidth = allBorder ?? borderLeft;
+            element.style.borderRightWidth = allBorder ?? borderRight;
+            element.style.borderTopWidth = allBorder ?? borderTop;
+            element.style.borderBottomWidth = allBorder ?? borderBottom;
+
+            element.style.borderLeftColor = borderColor;
+            element.style.borderRightColor = borderColor;
+            element.style.borderTopColor = borderColor;
+            element.style.borderBottomColor = borderColor;
+
+            return element;
+        }
+
+        public static VisualElement SetFlex(this VisualElement element, int flexBasis = 100, int flexGrow = 1, int flexShrink = 1, FlexDirection flexDirection = FlexDirection.Row, Wrap flexWrap = Wrap.Wrap)
+        {
+            element.style.flexGrow = flexGrow;
+            element.style.flexBasis = flexBasis;
+            element.style.flexDirection = flexDirection;
+            element.style.flexShrink = flexShrink;
+            element.style.flexWrap = flexWrap;
+
+            return element;
+        }
+
+        public static VisualElement SetTextSettings(this VisualElement element, TextAnchor alignment = TextAnchor.MiddleCenter, FontStyle fontStyle = FontStyle.Normal, int fontSize = 18)
+        {
             element.style.unityTextAlign = alignment;
             element.style.fontSize = fontSize;
             element.style.unityFontStyleAndWeight = fontStyle;
+
+            return element;
+        }
+
+        public static VisualElement SetCursor(this VisualElement element, MouseCursor cursor)
+        {
+            object objCursor = new UnityEngine.UIElements.Cursor();
+            PropertyInfo fields = typeof(UnityEngine.UIElements.Cursor).GetProperty("defaultCursorId", BindingFlags.NonPublic | BindingFlags.Instance);
+            fields.SetValue(objCursor, (int)cursor);
+            element.style.cursor = new StyleCursor((UnityEngine.UIElements.Cursor)objCursor);
 
             return element;
         }

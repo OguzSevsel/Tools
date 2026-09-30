@@ -46,9 +46,9 @@ namespace Tools.DialogueSystem.UI.Elements
 
             var label = DSElementUtility.CreateLabel("Node");
             titleContainer.Insert(0, label);
-            label.Align(UnityEngine.UIElements.Align.Center);
-            label.TextSettings(TextAnchor.MiddleCenter, FontStyle.Bold, 15);
-            titleContainer.Align(UnityEngine.UIElements.Align.Center);
+            label.SetAlignment(UnityEngine.UIElements.Align.Center);
+            label.SetTextSettings(fontStyle: FontStyle.Bold);
+            titleContainer.SetAlignment(UnityEngine.UIElements.Align.Center);
             mainContainer.Add(titleContainer);
             CreatePort(outputContainer, OutputPort, Direction.Output);
         }
@@ -59,8 +59,8 @@ namespace Tools.DialogueSystem.UI.Elements
             container.Add(port);
             mainContainer.Add(container);
             var label = port.Q<Label>("type");
-            label.Margin( 0);
-            port.Align(UnityEngine.UIElements.Align.Center);
+            label.SetMargins(0);
+            port.SetAlignment(UnityEngine.UIElements.Align.Center);
         }
 
         public TextField CreateTextField(string title = null, string label = null, bool isMultiLine = false, VisualElement customDataContainer = null, EventCallback<ChangeEvent<string>> onValueChanged = null)

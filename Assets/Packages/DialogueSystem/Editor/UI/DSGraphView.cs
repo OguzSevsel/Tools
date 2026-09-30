@@ -22,24 +22,22 @@ namespace Tools.DialogueSystem.UI
         private DSGraphTab tab;
         private IDSNodeInspector inspector;
 
-
         public DSGraphView(DSGraphTab tab)
         {
             this.tab = tab;
             Nodes = new List<DSNode>();
             sideBar = new VisualElement();
             VisualElement element = new VisualElement();
+
             element.style.width = 10;
             element.style.flexGrow = 1;
             element.style.backgroundColor = Color.green;
             element.AddManipulator(new ResizeManipulator(sideBar));
             element.style.alignSelf = Align.FlexStart;
-            
-
 
             sideBar.style.flexDirection = FlexDirection.Column;
             sideBar.Add(element);
-            sideBar.Align(Align.FlexEnd);
+            sideBar.SetAlignment(Align.FlexEnd);
             sideBar.style.width = 300;
             sideBar.style.flexGrow = 1;
             sideBar.style.backgroundColor = Color.red;

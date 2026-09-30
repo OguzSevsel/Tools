@@ -36,7 +36,8 @@ namespace Tools.DialogueSystem.Utilities
 
         private void OnMouseLeave(MouseLeaveEvent evt)
         {
-            target.SetCursor(MouseCursor.Arrow);
+            if (!isResizeable)
+                target.SetCursor(MouseCursor.Arrow);
         }
 
         private void OnMouseEnter(MouseEnterEvent evt)
@@ -49,6 +50,8 @@ namespace Tools.DialogueSystem.Utilities
             target.UnregisterCallback<MouseDownEvent>(OnMouseDown);
             target.UnregisterCallback<MouseMoveEvent>(OnMouseMove);
             target.UnregisterCallback<MouseUpEvent>(OnMouseUp);
+            target.UnregisterCallback<MouseEnterEvent>(OnMouseEnter);
+            target.UnregisterCallback<MouseLeaveEvent>(OnMouseLeave);
         }
 
         private void OnMouseDown(MouseDownEvent evt)
@@ -60,9 +63,7 @@ namespace Tools.DialogueSystem.Utilities
             startMousePosition = evt.mousePosition;
             startWidth = targetElement.resolvedStyle.width;
             width = startWidth;
-
             target.CaptureMouse();
-            evt.StopPropagation();
         }
 
         private void OnMouseMove(MouseMoveEvent evt)
@@ -73,8 +74,6 @@ namespace Tools.DialogueSystem.Utilities
 
             width = startWidth - delta;
             targetElement.style.width = Mathf.Clamp(width, 200, 400);
-
-            evt.StopPropagation();
         }
 
         private void OnMouseUp(MouseUpEvent evt)
@@ -83,8 +82,8 @@ namespace Tools.DialogueSystem.Utilities
                 return;
 
             isResizeable = false;
-            targetElement.ReleaseMouse();
-            evt.StopPropagation();
+            target.ReleaseMouse();
+            target.SetCursor(MouseCursor.Arrow);
         }
     } 
 }
