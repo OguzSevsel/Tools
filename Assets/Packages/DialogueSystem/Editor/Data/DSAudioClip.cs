@@ -9,9 +9,8 @@ namespace Tools.DialogueSystem.Data
     {
         public AudioClip Clip;
 
-        public DSAudioClip(string name, AudioClip clip)
+        public DSAudioClip(string title, string description, AudioClip clip) : base(title, description)
         {
-            this.Name = name;
             this.Clip = clip;
         }
     }

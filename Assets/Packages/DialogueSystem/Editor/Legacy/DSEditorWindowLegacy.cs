@@ -96,8 +96,6 @@ namespace Tools.DialogueSystem.UI
             rootVisualElement.Insert(0,toolbar);
         }
 
-        
-
         private void CreateDatabaseDialog()
         {
             VisualElement dialogRoot = new VisualElement();

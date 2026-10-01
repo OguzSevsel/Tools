@@ -9,10 +9,12 @@ namespace Tools.DialogueSystem
         public string DialogueId;
         public string DialogueText;
         public string ActorName;
+        public string ConversantName;
         public Vector2 Position;
         public DialogueType DialogueType;
         public AudioClip AudioClip;
         public Sprite ActorSprite;
+        public Sprite ConversantSprite;
         public bool IsStartNode;
         public List<DSChoice> Choices = new();
 

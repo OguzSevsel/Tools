@@ -81,7 +81,7 @@ namespace Tools.DialogueSystem.UI
 
         private void CreateDialogue()
         {
-            DSDialogueText dialogueText = new DSDialogueText("Default Text", "");
+            DSDialogueText dialogueText = new DSDialogueText("Default Text", "", "");
             CreateDialogueUIElement(dialogueText);
             DSDatabaseManager.Current.Register(dialogueText);
         }

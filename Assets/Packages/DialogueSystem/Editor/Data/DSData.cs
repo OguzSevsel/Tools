@@ -8,11 +8,18 @@ namespace Tools.DialogueSystem.Data
     public abstract class DSData
     {
         public string Guid { get; internal set; } = "UniqueID";
-        [field: SerializeField] public string Name { get; internal set; } = "Data";
+        [field: SerializeField] public string Title { get; internal set; } = "New Dialogue Entry";
+        [field: SerializeField] public string Description { get; internal set; } = "Description";
+
+        protected DSData(string title, string description)
+        {
+            this.Title = title;
+            this.Description = description;
+        }
 
         public void SetName(string name)
         {
-            this.Name = name;
+            this.Title = name;
         }
     }
 }

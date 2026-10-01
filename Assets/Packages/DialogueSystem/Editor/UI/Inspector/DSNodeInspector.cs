@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.UI.Inspector;
 using Tools.DialogueSystem.Utilities;
-using UnityEditor.UIElements;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI.Elements
@@ -13,43 +11,73 @@ namespace Tools.DialogueSystem.UI.Elements
     {
         private DSDialogueNodeData data;
         private TextField dialogueText;
-        private DropdownField actorDropdownField;
-        private DropdownField audioDropdownField;
         private DSDropdown<DSActor> actorDropdown;
+        private DSDropdown<DSActor> conversantDropdown;
         private DSDropdown<DSAudioClip> audioDropdown;
 
         public DSNodeInspector(DSDialogueNodeData data)
         {
             this.data = data;
+            this.SetFlex(flexDirection: FlexDirection.Column, flexWrap: Wrap.NoWrap);
             Create();
         }
 
         public void Create()
         {
-            actorDropdownField = DSElementUtility.CreateDropdown("Actors", new List<string>(), OnActorValueChanged);
-            audioDropdownField = DSElementUtility.CreateDropdown("Audio", new List<string>(), OnAudioValueChanged);
+            CreateUIElements();
+            RegisterEvents();
+        }
+
+        #region Creation
+
+        private void CreateUIElements()
+        {
             dialogueText = DSElementUtility.CreateTextField("Dialogue Text", "Dialogue Text", true, OnDialogueTextChanged);
-            actorDropdown = new DSDropdown<DSActor>(actorDropdownField, character => character.Name);
-            audioDropdown = new DSDropdown<DSAudioClip>(audioDropdownField, audio => audio.Name);
+            DropdownField actorDropdownField = DSElementUtility.CreateDropdown("Actor", new List<string>());
+            DropdownField conversantDropdownField = DSElementUtility.CreateDropdown("Conversant", new List<string>());
+            DropdownField audioDropdownField = DSElementUtility.CreateDropdown("Audio", new List<string>());
+
+            actorDropdown = new DSDropdown<DSActor>(actorDropdownField, character => character.Title);
+            conversantDropdown = new DSDropdown<DSActor>(conversantDropdownField, character => character.Title);
+            audioDropdown = new DSDropdown<DSAudioClip>(audioDropdownField, audio => audio.Title);
 
             this.contentContainer.Add(actorDropdownField);
+            this.contentContainer.Add(conversantDropdownField);
             this.contentContainer.Add(audioDropdownField);
             this.contentContainer.Add(dialogueText);
         }
 
-        private void OnDialogueTextChanged(ChangeEvent<string> evt)
+        #endregion
+
+        #region Events
+
+        private void RegisterEvents()
+        {
+            actorDropdown.ValueChanged += OnActorValueChanged;
+            conversantDropdown.ValueChanged += OnConversantValueChanged;
+            audioDropdown.ValueChanged += OnAudioValueChanged;
+        }
+
+        private void OnConversantValueChanged(DSActor conversant)
         {
             throw new NotImplementedException();
         }
 
-        private void OnAudioValueChanged(ChangeEvent<string> evt)
+        private void OnDialogueTextChanged(ChangeEvent<string> dialogueText)
         {
             throw new NotImplementedException();
         }
 
-        private void OnActorValueChanged(ChangeEvent<string> evt)
+        private void OnAudioValueChanged(DSAudioClip audio)
         {
             throw new NotImplementedException();
         }
+
+        private void OnActorValueChanged(DSActor actor)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

@@ -9,9 +9,8 @@ namespace Tools.DialogueSystem.Data
         [TextArea] public string Background;
         public Sprite Sprite;
 
-        public DSActor(string name, string background, Sprite sprite)
+        public DSActor(string title, string description, string background, Sprite sprite) : base(title, description)
         {
-            this.Name = name;
             this.Background = background;
             this.Sprite = sprite;
         }

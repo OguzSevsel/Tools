@@ -27,7 +27,7 @@ namespace Tools.DialogueSystem.Utilities
         {
             Button button = new Button(onClick)
             {
-                text = text
+                text = text,
             };
 
             return button;

@@ -101,7 +101,7 @@ namespace Tools.DialogueSystem.UI
         private void OnActorNameChanged(ChangeEvent<string> evt)
         {
             title.text = evt.newValue;
-            actor.Name = evt.newValue;
+            actor.Title = evt.newValue;
         }
 
         #endregion
@@ -110,7 +110,7 @@ namespace Tools.DialogueSystem.UI
 
         private void LoadFields()
         {
-            actorName.value = actor.Name;
+            actorName.value = actor.Title;
             actorSprite.value = actor.Sprite;
             actorBackground.value = actor.Background;
         }

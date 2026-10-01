@@ -52,7 +52,7 @@ namespace Tools.DialogueSystem.Utilities
             nodeSO.DialogueType = node.DialogueType;
             nodeSO.DialogueText = node.Data.Dialogue.Text;
             nodeSO.Position = node.GetPosition().position;
-            nodeSO.ActorName = node.Data.Actor.Name;
+            nodeSO.ActorName = node.Data.Actor.Title;
             nodeSO.AudioClip = node.Data.AudioClip.Clip;
             nodeSO.ActorSprite = node.Data.Actor.Sprite;
             nodeSO.name = node.Id;
@@ -186,12 +186,12 @@ namespace Tools.DialogueSystem.Utilities
         {
             if (nodeSO.IsStartNode)
             {
-                DSDialogueNodeLegacy node = graphView.CreateNode(nodeSO.DialogueType, nodeSO.Position, isStartNode: true, nodeSO.DialogueId, nodeSO.ActorName, nodeSO.AudioClip, nodeSO.ActorSprite, nodeSO.DialogueText, isPasting: false, isLoading: true);
+                DSDialogueNodeLegacy node = graphView.CreateNode(nodeSO.DialogueType, nodeSO.Position, isStartNode: true, nodeSO.DialogueId, nodeSO.ActorName, nodeSO.ConversantName, nodeSO.AudioClip, nodeSO.ActorSprite, nodeSO.ConversantSprite, nodeSO.DialogueText, isPasting: false, isLoading: true);
                 graphView.AddElement(node);
             }
             else
             {
-                DSDialogueNodeLegacy node = graphView.CreateNode(nodeSO.DialogueType, nodeSO.Position, isStartNode: false, nodeSO.DialogueId, nodeSO.ActorName, nodeSO.AudioClip, nodeSO.ActorSprite, nodeSO.DialogueText, isPasting: false, isLoading: true);
+                DSDialogueNodeLegacy node = graphView.CreateNode(nodeSO.DialogueType, nodeSO.Position, isStartNode: false, nodeSO.DialogueId, nodeSO.ActorName, nodeSO.ConversantName, nodeSO.AudioClip, nodeSO.ActorSprite, nodeSO.ConversantSprite, nodeSO.DialogueText, isPasting: false, isLoading: true);
                 graphView.AddElement(node);
             }
         }

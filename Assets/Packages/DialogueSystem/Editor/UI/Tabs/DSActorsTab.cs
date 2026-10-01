@@ -63,7 +63,7 @@ namespace Tools.DialogueSystem
 
         private void CreateActor()
         {
-            DSActor newActor = new DSActor("", "", null);
+            DSActor newActor = new DSActor("", "", "", null);
             CreateActorUIElement(newActor);
             DSDatabaseManager.Current.Register(newActor);
         }

@@ -22,14 +22,14 @@ namespace Tools.DialogueSystem.Elements
 
         #region Initialize and Draw
 
-        public virtual void Initialize(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSAudioClip audioClip, bool isStartNode, bool isPasting = false, bool isLoading = false)
+        public virtual void Initialize(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSActor conversant, DSAudioClip audioClip, bool isStartNode, bool isPasting = false, bool isLoading = false)
         {
             Choices = new Dictionary<Port, string>();
             this.isStartNode = isStartNode;
             this.isLoading = isLoading;
             this.isPasting = isPasting;
 
-            DSDialogueNodeData data = new DSDialogueNodeData(position, type, dialogueText, actor, audioClip);
+            DSDialogueNodeData data = new DSDialogueNodeData(position, type, dialogueText, actor, conversant, audioClip);
             this.Data = data;
 
             SetPosition(new Rect(position, Vector2.zero));
@@ -83,7 +83,7 @@ namespace Tools.DialogueSystem.Elements
             customDataContainer.AddToClassList("ds-node__custom-data-container");
 
             DropdownField dropdown = CreateDropdown(new List<string>(), "Actor");
-            actorSelectionDropdown = new DSDropdown<DSActor>(dropdown, character => character.Name);
+            actorSelectionDropdown = new DSDropdown<DSActor>(dropdown, character => character.Title);
             actorSelectionDropdown.SetItems(DSDatabaseManager.Current.Actors);
             Debug.Log($"database actors count: {DSDatabaseManager.Current.Actors.Count}");
             actorSelectionDropdown.ValueChanged += onActorChanged;

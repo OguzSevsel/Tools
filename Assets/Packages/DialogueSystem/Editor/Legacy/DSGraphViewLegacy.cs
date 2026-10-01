@@ -27,7 +27,9 @@ namespace Tools.DialogueSystem.UI
         public string DialogueId;
         public AudioClip AudioClip;
         public string ActorName;
+        public string ConversantName;
         public Sprite ActorSprite;
+        public Sprite ConversantSprite;
         public string DialogueText;
         public DialogueType DialogueType;
         public Vector2 Position;
@@ -154,7 +156,7 @@ namespace Tools.DialogueSystem.UI
 
             foreach (var data in copyBuffer.nodes)
             {
-                var node = CreateNode(data.DialogueType, mousePos, false, data.DialogueId, data.ActorName, data.AudioClip, data.ActorSprite, data.DialogueText, isPasting: true);
+                var node = CreateNode(data.DialogueType, mousePos, false, data.DialogueId, data.ActorName, data.ConversantName, data.AudioClip, data.ActorSprite, data.ConversantSprite, data.DialogueText, isPasting: true);
 
                 Vector2 offsetFromCenter = data.Position - center;
                 Vector2 newPos = mousePos + offsetFromCenter;
@@ -200,7 +202,7 @@ namespace Tools.DialogueSystem.UI
                 {
                     DialogueType = node.DialogueType,
                     DialogueId = node.Id,
-                    ActorName = node.Data.Actor.Name,
+                    ActorName = node.Data.Actor.Title,
                     ActorSprite = node.Data.Actor.Sprite,
                     AudioClip = node.Data.AudioClip.Clip,
                     DialogueText = node.Data.Dialogue.Text,
@@ -358,17 +360,18 @@ namespace Tools.DialogueSystem.UI
 
         #region Creation
 
-        public DSDialogueNodeLegacy CreateNode(DialogueType type, Vector2 position, bool isStartNode, string dialogueId, string actorName, AudioClip audioClip, Sprite actorSprite, string dialogueText, bool isPasting = false, bool isLoading = false)
+        public DSDialogueNodeLegacy CreateNode(DialogueType type, Vector2 position, bool isStartNode, string dialogueId, string actorName, string conversantName, AudioClip audioClip, Sprite actorSprite, Sprite conversantSprite, string dialogueText, bool isPasting = false, bool isLoading = false)
         {
             Type nodeType = Type.GetType($"Tools.DialogueSystem.UI.DS{type}Node");
 
             DSDialogueNodeLegacy node = (DSDialogueNodeLegacy)Activator.CreateInstance(nodeType);
 
-            DSDialogueText text = new DSDialogueText("dialogueName", dialogueText);
-            DSActor actor = new DSActor(actorName, "", actorSprite);
-            DSAudioClip clip = new DSAudioClip("audioClip", audioClip);
+            DSDialogueText text = new DSDialogueText("Dialogue Name","Dialogue Description", dialogueText);
+            DSActor actor = new DSActor(actorName, "Actor Description", "Actor Background", actorSprite);
+            DSActor conversant = new DSActor(conversantName, "Conversant Description", "Conversant Background", conversantSprite);
+            DSAudioClip clip = new DSAudioClip("Audio Clip Name", "Audio Clip Description", audioClip);
 
-            node.Initialize(position, type, text, actor, clip, isStartNode, isPasting, isLoading);
+            node.Initialize(position, type, text, actor, conversant, clip, isStartNode, isPasting, isLoading);
             node.Draw();
             this.Nodes.Add(node);
 
@@ -393,11 +396,11 @@ namespace Tools.DialogueSystem.UI
                 {
                     if (this.Nodes.Count == 0)
                     {
-                        AddElement(CreateNode(type, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition), isStartNode: true, "Dialogue ID", "Actor Name", null, null, "Dialogue Text"));
+                        AddElement(CreateNode(type, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition), isStartNode: true, "Dialogue ID", "Actor Name", "Conversant Name", null, null, null, "Dialogue Text"));
                     }
                     else
                     {
-                        AddElement(CreateNode(type, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition), isStartNode: false, "Dialogue ID", "Actor Name", null, null, "Dialogue Text"));
+                        AddElement(CreateNode(type, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition), isStartNode: false, "Dialogue ID", "Actor Name", "Conversant Name", null, null, null, "Dialogue Text"));
                     }
                 })
             );

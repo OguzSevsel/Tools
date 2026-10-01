@@ -16,10 +16,11 @@ namespace Tools.DialogueSystem.UI.Elements
         public Port OutputPort { get; set; }
         public DSDialogueNodeData Data = null;
         public event Action<DSNode> OnNodeSelect;
+        private VisualElement portContainer;
 
-        public virtual void Initialize(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSAudioClip audioClip, bool isStartNode)
+        public virtual void Initialize(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSActor conversant, DSAudioClip audioClip, bool isStartNode)
         {
-            DSDialogueNodeData data = new DSDialogueNodeData(position, type, dialogueText, actor, audioClip);
+            DSDialogueNodeData data = new DSDialogueNodeData(position, type, dialogueText, actor, conversant, audioClip);
             this.Data = data;
             Data.IsStartNode = isStartNode;
 
@@ -27,7 +28,6 @@ namespace Tools.DialogueSystem.UI.Elements
 
             mainContainer.AddToClassList("ds-node__main-container");
             extensionContainer.AddToClassList("ds-node__extension-container");
-            mainContainer.Clear();
             Draw();
         }
 
@@ -39,28 +39,39 @@ namespace Tools.DialogueSystem.UI.Elements
 
         public virtual void Draw()
         {
-            if (!this.Data.IsStartNode)
-            {
-                CreatePort(inputContainer, InputPort, Direction.Input);
-            }
+            portContainer = new VisualElement();
+
+            portContainer.style.flexDirection = FlexDirection.Column;
+            portContainer.style.alignItems = Align.Center;
+
+            mainContainer.Insert(0, portContainer);
+
+            if (!Data.IsStartNode)
+                CreatePort(portContainer, InputPort, Direction.Input);
 
             var label = DSElementUtility.CreateLabel("Node");
+
+            titleContainer.Clear();
             titleContainer.Insert(0, label);
-            label.SetAlignment(UnityEngine.UIElements.Align.Center);
-            label.SetTextSettings(fontStyle: FontStyle.Bold);
-            titleContainer.SetAlignment(UnityEngine.UIElements.Align.Center);
-            mainContainer.Add(titleContainer);
-            CreatePort(outputContainer, OutputPort, Direction.Output);
+
+            label.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
+            label.SetTextSettings(fontStyle: FontStyle.Bold, alignment: TextAnchor.MiddleCenter);
+
+            portContainer.Add(titleContainer);
+
+            CreatePort(portContainer, OutputPort, Direction.Output);
+            RefreshPorts();
         }
+
+        #region Creation
 
         private void CreatePort(VisualElement container, Port port, Direction direction)
         {
             port = this.CreatePort("", Orientation.Vertical, direction, Port.Capacity.Multi);
             container.Add(port);
-            mainContainer.Add(container);
             var label = port.Q<Label>("type");
             label.SetMargins(0);
-            port.SetAlignment(UnityEngine.UIElements.Align.Center);
+            port.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
         }
 
         public TextField CreateTextField(string title = null, string label = null, bool isMultiLine = false, VisualElement customDataContainer = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
@@ -120,5 +131,7 @@ namespace Tools.DialogueSystem.UI.Elements
             customDataContainer.Add(objectField);
             return objectField;
         }
+
+        #endregion
     }
 }

@@ -57,11 +57,11 @@ namespace Tools.DialogueSystem.UI
                 {
                     if (this.Nodes.Count == 0)
                     {
-                        AddElement(CreateNode(type, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition), isStartNode: true, "Dialogue ID", "Actor Name", null, null, "Dialogue Text"));
+                        AddElement(CreateNode(type, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition), isStartNode: true, "Dialogue ID", "Actor Name", "Conversant Name", null, null, null, "Dialogue Text"));
                     }
                     else
                     {
-                        AddElement(CreateNode(type, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition), isStartNode: false, "Dialogue ID", "Actor Name", null, null, "Dialogue Text"));
+                        AddElement(CreateNode(type, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition), isStartNode: false, "Dialogue ID", "Actor Name", "Conversant Name", null, null, null, "Dialogue Text"));
                     }
                 })
             );
@@ -69,17 +69,18 @@ namespace Tools.DialogueSystem.UI
             return manipulator;
         }
 
-        public DSNode CreateNode(DialogueType type, Vector2 position, bool isStartNode, string dialogueId, string actorName, AudioClip audioClip, Sprite actorSprite, string dialogueText, bool isPasting = false, bool isLoading = false)
+        public DSNode CreateNode(DialogueType type, Vector2 position, bool isStartNode, string dialogueId, string actorName, string conversantName, AudioClip audioClip, Sprite actorSprite, Sprite conversantSprite, string dialogueText, bool isPasting = false, bool isLoading = false)
         {
             Type nodeType = Type.GetType($"Tools.DialogueSystem.UI.Elements.DSNode");
 
             DSNode node = (DSNode)Activator.CreateInstance(nodeType);
 
-            DSDialogueText text = new DSDialogueText("dialogueName", dialogueText);
-            DSActor actor = new DSActor(actorName, "", actorSprite);
-            DSAudioClip clip = new DSAudioClip("audioClip", audioClip);
+            DSDialogueText text = new DSDialogueText("New Dialogue Text", "Dialogue Description", dialogueText);
+            DSActor actor = new DSActor(actorName, "Actor Description", "Actor Background", actorSprite);
+            DSActor conversant = new DSActor(conversantName, "Conversant Description", "Conversant Background", conversantSprite);
+            DSAudioClip clip = new DSAudioClip("New Audio Clip", "Audio Description", audioClip);
 
-            node.Initialize(position, type, text, actor, clip, isStartNode);
+            node.Initialize(position, type, text, actor, conversant, clip, isStartNode);
             this.Nodes.Add(node);
 
             node.OnNodeSelect += OnNodeSelected;

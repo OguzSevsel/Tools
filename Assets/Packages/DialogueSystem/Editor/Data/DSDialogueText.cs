@@ -9,9 +9,8 @@ namespace Tools.DialogueSystem.Data
     {
         public string Text;
 
-        public DSDialogueText(string name, string text)
+        public DSDialogueText(string title, string description, string text) : base(title, description)
         {
-            this.Name = name;
             this.Text = text;
         }
     }
