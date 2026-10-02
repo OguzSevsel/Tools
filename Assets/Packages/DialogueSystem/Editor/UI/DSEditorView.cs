@@ -1,29 +1,38 @@
 using System;
-using System.Collections.Generic;
-using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
 {
     public class DSEditorView : EditorWindow
     {
-        DSGraphTab graphTab;
+        [SerializeField] private VisualTreeAsset editorWindowAsset;
+        [SerializeField] private VisualTreeAsset sideBarAsset;
+
+        [SerializeField] private VisualTreeAsset actorsTabAsset;
+        [SerializeField] private VisualTreeAsset actorsCardAsset;
+
+        [SerializeField] private VisualTreeAsset audioClipsTabAsset;
+        [SerializeField] private VisualTreeAsset audioClipCardAsset;
+
+        [SerializeField] private VisualTreeAsset databaseTabAsset;
+
+        [SerializeField] private VisualTreeAsset dialoguesTabAsset;
+        [SerializeField] private VisualTreeAsset dialogueCardAsset;
+
+        [SerializeField] private VisualTreeAsset conversationsTabAsset;
+        [SerializeField] private VisualTreeAsset conversationCardAsset;
+
+        DSGraphTab conversationsTab;
         DSActorsTab actorsTab;
         DSAudioClipsTab audioClipsTab;
         DSDialoguesTab dialoguesTab;
         DSDatabaseTab databaseTab;
-        Button actorsTabButton;
-        Button databaseTabButton;
-        Button graphTabButton;
-        Button dialoguesTabButton;
-        Button audioClipsTabButton;
 
-        Toolbar toolbar;
-        VisualElement mainView;
-
+        TabView tabView;
 
         [MenuItem("Tools/Dialogue Graph")]
         public static void Open()
@@ -35,32 +44,33 @@ namespace Tools.DialogueSystem.UI
 
         private void OnEnable()
         {
-            CreateTabs();
-            CreateMainView();
-            CreateToolbar();
             CreateDefaultFolders();
-            AddStyles();
-            OnConversationsTabButtonClicked();
+            editorWindowAsset.CloneTree(rootVisualElement);
+            tabView = rootVisualElement.Q<TabView>("TabView");
+            tabView.activeTabChanged += OnActiveTabChanged;
+            AddTabs();
+            tabView.activeTab = conversationsTab;
         }
 
-        #region Tabs
-
-        private void CreateMainView()
+        private void OnActiveTabChanged(Tab tab1, Tab tab2)
         {
-            mainView = new VisualElement();
-            rootVisualElement.Add(mainView);
+
         }
 
-        private void CreateTabs()
+        private void AddTabs()
         {
-            graphTab = new DSGraphTab();
-            actorsTab = new DSActorsTab();
-            dialoguesTab = new DSDialoguesTab();
-            audioClipsTab = new DSAudioClipsTab();
-            databaseTab = new DSDatabaseTab();
-        }
+            conversationsTab = new DSGraphTab(conversationsTabAsset, sideBarAsset);
+            actorsTab = new DSActorsTab(actorsTabAsset, actorsCardAsset);
+            audioClipsTab = new DSAudioClipsTab(audioClipsTabAsset, audioClipCardAsset);
+            dialoguesTab = new DSDialoguesTab(dialoguesTabAsset, dialogueCardAsset);
+            databaseTab = new DSDatabaseTab(databaseTabAsset);
 
-        #endregion
+            tabView.Add(conversationsTab);
+            tabView.Add(actorsTab);
+            tabView.Add(audioClipsTab);
+            tabView.Add(dialoguesTab);
+            tabView.Add(databaseTab);
+        }
 
         #region Utils
 
@@ -69,77 +79,6 @@ namespace Tools.DialogueSystem.UI
             DSIOUtility.CreateFolderIfNotExists("Assets", "DialogueSystem");
             DSIOUtility.CreateFolderIfNotExists("Assets/DialogueSystem", "Conversations");
             DSIOUtility.CreateFolderIfNotExists("Assets/DialogueSystem", "Databases");
-        }
-
-        private void AddStyles()
-        {
-            rootVisualElement.AddStyleSheets("DialogueSystem/DSVariables.uss");
-            rootVisualElement.style.flexGrow = 1;
-            rootVisualElement.style.justifyContent = Justify.Center;
-
-            mainView.SetFlex();
-
-            toolbar.SetHeight(40, 40, 40);
-            toolbar.SetAlignment(alignContent: Align.Center, Align.Center);
-
-            foreach (var button in toolbar.Children())
-            {
-                button.SetHeight(30, 30, 30);
-                button.SetFlex();
-            }
-        }
-
-        #endregion
-
-        #region Toolbar
-
-        private void CreateToolbar()
-        {
-            toolbar = new Toolbar();
-
-            actorsTabButton = DSElementUtility.CreateButton("Actors", OnActorsTabButtonClicked);
-            databaseTabButton = DSElementUtility.CreateButton(text: "Database", OnDatabaseTabButtonClicked);
-            graphTabButton = DSElementUtility.CreateButton("Conversations", OnConversationsTabButtonClicked);
-            audioClipsTabButton = DSElementUtility.CreateButton("Audio Clips", OnAudioClipsTabButtonClicked);
-            dialoguesTabButton = DSElementUtility.CreateButton("Dialogues", OnDialoguesTabButtonClicked);
-
-            toolbar.Insert(0, graphTabButton);
-            toolbar.Insert(1, databaseTabButton);
-            toolbar.Insert(2, dialoguesTabButton);
-            toolbar.Insert(3, actorsTabButton);
-            toolbar.Insert(4, audioClipsTabButton);
-
-            rootVisualElement.Insert(0, toolbar);
-        }
-
-        private void OnDialoguesTabButtonClicked()
-        {
-            mainView.Clear();
-            mainView.Add(dialoguesTab);
-        }
-
-        private void OnAudioClipsTabButtonClicked()
-        {
-            mainView.Clear();
-            mainView.Add(audioClipsTab);
-        }
-
-        private void OnConversationsTabButtonClicked()
-        {
-            mainView.Clear();
-            mainView.Add(graphTab);
-        }
-
-        private void OnDatabaseTabButtonClicked()
-        {
-            mainView.Clear();
-            mainView.Add(databaseTab);
-        }
-
-        private void OnActorsTabButtonClicked()
-        {
-            mainView.Clear();
-            mainView.Add(actorsTab);
         }
 
         #endregion

@@ -9,7 +9,7 @@ using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem
 {
-    public class DSActorsTab : VisualElement
+    public class DSActorsTab : Tab
     {
         private ScrollView actorScrollView;
         private VisualElement actorGrid;
@@ -18,8 +18,9 @@ namespace Tools.DialogueSystem
         private Label actorCountLabel;
         public Dictionary<DSActor, DSActorElement> Actors { get; set; }
 
-        public DSActorsTab()
+        public DSActorsTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
         {
+            tabAsset.CloneTree(this);
             CreateUIElements();
             RegisterEvents();
             AddClasses();

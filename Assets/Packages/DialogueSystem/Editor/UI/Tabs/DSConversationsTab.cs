@@ -4,12 +4,13 @@ using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
 {
-    public class DSConversationsTab : VisualElement
+    public class DSConversationsTab : Tab
     {
-        public DSConversationsTab()
+        private VisualElement card;
+
+        public DSConversationsTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
         {
-            this.style.flexGrow = 1;
-            this.style.position = Position.Relative;
+            tabAsset.CloneTree(this);
         }
     }
 }

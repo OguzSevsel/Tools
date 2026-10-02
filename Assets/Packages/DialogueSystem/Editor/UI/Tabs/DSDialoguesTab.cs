@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
 {
-    public class DSDialoguesTab : VisualElement
+    public class DSDialoguesTab : Tab
     {
         private Button button_CreateNewDialogue;
         private Dictionary<DSDialogueText, DSDialogueElement> dialogues;
@@ -16,9 +16,13 @@ namespace Tools.DialogueSystem.UI
         private VisualElement grid_Dialogue;
         private VisualElement toolbar;
 
-        public DSDialoguesTab()
+        private VisualElement card;
+
+        public DSDialoguesTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
         {
             dialogues = new Dictionary<DSDialogueText, DSDialogueElement>();
+            tabAsset.CloneTree(this);
+
             CreateUIElements();
             RegisterEvents();
         }

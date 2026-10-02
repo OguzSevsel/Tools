@@ -18,7 +18,7 @@ namespace Tools.DialogueSystem.UI.Elements
         public DSNodeInspector(DSDialogueNodeData data)
         {
             this.data = data;
-            this.SetFlex(flexDirection: FlexDirection.Column, flexWrap: Wrap.NoWrap);
+            this.SetFlex(flexGrow: 1, flexDirection: FlexDirection.Column, flexWrap: Wrap.NoWrap);
             Create();
         }
 
@@ -26,6 +26,21 @@ namespace Tools.DialogueSystem.UI.Elements
         {
             CreateUIElements();
             RegisterEvents();
+            LoadFields(this.data);
+        }
+
+        public void LoadFields(DSDialogueNodeData data)
+        {
+            this.data = data;
+            actorDropdown.SetItems(DSDatabaseManager.Current.Actors);
+            conversantDropdown.SetItems(DSDatabaseManager.Current.Actors);
+            audioDropdown.SetItems(DSDatabaseManager.Current.AudioClips);
+
+            actorDropdown.SetValue(data.Actor);
+            conversantDropdown.SetValue(data.Conversant);
+            audioDropdown.SetValue(data.AudioClip);
+
+            dialogueText.value = data.Dialogue.Text;
         }
 
         #region Creation
@@ -60,22 +75,22 @@ namespace Tools.DialogueSystem.UI.Elements
 
         private void OnConversantValueChanged(DSActor conversant)
         {
-            throw new NotImplementedException();
+            this.data.Conversant = conversant;
         }
 
         private void OnDialogueTextChanged(ChangeEvent<string> dialogueText)
         {
-            throw new NotImplementedException();
+            this.data.Dialogue.Text = dialogueText.newValue;
         }
 
         private void OnAudioValueChanged(DSAudioClip audio)
         {
-            throw new NotImplementedException();
+            this.data.AudioClip = audio;
         }
 
         private void OnActorValueChanged(DSActor actor)
         {
-            throw new NotImplementedException();
+            this.data.Actor = actor;
         }
 
         #endregion

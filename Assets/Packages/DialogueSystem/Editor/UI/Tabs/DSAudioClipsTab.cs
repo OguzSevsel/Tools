@@ -4,12 +4,13 @@ using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
 {
-    public class DSAudioClipsTab : VisualElement
+    public class DSAudioClipsTab : Tab
     {
-        public DSAudioClipsTab()
+        VisualElement card;
+
+        public DSAudioClipsTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
         {
-            this.style.flexGrow = 1;
-            this.style.position = Position.Relative;
+            tabAsset.CloneTree(this);
         }
     }
 }

@@ -4,25 +4,20 @@ using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.UI.Elements;
 using Tools.DialogueSystem.UI.Inspector;
 using Tools.DialogueSystem.Utilities;
-using UnityEditor;
 using UnityEditor.Experimental.GraphView;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
-using UnityEngine.WSA;
 
 namespace Tools.DialogueSystem.UI
 {
     public class DSGraphView : GraphView
     {
-        //Nodes
-        public List<DSNode> Nodes;
+        public DSConversationData CurrentConversation { get; private set; }
 
         //UI Elements
         private DSGraphTab tab;
-        private VisualElement sideBar;
-        private VisualElement inspectorContainer;
         private IDSNodeInspector inspector;
+        private MiniMap miniMap;
 
         //Utils
         private DSNode selectedNode;
@@ -30,10 +25,11 @@ namespace Tools.DialogueSystem.UI
         public DSGraphView(DSGraphTab tab)
         {
             this.tab = tab;
-            Nodes = new List<DSNode>();
+            CurrentConversation = new DSConversationData("Oguzun convosu", "Default Conversation");
+            DSDatabaseManager.Open(new DSDatabase());
 
-            AddSideBar();
             AddGridBackground();
+            AddMiniMap();
             AddManipulators();
             AddStyles();
             RegisterCallback<MouseDownEvent>(OnMouseDown, TrickleDown.TrickleDown);
@@ -55,7 +51,7 @@ namespace Tools.DialogueSystem.UI
             ContextualMenuManipulator manipulator = new ContextualMenuManipulator(
                 menuEvent => menuEvent.menu.AppendAction(actionTitle, actionEvent =>
                 {
-                    if (this.Nodes.Count == 0)
+                    if (CurrentConversation.GetNodes().Count == 0)
                     {
                         AddElement(CreateNode(type, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition), isStartNode: true, "Dialogue ID", "Actor Name", "Conversant Name", null, null, null, "Dialogue Text"));
                     }
@@ -81,7 +77,7 @@ namespace Tools.DialogueSystem.UI
             DSAudioClip clip = new DSAudioClip("New Audio Clip", "Audio Description", audioClip);
 
             node.Initialize(position, type, text, actor, conversant, clip, isStartNode);
-            this.Nodes.Add(node);
+            CurrentConversation.AddToNodes(node);
 
             node.OnNodeSelect += OnNodeSelected;
 
@@ -96,30 +92,6 @@ namespace Tools.DialogueSystem.UI
             return node;
         }
 
-        private void AddSideBar()
-        {
-            sideBar = new VisualElement();
-            inspectorContainer = new VisualElement();
-            VisualElement resizeElement = new VisualElement();
-
-            resizeElement.SetBackgroundColor(Color.green);
-            resizeElement.SetWidth(10, 10, 10);
-            resizeElement.SetFlex();
-
-            inspectorContainer.SetFlex();
-            inspectorContainer.SetBackgroundColor(Color.blue);
-
-            sideBar.SetAlignment(alignSelf: Align.FlexEnd, alignItems: Align.Stretch);
-            sideBar.SetFlex(flexGrow: 1, flexShrink: 1, flexDirection: FlexDirection.Row);
-            sideBar.SetWidth(300, 600, 200);
-            sideBar.SetBackgroundColor(Color.red);
-
-            sideBar.Add(resizeElement);
-            sideBar.Add(inspectorContainer);
-            resizeElement.AddManipulator(new ResizeManipulator(sideBar));
-            this.contentContainer.Add(sideBar);
-        }
-
         private void AddGridBackground()
         {
             GridBackground gridBackground = new GridBackground();
@@ -131,6 +103,19 @@ namespace Tools.DialogueSystem.UI
         {
             this.AddStyleSheets("DialogueSystem/DSGraphViewStyles.uss",
                 "DialogueSystem/DSNodeStyles.uss");
+        }
+
+        private void AddMiniMap()
+        {
+            miniMap = new MiniMap();
+            miniMap.SetPosition(new Rect(5, 30, 200, 200));
+            Add(miniMap);
+            ToggleMiniMap();
+        }
+
+        public void ToggleMiniMap()
+        {
+            miniMap.visible = !miniMap.visible;
         }
 
         #endregion
@@ -155,11 +140,12 @@ namespace Tools.DialogueSystem.UI
             if (selectedNode is DSNode node && inspector == null)
             {
                 inspector = new DSNodeInspector(node.Data);
-                this.inspectorContainer.Add(inspector as DSNodeInspector);
+                tab.sideBar.AddToInspector(inspector as DSNodeInspector);
                 return;
             }
 
-            this.inspectorContainer.Add(inspector as DSNodeInspector);
+            inspector.LoadFields(selectedNode.Data);
+            tab.sideBar.AddToInspector(inspector as DSNodeInspector);
         }
 
         #endregion

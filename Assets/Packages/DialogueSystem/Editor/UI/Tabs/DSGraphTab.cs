@@ -1,97 +1,56 @@
+using Tools.DialogueSystem.UI.Elements;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
 {
-    public class DSGraphTab : VisualElement
+    public class DSGraphTab : Tab
     {
         DSGraphView graphView;
-        Button saveButton;
-        Button loadButton;
+        public DSSideBar sideBar;
         Button miniMapButton;
 
-        public TextField FileNameTextField { get; set; }
-        private string fileName;
-
-        public DSGraphTab()
+        public DSGraphTab(VisualTreeAsset tabAsset, VisualTreeAsset sideBarAsset)
         {
-            this.style.flexGrow = 1;
-            this.style.position = Position.Relative;
+            tabAsset.CloneTree(this);
             Create();
         }
 
         public void Create()
         {
-            this.contentContainer.style.flexDirection = FlexDirection.Column;
-            AddToolBar();
+            AddStyles();
+            //AddToolBar();
             AddGraphView();
-            SetFileName("New Dialogue");
-        }
-
-        private void AddToolBar()
-        {
-            Toolbar toolbar = new Toolbar();
-
-            FileNameTextField = DSElementUtility.CreateTextField(fileName, "File Name: ", onValueChanged: (evt) =>
-            {
-                fileName = evt.newValue;
-            });
-
-            saveButton = DSElementUtility.CreateButton("Save", SaveButtonClickHandler);
-            loadButton = DSElementUtility.CreateButton("Load", LoadButtonClickHandler);
-            miniMapButton = DSElementUtility.CreateButton("Mini Map", MiniMapButtonClickHandler);
-
-            toolbar.Add(FileNameTextField);
-            toolbar.Add(saveButton);
-            toolbar.Add(loadButton);
-            toolbar.Add(miniMapButton); 
-            this.contentContainer.Add(toolbar);
-        }
-
-        private void MiniMapButtonClickHandler()
-        {
-            //graphView.ToggleMiniMap();
-        }
-
-        private void LoadButtonClickHandler()
-        {
-            //graphView.Load();
-        }
-
-        private void SaveButtonClickHandler()
-        {
-            //graphView.Save();
+            //sideBar = new DSSideBar();
+            //this.mainView.Add(sideBar);
         }
 
         private void AddGraphView()
         {
             graphView = new DSGraphView(this);
             this.contentContainer.Add(graphView);
-            graphView.style.flexGrow = 1;
+            graphView.SetFlex(flexGrow: 1);
         }
 
-        public void EnableSaving()
+        private void AddStyles()
         {
-            saveButton.SetEnabled(true);
-            loadButton.SetEnabled(true);
+            this.contentContainer.SetFlex(flexGrow: 1, flexDirection: FlexDirection.Column);
         }
 
-        public void DisableSaving()
+        private void AddToolBar()
         {
-            saveButton.SetEnabled(false);
-            loadButton.SetEnabled(false);
+            Toolbar toolbar = new Toolbar();
+            miniMapButton = DSElementUtility.CreateButton("Mini Map", MiniMapButtonClickHandler);
+            toolbar.Add(miniMapButton);
+            toolbar.SetHeight(30, 30, 30);
+            this.contentContainer.Insert(0, toolbar);
         }
 
-        public void SetFileName(string newFileName)
+        private void MiniMapButtonClickHandler()
         {
-            fileName = newFileName;
-            FileNameTextField.value = fileName;
-        }
-
-        public string GetFileName()
-        {
-            return fileName;
+            graphView.ToggleMiniMap();
         }
     }
 }

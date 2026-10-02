@@ -28,30 +28,30 @@ namespace Tools.DialogueSystem.Utilities
             return element;
         }
 
-        public static VisualElement SetPaddings(this VisualElement element, int? allPadding = null, int paddingLeft = 0, int paddingRight = 0, int paddingTop = 0, int paddingBottom = 0)
+        public static VisualElement SetPaddings(this VisualElement element, int? allPadding = null, int? paddingLeft = null, int? paddingRight = null, int?paddingTop = null, int? paddingBottom = null)
         {
-            element.style.paddingLeft = allPadding ?? paddingLeft;
-            element.style.paddingRight = allPadding ?? paddingRight;
-            element.style.paddingTop = allPadding ?? paddingTop;
-            element.style.paddingBottom = allPadding ?? paddingBottom;
+            element.style.paddingLeft = allPadding ?? paddingLeft ?? element.style.paddingLeft;
+            element.style.paddingRight = allPadding ?? paddingRight ?? element.style.paddingRight;
+            element.style.paddingTop = allPadding ?? paddingTop ?? element.style.paddingTop;
+            element.style.paddingBottom = allPadding ?? paddingBottom ?? element.style.paddingBottom;
             return element;
         }
 
-        public static VisualElement SetAlignment(this VisualElement element, Align alignContent = Align.Auto, Align alignItems = Align.Auto, Align alignSelf = Align.Auto, Justify justifyContent = Justify.Center)
+        public static VisualElement SetAlignment(this VisualElement element, Align? alignContent = null, Align? alignItems = null, Align? alignSelf = null, Justify? justifyContent = null)
         {
-            element.style.alignContent = alignContent;
-            element.style.alignItems = alignItems;
-            element.style.alignSelf = alignSelf;
-            element.style.justifyContent = justifyContent;
+            element.style.alignContent = alignContent ?? element.style.alignContent;
+            element.style.alignItems = alignItems ?? element.style.alignItems;
+            element.style.alignSelf = alignSelf ?? element.style.alignSelf;
+            element.style.justifyContent = justifyContent ?? element.style.justifyContent;
             return element;
         }
 
-        public static VisualElement SetMargins(this VisualElement element, int? allMargin = null, int marginLeft = 0, int marginRight = 0, int marginTop = 0, int marginBottom = 0)
+        public static VisualElement SetMargins(this VisualElement element, int? allMargin = null, int? marginLeft = null, int? marginRight = null, int?marginTop = null, int? marginBottom = null)
         {
-            element.style.marginLeft = allMargin ?? marginLeft;
-            element.style.marginRight = allMargin ?? marginRight;
-            element.style.marginTop = allMargin ?? marginTop;
-            element.style.marginBottom = allMargin ?? marginBottom;
+            element.style.marginLeft = allMargin ?? marginLeft ?? element.style.marginLeft;
+            element.style.marginRight = allMargin ?? marginRight ?? element.style.marginRight;
+            element.style.marginTop = allMargin ?? marginTop ?? element.style.marginTop;
+            element.style.marginBottom = allMargin ?? marginBottom ?? element.style.marginBottom;
             return element;
         }
 
@@ -61,51 +61,65 @@ namespace Tools.DialogueSystem.Utilities
             return element;
         }
 
-        public static VisualElement SetWidth(this VisualElement element, int width = 200, int maxWidth = 500, int minWidth = 200)
+        public static VisualElement SetWidth(this VisualElement element, int? width = null, int? maxWidth = null, int? minWidth = null)
         {
-            element.style.width = width;
-            element.style.maxWidth = maxWidth;
-            element.style.minWidth = minWidth;
+            element.style.width = width ?? element.style.width;
+            element.style.maxWidth = maxWidth ?? element.style.maxWidth;
+            element.style.minWidth = minWidth ?? element.style.minWidth;
             return element;
         }
 
-        public static VisualElement SetHeight(this VisualElement element, int height = 200, int maxHeight = 500, int minHeight = 200)
+        public static VisualElement SetHeight(this VisualElement element, int? height = null, int? maxHeight = null, int? minHeight = null)
         {
-            element.style.height = height;
-            element.style.maxHeight = maxHeight;
-            element.style.minHeight = minHeight;
+            element.style.height = height ?? element.style.height;
+            element.style.maxHeight = maxHeight ?? element.style.maxHeight;
+            element.style.minHeight = minHeight ?? element.style.minHeight;
             return element;
         }
 
-        public static VisualElement SetBorder(this VisualElement element, Color borderColor, int? allBorder = null, int borderLeft = 3, int borderRight = 3, int borderTop = 3, int borderBottom = 3)
+        public static VisualElement SetBorder(this VisualElement element, Color? borderColor = null, int? allBorder = null, int? borderLeft = null, int? borderRight = null, int? borderTop = null, int? borderBottom = null)
         {
-            element.style.borderLeftWidth = allBorder ?? borderLeft;
-            element.style.borderRightWidth = allBorder ?? borderRight;
-            element.style.borderTopWidth = allBorder ?? borderTop;
-            element.style.borderBottomWidth = allBorder ?? borderBottom;
+            element.style.borderLeftWidth = allBorder ?? borderLeft ?? element.style.borderLeftWidth;
+            element.style.borderRightWidth = allBorder ?? borderRight ?? element.style.borderRightWidth;
+            element.style.borderTopWidth = allBorder ?? borderTop ?? element.style.borderTopWidth;
+            element.style.borderBottomWidth = allBorder ?? borderBottom ?? element.style.borderBottomWidth;
 
-            element.style.borderLeftColor = borderColor;
-            element.style.borderRightColor = borderColor;
-            element.style.borderTopColor = borderColor;
-            element.style.borderBottomColor = borderColor;
+            element.style.borderLeftColor = borderColor ?? element.style.borderLeftColor;
+            element.style.borderRightColor = borderColor ?? element.style.borderRightColor;
+            element.style.borderTopColor = borderColor ?? element.style.borderTopColor;
+            element.style.borderBottomColor = borderColor ?? element.style.borderBottomColor;
             return element;
         }
 
-        public static VisualElement SetFlex(this VisualElement element, int flexBasis = 100, int flexGrow = 1, int flexShrink = 1, FlexDirection flexDirection = FlexDirection.Row, Wrap flexWrap = Wrap.Wrap)
+        public static VisualElement SetFlex(this VisualElement element, int? flexBasis = null, int? flexGrow = null, int? flexShrink = null, FlexDirection ?flexDirection = null, Wrap? flexWrap = null)
         {
-            element.style.flexGrow = flexGrow;
-            element.style.flexBasis = flexBasis;
-            element.style.flexDirection = flexDirection;
-            element.style.flexShrink = flexShrink;
-            element.style.flexWrap = flexWrap;
+            element.style.flexGrow = flexGrow ?? element.style.flexGrow;
+            element.style.flexBasis = flexBasis ?? element.style.flexBasis;
+            element.style.flexDirection = flexDirection ?? element.style.flexDirection;
+            element.style.flexShrink = flexShrink ?? element.style.flexShrink;
+            element.style.flexWrap = flexWrap ?? element.style.flexWrap;
             return element;
         }
 
-        public static VisualElement SetTextSettings(this VisualElement element, TextAnchor alignment = TextAnchor.MiddleCenter, FontStyle fontStyle = FontStyle.Normal, int fontSize = 18)
+        public static VisualElement SetVisible(this VisualElement element, bool isVisible = true)
         {
-            element.style.unityTextAlign = alignment;
-            element.style.fontSize = fontSize;
-            element.style.unityFontStyleAndWeight = fontStyle;
+            if (isVisible)
+            {
+                element.style.display = DisplayStyle.Flex;
+            }
+            else
+            {
+                element.style.display = DisplayStyle.None;
+            }
+            
+            return element;
+        }
+
+        public static VisualElement SetTextSettings(this VisualElement element, TextAnchor? alignment = null, FontStyle? fontStyle = null, int? fontSize = null)
+        {
+            element.style.unityTextAlign = alignment ?? element.style.unityTextAlign;
+            element.style.fontSize = fontSize ?? element.style.fontSize;
+            element.style.unityFontStyleAndWeight = fontStyle ?? element.style.unityFontStyleAndWeight;
             return element;
         }
 

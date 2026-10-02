@@ -297,8 +297,7 @@ namespace Tools.DialogueSystem.UI
             ClearGraph();
             DSGraphSO graph = DSIOUtility.PromptAndLoad();
             this.loadedGraph = graph;
-            if (graph != null)
-                tab.SetFileName(graph.name);
+            
             DSIOUtility.Load(graph, this);
         }
 
@@ -312,12 +311,10 @@ namespace Tools.DialogueSystem.UI
 
                 if (loadedGraph != null)
                 {
-                    DSIOUtility.SaveLoadedGraph(this, loadedGraph, tab.GetFileName());
                     ClearGraph();
                 }
                 else
                 {
-                    DSIOUtility.Save(this, parentPath + "/" + folderName, tab.GetFileName());
                     ClearGraph();
                 }
             }
@@ -336,7 +333,6 @@ namespace Tools.DialogueSystem.UI
             this.DeleteElements(this.nodes.ToList());
             Nodes.Clear();
             this.loadedGraph = null;
-            tab.EnableSaving();
         }
 
         #endregion
@@ -473,10 +469,8 @@ namespace Tools.DialogueSystem.UI
         {
             if (NodeErrorCount <= 0)
             {
-                tab.EnableSaving();
                 return;
             }
-            tab.DisableSaving();
         }
 
         #endregion

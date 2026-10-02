@@ -53,12 +53,12 @@ namespace Tools.DialogueSystem.UI
             rootVisualElement.style.justifyContent = Justify.Center;
             mainView = DSElementUtility.CreateVisualElement(rootVisualElement);
 
-            conversationsTab = new DSConversationsTab();
-            actorsTab = new DSActorsTab();
-            databaseTab = new DSDatabaseTab();
-            graphTab = new DSGraphTab();
-            audioClipsTab = new DSAudioClipsTab();
-            dialoguesTab = new DSDialoguesTab();
+            //conversationsTab = new DSConversationsTab();
+            //actorsTab = new DSActorsTab();
+            //databaseTab = new DSDatabaseTab();
+            //graphTab = new DSGraphTab();
+            //audioClipsTab = new DSAudioClipsTab();
+            //dialoguesTab = new DSDialoguesTab();
 
             DSIOUtility.CreateFolderIfNotExists("Assets", "DialogueSystem");
             DSIOUtility.CreateFolderIfNotExists("Assets/DialogueSystem", "Conversations");
@@ -160,7 +160,7 @@ namespace Tools.DialogueSystem.UI
         private void OnActorsTabButtonClicked()
         {
             mainView.Clear();
-            mainView.Add(actorsTab);
+            //mainView.Add(actorsTab);
         }
 
         private void OnDatabaseTabButtonClicked()

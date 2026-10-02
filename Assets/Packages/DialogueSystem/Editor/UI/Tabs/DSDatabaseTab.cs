@@ -3,12 +3,11 @@ using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem
 {
-    public class DSDatabaseTab : VisualElement
+    public class DSDatabaseTab : Tab
     {
-        public DSDatabaseTab()
+        public DSDatabaseTab(VisualTreeAsset tabAsset)
         {
-            this.style.flexGrow = 1;
-            this.style.position = Position.Relative;
+            tabAsset.CloneTree(this);
         }
     }
 }

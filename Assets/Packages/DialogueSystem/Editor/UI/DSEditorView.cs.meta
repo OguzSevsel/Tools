@@ -1,2 +1,23 @@
 fileFormatVersion: 2
 guid: 2c34e9d28f30bca44bcfc55ba243c67f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_ViewDataDictionary: {instanceID: 0}
+  - editorWindowAsset: {fileID: 9197481963319205126, guid: d5b528e7cdc1e1547a6bd910ca6efb30, type: 3}
+  - sideBarAsset: {fileID: 9197481963319205126, guid: 934a5aba672f50f42abc940b473d6683, type: 3}
+  - actorsTabAsset: {fileID: 9197481963319205126, guid: 34c81104fa78e954e8d1dbfeb2f9f2eb, type: 3}
+  - actorsCardAsset: {fileID: 9197481963319205126, guid: 47be814f0443d7449909d50e0abb7162, type: 3}
+  - audioClipsTabAsset: {fileID: 9197481963319205126, guid: c8a4db4c849f8be4f8fb522bfd3e09e7, type: 3}
+  - audioClipCardAsset: {fileID: 9197481963319205126, guid: a8a24003db4906342ac61c2551198ec0, type: 3}
+  - databaseTabAsset: {fileID: 9197481963319205126, guid: 6578d63eae8f7cd469cac300f09e6dd8, type: 3}
+  - dialoguesTabAsset: {fileID: 9197481963319205126, guid: 83f2fc894d1fdf847a4b8cc84d007aaf, type: 3}
+  - dialogueCardAsset: {fileID: 9197481963319205126, guid: b9500a3c89381974395484dc25b1b90f, type: 3}
+  - conversationsTabAsset: {fileID: 9197481963319205126, guid: 2f10c742004a0b443bb7d450bc7f9ceb, type: 3}
+  - conversationCardAsset: {fileID: 9197481963319205126, guid: 368d37eddb046c7468a9a03f6f04beeb, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
