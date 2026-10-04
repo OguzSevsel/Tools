@@ -11,6 +11,7 @@ namespace Tools.DialogueSystem.UI
         public DSAudioClipsTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
         {
             tabAsset.CloneTree(this);
+            label = "Audio Clips";
         }
     }
 }

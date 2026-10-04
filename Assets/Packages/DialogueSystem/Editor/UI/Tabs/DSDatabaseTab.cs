@@ -8,6 +8,7 @@ namespace Tools.DialogueSystem
         public DSDatabaseTab(VisualTreeAsset tabAsset)
         {
             tabAsset.CloneTree(this);
+            label = "Database";
         }
     }
 }

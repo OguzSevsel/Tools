@@ -13,11 +13,15 @@ namespace Tools.DialogueSystem.Utilities
         private Vector2 startMousePosition;
         private float startWidth;
         private float width;
+        private float minPercent;
+        private float maxPercent;
         private bool isResizeable;
 
-        public ResizeManipulator(VisualElement target)
+        public ResizeManipulator(VisualElement target, float minPercent, float maxPercent)
         {
             targetElement = target;
+            this.minPercent = minPercent;
+            this.maxPercent = maxPercent;
 
             activators.Add(new ManipulatorActivationFilter
             {
@@ -73,7 +77,16 @@ namespace Tools.DialogueSystem.Utilities
             float delta = evt.mousePosition.x - startMousePosition.x;
 
             width = startWidth - delta;
-            targetElement.style.width = Mathf.Clamp(width, targetElement.style.minWidth.value.value, targetElement.style.maxWidth.value.value);
+
+            float parentWidth = targetElement.parent.resolvedStyle.width;
+
+            if (parentWidth <= 0f) return;
+
+            float percentage = (width / parentWidth) * 100f;
+
+            percentage = Mathf.Clamp(percentage, minPercent, maxPercent);
+
+            targetElement.style.width = Length.Percent(percentage);
         }
 
         private void OnMouseUp(MouseUpEvent evt)

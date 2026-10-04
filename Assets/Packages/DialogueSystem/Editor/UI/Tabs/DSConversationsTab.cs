@@ -11,6 +11,7 @@ namespace Tools.DialogueSystem.UI
         public DSConversationsTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
         {
             tabAsset.CloneTree(this);
+            label = "Conversations";
         }
     }
 }

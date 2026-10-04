@@ -21,6 +21,7 @@ namespace Tools.DialogueSystem
         public DSActorsTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
         {
             tabAsset.CloneTree(this);
+            label = "Actors";
             CreateUIElements();
             RegisterEvents();
             AddClasses();

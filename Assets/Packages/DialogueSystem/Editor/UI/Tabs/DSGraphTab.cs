@@ -9,43 +9,24 @@ namespace Tools.DialogueSystem.UI
     public class DSGraphTab : Tab
     {
         DSGraphView graphView;
+        VisualElement graphContainer;
+        VisualElement sideBarContainer;
+
         public DSSideBar sideBar;
         Button miniMapButton;
 
-        public DSGraphTab(VisualTreeAsset tabAsset, VisualTreeAsset sideBarAsset)
+        public DSGraphTab(VisualTreeAsset conversationsTabAsset, VisualTreeAsset sideBarAsset)
         {
-            tabAsset.CloneTree(this);
-            Create();
-        }
+            sideBar = new DSSideBar(sideBarAsset, conversationsTabAsset);
+            label = "Conversations";
 
-        public void Create()
-        {
-            AddStyles();
-            //AddToolBar();
-            AddGraphView();
-            //sideBar = new DSSideBar();
-            //this.mainView.Add(sideBar);
-        }
-
-        private void AddGraphView()
-        {
             graphView = new DSGraphView(this);
+
+            this.contentContainer.SetFlex(flexDirection: FlexDirection.Row);
+            graphView.SetFlex(flexGrow: 1, flexShrink: 1);
+
             this.contentContainer.Add(graphView);
-            graphView.SetFlex(flexGrow: 1);
-        }
-
-        private void AddStyles()
-        {
-            this.contentContainer.SetFlex(flexGrow: 1, flexDirection: FlexDirection.Column);
-        }
-
-        private void AddToolBar()
-        {
-            Toolbar toolbar = new Toolbar();
-            miniMapButton = DSElementUtility.CreateButton("Mini Map", MiniMapButtonClickHandler);
-            toolbar.Add(miniMapButton);
-            toolbar.SetHeight(30, 30, 30);
-            this.contentContainer.Insert(0, toolbar);
+            this.contentContainer.Add(sideBar);
         }
 
         private void MiniMapButtonClickHandler()

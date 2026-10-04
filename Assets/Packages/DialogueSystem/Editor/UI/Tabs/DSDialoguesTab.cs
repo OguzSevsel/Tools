@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
-using UnityEditor;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
@@ -22,6 +20,7 @@ namespace Tools.DialogueSystem.UI
         {
             dialogues = new Dictionary<DSDialogueText, DSDialogueElement>();
             tabAsset.CloneTree(this);
+            label = "Dialogues";
 
             CreateUIElements();
             RegisterEvents();

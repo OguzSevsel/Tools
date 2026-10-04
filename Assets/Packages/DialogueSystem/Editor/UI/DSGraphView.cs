@@ -26,7 +26,7 @@ namespace Tools.DialogueSystem.UI
         {
             this.tab = tab;
             CurrentConversation = new DSConversationData("Oguzun convosu", "Default Conversation");
-            DSDatabaseManager.Open(new DSDatabase());
+            DSDatabaseManager.Open(ScriptableObject.CreateInstance<DSDatabase>());
 
             AddGridBackground();
             AddMiniMap();
@@ -140,12 +140,10 @@ namespace Tools.DialogueSystem.UI
             if (selectedNode is DSNode node && inspector == null)
             {
                 inspector = new DSNodeInspector(node.Data);
-                tab.sideBar.AddToInspector(inspector as DSNodeInspector);
                 return;
             }
 
             inspector.LoadFields(selectedNode.Data);
-            tab.sideBar.AddToInspector(inspector as DSNodeInspector);
         }
 
         #endregion
