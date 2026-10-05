@@ -56,12 +56,50 @@
     padding-left: 0;
 }
 
-.unity-text-element {
-    -unity-text-auto-size: best-fit 10px 20px;
+.unity-text-field__label {
+    -unity-text-auto-size: best-fit 10px 14px;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 10px;
+    padding-bottom: 0;
+    padding-left: 0;
+    -unity-text-align: upper-right;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+}
+
+.unity-object-field__label {
+    -unity-text-auto-size: best-fit 10px 14px;
+    -unity-text-align: upper-right;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 0;
+    padding-right: 10px;
+    padding-bottom: 0;
+    padding-left: 0;
     color: rgb(255, 255, 255);
     -unity-font-style: bold;
-    letter-spacing: 5px;
-    -unity-text-align: middle-center;
+}
+
+.unity-object-field-display__label--value-null {
+    -unity-text-auto-size: best-fit 10px 14px;
+}
+
+.unity-text-element--inner-input-field-component {
+    -unity-text-auto-size: best-fit 10px 14px;
+    text-overflow: ellipsis;
+}
+
+.unity-base-text-field__input--multiline {
+    height: 100px;
+    min-height: 50px;
+    max-height: 150px;
+    text-overflow: ellipsis;
 }
 
 .height50 {
@@ -79,4 +117,20 @@
 
 .unity-tab {
     flex-grow: 1;
+}
+
+
+
+.title {
+    -unity-text-align: middle-center;
+    -unity-text-auto-size: best-fit 10px 30px;
+    -unity-font-style: bold;
+    color: rgb(255, 255, 255);
+}
+
+.unity-tab__header > .unity-tab__header-label {
+    -unity-text-auto-size: best-fit 10px 20px;
+    -unity-text-align: middle-center;
+    color: rgb(255, 255, 255);
+    -unity-font-style: bold;
 }

@@ -1,6 +1,9 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Assets/Packages/DialogueSystem/Editor/UI/Assets/DialogueSystem.uss?fileID=7433441132597879392&amp;guid=d8ee67fa447200445a0b5eb322156409&amp;type=3#DialogueSystem"/>
-    <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" mode="Vertical" name="ActorsScrollView">
-        <ui:VisualElement name="ActorsCardContainer" class="flexGrow"/>
-    </ui:ScrollView>
+    <ui:VisualElement class="flexGrow">
+        <ui:Button text="Create New Actor" name="CreateActorButton" style="margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;"/>
+        <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" mode="Vertical" name="ActorsScrollView" class="flexGrow">
+            <ui:VisualElement name="ActorsCardContainer" class="flexGrow" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-direction: row; flex-wrap: wrap; flex-grow: 1; width: 1920px; height: 1080px; min-width: 20%; max-width: 100%; min-height: 20%; max-height: 100%; justify-content: space-evenly;"/>
+        </ui:ScrollView>
+    </ui:VisualElement>
 </ui:UXML>

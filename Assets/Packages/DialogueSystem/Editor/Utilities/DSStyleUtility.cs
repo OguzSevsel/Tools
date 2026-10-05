@@ -1,4 +1,5 @@
 using PlasticPipe.PlasticProtocol.Messages;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
@@ -26,6 +27,32 @@ namespace Tools.DialogueSystem.Utilities
                 element.styleSheets.Add(styleSheet);
             }
             return element;
+        }
+
+        public static void SetDropShadow(this VisualElement element, bool isRemoving = false)
+        {
+            if (!isRemoving)
+            {
+                var dropShadow = new FilterFunction(
+                    FilterFunctionType.DropShadow
+                );
+
+                dropShadow.AddParameter(new FilterParameter(2f));
+                dropShadow.AddParameter(new FilterParameter(2f));
+                dropShadow.AddParameter(new FilterParameter(3f));
+                dropShadow.AddParameter(new FilterParameter(
+                    new Color(0.212f, 0.212f, 0.169f, 1f)
+                ));
+
+                element.style.filter = new List<FilterFunction>
+                {
+                    dropShadow
+                };
+            }
+            else
+            {
+                element.style.filter = StyleKeyword.Null;
+            }
         }
 
         public static VisualElement SetPaddings(this VisualElement element, int? allPadding = null, int? paddingLeft = null, int? paddingRight = null, int?paddingTop = null, int? paddingBottom = null)
