@@ -1,10 +1,30 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Assets/Packages/DialogueSystem/Editor/UI/Assets/DialogueSystem.uss?fileID=7433441132597879392&amp;guid=d8ee67fa447200445a0b5eb322156409&amp;type=3#DialogueSystem"/>
     <ui:VisualElement name="ActorCard" class="flexGrow" style="justify-content: space-evenly; margin-top: 4px; margin-right: 4px; margin-bottom: 4px; margin-left: 4px; align-self: center; align-content: center; align-items: stretch; width: 470px; height: 400px; min-width: 470px; min-height: 400px; max-width: 470px; max-height: 400px; background-color: rgb(55, 55, 55); border-top-width: 2px; border-right-width: 2px; border-bottom-width: 2px; border-left-width: 2px; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; border-left-color: rgba(0, 0, 0, 0.2); border-right-color: rgba(0, 0, 0, 0.2); border-top-color: rgba(0, 0, 0, 0.2); border-bottom-color: rgba(0, 0, 0, 0.2); padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
-        <ui:Label text="Actor Name Title" name="ActorCardTitle" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="_Title_k__BackingField" class="title"/>
-        <ui:TextField label="Name" placeholder-text="Name" name="ActorName" hide-placeholder-on-focus="true" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="_Title_k__BackingField"/>
-        <ui:TextField label="Description" placeholder-text="Description" name="ActorDescription" hide-placeholder-on-focus="true" multiline="true" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="_Description_k__BackingField"/>
-        <ui:TextField label="Background" placeholder-text="Background" name="ActorBackground" hide-placeholder-on-focus="true" multiline="true" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Background"/>
-        <uie:ObjectField label="Actor Sprite" name="SpriteField" type="UnityEngine.Sprite, UnityEngine.CoreModule" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Sprite"/>
+        <ui:Label text="Actor Name" name="ActorCardTitle" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" class="title">
+            <Bindings>
+                <ui:DataBinding property="text" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="_Title_k__BackingField" binding-mode="ToTarget"/>
+            </Bindings>
+        </ui:Label>
+        <ui:TextField label="Name" placeholder-text="Name" name="ActorName" hide-placeholder-on-focus="true" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="_Title_k__BackingField" binding-mode="TwoWay"/>
+            </Bindings>
+        </ui:TextField>
+        <ui:TextField label="Description" placeholder-text="Description" name="ActorDescription" hide-placeholder-on-focus="true" multiline="true" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" focusable="true">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="_Description_k__BackingField" binding-mode="TwoWay"/>
+            </Bindings>
+        </ui:TextField>
+        <ui:TextField label="Background" placeholder-text="Background" name="ActorBackground" hide-placeholder-on-focus="true" multiline="true" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="Background" binding-mode="TwoWay"/>
+            </Bindings>
+        </ui:TextField>
+        <uie:ObjectField label="Actor Sprite" name="SpriteField" type="UnityEngine.Sprite, UnityEngine.CoreModule" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="Sprite" binding-mode="TwoWay"/>
+            </Bindings>
+        </uie:ObjectField>
     </ui:VisualElement>
 </ui:UXML>

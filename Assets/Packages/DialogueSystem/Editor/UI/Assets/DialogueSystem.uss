@@ -119,13 +119,13 @@
     flex-grow: 1;
 }
 
-
-
 .title {
     -unity-text-align: middle-center;
     -unity-text-auto-size: best-fit 10px 30px;
     -unity-font-style: bold;
     color: rgb(255, 255, 255);
+    min-height: 40px;
+    min-width: 40px;
 }
 
 .unity-tab__header > .unity-tab__header-label {

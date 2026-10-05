@@ -15,7 +15,7 @@ namespace Tools.DialogueSystem
         private VisualElement actorGrid;
         private VisualElement toolbar;
         private VisualElement actorCard;
-        private VisualTreeAsset actorCardAsset;
+        private VisualTreeAsset cardAsset;
         private Button createNewActorButton;
         public Dictionary<DSActor, DSActorElement> Actors { get; set; }
 
@@ -24,7 +24,7 @@ namespace Tools.DialogueSystem
             tabAsset.CloneTree(this);
             label = "Actors";
             Actors = new Dictionary<DSActor, DSActorElement>();
-            actorCardAsset = cardAsset;
+            this.cardAsset = cardAsset;
 
             actorScrollView = this.Q<ScrollView>("ActorsScrollView");
             actorGrid = this.Q<VisualElement>("ActorsCardContainer");
@@ -35,13 +35,16 @@ namespace Tools.DialogueSystem
         private void OnCreateNewActorButtonClicked()
         {
             VisualElement cardElement = new VisualElement();
-            actorCardAsset.CloneTree(cardElement);
-            cardElement.RegisterCallback<MouseEnterEvent>(OnMouseEnterToActorCard);
-            cardElement.RegisterCallback<MouseLeaveEvent>(OnMouseExitFromActorCard);
+            cardAsset.CloneTree(cardElement);
+            cardElement.RegisterCallback<MouseEnterEvent>(OnMouseEnter);
+            cardElement.RegisterCallback<MouseLeaveEvent>(OnMouseLeave);
+
+            DSActor actor = new DSActor("New Actor", "Actor Description", "Actor Background", default);
+            cardElement.dataSource = actor;
             actorGrid.Add(cardElement);
         }
 
-        private void OnMouseExitFromActorCard(MouseLeaveEvent evt)
+        private void OnMouseLeave(MouseLeaveEvent evt)
         {
             if (evt.currentTarget is VisualElement element)
             {
@@ -49,7 +52,7 @@ namespace Tools.DialogueSystem
             }
         }
 
-        private void OnMouseEnterToActorCard(MouseEnterEvent evt)
+        private void OnMouseEnter(MouseEnterEvent evt)
         {
             if (evt.currentTarget is VisualElement element)
             {

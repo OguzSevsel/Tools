@@ -2,132 +2,60 @@
 using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
+using Unity.Properties;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
 {
     public class DSDialoguesTab : Tab
     {
-        private Button button_CreateNewDialogue;
         private Dictionary<DSDialogueText, DSDialogueElement> dialogues;
-        private ScrollView scrollView_Dialogue;
-        private VisualElement grid_Dialogue;
-        private VisualElement toolbar;
 
-        private VisualElement card;
+        private VisualTreeAsset cardAsset;
+
+        private VisualElement dialogueCardContainer;
+        private ScrollView dialogueScrollView;
+        private Button createDialogueButton;
 
         public DSDialoguesTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
         {
             dialogues = new Dictionary<DSDialogueText, DSDialogueElement>();
             tabAsset.CloneTree(this);
             label = "Dialogues";
+            this.cardAsset = cardAsset;
 
-            CreateUIElements();
-            RegisterEvents();
+            createDialogueButton = this.Q<Button>("CreateDialogueButton");
+            dialogueCardContainer = this.Q<VisualElement>("DialogueCardContainer");
+            dialogueScrollView = this.Q<ScrollView>("DialogueScrollView");
+
+            createDialogueButton.clicked += OnCreateDialogueButtonClicked;
         }
 
-        private void OnDatabaseOpened(DSDatabase database)
+        private void OnCreateDialogueButtonClicked()
         {
-            foreach (var dialogue in DSDatabaseManager.Current.DialogueTexts)
+            VisualElement cardElement = new VisualElement();
+            cardAsset.CloneTree(cardElement);
+            cardElement.RegisterCallback<MouseEnterEvent>(OnMouseEnter);
+            cardElement.RegisterCallback<MouseLeaveEvent>(OnMouseLeave);
+            DSDialogueText textObject = new DSDialogueText("New Dialogue", "Dialogue Description", "Dialogue Text");
+            cardElement.dataSource = textObject;
+            dialogueCardContainer.Add(cardElement);
+        }
+
+        private void OnMouseLeave(MouseLeaveEvent evt)
+        {
+            if (evt.currentTarget is VisualElement element)
             {
-                CreateDialogueUIElement(dialogue);
+                element.SetDropShadow(true);
             }
         }
 
-        private void OnDatabaseClosed(DSDatabase database)
+        private void OnMouseEnter(MouseEnterEvent evt)
         {
-            foreach (var dialogue in DSDatabaseManager.Current.DialogueTexts)
+            if (evt.currentTarget is VisualElement element)
             {
-                if (dialogues.ContainsKey(dialogue))
-                {
-                    DSDialogueElement textElement = dialogues[dialogue];
-                    if (grid_Dialogue.Contains(textElement))
-                    {
-                        grid_Dialogue.Remove(textElement);
-                        dialogues.Remove(dialogue);
-                    }
-                }
+                element.SetDropShadow();
             }
-        }
-
-        private void OnDetached(DetachFromPanelEvent evt)
-        {
-            DSDatabaseManager.DatabaseOpened -= OnDatabaseOpened;
-            DSDatabaseManager.DatabaseClosed -= OnDatabaseClosed;
-        }
-
-        private void OnCreateNewDialogueButtonClicked()
-        {
-            CreateDialogue();
-        }
-
-        private void OnDialogueDeleted(DSDialogueText text)
-        {
-            DeleteDialogueUIElement(text);
-            DeleteDialogue(text);
-        }
-
-        private void DeleteDialogueUIElement(DSDialogueText text)
-        {
-            if (dialogues.ContainsKey(text))
-            {
-                DSDialogueElement textElement = dialogues[text];
-                this.grid_Dialogue.Remove(textElement);
-                dialogues.Remove(text);
-            }
-        }
-
-        private void DeleteDialogue(DSDialogueText text)
-        {
-            DSDatabaseManager.Current.Unregister(text);
-        }
-
-        private void CreateDialogue()
-        {
-            DSDialogueText dialogueText = new DSDialogueText("Default Text", "", "");
-            CreateDialogueUIElement(dialogueText);
-            DSDatabaseManager.Current.Register(dialogueText);
-        }
-
-        private void CreateDialogueUIElement(DSDialogueText dialogueText)
-        {
-            DSDialogueElement textElement = new DSDialogueElement(dialogueText);
-            textElement.OnDialogueDelete += OnDialogueDeleted;
-            this.grid_Dialogue.Add(textElement);
-            this.dialogues.Add(dialogueText, textElement);
-        }
-
-        private void CreateUIElements()
-        {
-            this.style.flexGrow = 1;
-            this.style.position = Position.Relative;
-
-            scrollView_Dialogue = new ScrollView
-            {
-                mode = ScrollViewMode.Vertical,
-                verticalScrollerVisibility = ScrollerVisibility.Hidden,
-                horizontalScrollerVisibility = ScrollerVisibility.Hidden
-            };
-
-            grid_Dialogue = new VisualElement();
-            grid_Dialogue.style.flexDirection = FlexDirection.Row;
-            grid_Dialogue.style.flexWrap = Wrap.Wrap;
-
-            scrollView_Dialogue.Add(grid_Dialogue);
-
-            button_CreateNewDialogue = DSElementUtility.CreateButton("Create New Dialogue", OnCreateNewDialogueButtonClicked);
-            toolbar = new VisualElement();
-
-            this.toolbar.Insert(0, button_CreateNewDialogue);
-            this.contentContainer.Insert(0, toolbar);
-            this.contentContainer.Add(scrollView_Dialogue);
-        }
-
-        private void RegisterEvents()
-        {
-            RegisterCallback<DetachFromPanelEvent>(OnDetached);
-            DSDatabaseManager.DatabaseClosed += OnDatabaseClosed;
-            DSDatabaseManager.DatabaseOpened += OnDatabaseOpened;
         }
     }
 }
