@@ -12,7 +12,7 @@ namespace Tools.DialogueSystem.UI
 {
     public class DSGraphView : GraphView
     {
-        public DSConversationData CurrentConversation { get; private set; }
+        public DSConversation CurrentConversation { get; private set; }
 
         //UI Elements
         private DSGraphTab tab;
@@ -25,7 +25,7 @@ namespace Tools.DialogueSystem.UI
         public DSGraphView(DSGraphTab tab)
         {
             this.tab = tab;
-            CurrentConversation = new DSConversationData("Oguzun convosu", "Default Conversation");
+            CurrentConversation = new DSConversation("Oguzun convosu", "Default Conversation");
             DSDatabaseManager.Open(ScriptableObject.CreateInstance<DSDatabase>());
 
             AddGridBackground();

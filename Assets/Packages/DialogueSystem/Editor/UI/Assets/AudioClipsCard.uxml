@@ -1,3 +1,25 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Assets/Packages/DialogueSystem/Editor/UI/Assets/DialogueSystem.uss?fileID=7433441132597879392&amp;guid=d8ee67fa447200445a0b5eb322156409&amp;type=3#DialogueSystem"/>
+    <ui:VisualElement name="AudioClipsCard" tooltip="This is an actor" class="flexGrow Border Background Spacing Size" style="justify-content: space-evenly; align-self: center; align-content: center; align-items: stretch;">
+        <ui:Label text="New Audio Clip" name="AudioClipTitleLabel" data-source-type="Tools.DialogueSystem.Data.DSAudioClip, Tools.DialogueSystem.Editor" class="title">
+            <Bindings>
+                <ui:DataBinding property="text" data-source-path="_Title_k__BackingField" binding-mode="TwoWay"/>
+            </Bindings>
+        </ui:Label>
+        <ui:TextField label="Name" placeholder-text="Name" name="AudioClipTitle" hide-placeholder-on-focus="true" data-source-type="Tools.DialogueSystem.Data.DSAudioClip, Tools.DialogueSystem.Editor">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="_Title_k__BackingField" binding-mode="TwoWay"/>
+            </Bindings>
+        </ui:TextField>
+        <ui:TextField label="Description" placeholder-text="Description" name="AudioClipDescription" hide-placeholder-on-focus="true" multiline="true" data-source-type="Tools.DialogueSystem.Data.DSAudioClip, Tools.DialogueSystem.Editor" focusable="true">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="_Description_k__BackingField" binding-mode="TwoWay" data-source-type="Tools.DialogueSystem.Data.DSAudioClip, Tools.DialogueSystem.Editor"/>
+            </Bindings>
+        </ui:TextField>
+        <uie:ObjectField label="Audio Clip" name="AudioClipObjectField" type="UnityEngine.AudioClip, UnityEngine.AudioModule" data-source-type="Tools.DialogueSystem.Data.DSAudioClip, Tools.DialogueSystem.Editor">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="Clip" binding-mode="TwoWay"/>
+            </Bindings>
+        </uie:ObjectField>
+    </ui:VisualElement>
 </ui:UXML>

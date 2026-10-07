@@ -2,7 +2,7 @@
     <Style src="project://database/Assets/Packages/DialogueSystem/Editor/UI/Assets/DialogueSystem.uss?fileID=7433441132597879392&amp;guid=d8ee67fa447200445a0b5eb322156409&amp;type=3#DialogueSystem"/>
     <ui:VisualElement class="flexGrow">
         <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" mode="Vertical" name="DialogueScrollView" class="flexGrow">
-            <ui:VisualElement name="DialogueCardContainer" class="flexGrow" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-direction: row; flex-wrap: wrap; flex-grow: 1; width: 1920px; height: 1080px; min-width: 20%; max-width: 100%; min-height: 20%; max-height: 100%; justify-content: space-evenly;"/>
+            <ui:VisualElement name="DialogueCardContainer" class="flexGrow" style="padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-direction: row; flex-wrap: wrap; flex-grow: 1; width: 1920px; height: 1080px; min-width: 20%; max-width: 100%; min-height: 20%; max-height: 100%;"/>
         </ui:ScrollView>
         <ui:Button name="CreateDialogueButton" icon-image="project://database/Assets/Packages/DialogueSystem/Editor/Icons/add.png?fileID=-3479061504300586076&amp;guid=db5a9c0314a477843aba43e09fc19bf0&amp;type=3#add_0" class="CreateButton"/>
     </ui:VisualElement>

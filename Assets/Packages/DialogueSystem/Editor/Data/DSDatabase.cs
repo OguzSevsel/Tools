@@ -9,7 +9,7 @@ namespace Tools.DialogueSystem.Data
     public class DSDatabase : ScriptableObject
     {
         public string Name;
-        [field: SerializeField] public List<DSConversationData> Conversations { get; private set; } = new();
+        [field: SerializeField] public List<DSConversation> Conversations { get; private set; } = new();
         [field: SerializeField] public List<DSActor> Actors { get; private set; }
         [field: SerializeField] public List<DSAudioClip> AudioClips { get; private set; } = new();
         [field: SerializeField] public List<DSDialogueText> DialogueTexts { get; private set; } = new();
@@ -87,7 +87,7 @@ namespace Tools.DialogueSystem.Data
             {
                 AudioClips.Add(clip);
             }
-            else if (item is DSConversationData conversation)
+            else if (item is DSConversation conversation)
             {
                 Conversations.Add(conversation);
             }
@@ -124,7 +124,7 @@ namespace Tools.DialogueSystem.Data
                     removed = true;
                 }
             }
-            else if (item is DSConversationData conversation)
+            else if (item is DSConversation conversation)
             {
                 if (Conversations.Contains(conversation))
                 {

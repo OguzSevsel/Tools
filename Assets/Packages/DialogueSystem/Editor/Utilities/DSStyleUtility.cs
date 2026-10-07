@@ -96,7 +96,7 @@ namespace Tools.DialogueSystem.Utilities
             return element;
         }
 
-        public static VisualElement SetHeight(this VisualElement element, int? height = null, int? maxHeight = null, int? minHeight = null)
+        public static VisualElement SetHeight(this VisualElement element, float? height = null, float? maxHeight = null, float? minHeight = null)
         {
             element.style.height = height ?? element.style.height;
             element.style.maxHeight = maxHeight ?? element.style.maxHeight;
@@ -104,7 +104,7 @@ namespace Tools.DialogueSystem.Utilities
             return element;
         }
 
-        public static VisualElement SetBorder(this VisualElement element, Color? borderColor = null, int? allBorder = null, int? borderLeft = null, int? borderRight = null, int? borderTop = null, int? borderBottom = null)
+        public static VisualElement SetBorder(this VisualElement element, Color? borderColor = null, float? allBorder = null, float? borderLeft = null, float? borderRight = null, float? borderTop = null, float? borderBottom = null)
         {
             element.style.borderLeftWidth = allBorder ?? borderLeft ?? element.style.borderLeftWidth;
             element.style.borderRightWidth = allBorder ?? borderRight ?? element.style.borderRightWidth;
