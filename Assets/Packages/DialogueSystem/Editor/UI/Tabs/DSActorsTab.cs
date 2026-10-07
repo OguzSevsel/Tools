@@ -13,17 +13,15 @@ namespace Tools.DialogueSystem
     {
         private ScrollView actorScrollView;
         private VisualElement actorGrid;
-        private VisualElement toolbar;
-        private VisualElement actorCard;
         private VisualTreeAsset cardAsset;
         private Button createNewActorButton;
-        public Dictionary<DSActor, DSActorElement> Actors { get; set; }
+        public Dictionary<DSActor, VisualElement> Actors { get; set; }
 
         public DSActorsTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
         {
             tabAsset.CloneTree(this);
             label = "Actors";
-            Actors = new Dictionary<DSActor, DSActorElement>();
+            Actors = new Dictionary<DSActor, VisualElement>();
             this.cardAsset = cardAsset;
 
             actorScrollView = this.Q<ScrollView>("ActorsScrollView");
@@ -38,10 +36,10 @@ namespace Tools.DialogueSystem
             cardAsset.CloneTree(cardElement);
             cardElement.RegisterCallback<MouseEnterEvent>(OnMouseEnter);
             cardElement.RegisterCallback<MouseLeaveEvent>(OnMouseLeave);
-
             DSActor actor = new DSActor("New Actor", "Actor Description", "Actor Background", default);
             cardElement.dataSource = actor;
             actorGrid.Add(cardElement);
+            Actors.Add(actor, cardElement);
         }
 
         private void OnMouseLeave(MouseLeaveEvent evt)

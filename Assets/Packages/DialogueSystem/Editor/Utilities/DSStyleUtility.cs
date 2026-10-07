@@ -88,7 +88,7 @@ namespace Tools.DialogueSystem.Utilities
             return element;
         }
 
-        public static VisualElement SetWidth(this VisualElement element, int? width = null, int? maxWidth = null, int? minWidth = null)
+        public static VisualElement SetWidth(this VisualElement element, float? width = null, float? maxWidth = null, float? minWidth = null)
         {
             element.style.width = width ?? element.style.width;
             element.style.maxWidth = maxWidth ?? element.style.maxWidth;
