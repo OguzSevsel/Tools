@@ -37,7 +37,6 @@ namespace Tools.DialogueSystem.UI
             foreach (var audioClip in database.AudioClips)
             {
                 var card = CreateCard(cardAsset, audioClip);
-
                 AddCard(audioClipContainer, AudioClips, audioClip, card);
             }
         }

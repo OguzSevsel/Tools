@@ -10,10 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07a962b802f4d87418b2d3aea2813a21, type: 3}
-  m_Name: NewDatabase
+  m_Name: Database1
   m_EditorClassIdentifier: Tools.DialogueSystem.Editor::Tools.DialogueSystem.DSDatabase
-  Name: 
-  <Conversations>k__BackingField: []
+  <Conversations>k__BackingField:
+  - <Title>k__BackingField: Conversation 1
+    <Description>k__BackingField: Conversation 1
+  - <Title>k__BackingField: Conversation 2
+    <Description>k__BackingField: Conversation 2
+  - <Title>k__BackingField: Conversation 3
+    <Description>k__BackingField: Conversation 3
   <Actors>k__BackingField:
   - <Title>k__BackingField: Actor1
     <Description>k__BackingField: Actor1
@@ -27,13 +32,16 @@ MonoBehaviour:
   - <Title>k__BackingField: Audio Clip 1
     <Description>k__BackingField: Audio Clip 1
     Clip: {fileID: 0}
+  - <Title>k__BackingField: Audio Clip 2
+    <Description>k__BackingField: Audio Clip 2
+    Clip: {fileID: 0}
   <DialogueTexts>k__BackingField:
-  - <Title>k__BackingField: Deneme 1
-    <Description>k__BackingField: Deneme 1
-    Text: Deneme 1
-  - <Title>k__BackingField: Deneme 2
-    <Description>k__BackingField: Deneme 2
-    Text: Deneme 2
-  - <Title>k__BackingField: Deneme 3
-    <Description>k__BackingField: Deneme 3
-    Text: Deneme 3
+  - <Title>k__BackingField: Dialogue 1
+    <Description>k__BackingField: Dialogue 1
+    Text: Dialogue 1
+  - <Title>k__BackingField: Dialogue 2
+    <Description>k__BackingField: Dialogue 2
+    Text: Dialogue 2
+  - <Title>k__BackingField: Dialogue 3
+    <Description>k__BackingField: Dialogue 3
+    Text: Dialogue 3

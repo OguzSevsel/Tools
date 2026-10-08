@@ -8,7 +8,6 @@ namespace Tools.DialogueSystem.Data
     [CreateAssetMenu(menuName = "Dialogue/Dialogue Database")]
     public class DSDatabase : ScriptableObject
     {
-        public string Name;
         [field: SerializeField] public List<DSConversation> Conversations { get; private set; } = new();
         [field: SerializeField] public List<DSActor> Actors { get; private set; }
         [field: SerializeField] public List<DSAudioClip> AudioClips { get; private set; } = new();

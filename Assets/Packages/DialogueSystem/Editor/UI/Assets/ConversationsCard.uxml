@@ -1,3 +1,25 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Assets/Packages/DialogueSystem/Editor/UI/Assets/DialogueSystem.uss?fileID=7433441132597879392&amp;guid=d8ee67fa447200445a0b5eb322156409&amp;type=3#DialogueSystem"/>
+    <ui:VisualElement name="ConversationCard" tooltip="This is an actor" class="flexGrow Border Background Spacing" style="justify-content: space-evenly; align-self: stretch; align-content: center; align-items: stretch;">
+        <ui:VisualElement class="flexGrow" style="width: 100%; min-width: 70%; max-width: 100%; min-height: 20px; height: 50px; max-height: 60px; flex-direction: row;">
+            <ui:Image source="project://database/Assets/Packages/TweenSystem/Editor/Icons/Dialogue%20Button%20Icon.png?fileID=2779512007517704115&amp;guid=7c5ca9666fd569b46be93404aaa43817&amp;type=3#Dialogue Button Icon_0" name="ConversationImage" style="width: 15%; height: 70%; min-width: 10%; max-width: 40%; min-height: 40%; max-height: 100%;"/>
+            <ui:Label text="" name="ConversationCardTitle" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor" class="title" style="flex-grow: 1; flex-shrink: 1;">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor" data-source-path="_Title_k__BackingField" binding-mode="ToTarget"/>
+                </Bindings>
+            </ui:Label>
+            <ui:Label name="NodeCountLabel" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" text="23 Nodes" class="title" style="-unity-text-align: upper-right; color: rgb(255, 255, 255); -unity-text-auto-size: best-fit 5px 10px;"/>
+            <ui:Button name="DeleteButton" icon-image="project://database/Assets/Editor%20Default%20Resources/Icons/delete.png?fileID=2800000&amp;guid=36090787d5284da4abab0c041d0af4f6&amp;type=3#delete" style="width: 15%; min-width: 10%; max-width: 40%; min-height: 40%; max-height: 100%; height: 70%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;"/>
+        </ui:VisualElement>
+        <ui:TextField label="Name" placeholder-text="Name" name="ConversationName" hide-placeholder-on-focus="true" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="_Title_k__BackingField" binding-mode="TwoWay"/>
+            </Bindings>
+        </ui:TextField>
+        <ui:TextField label="Description" placeholder-text="Description" name="ConversationDescription" hide-placeholder-on-focus="true" multiline="true" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor" focusable="true">
+            <Bindings>
+                <ui:DataBinding property="value" data-source-path="_Description_k__BackingField" binding-mode="TwoWay"/>
+            </Bindings>
+        </ui:TextField>
+    </ui:VisualElement>
 </ui:UXML>

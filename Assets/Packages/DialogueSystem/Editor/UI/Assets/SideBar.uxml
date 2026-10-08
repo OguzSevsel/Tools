@@ -3,10 +3,9 @@
     <ui:VisualElement name="SideBar" class="flexGrow sideBar">
         <ui:VisualElement name="ResizeElement" class="flexGrow" style="width: 10px; height: auto; min-width: 10px; max-width: 10px; max-height: none; min-height: auto;"/>
         <ui:VisualElement name="TabContainer" class="flexGrow">
-            <ui:Label text="Label" name="InspectorLabel" class="height50 title"/>
-            <ui:TabView name="SideBarTabView" class="flexGrow">
+            <ui:Label text="Label" name="CurrentConversationLabel" class="height50 title"/>
+            <ui:TabView name="TabControl" class="flexGrow">
                 <ui:Tab label="Inspector" name="InspectorTab" class="flexGrow"/>
-                <ui:Tab label="Conversations" name="ConversationsSideBarTab" class="flexGrow"/>
             </ui:TabView>
         </ui:VisualElement>
     </ui:VisualElement>

@@ -8,21 +8,24 @@ namespace Tools.DialogueSystem.Data
     public class DSConversation : DSData
     {
         //TODO: This is going to be individual graphs of the Conversations and we will show the conversations on database tab.
-        private List<DSNode> Nodes;
+        private List<DSNode> nodes;
+        public event Action OnNewNodeCreated;
+        public int NodeCount => nodes.Count;
 
         public DSConversation(string title, string description) : base(title, description)
         {
-            Nodes = new List<DSNode>(); 
+            nodes = new List<DSNode>(); 
         }
 
         public List<DSNode> GetNodes()
         {
-            return Nodes;
+            return nodes;
         }
 
         public void AddToNodes(DSNode node)
         {
-            this.Nodes.Add(node);
+            this.nodes.Add(node);
+            OnNewNodeCreated?.Invoke();
         }
     }
 }

@@ -10,19 +10,22 @@ namespace Tools.DialogueSystem.UI.Elements
         private Label currentConversationLabel;
         private TabView tabControl;
         private Tab InspectorTab;
-        private Tab ConversationsTab;
+        private DSConversationsTab ConversationsTab;
 
-        public DSSideBar(VisualTreeAsset sideBarAsset, VisualTreeAsset conversationsTabAsset)
+        public DSSideBar(VisualTreeAsset sideBarAsset, VisualTreeAsset conversationsTabAsset, VisualTreeAsset conversationsCardAsset)
         {
             sideBarAsset.CloneTree(this);
             this.style.width = Length.Percent(25);
             resizeElement = this.Q<VisualElement>("ResizeElement");
-            currentConversationLabel = this.Q<Label>("InspectorLabel");
-            tabControl = this.Q<TabView>("SideBarTabView");
-            InspectorTab = this.Q<Tab>("InspectorTab");
-            ConversationsTab = this.Q<Tab>("ConversationsSideBarTab");
-            conversationsTabAsset.CloneTree(ConversationsTab);
+            
+            currentConversationLabel = this.Q<Label>("CurrentConversationLabel");
+            tabControl = this.Q<TabView>("TabControl");
+
+            ConversationsTab = new DSConversationsTab(conversationsTabAsset, conversationsCardAsset);
             resizeElement.AddManipulator(new ResizeManipulator(this, 15, 35));
+
+            tabControl.Add(ConversationsTab);
+            tabControl.activeTab = ConversationsTab;
         }
     }
 }

@@ -15,9 +15,9 @@ namespace Tools.DialogueSystem.UI
         public DSSideBar sideBar;
         Button miniMapButton;
 
-        public DSGraphTab(VisualTreeAsset conversationsTabAsset, VisualTreeAsset sideBarAsset)
+        public DSGraphTab(VisualTreeAsset conversationsTabAsset, VisualTreeAsset conversationsCardAsset, VisualTreeAsset sideBarAsset)
         {
-            sideBar = new DSSideBar(sideBarAsset, conversationsTabAsset);
+            sideBar = new DSSideBar(sideBarAsset, conversationsTabAsset, conversationsCardAsset);
             label = "Conversations";
 
             graphView = new DSGraphView(this);
