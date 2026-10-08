@@ -1,6 +1,8 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Assets/Packages/DialogueSystem/Editor/UI/Assets/DialogueSystem.uss?fileID=7433441132597879392&amp;guid=d8ee67fa447200445a0b5eb322156409&amp;type=3#DialogueSystem"/>
-    <ui:VisualElement name="AudioClipsCard" tooltip="This is an actor" class="flexGrow Border Background Spacing Size" style="justify-content: space-evenly; align-self: center; align-content: center; align-items: stretch;">
+    <ui:VisualElement name="AudioClipsCard" tooltip="This is an actor" class="flexGrow Border Background Spacing Size" style="justify-content: space-evenly; align-self: center; align-content: center; align-items: stretch; width: 470px; min-width: 470px; max-width: 470px;">
+        <ui:Image source="project://database/Assets/Packages/AudioSystem/Editor/Icons/Sound%20Icon.png?fileID=9061482216138709725&amp;guid=e4ab54edb3e8ec848ab69b1699997545&amp;type=3#Sound Icon_0" name="AudioClipImage" style="position: absolute; width: 40px; height: 40px; top: 3px; left: 3px;"/>
+        <ui:Button name="DeleteButton" icon-image="project://database/Assets/Editor%20Default%20Resources/Icons/delete.png?fileID=2800000&amp;guid=36090787d5284da4abab0c041d0af4f6&amp;type=3#delete" style="position: absolute; right: 0; top: 2px; width: 40px; height: 40px;"/>
         <ui:Label text="New Audio Clip" name="AudioClipTitleLabel" data-source-type="Tools.DialogueSystem.Data.DSAudioClip, Tools.DialogueSystem.Editor" class="title">
             <Bindings>
                 <ui:DataBinding property="text" data-source-path="_Title_k__BackingField" binding-mode="TwoWay"/>

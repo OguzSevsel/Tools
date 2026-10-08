@@ -15,17 +15,25 @@ MonoBehaviour:
   Name: 
   <Conversations>k__BackingField: []
   <Actors>k__BackingField:
-  - <Name>k__BackingField: Deneme
-    Background: Deneme
+  - <Title>k__BackingField: Actor1
+    <Description>k__BackingField: Actor1
+    Background: Actor1
     Sprite: {fileID: -2898002648302925651, guid: 9c2602ab685e1ee4683a7783482bf38e, type: 3}
-  - <Name>k__BackingField: Oguz Sevsel
-    Background: Bucada yasayan bi mal
+  - <Title>k__BackingField: Actor2
+    <Description>k__BackingField: Actor2
+    Background: Actor2
     Sprite: {fileID: 21300000, guid: 125772fa577f22c42971097edbeefae9, type: 3}
-  <AudioClips>k__BackingField: []
+  <AudioClips>k__BackingField:
+  - <Title>k__BackingField: Audio Clip 1
+    <Description>k__BackingField: Audio Clip 1
+    Clip: {fileID: 0}
   <DialogueTexts>k__BackingField:
-  - <Name>k__BackingField: Default Text
-    Text: Deneme
-  - <Name>k__BackingField: Default Text
-    Text: "Hello\t"
-  - <Name>k__BackingField: Default Text
-    Text: Darling
+  - <Title>k__BackingField: Deneme 1
+    <Description>k__BackingField: Deneme 1
+    Text: Deneme 1
+  - <Title>k__BackingField: Deneme 2
+    <Description>k__BackingField: Deneme 2
+    Text: Deneme 2
+  - <Title>k__BackingField: Deneme 3
+    <Description>k__BackingField: Deneme 3
+    Text: Deneme 3

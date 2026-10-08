@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.UI;
@@ -12,9 +11,9 @@ namespace Tools.DialogueSystem
     public class DSActorsTab : Tab
     {
         private ScrollView actorScrollView;
-        private VisualElement actorGrid;
+        private VisualElement actorContainer;
         private VisualTreeAsset cardAsset;
-        private Button createNewActorButton;
+        private Button createActorButton;
         public Dictionary<DSActor, VisualElement> Actors { get; set; }
 
         public DSActorsTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
@@ -25,37 +24,102 @@ namespace Tools.DialogueSystem
             this.cardAsset = cardAsset;
 
             actorScrollView = this.Q<ScrollView>("ActorsScrollView");
-            actorGrid = this.Q<VisualElement>("ActorsCardContainer");
-            createNewActorButton = this.Q<Button>("CreateActorButton");
-            createNewActorButton.clicked += OnCreateNewActorButtonClicked;
+            actorContainer = this.Q<VisualElement>("ActorsCardContainer");
+            createActorButton = this.Q<Button>("CreateActorButton");
+            createActorButton.clicked += OnCreateActorButtonClicked;
+
+            RegisterEvents();
         }
 
-        private void OnCreateNewActorButtonClicked()
+        private void OnDatabaseOpened(DSDatabase database)
+        {
+            foreach (var actor in database.Actors)
+            {
+                var card = CreateCard(cardAsset, actor);
+
+                AddCard(actorContainer, Actors, actor, card);
+            }
+        }
+
+        private void OnDatabaseClosed(DSDatabase database)
+        {
+            foreach (KeyValuePair<DSActor, VisualElement> cardPair in Actors)
+            {
+                var card = cardPair.Value;
+                var text = cardPair.Key;
+
+                actorContainer.Remove(card);
+            }
+
+            Actors.Clear();
+        }
+
+        private void OnCreateActorButtonClicked()
+        {
+            DSActor actor = new DSActor("New Actor", "Actor Description", "Actor Background", default);
+            var cardElement = CreateCard(cardAsset, actor);
+            AddCard(actorContainer, Actors, actor, cardElement);
+            DSDatabaseManager.Current.Register(actor);
+        }
+
+        #region Utils
+
+        private void UnRegisterEvents()
+        {
+            DSDatabaseManager.DatabaseClosed -= OnDatabaseClosed;
+            DSDatabaseManager.DatabaseOpened -= OnDatabaseOpened;
+            DSEditorView.OnWindowCloses -= UnRegisterEvents;
+        }
+
+        private void RegisterEvents()
+        {
+            DSDatabaseManager.DatabaseClosed += OnDatabaseClosed;
+            DSDatabaseManager.DatabaseOpened += OnDatabaseOpened;
+            DSEditorView.OnWindowCloses += UnRegisterEvents;
+        }
+
+        private void AddCard(VisualElement container, Dictionary<DSActor, VisualElement> actors, DSActor actor, VisualElement cardElement)
+        {
+            container.Add(cardElement);
+            actors.Add(actor, cardElement);
+
+            Button deleteButton = cardElement.Q<Button>("DeleteButton");
+            deleteButton.clicked += () => {
+                container.Remove(cardElement);
+                actors.Remove(actor);
+                DSDatabaseManager.Current.Unregister(actor);
+            };
+
+            Image actorImage = cardElement.Q<Image>("ActorImage");
+            ObjectField actorSpriteField = cardElement.Q<ObjectField>("SpriteField");
+            actorSpriteField.RegisterValueChangedCallback<Object>((evt) =>
+            {
+                actorImage.sprite = evt.newValue as Sprite;
+            });
+        }
+
+        private VisualElement CreateCard(VisualTreeAsset cardAsset, DSActor actor)
         {
             VisualElement cardElement = new VisualElement();
             cardAsset.CloneTree(cardElement);
-            cardElement.RegisterCallback<MouseEnterEvent>(OnMouseEnter);
-            cardElement.RegisterCallback<MouseLeaveEvent>(OnMouseLeave);
-            DSActor actor = new DSActor("New Actor", "Actor Description", "Actor Background", default);
+            cardElement.RegisterCallback<MouseEnterEvent>((evt) => {
+                if (evt.currentTarget is VisualElement element)
+                {
+                    element.SetDropShadow();
+                }
+            });
+            cardElement.RegisterCallback<MouseLeaveEvent>((evt) =>
+            {
+                if (evt.currentTarget is VisualElement element)
+                {
+                    element.SetDropShadow(true);
+                }
+            });
             cardElement.dataSource = actor;
-            actorGrid.Add(cardElement);
-            Actors.Add(actor, cardElement);
+
+            return cardElement;
         }
 
-        private void OnMouseLeave(MouseLeaveEvent evt)
-        {
-            if (evt.currentTarget is VisualElement element)
-            {
-                element.SetDropShadow(true);
-            }
-        }
-
-        private void OnMouseEnter(MouseEnterEvent evt)
-        {
-            if (evt.currentTarget is VisualElement element)
-            {
-                element.SetDropShadow();
-            }
-        }
+        #endregion
     }
 }

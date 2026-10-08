@@ -1,11 +1,13 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Assets/Packages/DialogueSystem/Editor/UI/Assets/DialogueSystem.uss?fileID=7433441132597879392&amp;guid=d8ee67fa447200445a0b5eb322156409&amp;type=3#DialogueSystem"/>
-    <ui:VisualElement name="ActorCard" tooltip="This is an actor" class="flexGrow Border Background Spacing Size" style="justify-content: space-evenly; align-self: center; align-content: center; align-items: stretch;">
-        <ui:Label text="Actor Name" name="ActorCardTitle" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" class="title">
+    <ui:VisualElement name="ActorCard" tooltip="This is an actor" class="flexGrow Border Background Spacing Size" style="justify-content: space-evenly; align-self: center; align-content: center; align-items: stretch; width: 470px; min-width: 470px; max-width: 470px;">
+        <ui:Label text="" name="ActorCardTitle" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" class="title">
             <Bindings>
                 <ui:DataBinding property="text" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="_Title_k__BackingField" binding-mode="ToTarget"/>
             </Bindings>
         </ui:Label>
+        <ui:Image source="project://database/Assets/Packages/DialogueSystem/Editor/Icons/actor.png?fileID=1276598283726642267&amp;guid=22a7d2bf1d52f904eb05d5b598b8ed20&amp;type=3#actor_0" name="ActorImage" style="position: absolute; width: 40px; height: 40px; top: 3px; left: 3px;"/>
+        <ui:Button name="DeleteButton" icon-image="project://database/Assets/Editor%20Default%20Resources/Icons/delete.png?fileID=2800000&amp;guid=36090787d5284da4abab0c041d0af4f6&amp;type=3#delete" style="position: absolute; right: 0; top: 2px; width: 40px; height: 40px;"/>
         <ui:TextField label="Name" placeholder-text="Name" name="ActorName" hide-placeholder-on-focus="true" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor">
             <Bindings>
                 <ui:DataBinding property="value" data-source-path="_Title_k__BackingField" binding-mode="TwoWay"/>

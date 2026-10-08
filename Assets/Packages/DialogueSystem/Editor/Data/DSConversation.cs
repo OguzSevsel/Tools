@@ -12,7 +12,7 @@ namespace Tools.DialogueSystem.Data
 
         public DSConversation(string title, string description) : base(title, description)
         {
-            Nodes = new List<DSNode>();      
+            Nodes = new List<DSNode>(); 
         }
 
         public List<DSNode> GetNodes()
