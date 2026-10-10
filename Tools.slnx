@@ -1,4 +1,4 @@
-﻿<Solution>
+<Solution>
   <Project Path="Tools.DialogueSystem.Runtime.csproj" />
   <Project Path="Tools.SaveSystem.Runtime.csproj" />
   <Project Path="Tools.DialogueSystem.Editor.csproj" />
