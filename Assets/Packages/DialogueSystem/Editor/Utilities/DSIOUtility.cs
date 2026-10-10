@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Tools.DialogueSystem.Elements;
-using Tools.DialogueSystem.UI;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using Tools.DialogueSystem.Elements;
+using Tools.DialogueSystem.UI;
 
 namespace Tools.DialogueSystem.Utilities
 {
@@ -16,7 +16,7 @@ namespace Tools.DialogueSystem.Utilities
 
             if (!AssetDatabase.IsValidFolder(fullPath))
             {
-                _ = AssetDatabase.CreateFolder(parentPath, folderName);
+                AssetDatabase.CreateFolder(parentPath, folderName);
                 AssetDatabase.Refresh();
             }
         }
@@ -40,7 +40,7 @@ namespace Tools.DialogueSystem.Utilities
                 return null;
             }
 
-            string relativePath = "Assets" + path[Application.dataPath.Length..];
+            string relativePath = "Assets" + path.Substring(Application.dataPath.Length);
 
             return AssetDatabase.LoadAssetAtPath<DSGraphSO>(relativePath);
         }
@@ -68,7 +68,7 @@ namespace Tools.DialogueSystem.Utilities
             AssetDatabase.SaveAssets();
 
             string assetPath = AssetDatabase.GetAssetPath(graphSO);
-            _ = AssetDatabase.RenameAsset(assetPath, assetName);
+            AssetDatabase.RenameAsset(assetPath, assetName);
 
             foreach (DSDialogueNodeLegacy node in graphView.Nodes)
             {
@@ -95,7 +95,7 @@ namespace Tools.DialogueSystem.Utilities
 
             ClearSubAssets<DSNodeSO>(loadedGraphSO);
             Object.DestroyImmediate(loadedGraphSO, true);
-            _ = AssetDatabase.DeleteAsset(fullPath);
+            AssetDatabase.DeleteAsset(fullPath);
 
             string uniquePath = AssetDatabase.GenerateUniqueAssetPath(fullPath);
 
@@ -103,7 +103,7 @@ namespace Tools.DialogueSystem.Utilities
             AssetDatabase.SaveAssets();
 
             string assetPath = AssetDatabase.GetAssetPath(graphSO);
-            _ = AssetDatabase.RenameAsset(assetPath, assetName);
+            AssetDatabase.RenameAsset(assetPath, assetName);
 
             foreach (DSDialogueNodeLegacy node in graphView.Nodes)
             {
@@ -123,12 +123,12 @@ namespace Tools.DialogueSystem.Utilities
             AssetDatabase.Refresh();
         }
 
-        private static void ClearSubAssets<T>(ScriptableObject parent) where T : ScriptableObject
+        static void ClearSubAssets<T>(ScriptableObject parent) where T : ScriptableObject
         {
             string path = AssetDatabase.GetAssetPath(parent);
-            Object[] assets = AssetDatabase.LoadAllAssetsAtPath(path);
+            var assets = AssetDatabase.LoadAllAssetsAtPath(path);
 
-            foreach (Object asset in assets)
+            foreach (var asset in assets)
             {
                 if (asset is T && asset != parent)
                 {
@@ -139,28 +139,29 @@ namespace Tools.DialogueSystem.Utilities
 
         public static void SaveConnections(DSGraphViewLegacy graphView, DSGraphSO graphSO, DSDialogueNodeLegacy node, DSNodeSO nodeSO)
         {
-            foreach (Port port in node.Choices.Keys)
+            foreach (var port in node.Choices.Keys)
             {
                 if (port.connections.Count() == 0)
                 {
                     DSPortData portData = (DSPortData)port.userData;
                     portData.InNodeId = "";
                     portData.OutNodeId = node.Id;
-                    DSChoice choice = new(portData.PortName, portData.InNodeId);
+                    DSChoice choice = new DSChoice(portData.PortName, portData.InNodeId);
                     nodeSO.Choices.Add(choice);
                     graphSO.Connections.Add((DSPortData)port.userData);
                 }
                 else
                 {
-                    foreach (Edge edge in port.connections)
+                    foreach (var edge in port.connections)
                     {
-                        if (edge.input.node is not DSDialogueNodeLegacy inNode)
+                        DSDialogueNodeLegacy inNode = edge.input.node as DSDialogueNodeLegacy;
+                        if (inNode == null)
                             continue;
                         DSDialogueNodeLegacy outNode = edge.output.node as DSDialogueNodeLegacy;
                         DSPortData portData = (DSPortData)edge.output.userData;
                         portData.InNodeId = inNode.Id;
                         portData.OutNodeId = outNode.Id;
-                        DSChoice choice = new(portData.PortName, portData.InNodeId);
+                        DSChoice choice = new DSChoice(portData.PortName, portData.InNodeId);
                         nodeSO.Choices.Add(choice);
                         graphSO.Connections.Add(portData);
                     }
@@ -172,7 +173,7 @@ namespace Tools.DialogueSystem.Utilities
         {
             if (graphSO.Nodes.Count > 0 && graphSO.Nodes != null)
             {
-                foreach (DSNodeSO nodeSO in graphSO.Nodes)
+                foreach (var nodeSO in graphSO.Nodes)
                 {
                     CreateNode(nodeSO, graphView);
                 }
@@ -199,13 +200,13 @@ namespace Tools.DialogueSystem.Utilities
         {
             Dictionary<string, DSDialogueNodeLegacy> nodeLookUp = graphView.Nodes.OfType<DSDialogueNodeLegacy>().ToDictionary(n => n.Id, n => n);
 
-            foreach (DSPortData conn in graph.Connections)
+            foreach (var conn in graph.Connections)
             {
                 if (!nodeLookUp.TryGetValue(conn.OutNodeId, out DSDialogueNodeLegacy OutputNode)) return;
                 if (!nodeLookUp.TryGetValue(conn.InNodeId, out DSDialogueNodeLegacy InputNode))
                 {
                     Port port = null;
-                    DSPortData portData = new("", OutputNode.Id, conn.PortName);
+                    DSPortData portData = new DSPortData("", OutputNode.Id, conn.PortName);
                     port = OutputNode.CreateChoicePort(conn.PortName, portData);
                     OutputNode.outputContainer.Add(port);
                     OutputNode.RefreshExpandedState();
@@ -213,7 +214,7 @@ namespace Tools.DialogueSystem.Utilities
                 }
 
                 Port outputPort = null;
-                DSPortData data = new(InputNode.Id, OutputNode.Id, conn.PortName);
+                DSPortData data = new DSPortData(InputNode.Id, OutputNode.Id, conn.PortName);
 
                 outputPort = OutputNode.CreateChoicePort(conn.PortName, data);
                 OutputNode.outputContainer.Add(outputPort);

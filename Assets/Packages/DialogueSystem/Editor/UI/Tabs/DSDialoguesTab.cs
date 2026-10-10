@@ -34,8 +34,8 @@ namespace Tools.DialogueSystem.UI
         {
             foreach (KeyValuePair<DSDialogueText, VisualElement> cardPair in dialogues)
             {
-                VisualElement card = cardPair.Value;
-                _ = cardPair.Key;
+                var card = cardPair.Value;
+                var text = cardPair.Key;
 
                 dialogueCardContainer.Remove(card);
             }
@@ -45,9 +45,9 @@ namespace Tools.DialogueSystem.UI
 
         private void OnDatabaseOpened(DSDatabase database)
         {
-            foreach (DSDialogueText text in database.DialogueTexts)
+            foreach (var text in database.DialogueTexts)
             {
-                VisualElement card = CreateCard(cardAsset, text);
+                var card = CreateCard(cardAsset, text);
 
                 AddCard(dialogueCardContainer, dialogues, text, card);
             }
@@ -55,10 +55,10 @@ namespace Tools.DialogueSystem.UI
 
         private void OnCreateDialogueButtonClicked()
         {
-            DSDialogueText textObject = new("New Dialogue", "Dialogue Description", "Dialogue Text");
-            VisualElement cardElement = CreateCard(cardAsset, textObject);
+            DSDialogueText textObject = new DSDialogueText("New Dialogue", "Dialogue Description", "Dialogue Text");
+            var cardElement = CreateCard(cardAsset, textObject);
             AddCard(dialogueCardContainer, dialogues, textObject, cardElement);
-            _ = DSDatabaseManager.Current.Register(textObject);
+            DSDatabaseManager.Current.Register(textObject);
         }
 
         #region Utils
@@ -80,7 +80,7 @@ namespace Tools.DialogueSystem.UI
 
         private VisualElement CreateCard(VisualTreeAsset cardAsset, DSDialogueText textObject)
         {
-            VisualElement cardElement = new();
+            VisualElement cardElement = new VisualElement();
             cardAsset.CloneTree(cardElement);
             cardElement.RegisterCallback<MouseEnterEvent>((evt) =>
             {
@@ -106,10 +106,9 @@ namespace Tools.DialogueSystem.UI
         {
             container.Add(cardElement);
             Button deleteButton = cardElement.Q<Button>("DeleteButton");
-            deleteButton.clicked += () =>
-            {
+            deleteButton.clicked += () => {
                 container.Remove(cardElement);
-                _ = dialogues.Remove(textObject);
+                dialogues.Remove(textObject);
                 DSDatabaseManager.Current.Unregister(textObject);
             };
 

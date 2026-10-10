@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using Tools.TweenSystem.Elements;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Tools.TweenSystem.Elements;
 
 namespace Tools.TweenSystem.Utilities
 {
@@ -20,7 +20,7 @@ namespace Tools.TweenSystem.Utilities
             navigateReference.action.Enable();
             navigateReference.action.performed += OnNavigate;
 
-            foreach (UIElement element in elements)
+            foreach (var element in elements)
             {
                 if (element.gameObject.activeInHierarchy)
                 {
@@ -94,22 +94,31 @@ namespace Tools.TweenSystem.Utilities
             }
         }
 
-        private void Start() => EventSystem.current.SetSelectedGameObject(FirstSelected.gameObject);
+        private void Start()
+        {
+            EventSystem.current.SetSelectedGameObject(FirstSelected.gameObject);
+        }
 
         private void Element_OnSubmit(BaseEventData data)
         {
             UIElement element = data.selectedObject.GetComponent<UIElement>();
-            _ = element.ScaleDown(duration: 0.1f);
+            element.ScaleDown(duration: 0.1f);
         }
 
-        private void Element_OnMouseExit(PointerEventData data) => data.selectedObject = null;
+        private void Element_OnMouseExit(PointerEventData data)
+        {
+            data.selectedObject = null;
+        }
 
-        private void Element_OnMouseEnter(PointerEventData data) => data.selectedObject = data.pointerEnter;
+        private void Element_OnMouseEnter(PointerEventData data)
+        {
+            data.selectedObject = data.pointerEnter;
+        }
 
         private void Element_OnDeselected(BaseEventData data)
         {
             UIElement element = data.selectedObject.GetComponent<UIElement>();
-            _ = element.ScaleDown();
+            element.ScaleDown();
         }
 
         private void Element_OnSelected(BaseEventData obj)
@@ -119,7 +128,7 @@ namespace Tools.TweenSystem.Utilities
 
             Debug.Log($"Last selected: {lastSelected?.name}");
 
-            _ = element.ScaleUp();
+            element.ScaleUp();
         }
 
         private void OnNavigate(InputAction.CallbackContext context)
@@ -133,7 +142,7 @@ namespace Tools.TweenSystem.Utilities
 
         private void OnDestroy()
         {
-            foreach (UIElement element in elements)
+            foreach (var element in elements)
             {
                 if (element.gameObject.activeInHierarchy)
                 {
@@ -206,5 +215,5 @@ namespace Tools.TweenSystem.Utilities
                 }
             }
         }
-    }
+    } 
 }

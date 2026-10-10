@@ -2,12 +2,12 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
-using Tools.Core;
-using Tools.TweenSystem.Extensions;
-using Tools.TweenSystem.Interfaces;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Tools.TweenSystem.Interfaces;
+using Tools.TweenSystem.Extensions;
+using Tools.Core;
 
 namespace Tools.TweenSystem.Elements
 {
@@ -32,7 +32,7 @@ namespace Tools.TweenSystem.Elements
         [SerializeField] private float maxPanelWidth = 200f;
         [SerializeField] private bool toggleScrollBar = true;
         [SerializeField] private bool isBlockerAboveList = true;
-
+        
         [Header("Options")]
         [SerializeField] private List<OptionData> options;
         private GameObject blocker;
@@ -66,22 +66,31 @@ namespace Tools.TweenSystem.Elements
 
             public OptionData(string text, Sprite image, PanelElement panelElement, object refObject = default)
             {
-                Text = text;
-                Image = image;
-                RefObject = refObject;
-                PanelElement = panelElement;
+                this.Text = text;
+                this.Image = image;
+                this.RefObject = refObject;
+                this.PanelElement = panelElement;
 
-                PanelElement.Submitted += OnOptionSelected;
-                PanelElement.OnMouseClick += OnOptionSelected;
-                PanelElement.OnMouseEnter += OnOptionMouseEnter;
-                PanelElement.OnMouseExit += OnOptionMouseExit;
+                this.PanelElement.Submitted += OnOptionSelected;
+                this.PanelElement.OnMouseClick += OnOptionSelected;
+                this.PanelElement.OnMouseEnter += OnOptionMouseEnter;
+                this.PanelElement.OnMouseExit += OnOptionMouseExit;
             }
 
-            private void OnOptionMouseExit(PointerEventData obj) => OnMouseExit?.Invoke(PanelElement);
+            private void OnOptionMouseExit(PointerEventData obj)
+            {
+                this.OnMouseExit?.Invoke(PanelElement);
+            }
 
-            private void OnOptionMouseEnter(PointerEventData obj) => OnMouseEnter?.Invoke(PanelElement);
+            private void OnOptionMouseEnter(PointerEventData obj)
+            {
+                this.OnMouseEnter?.Invoke(PanelElement);
+            }
 
-            private void OnOptionSelected(BaseEventData data) => OnSelected?.Invoke(this);
+            private void OnOptionSelected(BaseEventData data)
+            {
+                this.OnSelected?.Invoke(this);
+            }
         }
 
         private class DropdownBlocker : MonoBehaviour, IPointerClickHandler, ICanvasRaycastFilter
@@ -109,7 +118,12 @@ namespace Tools.TweenSystem.Elements
                 OnCloseDropDown?.Invoke();
             }
 
-            public bool IsRaycastLocationValid(Vector2 sp, Camera eventCamera) => dropdownList == null || !RectTransformUtility.RectangleContainsScreenPoint(dropdownList, sp, eventCamera);
+            public bool IsRaycastLocationValid(Vector2 sp, Camera eventCamera)
+            {
+                if (dropdownList == null) return true;
+
+                return !RectTransformUtility.RectangleContainsScreenPoint(dropdownList, sp, eventCamera);
+            }
         }
 
         #endregion
@@ -122,7 +136,7 @@ namespace Tools.TweenSystem.Elements
             Options = new List<OptionData>();
             dropdownAnimationPanel = dropdownPanel.GetComponent<PanelElement>();
 
-            foreach (OptionData option in options)
+            foreach (var option in options)
             {
                 AddOption(option.Text, option.Image);
             }
@@ -134,7 +148,10 @@ namespace Tools.TweenSystem.Elements
             SetWidthDropdown();
         }
 
-        public virtual void OnValidate() => ToggleScrollBar();
+        public virtual void OnValidate()
+        {
+            ToggleScrollBar();
+        }
 
         #endregion
 
@@ -188,7 +205,7 @@ namespace Tools.TweenSystem.Elements
 
         private GameObject CreateBlocker(Transform parent)
         {
-            GameObject blocker = new("Blocker", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+            GameObject blocker = new GameObject("Blocker", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
 
             RectTransform rt = blocker.GetComponent<RectTransform>();
             rt.SetParent(parent, false);
@@ -209,14 +226,21 @@ namespace Tools.TweenSystem.Elements
 
         private bool IsPartOfLayoutGroup()
         {
-            HorizontalLayoutGroup horizontal = gameObject.GetComponentInParent<HorizontalLayoutGroup>();
-            VerticalLayoutGroup vertical = gameObject.GetComponentInParent<VerticalLayoutGroup>();
-            GridLayoutGroup grid = gameObject.GetComponentInParent<GridLayoutGroup>();
+            var horizontal = this.gameObject.GetComponentInParent<HorizontalLayoutGroup>();
+            var vertical = this.gameObject.GetComponentInParent<VerticalLayoutGroup>();
+            var grid = this.gameObject.GetComponentInParent<GridLayoutGroup>();
 
-            return horizontal != null || vertical != null || grid != null;
+            if (horizontal == null && vertical == null && grid == null)
+            {
+                return false;
+            }
+            return true;
         }
 
-        private void CloseDropdown() => ToggleDropdown();
+        private void CloseDropdown()
+        {
+            ToggleDropdown();
+        }
 
         private void SelectFirstOption()
         {
@@ -226,7 +250,7 @@ namespace Tools.TweenSystem.Elements
 
                 SetCaptions(data.Text, data.Image);
                 SelectedOption = data;
-                OnValueChanged?.Invoke(SelectedOption);
+                this.OnValueChanged?.Invoke(SelectedOption);
             }
         }
 
@@ -238,7 +262,7 @@ namespace Tools.TweenSystem.Elements
                 scrollBar.gameObject.SetActive(true);
                 return;
             }
-
+            
             scrollView.verticalScrollbar = null;
             scrollBar.gameObject.SetActive(false);
         }
@@ -258,7 +282,7 @@ namespace Tools.TweenSystem.Elements
 
                 if (OnClose == null)
                 {
-                    _ = dropdownAnimationPanel.FadeSlideOut();
+                    dropdownAnimationPanel.FadeSlideOut();
                     return;
                 }
 
@@ -270,7 +294,7 @@ namespace Tools.TweenSystem.Elements
 
                 if (OnOpen == null)
                 {
-                    _ = dropdownAnimationPanel.FadeSlideIn();
+                    dropdownAnimationPanel.FadeSlideIn();
                     return;
                 }
 
@@ -347,7 +371,7 @@ namespace Tools.TweenSystem.Elements
             data.OnSelected += OnValueChangedHandler;
             data.OnMouseEnter += OnOptionMouseEnter;
             data.OnMouseExit += OnOptionMouseExit;
-
+            
             view.Text.text = data.Text;
             view.Icon.sprite = data.Image;
 
@@ -358,13 +382,13 @@ namespace Tools.TweenSystem.Elements
         {
             ClearOptions();
 
-            foreach (OptionData option in options)
+            foreach (var option in options)
             {
                 if (option.RefObject != null)
                 {
                     AddOption(option.Text, option.Image, option.RefObject);
                 }
-                else
+                else 
                 {
                     AddOption(option.Text, option.Image);
                 }
@@ -380,20 +404,20 @@ namespace Tools.TweenSystem.Elements
         public void SetOption(int value)
         {
             if (Options.Count <= 0) return;
-            if (value < 0 || value >= Options.Count) return;
+            if(value < 0 || value >= Options.Count) return;
 
             OptionData data = Options[value];
-            OnValueChanged?.Invoke(data);
-            SelectedOption = data;
+            this.OnValueChanged?.Invoke(data);
+            this.SelectedOption = data;
             SetCaptions(data.Text, data.Image);
         }
-
+            
         public void SetOption(OptionData data)
         {
             if (!Options.Contains(data)) return;
 
-            OnValueChanged?.Invoke(data);
-            SelectedOption = data;
+            this.OnValueChanged?.Invoke(data);
+            this.SelectedOption = data;
             SetCaptions(data.Text, data.Image);
         }
 
@@ -401,7 +425,7 @@ namespace Tools.TweenSystem.Elements
         {
             OptionData data = null;
 
-            foreach (OptionData option in Options)
+            foreach (var option in Options)
             {
                 if (option.RefObject == refObject)
                 {
@@ -411,8 +435,8 @@ namespace Tools.TweenSystem.Elements
 
             if (data != null)
             {
-                OnValueChanged?.Invoke(data);
-                SelectedOption = data;
+                this.OnValueChanged?.Invoke(data);
+                this.SelectedOption = data;
                 SetCaptions(data.Text, data.Image);
                 return;
             }
@@ -422,7 +446,7 @@ namespace Tools.TweenSystem.Elements
 
         public OptionData GetOption(object refObject)
         {
-            foreach (OptionData option in Options)
+            foreach (var option in Options)
             {
                 if (option.RefObject == refObject)
                 {
@@ -434,7 +458,7 @@ namespace Tools.TweenSystem.Elements
 
         public OptionData GetOption(Image image)
         {
-            foreach (OptionData option in Options)
+            foreach (var option in Options)
             {
                 if (option.Image == image)
                 {
@@ -446,7 +470,7 @@ namespace Tools.TweenSystem.Elements
 
         public OptionData GetOption(string text)
         {
-            foreach (OptionData option in Options)
+            foreach (var option in Options)
             {
                 if (option.Text == text)
                 {
@@ -456,37 +480,49 @@ namespace Tools.TweenSystem.Elements
             return null;
         }
 
-        public OptionData GetOption(int index) => Options.Count <= 0 ? null : index < 0 || index >= Options.Count ? null : Options[index];
+        public OptionData GetOption(int index)
+        {
+            if (Options.Count <= 0) return null;
+            if (index < 0 || index >= Options.Count) return null;
+
+            return Options[index];
+        }
 
         #endregion
 
         #region Events
 
-        private void OnOptionMouseExit(PanelElement element) => element.ScaleDown();
+        private void OnOptionMouseExit(PanelElement element)
+        {
+            element.ScaleDown();
+        }
 
-        private void OnOptionMouseEnter(PanelElement element) => element.ScaleUp();
+        private void OnOptionMouseEnter(PanelElement element)
+        {
+            element.ScaleUp();
+        }
 
         private void OnValueChangedHandler(OptionData data)
         {
-            SelectedOption = data;
+            this.SelectedOption = data;
             SetCaptions(data.Text, data.Image);
             ToggleDropdown();
 
             if (!EventSettings.OnValueChanged) return;
 
-            OnValueChanged?.Invoke(data);
+            this.OnValueChanged?.Invoke(data);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (!EventSettings.Interactable) return;
-            OnMouseEnter?.Invoke(eventData);
+            this.OnMouseEnter?.Invoke(eventData);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             if (!EventSettings.Interactable) return;
-            OnMouseExit?.Invoke(eventData);
+            this.OnMouseExit?.Invoke(eventData);
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -494,21 +530,21 @@ namespace Tools.TweenSystem.Elements
             if (!EventSettings.Interactable) return;
             ToggleDropdown();
 
-            OnMouseClick?.Invoke(eventData);
+            this.OnMouseClick?.Invoke(eventData);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
             if (!EventSettings.Interactable) return;
 
-            OnMouseUp?.Invoke(eventData);
+            this.OnMouseUp?.Invoke(eventData);
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
             if (!EventSettings.Interactable) return;
 
-            OnMouseDown?.Invoke(eventData);
+            this.OnMouseDown?.Invoke(eventData);
         }
 
         #endregion

@@ -33,9 +33,9 @@ namespace Tools.DialogueSystem
 
         private void OnDatabaseOpened(DSDatabase database)
         {
-            foreach (DSActor actor in database.Actors)
+            foreach (var actor in database.Actors)
             {
-                VisualElement card = CreateCard(cardAsset, actor);
+                var card = CreateCard(cardAsset, actor);
 
                 AddCard(actorContainer, Actors, actor, card);
             }
@@ -45,8 +45,8 @@ namespace Tools.DialogueSystem
         {
             foreach (KeyValuePair<DSActor, VisualElement> cardPair in Actors)
             {
-                VisualElement card = cardPair.Value;
-                _ = cardPair.Key;
+                var card = cardPair.Value;
+                var text = cardPair.Key;
 
                 actorContainer.Remove(card);
             }
@@ -56,10 +56,10 @@ namespace Tools.DialogueSystem
 
         private void OnCreateActorButtonClicked()
         {
-            DSActor actor = new("New Actor", "Actor Description", "Actor Background", default);
-            VisualElement cardElement = CreateCard(cardAsset, actor);
+            DSActor actor = new DSActor("New Actor", "Actor Description", "Actor Background", default);
+            var cardElement = CreateCard(cardAsset, actor);
             AddCard(actorContainer, Actors, actor, cardElement);
-            _ = DSDatabaseManager.Current.Register(actor);
+            DSDatabaseManager.Current.Register(actor);
         }
 
         #region Utils
@@ -84,16 +84,15 @@ namespace Tools.DialogueSystem
             actors.Add(actor, cardElement);
 
             Button deleteButton = cardElement.Q<Button>("DeleteButton");
-            deleteButton.clicked += () =>
-            {
+            deleteButton.clicked += () => {
                 container.Remove(cardElement);
-                _ = actors.Remove(actor);
+                actors.Remove(actor);
                 DSDatabaseManager.Current.Unregister(actor);
             };
 
             Image actorImage = cardElement.Q<Image>("ActorImage");
             ObjectField actorSpriteField = cardElement.Q<ObjectField>("SpriteField");
-            _ = actorSpriteField.RegisterValueChangedCallback<Object>((evt) =>
+            actorSpriteField.RegisterValueChangedCallback<Object>((evt) =>
             {
                 actorImage.sprite = evt.newValue as Sprite;
             });
@@ -101,10 +100,9 @@ namespace Tools.DialogueSystem
 
         private VisualElement CreateCard(VisualTreeAsset cardAsset, DSActor actor)
         {
-            VisualElement cardElement = new();
+            VisualElement cardElement = new VisualElement();
             cardAsset.CloneTree(cardElement);
-            cardElement.RegisterCallback<MouseEnterEvent>((evt) =>
-            {
+            cardElement.RegisterCallback<MouseEnterEvent>((evt) => {
                 if (evt.currentTarget is VisualElement element)
                 {
                     element.SetDropShadow();

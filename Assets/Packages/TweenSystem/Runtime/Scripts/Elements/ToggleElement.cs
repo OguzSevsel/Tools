@@ -2,13 +2,15 @@ using PrimeTween;
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Tools.TweenSystem.Interfaces;
 
 namespace Tools.TweenSystem.Elements
 {
     public class ToggleElement : UIElement
     {
-        [field: SerializeField] public Image CheckMarkImage { get; private set; }
+        [field: SerializeField] public Image CheckMarkImage {  get; private set; }
         public Toggle ToggleComponent { get; private set; }
         public TextMeshProUGUI Text { get; private set; }
         public bool Value { get; private set; }
@@ -22,7 +24,7 @@ namespace Tools.TweenSystem.Elements
             base.Awake();
             ToggleComponent = GetComponent<Toggle>();
             Text = GetComponentInChildren<TextMeshProUGUI>();
-            Value = ToggleComponent.isOn;
+            this.Value = ToggleComponent.isOn;
             ToggleComponent.onValueChanged.AddListener(ValueChangedHandler);
         }
 
@@ -47,7 +49,7 @@ namespace Tools.TweenSystem.Elements
             if (charCount == 0) charCount = Text.text.Length;
 
             Text.ForceMeshUpdate();
-            _ = Tween.TextMaxVisibleCharacters(Text,
+            Tween.TextMaxVisibleCharacters(Text,
                 charCount,
                 duration ?? AnimationSettings.Duration,
                 ease ?? AnimationSettings.Ease,
@@ -106,11 +108,14 @@ namespace Tools.TweenSystem.Elements
 
         public void SetValue(bool value)
         {
-            Value = value;
-            ToggleComponent.isOn = value;
+            this.Value = value;
+            this.ToggleComponent.isOn = value;
         }
 
-        public void SetText(string value) => Text.text = value;
+        public void SetText(string value)
+        {
+            Text.text = value;
+        }
 
         public void AppendText(string value)
         {
@@ -119,7 +124,10 @@ namespace Tools.TweenSystem.Elements
             Text.text = newText;
         }
 
-        public void Clear() => Text.text = string.Empty;
+        public void Clear()
+        {
+            Text.text = string.Empty;
+        }
 
         #endregion
 
@@ -127,7 +135,7 @@ namespace Tools.TweenSystem.Elements
 
         private void ValueChangedHandler(bool value)
         {
-            Value = value;
+            this.Value = value;
 
             if (!EventSettings.OnValueChanged) return;
 

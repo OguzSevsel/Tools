@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using Tools.AutoTagSystem;
-using Tools.TweenSystem.Elements;
-using Tools.TweenSystem.Interfaces;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Tools.TweenSystem.Interfaces;
+using Tools.TweenSystem.Elements;
 
 namespace Tools.DialogueSystem.Elements
 {
@@ -30,7 +30,10 @@ namespace Tools.DialogueSystem.Elements
 
         private Tween dialogueTween;
 
-        public override void Awake() => base.Awake();
+        public override void Awake()
+        {
+            base.Awake();
+        }
 
         public Tween Color(
             UnityEngine.Color? endValue = null,
@@ -74,7 +77,7 @@ namespace Tools.DialogueSystem.Elements
 
         public void ShowChoicesText(List<DSChoice> choices, System.Action<DSChoice> onComplete = null)
         {
-            foreach (DSChoice choice in choices)
+            foreach (var choice in choices)
             {
                 DialogOptionButton choiceButton = Instantiate(choiceButtonPrefab, choicesContainer.transform);
                 TextMeshProUGUI choiceButtonText = choiceButton.GetComponentInChildren<TextMeshProUGUI>();
@@ -88,11 +91,20 @@ namespace Tools.DialogueSystem.Elements
             }
         }
 
-        public void EndDialog() => SetActive(false);
+        public void EndDialog()
+        {
+            SetActive(false);
+        }
 
-        public void TextColorSpeakerName() => speakerNameText.TextColor();
+        public void TextColorSpeakerName()
+        {
+            speakerNameText.TextColor();
+        }
 
-        public void TextColorDialogue() => speakerNameText.TextColor();
+        public void TextColorDialogue()
+        {
+            speakerNameText.TextColor();
+        }
 
         #endregion
 

@@ -1,8 +1,8 @@
 namespace Tools.DialogueSystem
 {
-    public interface IDialogueEvent
-    {
-        string DialogueId { get; }
-        string ActorName { get; }
-    }
+	public interface IDialogueEvent
+	{
+        public string DialogueId { get; }
+        public string ActorName { get; }
+	}
 }

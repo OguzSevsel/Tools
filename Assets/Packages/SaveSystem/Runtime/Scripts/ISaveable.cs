@@ -2,8 +2,8 @@ namespace Tools.SaveSystem
 {
     public interface ISaveable
     {
-        object CaptureState();
-        void RestoreState(object state);
-        string GetUniqueId();
-    }
+        public object CaptureState();
+        public void RestoreState(object state);
+        public string GetUniqueId();
+    } 
 }

@@ -16,7 +16,7 @@ namespace Tools.TweenSystem.Utilities
 
         public AnimSequence Begin(Tween tween)
         {
-            _ = _seq.Chain(tween);
+            _seq.Chain(tween);
             _hasSlot = true;
             return this;
         }
@@ -25,7 +25,7 @@ namespace Tools.TweenSystem.Utilities
         {
             if (!_hasSlot)
                 return Begin(tween);
-            _ = _seq.Group(tween);
+            _seq.Group(tween);
             return this;
         }
 
@@ -37,7 +37,7 @@ namespace Tools.TweenSystem.Utilities
 
         public AnimSequence SetDelay(float time)
         {
-            _ = _seq.ChainDelay(time);
+            _seq.ChainDelay(time);
             _hasSlot = false;
             return this;
         }
@@ -48,11 +48,14 @@ namespace Tools.TweenSystem.Utilities
             return this;
         }
 
-        public void Stop() => _seq.Stop();
+        public void Stop()
+        {
+            _seq.Stop();
+        }
 
         public AnimSequence OnComplete<T>(T target, System.Action<T> cb) where T : class
         {
-            _ = _seq.OnComplete(target: target, onComplete: cb);
+            _seq.OnComplete(target: target, onComplete: cb);
             return this;
         }
     }

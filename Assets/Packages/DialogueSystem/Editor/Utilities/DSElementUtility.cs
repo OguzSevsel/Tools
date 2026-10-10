@@ -1,10 +1,12 @@
 using System;
-using System.Collections.Generic;
-using Tools.DialogueSystem.Elements;
-using Tools.DialogueSystem.UI.Elements;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
+using Tools.DialogueSystem.Elements;
+using Tools.DialogueSystem.UI;
+using UnityEngine;
+using System.Collections.Generic;
+using Tools.DialogueSystem.UI.Elements;
 
 namespace Tools.DialogueSystem.Utilities
 {
@@ -12,7 +14,7 @@ namespace Tools.DialogueSystem.Utilities
     {
         public static VisualElement CreateVisualElement(VisualElement parent)
         {
-            VisualElement element = new();
+            VisualElement element = new VisualElement();
             element.style.flexGrow = 1;
             element.style.alignContent = Align.Stretch;
             element.style.position = Position.Relative;
@@ -23,7 +25,7 @@ namespace Tools.DialogueSystem.Utilities
 
         public static Button CreateButton(string text, Action onClick = null)
         {
-            Button button = new(onClick)
+            Button button = new Button(onClick)
             {
                 text = text,
             };
@@ -33,7 +35,7 @@ namespace Tools.DialogueSystem.Utilities
 
         public static Foldout CreateFoldout(string title, bool collapsed = false)
         {
-            Foldout foldout = new()
+            Foldout foldout = new Foldout()
             {
                 text = title,
                 value = !collapsed
@@ -44,12 +46,12 @@ namespace Tools.DialogueSystem.Utilities
 
         public static DropdownField CreateDropdown(string title, List<string> choices = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
         {
-            DropdownField dropdown = new()
+            DropdownField dropdown = new DropdownField()
             {
                 choices = choices,
                 label = title
             };
-
+            
             if (dropdown.choices.Count > 0)
             {
                 dropdown.value = choices[0];
@@ -57,7 +59,7 @@ namespace Tools.DialogueSystem.Utilities
 
             if (onValueChanged != null)
             {
-                _ = dropdown.RegisterValueChangedCallback(onValueChanged);
+                dropdown.RegisterValueChangedCallback(onValueChanged);
             }
 
             return dropdown;
@@ -65,22 +67,22 @@ namespace Tools.DialogueSystem.Utilities
 
         public static Label CreateLabel(string text, EventCallback<ChangeEvent<string>> onValueChanged = null)
         {
-            Label label = new()
+            Label label = new Label()
             {
                 text = text,
             };
 
             if (onValueChanged != null)
             {
-                _ = label.RegisterValueChangedCallback(onValueChanged);
+                label.RegisterValueChangedCallback(onValueChanged);
             }
 
             return label;
         }
 
-        public static ObjectField CreateObjectField(string title, Type type, string label = null, EventCallback<ChangeEvent<UnityEngine.Object>> onValueChanged = null)
+        public static ObjectField CreateObjectField(string title, Type type, string label = null,  EventCallback<ChangeEvent<UnityEngine.Object>> onValueChanged = null)
         {
-            ObjectField objectField = new()
+            ObjectField objectField = new ObjectField()
             {
                 label = label,
                 objectType = type,
@@ -89,7 +91,7 @@ namespace Tools.DialogueSystem.Utilities
 
             if (onValueChanged != null)
             {
-                _ = objectField.RegisterValueChangedCallback(onValueChanged);
+                objectField.RegisterValueChangedCallback(onValueChanged);
             }
 
             return objectField;
@@ -115,7 +117,7 @@ namespace Tools.DialogueSystem.Utilities
 
         public static TextField CreateTextField(string value = null, string label = null, bool isMultiLine = false, EventCallback<ChangeEvent<string>> onValueChanged = null)
         {
-            TextField textField = new()
+            TextField textField = new TextField()
             {
                 value = value,
                 label = label
@@ -123,7 +125,7 @@ namespace Tools.DialogueSystem.Utilities
 
             if (onValueChanged != null)
             {
-                _ = textField.RegisterValueChangedCallback(onValueChanged);
+                textField.RegisterValueChangedCallback(onValueChanged);
             }
 
             textField.multiline = isMultiLine;

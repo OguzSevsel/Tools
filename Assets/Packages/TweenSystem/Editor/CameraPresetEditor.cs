@@ -1,6 +1,6 @@
-using Tools.TweenSystem.Settings;
 using UnityEditor;
 using UnityEngine.UIElements;
+using Tools.TweenSystem.Settings;
 
 namespace Tools.TweenSystem.EditorTools
 {
@@ -18,5 +18,5 @@ namespace Tools.TweenSystem.EditorTools
 
             return Root;
         }
-    }
+    } 
 }

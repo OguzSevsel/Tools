@@ -24,7 +24,7 @@ namespace Tools.DialogueSystem.UI
             this.dropdown = dropdown;
             this.displayNameFunc = displayNameFunc;
 
-            _ = dropdown.RegisterValueChangedCallback(OnDropdownChanged);
+            dropdown.RegisterValueChangedCallback(OnDropdownChanged);
         }
 
         public void SetItems(IEnumerable<T> newItems)
@@ -71,5 +71,5 @@ namespace Tools.DialogueSystem.UI
 
             ValueChanged?.Invoke(Value);
         }
-    }
+    } 
 }

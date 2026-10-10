@@ -29,8 +29,11 @@ namespace Tools.SaveSystem
                 Instance.saveables.Add(saveable);
         }
 
-        public static void Unregister(ISaveable saveable) => Instance.saveables.Remove(saveable);
+        public static void Unregister(ISaveable saveable)
+        {
+            Instance.saveables.Remove(saveable);
+        }
 
         public static IEnumerable<ISaveable> GetAllSaveables() => Instance.saveables;
-    }
+    } 
 }

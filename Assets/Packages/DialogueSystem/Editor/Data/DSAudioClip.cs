@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace Tools.DialogueSystem.Data
@@ -10,7 +11,7 @@ namespace Tools.DialogueSystem.Data
 
         public DSAudioClip(string title, string description, AudioClip clip) : base(title, description)
         {
-            Clip = clip;
+            this.Clip = clip;
         }
     }
 }

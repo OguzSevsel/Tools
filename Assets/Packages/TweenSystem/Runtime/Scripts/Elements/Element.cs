@@ -1,7 +1,7 @@
 using PrimeTween;
-using Tools.TweenSystem.Settings;
-using Tools.TweenSystem.Utilities;
 using UnityEngine;
+using Tools.TweenSystem.Utilities;
+using Tools.TweenSystem.Settings;
 
 namespace Tools.TweenSystem.Elements
 {
@@ -22,10 +22,13 @@ namespace Tools.TweenSystem.Elements
                 Subscribe(ElementId, this);
             }
 
-            DefaultLocalPosition = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, gameObject.transform.localPosition.z);
+            DefaultLocalPosition = new Vector3(this.gameObject.transform.localPosition.x, this.gameObject.transform.localPosition.y, this.gameObject.transform.localPosition.z);
         }
 
-        public virtual void OnDestroy() => Unsubscribe();
+        public virtual void OnDestroy()
+        {
+            Unsubscribe();
+        }
 
         public void Subscribe<T>(string id, T register) where T : Element
         {
@@ -43,7 +46,10 @@ namespace Tools.TweenSystem.Elements
 
         }
 
-        public virtual void OnEnable() => SaveLocalPos();
+        public virtual void OnEnable()
+        {
+            SaveLocalPos();
+        }
 
         public AnimSequence Animate(bool unScaledTime = true)
         {
@@ -53,37 +59,47 @@ namespace Tools.TweenSystem.Elements
 
         public void ResetLocalPos()
         {
-            gameObject.transform.localPosition = Vector3.zero;
-            DefaultLocalPosition = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, gameObject.transform.localPosition.z);
+            this.gameObject.transform.localPosition = Vector3.zero;
+            DefaultLocalPosition = new Vector3(this.gameObject.transform.localPosition.x, this.gameObject.transform.localPosition.y, this.gameObject.transform.localPosition.z);
         }
 
-        public void SaveLocalPos() => DefaultLocalPosition = new Vector3(gameObject.transform.localPosition.x, gameObject.transform.localPosition.y, gameObject.transform.localPosition.z);
+        public void SaveLocalPos()
+        {
+            DefaultLocalPosition = new Vector3(this.gameObject.transform.localPosition.x, this.gameObject.transform.localPosition.y, this.gameObject.transform.localPosition.z);
+        }
 
         public virtual void SetActive(bool active = true)
         {
             if (active)
             {
-                if (!gameObject.activeInHierarchy)
+                if (!this.gameObject.activeInHierarchy)
                 {
-                    gameObject.SetActive(true);
+                    this.gameObject.SetActive(true);
                 }
             }
             else
             {
-                if (gameObject.activeInHierarchy)
+                if (this.gameObject.activeInHierarchy)
                 {
-                    gameObject.SetActive(false);
+                    this.gameObject.SetActive(false);
                 }
             }
         }
 
-        public virtual bool IsActive() => gameObject.activeInHierarchy;
+        public virtual bool IsActive()
+        {
+            if (gameObject.activeInHierarchy)
+            {
+                return true;
+            }
+            return false;
+        }
 
         #region Animations
 
         private Vector3 GetDirectionOffSet(SlideDirection direction, Vector3 startPos, float distance)
         {
-            Vector3 endPos = new(startPos.x, startPos.y, startPos.z);
+            Vector3 endPos = new Vector3(startPos.x, startPos.y, startPos.z);
 
             switch (direction)
             {
@@ -382,9 +398,9 @@ namespace Tools.TweenSystem.Elements
             bool unScaledTime = true,
             System.Action<Element> onComplete = null)
         {
-            if (gameObject.activeInHierarchy)
+            if (this.gameObject.activeInHierarchy)
             {
-                gameObject.transform.localPosition = GetDirectionOffSet(
+                this.gameObject.transform.localPosition = GetDirectionOffSet(
                     direction ?? AnimationSettings.SlideInDirection,
                     DefaultLocalPosition,
                     slideDistance ?? AnimationSettings.SlideDistance);
@@ -414,7 +430,7 @@ namespace Tools.TweenSystem.Elements
         {
             Vector3 endPos = DefaultLocalPosition;
 
-            if (gameObject.activeInHierarchy)
+            if (this.gameObject.activeInHierarchy)
             {
                 endPos = GetDirectionOffSet(
                 direction ?? AnimationSettings.SlideOutDirection,
@@ -503,5 +519,5 @@ namespace Tools.TweenSystem.Elements
         }
 
         #endregion
-    }
+    } 
 }

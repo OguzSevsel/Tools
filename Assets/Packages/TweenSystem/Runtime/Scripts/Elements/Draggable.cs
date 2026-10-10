@@ -1,7 +1,7 @@
 using System;
-using Tools.TweenSystem.Interfaces;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Tools.TweenSystem.Interfaces;
 
 namespace Tools.TweenSystem.Elements
 {
@@ -43,7 +43,7 @@ namespace Tools.TweenSystem.Elements
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            _ = RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
                 (RectTransform)RectTransform.parent,
                 eventData.position,
                 eventData.pressEventCamera,
@@ -53,6 +53,9 @@ namespace Tools.TweenSystem.Elements
             OnDragBegin?.Invoke(eventData);
         }
 
-        public void OnEndDrag(PointerEventData eventData) => OnDragEnd?.Invoke(eventData);
-    }
+        public void OnEndDrag(PointerEventData eventData)
+        {
+            OnDragEnd?.Invoke(eventData);
+        }
+    } 
 }

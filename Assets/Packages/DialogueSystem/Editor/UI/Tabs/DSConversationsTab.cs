@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using CodiceApp.EventTracking;
+using System;
+using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
+using UnityEditor;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
@@ -32,9 +36,9 @@ namespace Tools.DialogueSystem.UI
 
         private void OnDatabaseOpened(DSDatabase database)
         {
-            foreach (DSConversation conversation in database.Conversations)
+            foreach (var conversation in database.Conversations)
             {
-                VisualElement card = CreateCard(cardAsset, conversation);
+                var card = CreateCard(cardAsset, conversation);
                 AddCard(container, conversations, card, conversation);
             }
         }
@@ -43,8 +47,8 @@ namespace Tools.DialogueSystem.UI
         {
             foreach (KeyValuePair<DSConversation, VisualElement> cardPair in conversations)
             {
-                VisualElement card = cardPair.Value;
-                _ = cardPair.Key;
+                var card = cardPair.Value;
+                var text = cardPair.Key;
 
                 container.Remove(card);
             }
@@ -54,10 +58,10 @@ namespace Tools.DialogueSystem.UI
 
         private void OnCreateButtonClicked()
         {
-            DSConversation newConversation = new("New Conversation", "Conversation Description");
-            VisualElement cardElement = CreateCard(cardAsset, newConversation);
+            DSConversation newConversation = new DSConversation("New Conversation", "Conversation Description");
+            var cardElement = CreateCard(cardAsset, newConversation);
             AddCard(container, conversations, cardElement, newConversation);
-            _ = DSDatabaseManager.Current.Register(newConversation);
+            DSDatabaseManager.Current.Register(newConversation);
         }
 
         #region Utils
@@ -90,18 +94,17 @@ namespace Tools.DialogueSystem.UI
             deleteButton.clicked += () =>
             {
                 container.Remove(cardElement);
-                _ = conversations.Remove(conversation);
+                conversations.Remove(conversation);
                 DSDatabaseManager.Current.Unregister(conversation);
             };
         }
 
         private VisualElement CreateCard(VisualTreeAsset cardAsset, DSConversation conversation)
         {
-            VisualElement cardElement = new();
+            VisualElement cardElement = new VisualElement();
             cardAsset.CloneTree(cardElement);
 
-            cardElement.RegisterCallback<MouseEnterEvent>((evt) =>
-            {
+            cardElement.RegisterCallback<MouseEnterEvent>((evt) => {
                 if (evt.currentTarget is VisualElement element)
                 {
                     element.SetDropShadow();

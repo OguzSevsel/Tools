@@ -16,16 +16,16 @@ namespace Tools.AudioSystem
 
         private AudioSource CreateSource()
         {
-            GameObject go = new("AudioSource_Pooled");
+            var go = new GameObject("AudioSource_Pooled");
             go.transform.SetParent(transform);
-            AudioSource src = go.AddComponent<AudioSource>();
+            var src = go.AddComponent<AudioSource>();
             go.SetActive(false);
             return src;
         }
 
         public AudioSource Get()
         {
-            AudioSource src = _pool.Count > 0 ? _pool.Dequeue() : CreateSource();
+            var src = _pool.Count > 0 ? _pool.Dequeue() : CreateSource();
             src.gameObject.SetActive(true);
             return src;
         }
@@ -37,5 +37,5 @@ namespace Tools.AudioSystem
             src.gameObject.SetActive(false);
             _pool.Enqueue(src);
         }
-    }
+    } 
 }

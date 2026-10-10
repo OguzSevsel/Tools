@@ -18,7 +18,10 @@ namespace Tools.DialogueSystem
         public bool IsStartNode;
         public List<DSChoice> Choices = new();
 
-        public DSChoice GetTargetById(string choiceTargetId) => Choices.Find(choice => choice.TargetNodeId == choiceTargetId);
+        public DSChoice GetTargetById(string choiceTargetId)
+        {
+            return Choices.Find(choice => choice.TargetNodeId == choiceTargetId);
+        }
     }
 }
 

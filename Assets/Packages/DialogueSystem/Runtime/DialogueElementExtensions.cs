@@ -1,6 +1,7 @@
 using PrimeTween;
-using Tools.DialogueSystem.Elements;
+using UnityEngine;
 using Tools.TweenSystem.Utilities;
+using Tools.DialogueSystem.Elements;
 
 namespace Tools.DialogueSystem.Extensions
 {
@@ -17,7 +18,7 @@ namespace Tools.DialogueSystem.Extensions
             bool unScaledTime = true,
             System.Action<DialogueElement> onComplete = null)
         {
-            AnimSequence seq = el.Animate()
+            var seq = el.Animate()
                 .Begin(el.Color(
                     endValue: endValue,
                     duration: duration,
@@ -33,10 +34,10 @@ namespace Tools.DialogueSystem.Extensions
                     endDelay: endDelay,
                     unScaledTime: unScaledTime));
 
-            _ = seq.SetLoops(cycles);
+            seq.SetLoops(cycles);
 
             if (onComplete != null)
-                _ = seq.OnComplete(el, onComplete);
+                seq.OnComplete(el, onComplete);
 
             return seq;
         }

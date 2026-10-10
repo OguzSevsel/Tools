@@ -29,6 +29,6 @@ public static class TextFieldExtensions
     {
         int start = Mathf.Min(textField.cursorIndex, textField.selectIndex);
         int end = Mathf.Max(textField.cursorIndex, textField.selectIndex);
-        return start == end ? string.Empty : textField.text[start..end];
+        return start == end ? string.Empty : textField.text.Substring(start, end - start);
     }
 }

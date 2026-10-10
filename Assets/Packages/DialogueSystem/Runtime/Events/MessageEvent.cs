@@ -15,13 +15,16 @@ namespace Tools.DialogueSystem
         internal MessageEvent(DialogueRunner.DialogueInternal runner, string dialogueId, string actorName, string dialogueText, Sprite actorSprite, AudioClip audioClip)
         {
             this.runner = runner;
-            DialogueId = dialogueId;
-            ActorName = actorName;
-            DialogueText = dialogueText;
-            ActorSprite = actorSprite;
-            AudioClip = audioClip;
+            this.DialogueId = dialogueId;
+            this.ActorName = actorName;
+            this.DialogueText = dialogueText;
+            this.ActorSprite = actorSprite;
+            this.AudioClip = audioClip;
         }
 
-        public void Advance() => runner.AdvanceToChoices(DialogueId);
+        public void Advance()
+        {
+            runner.AdvanceToChoices(DialogueId);
+        }
     }
 }

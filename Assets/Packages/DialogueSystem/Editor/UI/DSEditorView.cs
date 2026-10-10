@@ -2,6 +2,7 @@ using System;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -26,21 +27,21 @@ namespace Tools.DialogueSystem.UI
         [SerializeField] private VisualTreeAsset conversationsTabAsset;
         [SerializeField] private VisualTreeAsset conversationCardAsset;
 
-        private DSGraphTab graphTab;
-        private DSActorsTab actorsTab;
-        private DSAudioClipsTab audioClipsTab;
-        private DSDialoguesTab dialoguesTab;
-        private DSDatabaseTab databaseTab;
-        private TabView tabView;
-        private VisualElement databaseDialogContainer;
-        private Button createDatabaseButton;
-        private Button loadDatabaseButton;
+        DSGraphTab graphTab;
+        DSActorsTab actorsTab;
+        DSAudioClipsTab audioClipsTab;
+        DSDialoguesTab dialoguesTab;
+        DSDatabaseTab databaseTab;
+        TabView tabView;
+        VisualElement databaseDialogContainer;
+        Button createDatabaseButton;
+        Button loadDatabaseButton;
         public static event Action OnWindowCloses;
 
         [MenuItem("Tools/Dialogue Graph")]
         public static void Open()
         {
-            DSEditorView window = GetWindow<DSEditorView>();
+            var window = GetWindow<DSEditorView>();
             window.maximized = true;
             window.titleContent = new UnityEngine.GUIContent("Database Name");
         }
@@ -60,7 +61,10 @@ namespace Tools.DialogueSystem.UI
             loadDatabaseButton.clicked += OnLoadDatabaseButtonClicked;
         }
 
-        private void OnDisable() => OnWindowCloses?.Invoke();
+        private void OnDisable()
+        {
+            OnWindowCloses?.Invoke();
+        }
 
         private void OnLoadDatabaseButtonClicked()
         {
@@ -72,7 +76,7 @@ namespace Tools.DialogueSystem.UI
                 databaseDialogContainer.style.display = DisplayStyle.None;
                 tabView.style.display = DisplayStyle.Flex;
 
-                DSEditorView window = GetWindow<DSEditorView>();
+                var window = GetWindow<DSEditorView>();
                 window.titleContent = new UnityEngine.GUIContent(database.name);
             }
         }
@@ -87,25 +91,33 @@ namespace Tools.DialogueSystem.UI
                 databaseDialogContainer.style.display = DisplayStyle.None;
                 tabView.style.display = DisplayStyle.Flex;
 
-                DSEditorView window = GetWindow<DSEditorView>();
+                var window = GetWindow<DSEditorView>();
                 window.titleContent = new UnityEngine.GUIContent(database.name);
             }
         }
 
         public DSDatabase OpenDatabaseFileDialog(bool isLoad = false)
         {
-            string path = isLoad
-                ? EditorUtility.OpenFilePanel(
+            string path = "";
+
+            if (isLoad)
+            {
+                path = EditorUtility.OpenFilePanel(
                     "Load Database",
                     Application.dataPath + "/DialogueSystem/Databases",
                     "asset"
-                )
-                : EditorUtility.SaveFilePanel(
+                );
+            }
+            else
+            {
+                path = EditorUtility.SaveFilePanel(
                     "Create Database",
                     Application.dataPath + "/DialogueSystem/Databases",
                     "NewDatabase",
                     "asset"
                 );
+            }
+
             if (string.IsNullOrEmpty(path))
                 return null;
 
@@ -116,7 +128,7 @@ namespace Tools.DialogueSystem.UI
             }
 
             string relativePath =
-                "Assets" + path[Application.dataPath.Length..];
+                "Assets" + path.Substring(Application.dataPath.Length);
 
             if (isLoad)
             {

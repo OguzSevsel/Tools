@@ -8,7 +8,7 @@ namespace Tools.Core
         {
             Vector3 refBottomWorld = reference.position - new Vector3(0, reference.rect.height * reference.pivot.y, 0);
 
-            Vector3 targetPivotOffset = new(0, target.rect.height * (1 - target.pivot.y), 0);
+            Vector3 targetPivotOffset = new Vector3(0, target.rect.height * (1 - target.pivot.y), 0);
 
             target.position = refBottomWorld - targetPivotOffset;
 

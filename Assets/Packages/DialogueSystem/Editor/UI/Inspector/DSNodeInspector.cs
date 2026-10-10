@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.UI.Inspector;
@@ -17,7 +18,7 @@ namespace Tools.DialogueSystem.UI.Elements
         public DSNodeInspector(DSDialogueNodeData data)
         {
             this.data = data;
-            _ = this.SetFlex(flexGrow: 1, flexDirection: FlexDirection.Column, flexWrap: Wrap.NoWrap);
+            this.SetFlex(flexGrow: 1, flexDirection: FlexDirection.Column, flexWrap: Wrap.NoWrap);
             Create();
         }
 
@@ -25,7 +26,7 @@ namespace Tools.DialogueSystem.UI.Elements
         {
             CreateUIElements();
             RegisterEvents();
-            LoadFields(data);
+            LoadFields(this.data);
         }
 
         public void LoadFields(DSDialogueNodeData data)
@@ -55,10 +56,10 @@ namespace Tools.DialogueSystem.UI.Elements
             conversantDropdown = new DSDropdown<DSActor>(conversantDropdownField, character => character.Title);
             audioDropdown = new DSDropdown<DSAudioClip>(audioDropdownField, audio => audio.Title);
 
-            contentContainer.Add(actorDropdownField);
-            contentContainer.Add(conversantDropdownField);
-            contentContainer.Add(audioDropdownField);
-            contentContainer.Add(dialogueText);
+            this.contentContainer.Add(actorDropdownField);
+            this.contentContainer.Add(conversantDropdownField);
+            this.contentContainer.Add(audioDropdownField);
+            this.contentContainer.Add(dialogueText);
         }
 
         #endregion
@@ -72,13 +73,25 @@ namespace Tools.DialogueSystem.UI.Elements
             audioDropdown.ValueChanged += OnAudioValueChanged;
         }
 
-        private void OnConversantValueChanged(DSActor conversant) => data.Conversant = conversant;
+        private void OnConversantValueChanged(DSActor conversant)
+        {
+            this.data.Conversant = conversant;
+        }
 
-        private void OnDialogueTextChanged(ChangeEvent<string> dialogueText) => data.Dialogue.Text = dialogueText.newValue;
+        private void OnDialogueTextChanged(ChangeEvent<string> dialogueText)
+        {
+            this.data.Dialogue.Text = dialogueText.newValue;
+        }
 
-        private void OnAudioValueChanged(DSAudioClip audio) => data.AudioClip = audio;
+        private void OnAudioValueChanged(DSAudioClip audio)
+        {
+            this.data.AudioClip = audio;
+        }
 
-        private void OnActorValueChanged(DSActor actor) => data.Actor = actor;
+        private void OnActorValueChanged(DSActor actor)
+        {
+            this.data.Actor = actor;
+        }
 
         #endregion
     }

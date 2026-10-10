@@ -25,32 +25,35 @@ namespace Tools.DialogueSystem.Data
         {
             _guidLookup = new HashSet<string>();
 
-            foreach (DSActor actor in Actors)
+            foreach (var actor in Actors)
             {
                 if (!string.IsNullOrEmpty(actor.Guid))
-                    _ = _guidLookup.Add(actor.Guid);
+                    _guidLookup.Add(actor.Guid);
             }
 
-            foreach (DSAudioClip audio in AudioClips)
+            foreach (var audio in AudioClips)
             {
                 if (!string.IsNullOrEmpty(audio.Guid))
-                    _ = _guidLookup.Add(audio.Guid);
+                    _guidLookup.Add(audio.Guid);
             }
 
-            foreach (DSDialogueText dialogue in DialogueTexts)
+            foreach (var dialogue in DialogueTexts)
             {
                 if (!string.IsNullOrEmpty(dialogue.Guid))
-                    _ = _guidLookup.Add(dialogue.Guid);
+                    _guidLookup.Add(dialogue.Guid);
             }
 
-            foreach (DSConversation conversation in Conversations)
+            foreach (var conversation in Conversations)
             {
                 if (!string.IsNullOrEmpty(conversation.Guid))
-                    _ = _guidLookup.Add(conversation.Guid);
+                    _guidLookup.Add(conversation.Guid);
             }
         }
 
-        public bool Contains(string guid) => _guidLookup.Contains(guid);
+        public bool Contains(string guid)
+        {
+            return _guidLookup.Contains(guid);
+        }
 
         public string GenerateUniqueGuid()
         {
@@ -69,7 +72,7 @@ namespace Tools.DialogueSystem.Data
         {
             string guid = GenerateUniqueGuid();
             item.Guid = guid;
-            _ = _guidLookup.Add(guid);
+            _guidLookup.Add(guid);
 
             if (item is DSActor actor)
             {
@@ -100,7 +103,7 @@ namespace Tools.DialogueSystem.Data
             {
                 if (DialogueTexts.Contains(text))
                 {
-                    _ = DialogueTexts.Remove(text);
+                    DialogueTexts.Remove(text);
                     removed = true;
                 }
             }
@@ -108,7 +111,7 @@ namespace Tools.DialogueSystem.Data
             {
                 if (Actors.Contains(actor))
                 {
-                    _ = Actors.Remove(actor);
+                    Actors.Remove(actor);
                     removed = true;
                 }
             }
@@ -116,7 +119,7 @@ namespace Tools.DialogueSystem.Data
             {
                 if (AudioClips.Contains(clip))
                 {
-                    _ = AudioClips.Remove(clip);
+                    AudioClips.Remove(clip);
                     removed = true;
                 }
             }
@@ -124,14 +127,14 @@ namespace Tools.DialogueSystem.Data
             {
                 if (Conversations.Contains(conversation))
                 {
-                    _ = Conversations.Remove(conversation);
+                    Conversations.Remove(conversation);
                     removed = true;
                 }
             }
 
             if (removed && _guidLookup.Contains(item.Guid))
             {
-                _ = _guidLookup.Remove(item.Guid);
+                _guidLookup.Remove(item.Guid);
                 EditorUtility.SetDirty(this);
             }
         }

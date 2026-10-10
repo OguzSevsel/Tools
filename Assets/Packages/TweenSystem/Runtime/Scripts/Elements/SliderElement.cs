@@ -29,8 +29,8 @@ namespace Tools.TweenSystem.Elements
 
         public void SetValue(float value)
         {
-            Value = value;
-            Slider.value = Value;
+            this.Value = value;
+            Slider.value = this.Value;
         }
 
         public Tween BGColor(
@@ -98,11 +98,11 @@ namespace Tools.TweenSystem.Elements
 
         private void OnValueChangedHandler(float value)
         {
-            Value = value;
+            this.Value = value;
 
             if (!EventSettings.OnValueChanged) return;
 
-            OnValueChanged?.Invoke(Value);
+            this.OnValueChanged?.Invoke(this.Value);
         }
     }
 }

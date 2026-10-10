@@ -1,6 +1,6 @@
 using PrimeTween;
-using Tools.TweenSystem.Utilities;
 using UnityEngine;
+using Tools.TweenSystem.Utilities;
 
 namespace Tools.TweenSystem.Settings
 {
@@ -36,5 +36,5 @@ namespace Tools.TweenSystem.Settings
         public SlideDirection SlideInDirection = SlideDirection.Left;
         public SlideDirection SlideOutDirection = SlideDirection.Right;
         public float SlideDistance = 500f;
-    }
+    } 
 }

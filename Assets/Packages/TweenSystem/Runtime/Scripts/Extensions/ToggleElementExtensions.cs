@@ -1,6 +1,6 @@
 using PrimeTween;
-using Tools.TweenSystem.Elements;
 using Tools.TweenSystem.Utilities;
+using Tools.TweenSystem.Elements;
 
 namespace Tools.TweenSystem.Extensions
 {
@@ -17,7 +17,7 @@ namespace Tools.TweenSystem.Extensions
             bool unScaledTime = true,
             System.Action<ToggleElement> onComplete = null)
         {
-            AnimSequence seq = el.Animate()
+            var seq = el.Animate()
                 .Begin(el.Color(
                     endValue: endValue,
                     duration: duration,
@@ -33,10 +33,10 @@ namespace Tools.TweenSystem.Extensions
                     endDelay: endDelay,
                     unScaledTime: unScaledTime));
 
-            _ = seq.SetLoops(cycles);
+            seq.SetLoops(cycles);
 
             if (onComplete != null)
-                _ = seq.OnComplete(el, onComplete);
+                seq.OnComplete(el, onComplete);
 
             return seq;
         }
@@ -52,7 +52,7 @@ namespace Tools.TweenSystem.Extensions
             bool unScaledTime = true,
             System.Action<ToggleElement> onComplete = null)
         {
-            AnimSequence seq = el.Animate()
+            var seq = el.Animate()
                 .Begin(el.TextColor(
                     endValue: endValue,
                     duration: duration,
@@ -68,10 +68,10 @@ namespace Tools.TweenSystem.Extensions
                     endDelay: endDelay,
                     unScaledTime: unScaledTime));
 
-            _ = seq.SetLoops(cycles);
+            seq.SetLoops(cycles);
 
             if (onComplete != null)
-                _ = seq.OnComplete(el, onComplete);
+                seq.OnComplete(el, onComplete);
 
             return seq;
         }

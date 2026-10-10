@@ -1,9 +1,9 @@
 using PrimeTween;
 using System;
-using Tools.TweenSystem.Interfaces;
-using Tools.TweenSystem.Settings;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Tools.TweenSystem.Interfaces;
+using Tools.TweenSystem.Settings;
 
 namespace Tools.TweenSystem.Elements
 {

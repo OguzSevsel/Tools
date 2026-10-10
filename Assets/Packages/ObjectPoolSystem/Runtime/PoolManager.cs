@@ -85,7 +85,7 @@ namespace Tools.ObjectPoolSystem
 
         private static void CreatePool(GameObject prefab, Vector3 pos, Quaternion rot, PoolType poolType = PoolType.GameObjects)
         {
-            ObjectPool<GameObject> pool = new(
+            ObjectPool<GameObject> pool = new ObjectPool<GameObject>(
                 createFunc: () => CreateObject(prefab, pos, rot, poolType),
                 actionOnGet: OnGetObject,
                 actionOnRelease: OnReleaseObject,
@@ -100,7 +100,7 @@ namespace Tools.ObjectPoolSystem
 
         private static void CreatePool(GameObject prefab, Transform parent, Quaternion rot, PoolType poolType = PoolType.GameObjects)
         {
-            ObjectPool<GameObject> pool = new(
+            ObjectPool<GameObject> pool = new ObjectPool<GameObject>(
                 createFunc: () => CreateObject(prefab, parent, rot, poolType),
                 actionOnGet: OnGetObject,
                 actionOnRelease: OnReleaseObject,
@@ -186,14 +186,27 @@ namespace Tools.ObjectPoolSystem
 
         private static GameObject SetParentObject(PoolType poolType)
         {
-            return poolType switch
+            switch (poolType)
             {
-                PoolType.ParticleSystems => particleSystemsPools,
-                PoolType.GameObjects => gameObjectsPools,
-                PoolType.UI => UIPools,
-                PoolType.WorldUI => WorldUIPools,
-                _ => null,
-            };
+                case PoolType.ParticleSystems:
+
+                    return particleSystemsPools;
+
+                case PoolType.GameObjects:
+
+                    return gameObjectsPools;
+
+                case PoolType.UI:
+
+                    return UIPools;
+
+                case PoolType.WorldUI:
+
+                    return WorldUIPools;
+
+                default:
+                    return null;
+            }
         }
 
         private static T SpawnObject<T>(GameObject objectToSpawn, Vector3 spawnPos, Quaternion spawnRotation, PoolType poolType = PoolType.GameObjects) where T : UnityEngine.Object
@@ -284,7 +297,14 @@ namespace Tools.ObjectPoolSystem
         /// </summary>
         /// <param name="prefab">Pool Template</param>
         /// <returns></returns>
-        public static bool HasPool(GameObject prefab) => objectPools.ContainsKey(prefab);
+        public static bool HasPool(GameObject prefab)
+        {
+            if (objectPools.ContainsKey(prefab))
+            {
+                return true;
+            }
+            return false;
+        }
 
         /// <summary>
         /// Creates a pool for the given prefab with the specified parameters.
@@ -298,7 +318,7 @@ namespace Tools.ObjectPoolSystem
         /// <param name="collectionCheck"></param>
         public static void CreatePool(GameObject prefab, Vector3 pos, Quaternion rot, PoolType poolType = PoolType.GameObjects, int defaultCapacity = 5, int maxCapacity = 20, bool collectionCheck = false)
         {
-            ObjectPool<GameObject> pool = new(
+            ObjectPool<GameObject> pool = new ObjectPool<GameObject>(
                 createFunc: () => CreateObject(prefab, pos, rot, poolType),
                 actionOnGet: OnGetObject,
                 actionOnRelease: OnReleaseObject,
@@ -323,7 +343,7 @@ namespace Tools.ObjectPoolSystem
         /// <param name="collectionCheck"></param>
         public static void CreatePool(GameObject prefab, Transform parent, Quaternion rot, PoolType poolType = PoolType.GameObjects, int defaultCapacity = 5, int maxCapacity = 20, bool collectionCheck = false)
         {
-            ObjectPool<GameObject> pool = new(
+            ObjectPool<GameObject> pool = new ObjectPool<GameObject>(
                 createFunc: () => CreateObject(prefab, parent, rot, poolType),
                 actionOnGet: OnGetObject,
                 actionOnRelease: OnReleaseObject,
@@ -356,7 +376,10 @@ namespace Tools.ObjectPoolSystem
         /// <param name="spawnRotation">Rotation</param>
         /// <param name="poolType"></param>
         /// <returns></returns>
-        public static T SpawnObject<T>(T typePrefab, Vector3 spawnPos, Quaternion spawnRotation, PoolType poolType = PoolType.GameObjects) where T : UnityEngine.Component => SpawnObject<T>(typePrefab.gameObject, spawnPos, spawnRotation, poolType);
+        public static T SpawnObject<T>(T typePrefab, Vector3 spawnPos, Quaternion spawnRotation, PoolType poolType = PoolType.GameObjects) where T : UnityEngine.Component
+        {
+            return SpawnObject<T>(typePrefab.gameObject, spawnPos, spawnRotation, poolType);
+        }
 
         /// <summary>
         /// Spawn an Game Object from the pool. If the pool doesn't exist, it will be created with the given parameters.
@@ -366,7 +389,10 @@ namespace Tools.ObjectPoolSystem
         /// <param name="spawnRotation">Rotation</param>
         /// <param name="poolType"></param>
         /// <returns></returns>
-        public static GameObject SpawnObject(GameObject objectToSpawn, Vector3 spawnPos, Quaternion spawnRotation, PoolType poolType = PoolType.GameObjects) => SpawnObject<GameObject>(objectToSpawn, spawnPos, spawnRotation, poolType);
+        public static GameObject SpawnObject(GameObject objectToSpawn, Vector3 spawnPos, Quaternion spawnRotation, PoolType poolType = PoolType.GameObjects)
+        {
+            return SpawnObject<GameObject>(objectToSpawn, spawnPos, spawnRotation, poolType);
+        }
 
         /// <summary>
         /// Spawn an object with type from the pool. If the pool doesn't exist, it will be created with the given parameters.
@@ -376,7 +402,10 @@ namespace Tools.ObjectPoolSystem
         /// <param name="spawnRotation">Rotation</param>
         /// <param name="poolType"></param>
         /// <returns></returns>
-        public static T SpawnObject<T>(T typePrefab, Transform parent, Quaternion spawnRotation, PoolType poolType = PoolType.GameObjects) where T : UnityEngine.Component => SpawnObject<T>(typePrefab.gameObject, parent, spawnRotation, poolType);
+        public static T SpawnObject<T>(T typePrefab, Transform parent, Quaternion spawnRotation, PoolType poolType = PoolType.GameObjects) where T : UnityEngine.Component
+        {
+            return SpawnObject<T>(typePrefab.gameObject, parent, spawnRotation, poolType);
+        }
 
         /// <summary>
         /// Spawn an Game Object from the pool. If the pool doesn't exist, it will be created with the given parameters.
@@ -386,7 +415,10 @@ namespace Tools.ObjectPoolSystem
         /// <param name="spawnRotation">Rotation</param>
         /// <param name="poolType"></param>
         /// <returns></returns>
-        public static GameObject SpawnObject(GameObject objectToSpawn, Transform parent, Quaternion spawnRotation, PoolType poolType = PoolType.GameObjects) => SpawnObject<GameObject>(objectToSpawn, parent, spawnRotation, poolType);
+        public static GameObject SpawnObject(GameObject objectToSpawn, Transform parent, Quaternion spawnRotation, PoolType poolType = PoolType.GameObjects)
+        {
+            return SpawnObject<GameObject>(objectToSpawn, parent, spawnRotation, poolType);
+        }
 
         /// <summary>
         /// Make inactive the given object and return it to the pool. If the object doesn't belong to any pool, a warning will be logged.

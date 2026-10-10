@@ -1,7 +1,7 @@
 using System;
-using Tools.TweenSystem.Elements;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Tools.TweenSystem.Elements;
 
 namespace Tools.TweenSystem.Utilities
 {
@@ -40,17 +40,24 @@ namespace Tools.TweenSystem.Utilities
             ClampCamera();
         }
 
-        public void StopDragging() => _isDragging = false;
+        public void StopDragging()
+        {
+            _isDragging = false;
+        }
 
-        public void StartDragging() => _isDragging = true;
+        public void StartDragging()
+        {
+            _isDragging = true;
+        }
 
         public void FocusOn<T>(Vector3 endPos, Vector2 focusOffset, T target, System.Action<T> onComplete) where T : class
         {
+            float duration = 0f;
             float distance = Vector3.Distance(Camera.transform.position, endPos);
 
-            float duration = distance * 0.1f;
+            duration = distance * 0.1f;
 
-            _ = Animate()
+            Animate()
                 .Begin(Move(new Vector3(endPos.x + focusOffset.x, endPos.y + focusOffset.y, -1f), duration))
                 .Also(Zoom(duration, _focusZoom)).OnComplete(target, onComplete);
 

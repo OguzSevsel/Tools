@@ -1,6 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using CodiceApp.EventTracking;
+using System;
+using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
+using UnityEditor;
+using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
@@ -29,9 +34,9 @@ namespace Tools.DialogueSystem.UI
 
         private void OnDatabaseOpened(DSDatabase database)
         {
-            foreach (DSAudioClip audioClip in database.AudioClips)
+            foreach (var audioClip in database.AudioClips)
             {
-                VisualElement card = CreateCard(cardAsset, audioClip);
+                var card = CreateCard(cardAsset, audioClip);
                 AddCard(audioClipContainer, AudioClips, audioClip, card);
             }
         }
@@ -40,8 +45,8 @@ namespace Tools.DialogueSystem.UI
         {
             foreach (KeyValuePair<DSAudioClip, VisualElement> cardPair in AudioClips)
             {
-                VisualElement card = cardPair.Value;
-                _ = cardPair.Key;
+                var card = cardPair.Value;
+                var text = cardPair.Key;
 
                 audioClipContainer.Remove(card);
             }
@@ -51,10 +56,10 @@ namespace Tools.DialogueSystem.UI
 
         private void OnCreateAudioClipsButtonClicked()
         {
-            DSAudioClip audioClip = new("New Clip", "New Description", null);
-            VisualElement cardElement = CreateCard(cardAsset, audioClip);
+            DSAudioClip audioClip = new DSAudioClip("New Clip", "New Description", null);
+            var cardElement = CreateCard(cardAsset, audioClip);
             AddCard(audioClipContainer, AudioClips, audioClip, cardElement);
-            _ = DSDatabaseManager.Current.Register(audioClip);
+            DSDatabaseManager.Current.Register(audioClip);
         }
 
         #region Utils
@@ -75,7 +80,7 @@ namespace Tools.DialogueSystem.UI
 
         private VisualElement CreateCard(VisualTreeAsset cardAsset, DSAudioClip audioClip)
         {
-            VisualElement cardElement = new();
+            VisualElement cardElement = new VisualElement();
             cardAsset.CloneTree(cardElement);
             cardElement.RegisterCallback<MouseEnterEvent>((evt) =>
             {
@@ -100,10 +105,9 @@ namespace Tools.DialogueSystem.UI
         {
             container.Add(cardElement);
             Button deleteButton = cardElement.Q<Button>("DeleteButton");
-            deleteButton.clicked += () =>
-            {
+            deleteButton.clicked += () => {
                 container.Remove(cardElement);
-                _ = audioClips.Remove(audioClip);
+                audioClips.Remove(audioClip);
                 DSDatabaseManager.Current.Unregister(audioClip);
             };
         }

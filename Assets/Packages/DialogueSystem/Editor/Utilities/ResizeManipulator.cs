@@ -38,10 +38,13 @@ namespace Tools.DialogueSystem.Utilities
         private void OnMouseLeave(MouseLeaveEvent evt)
         {
             if (!isResizeable)
-                _ = target.SetCursor(MouseCursor.Arrow);
+                target.SetCursor(MouseCursor.Arrow);
         }
 
-        private void OnMouseEnter(MouseEnterEvent evt) => target.SetCursor(MouseCursor.ResizeHorizontal);
+        private void OnMouseEnter(MouseEnterEvent evt)
+        {
+            target.SetCursor(MouseCursor.ResizeHorizontal);
+        }
 
         protected override void UnregisterCallbacksFromTarget()
         {
@@ -76,7 +79,7 @@ namespace Tools.DialogueSystem.Utilities
 
             if (parentWidth <= 0f) return;
 
-            float percentage = width / parentWidth * 100f;
+            float percentage = (width / parentWidth) * 100f;
 
             percentage = Mathf.Clamp(percentage, minPercent, maxPercent);
 
@@ -90,7 +93,7 @@ namespace Tools.DialogueSystem.Utilities
 
             isResizeable = false;
             target.ReleaseMouse();
-            _ = target.SetCursor(MouseCursor.Arrow);
+            target.SetCursor(MouseCursor.Arrow);
         }
-    }
+    } 
 }

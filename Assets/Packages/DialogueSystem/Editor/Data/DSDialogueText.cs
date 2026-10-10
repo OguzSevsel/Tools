@@ -1,4 +1,6 @@
 ﻿using System;
+using UnityEditor;
+using UnityEngine;
 
 namespace Tools.DialogueSystem.Data
 {
@@ -9,7 +11,7 @@ namespace Tools.DialogueSystem.Data
 
         public DSDialogueText(string title, string description, string text) : base(title, description)
         {
-            Text = text;
+            this.Text = text;
         }
     }
 }

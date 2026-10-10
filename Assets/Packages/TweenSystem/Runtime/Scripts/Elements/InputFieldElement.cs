@@ -46,10 +46,11 @@ namespace Tools.TweenSystem.Elements
                 return;
             }
 
-            charCount = charCount == null ? Text.Count() : charCount.Value;
+            if (charCount == null) charCount = Text.Count();
+            else charCount = charCount.Value;
 
             InputField.textComponent.ForceMeshUpdate();
-            _ = Tween.TextMaxVisibleCharacters(InputField.textComponent,
+            Tween.TextMaxVisibleCharacters(InputField.textComponent,
                 charCount.Value,
                 duration ?? AnimationSettings.Duration,
                 ease ?? AnimationSettings.Ease,

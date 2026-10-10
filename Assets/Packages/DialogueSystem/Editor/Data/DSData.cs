@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 namespace Tools.DialogueSystem.Data
@@ -12,10 +13,13 @@ namespace Tools.DialogueSystem.Data
 
         protected DSData(string title, string description)
         {
-            Title = title;
-            Description = description;
+            this.Title = title;
+            this.Description = description;
         }
 
-        public void SetName(string name) => Title = name;
+        public void SetName(string name)
+        {
+            this.Title = name;
+        }
     }
 }

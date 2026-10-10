@@ -1,8 +1,11 @@
+using Alchemy;
+using Alchemy.Inspector;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Game
 {
-    internal enum DenemeEnum
+    enum DenemeEnum
     {
         World,
         Moon,
@@ -14,6 +17,9 @@ namespace Game
     {
         [SerializeField, EnumButtons] private DenemeEnum deneme;
 
-        private void Awake() => Application.targetFrameRate = 60;
+        private void Awake()
+        {
+            Application.targetFrameRate = 60;
+        }
     }
 }

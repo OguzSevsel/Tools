@@ -1,3 +1,4 @@
+using PlasticPipe.PlasticProtocol.Messages;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
@@ -32,7 +33,7 @@ namespace Tools.DialogueSystem.Utilities
         {
             if (!isRemoving)
             {
-                FilterFunction dropShadow = new(
+                var dropShadow = new FilterFunction(
                     FilterFunctionType.DropShadow
                 );
 
@@ -54,7 +55,7 @@ namespace Tools.DialogueSystem.Utilities
             }
         }
 
-        public static VisualElement SetPaddings(this VisualElement element, int? allPadding = null, int? paddingLeft = null, int? paddingRight = null, int? paddingTop = null, int? paddingBottom = null)
+        public static VisualElement SetPaddings(this VisualElement element, int? allPadding = null, int? paddingLeft = null, int? paddingRight = null, int?paddingTop = null, int? paddingBottom = null)
         {
             element.style.paddingLeft = allPadding ?? paddingLeft ?? element.style.paddingLeft;
             element.style.paddingRight = allPadding ?? paddingRight ?? element.style.paddingRight;
@@ -72,7 +73,7 @@ namespace Tools.DialogueSystem.Utilities
             return element;
         }
 
-        public static VisualElement SetMargins(this VisualElement element, int? allMargin = null, int? marginLeft = null, int? marginRight = null, int? marginTop = null, int? marginBottom = null)
+        public static VisualElement SetMargins(this VisualElement element, int? allMargin = null, int? marginLeft = null, int? marginRight = null, int?marginTop = null, int? marginBottom = null)
         {
             element.style.marginLeft = allMargin ?? marginLeft ?? element.style.marginLeft;
             element.style.marginRight = allMargin ?? marginRight ?? element.style.marginRight;
@@ -117,7 +118,7 @@ namespace Tools.DialogueSystem.Utilities
             return element;
         }
 
-        public static VisualElement SetFlex(this VisualElement element, int? flexBasis = null, int? flexGrow = null, int? flexShrink = null, FlexDirection? flexDirection = null, Wrap? flexWrap = null)
+        public static VisualElement SetFlex(this VisualElement element, int? flexBasis = null, int? flexGrow = null, int? flexShrink = null, FlexDirection ?flexDirection = null, Wrap? flexWrap = null)
         {
             element.style.flexGrow = flexGrow ?? element.style.flexGrow;
             element.style.flexBasis = flexBasis ?? element.style.flexBasis;
@@ -129,8 +130,15 @@ namespace Tools.DialogueSystem.Utilities
 
         public static VisualElement SetVisible(this VisualElement element, bool isVisible = true)
         {
-            element.style.display = isVisible ? (StyleEnum<DisplayStyle>)DisplayStyle.Flex : (StyleEnum<DisplayStyle>)DisplayStyle.None;
-
+            if (isVisible)
+            {
+                element.style.display = DisplayStyle.Flex;
+            }
+            else
+            {
+                element.style.display = DisplayStyle.None;
+            }
+            
             return element;
         }
 

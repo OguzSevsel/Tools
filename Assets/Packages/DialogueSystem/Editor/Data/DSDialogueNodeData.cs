@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using Tools.DialogueSystem.Elements;
 using UnityEngine;
 
 namespace Tools.DialogueSystem.Data
@@ -18,16 +21,25 @@ namespace Tools.DialogueSystem.Data
         public DSDialogueNodeData(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSActor conversant, DSAudioClip audioClip)
         {
             this.position = position;
-            DialogueType = type;
-            Dialogue = dialogueText;
-            AudioClip = audioClip;
-            Actor = actor;
+            this.DialogueType = type;
+            this.Dialogue = dialogueText;
+            this.AudioClip = audioClip;
+            this.Actor = actor;
         }
 
-        public void SetGuid(string guid) => Guid = guid;
+        public void SetGuid(string guid)
+        {
+            this.Guid = guid;
+        }
 
-        public Vector2 GetPosition() => position;
+        public Vector2 GetPosition()
+        {
+            return position;
+        }
 
-        public void SetPosition(Vector2 position) => this.position = position;
+        public void SetPosition(Vector2 position)
+        {
+            this.position = position;
+        }
     }
 }

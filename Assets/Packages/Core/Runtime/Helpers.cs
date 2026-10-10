@@ -8,22 +8,50 @@ namespace Tools.Core
     {
         public static float Clamp01(float value, float maxValue)
         {
-            float ratio = value < maxValue ? value / maxValue : 1f;
+            float ratio = 0f;
+
+            if (value < maxValue)
+            {
+                ratio = value / maxValue;
+            }
+            else
+            {
+                ratio = 1f;
+            }
+
             return ratio;
         }
 
         public static double Clamp01(float value, double maxValue)
         {
+            double ratio = 0f;
             double doubleValue = (double)value;
 
-            double ratio = doubleValue < maxValue ? doubleValue / maxValue : 1d;
+            if (doubleValue < maxValue)
+            {
+                ratio = doubleValue / maxValue;
+            }
+            else
+            {
+                ratio = 1d;
+            }
 
             return ratio;
         }
 
         public static float Clamp01(double value, double maxValue)
         {
-            double ratio = value < maxValue ? value / maxValue : 1d;
+            double ratio = 0f;
+
+            if (value < maxValue)
+            {
+                ratio = value / maxValue;
+            }
+            else
+            {
+                ratio = 1d;
+            }
+
             return (float)ratio;
         }
 
@@ -37,10 +65,10 @@ namespace Tools.Core
             }
         }
 
-        private static readonly Dictionary<float, WaitForSeconds> WaitDictionary = new();
+        private static readonly Dictionary<float, WaitForSeconds> WaitDictionary = new Dictionary<float, WaitForSeconds>();
         public static WaitForSeconds GetWait(float time)
         {
-            if (WaitDictionary.TryGetValue(time, out WaitForSeconds wait)) return wait;
+            if (WaitDictionary.TryGetValue(time, out var wait)) return wait;
 
             WaitDictionary[time] = new WaitForSeconds(time);
             return WaitDictionary[time];
@@ -58,7 +86,7 @@ namespace Tools.Core
 
         public static Vector2 GetWorldPositionOfCanvasElement(RectTransform element)
         {
-            _ = RectTransformUtility.ScreenPointToWorldPointInRectangle(element, element.position, Camera, out Vector3 result);
+            RectTransformUtility.ScreenPointToWorldPointInRectangle(element, element.position, Camera, out var result);
             return result;
         }
 
@@ -69,5 +97,5 @@ namespace Tools.Core
                 GameObject.Destroy(child.gameObject);
             }
         }
-    }
+    } 
 }

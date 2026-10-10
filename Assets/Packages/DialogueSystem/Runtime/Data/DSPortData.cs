@@ -17,9 +17,9 @@ namespace Tools.DialogueSystem
 
         public DSPortData(string inputNodeId, string outputNodeId, string portId)
         {
-            InNodeId = inputNodeId;
-            OutNodeId = outputNodeId;
-            PortName = portId;
+            this.InNodeId = inputNodeId;
+            this.OutNodeId = outputNodeId;
+            this.PortName = portId;
         }
     }
 }

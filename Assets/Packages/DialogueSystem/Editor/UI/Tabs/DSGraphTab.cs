@@ -1,17 +1,19 @@
 using Tools.DialogueSystem.UI.Elements;
 using Tools.DialogueSystem.Utilities;
+using UnityEditor.UIElements;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
 {
     public class DSGraphTab : Tab
     {
-        private DSGraphView graphView;
-        private VisualElement graphContainer;
-        private VisualElement sideBarContainer;
+        DSGraphView graphView;
+        VisualElement graphContainer;
+        VisualElement sideBarContainer;
 
         public DSSideBar sideBar;
-        private Button miniMapButton;
+        Button miniMapButton;
 
         public DSGraphTab(VisualTreeAsset conversationsTabAsset, VisualTreeAsset conversationsCardAsset, VisualTreeAsset sideBarAsset)
         {
@@ -20,13 +22,16 @@ namespace Tools.DialogueSystem.UI
 
             graphView = new DSGraphView(this);
 
-            _ = contentContainer.SetFlex(flexDirection: FlexDirection.Row);
-            _ = graphView.SetFlex(flexGrow: 1, flexShrink: 1);
+            this.contentContainer.SetFlex(flexDirection: FlexDirection.Row);
+            graphView.SetFlex(flexGrow: 1, flexShrink: 1);
 
-            contentContainer.Add(graphView);
-            contentContainer.Add(sideBar);
+            this.contentContainer.Add(graphView);
+            this.contentContainer.Add(sideBar);
         }
 
-        private void MiniMapButtonClickHandler() => graphView.ToggleMiniMap();
+        private void MiniMapButtonClickHandler()
+        {
+            graphView.ToggleMiniMap();
+        }
     }
 }

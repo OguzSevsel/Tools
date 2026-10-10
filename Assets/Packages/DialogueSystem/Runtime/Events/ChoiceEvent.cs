@@ -13,11 +13,14 @@ namespace Tools.DialogueSystem
         internal ChoiceEvent(DialogueRunner.DialogueInternal runner, string dialogueId, string actorName, List<DSChoice> choices)
         {
             this.runner = runner;
-            DialogueId = dialogueId;
-            ActorName = actorName;
-            Choices = choices;
+            this.DialogueId = dialogueId;
+            this.ActorName = actorName;
+            this.Choices = choices;
         }
 
-        public void Advance(DSChoice selectedChoice) => runner.NextDialogue(selectedChoice.TargetNodeId);
+        public void Advance(DSChoice selectedChoice)
+        {
+            runner.NextDialogue(selectedChoice.TargetNodeId);
+        }
     }
 }

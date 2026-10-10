@@ -22,13 +22,13 @@ namespace Tools.TweenSystem.Elements
             get => currentValue;
             set
             {
-                if (currentValue != value)
+                if (this.currentValue != value)
                 {
-                    currentValue = value;
+                    this.currentValue = value;
 
                     if (EventSettings.OnValueChanged)
                     {
-                        OnValueChanged?.Invoke(currentValue);
+                        OnValueChanged?.Invoke(this.currentValue);
                     }
 
                     UpdateUI();
@@ -41,15 +41,18 @@ namespace Tools.TweenSystem.Elements
             get => currentColor;
             set
             {
-                if (currentColor != value)
+                if (this.currentColor != value)
                 {
-                    currentColor = value;
+                    this.currentColor = value;
                     UpdateUI();
                 }
             }
         }
 
-        public override void Awake() => base.Awake();
+        public override void Awake()
+        {
+            base.Awake();
+        }
 
         public virtual void OnValidate()
         {
@@ -65,11 +68,14 @@ namespace Tools.TweenSystem.Elements
             SetProgressBarValue(ProgressValue);
         }
 
-        private void SetProgressBarColor(Color color) => fill.color = gradient.Evaluate(ProgressValue);
+        private void SetProgressBarColor(Color color)
+        {
+            fill.color = gradient.Evaluate(ProgressValue);
+        }
 
         private void SetProgressBarValue(float value)
         {
-            if (value is >= 0f and <= 1f)
+            if (value >= 0f && value <= 1f)
             {
                 fill.fillAmount = value;
             }
@@ -156,7 +162,7 @@ namespace Tools.TweenSystem.Elements
             {
                 string text = Text.text;
                 string newText = text + value;
-                Text.text = newText;
+                Text.text = newText; 
             }
         }
 
@@ -164,7 +170,7 @@ namespace Tools.TweenSystem.Elements
         {
             if (hasText)
             {
-                Text.text = string.Empty;
+                Text.text = string.Empty; 
             }
         }
     }
