@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using UnityEngine;
-using System.IO;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.IO;
 using Tools.TweenSystem.Elements;
+using UnityEngine;
 
 namespace Tools.SaveSystem
 {
@@ -25,21 +25,15 @@ namespace Tools.SaveSystem
 
         public static SaveUtility Instance;
 
-        private void Awake()
-        {
-            Instance = this;
-        }
+        private void Awake() => Instance = this;
 
-        private void Start()
-        {
-            RegisterEvents();
-        }
+        private void Start() => RegisterEvents();
 
         private void RegisterEvents()
         {
             IEnumerable<GameData> saveFiles = GetAllSaves();
 
-            foreach (var save in saveFiles)
+            foreach (GameData save in saveFiles)
             {
                 if (save.metadata.saveSlot == 1)
                 {
@@ -104,7 +98,7 @@ namespace Tools.SaveSystem
             {
                 string json = File.ReadAllText(file);
 
-                JsonSerializerSettings settings = new JsonSerializerSettings
+                JsonSerializerSettings settings = new()
                 {
                     TypeNameHandling = TypeNameHandling.All,
                     Formatting = Formatting.Indented
@@ -115,5 +109,5 @@ namespace Tools.SaveSystem
                 if (data != null) yield return data;
             }
         }
-    } 
+    }
 }

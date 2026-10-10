@@ -1,18 +1,16 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Tools.DialogueSystem.Data;
+using Tools.DialogueSystem.Elements;
+using Tools.DialogueSystem.Utilities;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Tools.DialogueSystem.Elements;
-using Tools.DialogueSystem.Utilities;
 
 namespace Tools.DialogueSystem.UI
 {
-    using System.Linq;
-    using Tools.DialogueSystem.Data;
-    using Unity.GraphToolkit.Editor;
-    using UnityEditor;
-
     #region Copy Data
 
     [Serializable]
@@ -33,8 +31,8 @@ namespace Tools.DialogueSystem.UI
         public string DialogueText;
         public DialogueType DialogueType;
         public Vector2 Position;
-        public List<DSPortData> Ports = new List<DSPortData>();
-        public List<string> PortNames = new List<string>();
+        public List<DSPortData> Ports = new();
+        public List<string> PortNames = new();
     }
 
     #endregion
@@ -83,7 +81,7 @@ namespace Tools.DialogueSystem.UI
 
         private void AddGridBackground()
         {
-            GridBackground gridBackground = new GridBackground();
+            GridBackground gridBackground = new();
             gridBackground.StretchToParentSize();
             Insert(0, gridBackground);
         }
@@ -139,12 +137,9 @@ namespace Tools.DialogueSystem.UI
             PasteAtMouse();
         }
 
-        private bool CanPaste(string data)
-        {
-            return !string.IsNullOrEmpty(data);
-        }
+        private bool CanPaste(string data) => !string.IsNullOrEmpty(data);
 
-        void PasteAtMouse()
+        private void PasteAtMouse()
         {
             if (copyBuffer == null || copyBuffer.nodes.Count == 0)
                 return;
@@ -154,9 +149,9 @@ namespace Tools.DialogueSystem.UI
 
             ClearSelection();
 
-            foreach (var data in copyBuffer.nodes)
+            foreach (NodeCopyData data in copyBuffer.nodes)
             {
-                var node = CreateNode(data.DialogueType, mousePos, false, data.DialogueId, data.ActorName, data.ConversantName, data.AudioClip, data.ActorSprite, data.ConversantSprite, data.DialogueText, isPasting: true);
+                DSDialogueNodeLegacy node = CreateNode(data.DialogueType, mousePos, false, data.DialogueId, data.ActorName, data.ConversantName, data.AudioClip, data.ActorSprite, data.ConversantSprite, data.DialogueText, isPasting: true);
 
                 Vector2 offsetFromCenter = data.Position - center;
                 Vector2 newPos = mousePos + offsetFromCenter;
@@ -178,27 +173,27 @@ namespace Tools.DialogueSystem.UI
             }
         }
 
-        Vector2 GetCopiedNodesCenter(DialogueCopyBuffer buffer)
+        private Vector2 GetCopiedNodesCenter(DialogueCopyBuffer buffer)
         {
             Vector2 sum = Vector2.zero;
 
-            foreach (var n in buffer.nodes)
+            foreach (NodeCopyData n in buffer.nodes)
                 sum += n.Position;
 
             return sum / buffer.nodes.Count;
         }
 
-        void Copy()
+        private void Copy()
         {
-            var selectedNodes = selection
+            List<DSDialogueNodeLegacy> selectedNodes = selection
                 .OfType<DSDialogueNodeLegacy>()
                 .ToList();
 
             copyBuffer = new DialogueCopyBuffer();
 
-            foreach (var node in selectedNodes)
+            foreach (DSDialogueNodeLegacy node in selectedNodes)
             {
-                NodeCopyData data = new NodeCopyData
+                NodeCopyData data = new()
                 {
                     DialogueType = node.DialogueType,
                     DialogueId = node.Id,
@@ -209,7 +204,7 @@ namespace Tools.DialogueSystem.UI
                     Position = node.GetPosition().position,
                 };
 
-                foreach (var choice in node.Choices)
+                foreach (KeyValuePair<Port, string> choice in node.Choices)
                 {
                     data.Ports.Add((DSPortData)choice.Key.userData);
                     data.PortNames.Add(choice.Value);
@@ -221,10 +216,11 @@ namespace Tools.DialogueSystem.UI
 
         private void OnElementsDeleted()
         {
-            deleteSelection = (operationName, askUser) => {
+            deleteSelection = (operationName, askUser) =>
+            {
 
-                List<DSDialogueNodeLegacy> deletedNodes = new List<DSDialogueNodeLegacy>();
-                List<UnityEditor.Experimental.GraphView.Edge> deletedEdges = new List<UnityEditor.Experimental.GraphView.Edge>();
+                List<DSDialogueNodeLegacy> deletedNodes = new();
+                List<UnityEditor.Experimental.GraphView.Edge> deletedEdges = new();
 
                 foreach (GraphElement element in selection)
                 {
@@ -232,31 +228,33 @@ namespace Tools.DialogueSystem.UI
                     {
                         deletedNodes.Add(node);
 
-                        foreach (var port in node.Choices)
+                        foreach (KeyValuePair<Port, string> port in node.Choices)
                         {
-                            foreach (var edge in port.Key.connections)
+                            foreach (Edge edge in port.Key.connections)
                             {
                                 deletedEdges.Add(edge);
                             }
                         }
 
                         if (node.InputPort != null)
-                            foreach (var inputEdge in node.InputPort.connections)
+                        {
+                            foreach (Edge inputEdge in node.InputPort.connections)
                             {
                                 deletedEdges.Add(inputEdge);
                             }
+                        }
 
                         node.Choices.Clear();
                     }
                 }
 
-                foreach (var node in deletedNodes)
+                foreach (DSDialogueNodeLegacy node in deletedNodes)
                 {
                     this.Nodes.Remove(node);
                     RemoveElement(node);
                 }
 
-                foreach (var edge in deletedEdges)
+                foreach (Edge edge in deletedEdges)
                 {
                     RemoveElement(edge);
                 }
@@ -297,7 +295,7 @@ namespace Tools.DialogueSystem.UI
             ClearGraph();
             DSGraphSO graph = DSIOUtility.PromptAndLoad();
             this.loadedGraph = graph;
-            
+
             DSIOUtility.Load(graph, this);
         }
 
@@ -322,7 +320,7 @@ namespace Tools.DialogueSystem.UI
 
         public void ClearGraph()
         {
-            foreach (var node in Nodes)
+            foreach (DSNodeLegacy node in Nodes)
             {
                 node.OnNodeIdChanged -= NodeIdChangedHandler;
             }
@@ -347,10 +345,7 @@ namespace Tools.DialogueSystem.UI
             Add(miniMap);
         }
 
-        public void ToggleMiniMap()
-        {
-            miniMap.visible = !miniMap.visible;
-        }
+        public void ToggleMiniMap() => miniMap.visible = !miniMap.visible;
 
         #endregion
 
@@ -362,10 +357,10 @@ namespace Tools.DialogueSystem.UI
 
             DSDialogueNodeLegacy node = (DSDialogueNodeLegacy)Activator.CreateInstance(nodeType);
 
-            DSDialogueText text = new DSDialogueText("Dialogue Name","Dialogue Description", dialogueText);
-            DSActor actor = new DSActor(actorName, "Actor Description", "Actor Background", actorSprite);
-            DSActor conversant = new DSActor(conversantName, "Conversant Description", "Conversant Background", conversantSprite);
-            DSAudioClip clip = new DSAudioClip("Audio Clip Name", "Audio Clip Description", audioClip);
+            DSDialogueText text = new("Dialogue Name", "Dialogue Description", dialogueText);
+            DSActor actor = new(actorName, "Actor Description", "Actor Background", actorSprite);
+            DSActor conversant = new(conversantName, "Conversant Description", "Conversant Background", conversantSprite);
+            DSAudioClip clip = new("Audio Clip Name", "Audio Clip Description", audioClip);
 
             node.Initialize(position, type, text, actor, conversant, clip, isStartNode, isPasting, isLoading);
             node.Draw();
@@ -374,7 +369,7 @@ namespace Tools.DialogueSystem.UI
             node.OnNodeIdChanged += NodeIdChangedHandler;
             SetNodeError(node.Id, node, this.Nodes);
 
-            node.OnEdgeDeleted += (edge) => 
+            node.OnEdgeDeleted += (edge) =>
             {
                 if (this.Contains(edge))
                 {
@@ -387,8 +382,8 @@ namespace Tools.DialogueSystem.UI
 
         private IManipulator CreateNodeContextualMenu(DialogueType type, string actionTitle)
         {
-            ContextualMenuManipulator manipulator = new ContextualMenuManipulator(
-                menuEvent => menuEvent.menu.AppendAction(actionTitle, actionEvent => 
+            ContextualMenuManipulator manipulator = new(
+                menuEvent => menuEvent.menu.AppendAction(actionTitle, actionEvent =>
                 {
                     if (this.Nodes.Count == 0)
                     {
@@ -451,7 +446,7 @@ namespace Tools.DialogueSystem.UI
             bool isError = false;
             int errorCount = 0;
 
-            foreach (var item in nodes)
+            foreach (DSNodeLegacy item in nodes)
             {
                 if (item.Id == title && node != item)
                 {
@@ -479,7 +474,7 @@ namespace Tools.DialogueSystem.UI
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
         {
-            List<Port> compatiblePorts = new List<Port>();
+            List<Port> compatiblePorts = new();
 
             ports.ForEach(port =>
             {

@@ -1,7 +1,6 @@
 using PrimeTween;
-using UnityEngine;
-using Tools.TweenSystem.Utilities;
 using Tools.TweenSystem.Elements;
+using Tools.TweenSystem.Utilities;
 
 namespace Tools.TweenSystem.Extensions
 {
@@ -18,7 +17,7 @@ namespace Tools.TweenSystem.Extensions
             bool unScaledTime = true,
             System.Action<PanelElement> onComplete = null)
         {
-            var seq = el.Animate()
+            AnimSequence seq = el.Animate()
                 .Begin(el.Color(
                     endValue: endValue,
                     duration: duration,

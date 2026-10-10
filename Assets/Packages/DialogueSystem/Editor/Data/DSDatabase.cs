@@ -25,35 +25,32 @@ namespace Tools.DialogueSystem.Data
         {
             _guidLookup = new HashSet<string>();
 
-            foreach (var actor in Actors)
+            foreach (DSActor actor in Actors)
             {
                 if (!string.IsNullOrEmpty(actor.Guid))
                     _guidLookup.Add(actor.Guid);
             }
 
-            foreach (var audio in AudioClips)
+            foreach (DSAudioClip audio in AudioClips)
             {
                 if (!string.IsNullOrEmpty(audio.Guid))
                     _guidLookup.Add(audio.Guid);
             }
 
-            foreach (var dialogue in DialogueTexts)
+            foreach (DSDialogueText dialogue in DialogueTexts)
             {
                 if (!string.IsNullOrEmpty(dialogue.Guid))
                     _guidLookup.Add(dialogue.Guid);
             }
 
-            foreach (var conversation in Conversations)
+            foreach (DSConversation conversation in Conversations)
             {
                 if (!string.IsNullOrEmpty(conversation.Guid))
                     _guidLookup.Add(conversation.Guid);
             }
         }
 
-        public bool Contains(string guid)
-        {
-            return _guidLookup.Contains(guid);
-        }
+        public bool Contains(string guid) => _guidLookup.Contains(guid);
 
         public string GenerateUniqueGuid()
         {

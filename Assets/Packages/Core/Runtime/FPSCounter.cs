@@ -15,17 +15,11 @@ namespace Tools.Core
 
         public float CurrentFPS { get; private set; }
 
-        private void Awake()
-        {
-            Instance = this;
-        }
+        private void Awake() => Instance = this;
 
-        void Start()
-        {
-            timeLeft = updateInterval;
-        }
+        private void Start() => timeLeft = updateInterval;
 
-        void Update()
+        private void Update()
         {
             timeLeft -= Time.unscaledDeltaTime;
             accum += Time.unscaledDeltaTime;
@@ -41,7 +35,7 @@ namespace Tools.Core
             }
         }
 
-        void OnGUI()
+        private void OnGUI()
         {
             int fps = (int)CurrentFPS;
 
@@ -54,5 +48,5 @@ namespace Tools.Core
 
             GUI.Label(new Rect(10, 10, 150, 50), $"FPS: {fps}", fpsStyle);
         }
-    } 
+    }
 }

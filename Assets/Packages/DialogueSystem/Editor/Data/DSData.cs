@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEditor;
 using UnityEngine;
 
 namespace Tools.DialogueSystem.Data
@@ -17,9 +16,6 @@ namespace Tools.DialogueSystem.Data
             this.Description = description;
         }
 
-        public void SetName(string name)
-        {
-            this.Title = name;
-        }
+        public void SetName(string name) => this.Title = name;
     }
 }

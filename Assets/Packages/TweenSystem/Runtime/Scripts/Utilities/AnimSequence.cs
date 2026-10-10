@@ -48,10 +48,7 @@ namespace Tools.TweenSystem.Utilities
             return this;
         }
 
-        public void Stop()
-        {
-            _seq.Stop();
-        }
+        public void Stop() => _seq.Stop();
 
         public AnimSequence OnComplete<T>(T target, System.Action<T> cb) where T : class
         {

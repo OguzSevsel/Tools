@@ -1,13 +1,13 @@
-using UnityEngine;
-using Tools.ObjectPoolSystem;
 using PrimeTween;
-using UnityEngine.InputSystem;
+using Tools.ObjectPoolSystem;
 using Tools.TweenSystem.Elements;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Tools.TweenSystem.Utilities
 {
-	public static class PopupManager
-	{
+    public static class PopupManager
+    {
         /// <summary>
         /// Create floating element at mouse location and play tween
         /// </summary>
@@ -41,8 +41,8 @@ namespace Tools.TweenSystem.Utilities
         /// <param name="target"></param>
         /// <param name="position">Element creation location</param>
         /// <param name="tween"></param>
-        public static void Create<T>(GameObject target, Vector3 position, System.Func<T, Tween> tween) where T : UIElement 
-		{
+        public static void Create<T>(GameObject target, Vector3 position, System.Func<T, Tween> tween) where T : UIElement
+        {
             T element = GetElement(target, position) as T;
 
             tween(element).OnComplete(element.gameObject, onComplete: static target => PoolManager.Release(target, PoolManager.PoolType.UI));
@@ -75,5 +75,5 @@ namespace Tools.TweenSystem.Utilities
 
             return targetElement;
         }
-    } 
+    }
 }

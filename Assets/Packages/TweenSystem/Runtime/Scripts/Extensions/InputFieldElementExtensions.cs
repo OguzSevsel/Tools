@@ -17,7 +17,7 @@ namespace Tools.TweenSystem.Extensions
             bool unScaledTime = true,
             System.Action<InputFieldElement> onComplete = null)
         {
-            var seq = el.Animate()
+            AnimSequence seq = el.Animate()
                 .Begin(el.Color(
                     endValue: endValue,
                     duration: duration,
@@ -52,7 +52,7 @@ namespace Tools.TweenSystem.Extensions
             bool unScaledTime = true,
             System.Action<InputFieldElement> onComplete = null)
         {
-            var seq = el.Animate()
+            AnimSequence seq = el.Animate()
                 .Begin(el.TextColor(
                     endValue: endValue,
                     duration: duration,

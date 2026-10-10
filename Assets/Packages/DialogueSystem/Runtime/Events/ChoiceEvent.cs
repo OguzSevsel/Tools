@@ -18,9 +18,6 @@ namespace Tools.DialogueSystem
             this.Choices = choices;
         }
 
-        public void Advance(DSChoice selectedChoice)
-        {
-            runner.NextDialogue(selectedChoice.TargetNodeId);
-        }
+        public void Advance(DSChoice selectedChoice) => runner.NextDialogue(selectedChoice.TargetNodeId);
     }
 }

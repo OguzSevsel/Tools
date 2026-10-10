@@ -1,6 +1,5 @@
 ﻿using System;
 using Tools.DialogueSystem.Utilities;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 
@@ -87,9 +86,6 @@ namespace Tools.DialogueSystem.UI
             }
         }
 
-        public void Hide()
-        {
-            root.style.display = DisplayStyle.None;
-        }
-    } 
+        public void Hide() => root.style.display = DisplayStyle.None;
+    }
 }

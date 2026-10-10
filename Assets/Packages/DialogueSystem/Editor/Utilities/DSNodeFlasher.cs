@@ -1,6 +1,6 @@
+using Tools.DialogueSystem.Elements;
 using UnityEditor;
 using UnityEngine;
-using Tools.DialogueSystem.Elements;
 
 namespace Tools.DialogueSystem.Utilities
 {

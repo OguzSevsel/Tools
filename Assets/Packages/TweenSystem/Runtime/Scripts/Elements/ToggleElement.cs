@@ -2,15 +2,13 @@ using PrimeTween;
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Tools.TweenSystem.Interfaces;
 
 namespace Tools.TweenSystem.Elements
 {
     public class ToggleElement : UIElement
     {
-        [field: SerializeField] public Image CheckMarkImage {  get; private set; }
+        [field: SerializeField] public Image CheckMarkImage { get; private set; }
         public Toggle ToggleComponent { get; private set; }
         public TextMeshProUGUI Text { get; private set; }
         public bool Value { get; private set; }
@@ -112,10 +110,7 @@ namespace Tools.TweenSystem.Elements
             this.ToggleComponent.isOn = value;
         }
 
-        public void SetText(string value)
-        {
-            Text.text = value;
-        }
+        public void SetText(string value) => Text.text = value;
 
         public void AppendText(string value)
         {
@@ -124,10 +119,7 @@ namespace Tools.TweenSystem.Elements
             Text.text = newText;
         }
 
-        public void Clear()
-        {
-            Text.text = string.Empty;
-        }
+        public void Clear() => Text.text = string.Empty;
 
         #endregion
 

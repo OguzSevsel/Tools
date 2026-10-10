@@ -1,7 +1,7 @@
 using System;
+using Tools.TweenSystem.Elements;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Tools.TweenSystem.Elements;
 
 namespace Tools.TweenSystem.Utilities
 {
@@ -40,15 +40,9 @@ namespace Tools.TweenSystem.Utilities
             ClampCamera();
         }
 
-        public void StopDragging()
-        {
-            _isDragging = false;
-        }
+        public void StopDragging() => _isDragging = false;
 
-        public void StartDragging()
-        {
-            _isDragging = true;
-        }
+        public void StartDragging() => _isDragging = true;
 
         public void FocusOn<T>(Vector3 endPos, Vector2 focusOffset, T target, System.Action<T> onComplete) where T : class
         {

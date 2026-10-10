@@ -1,4 +1,3 @@
-using Tools.DialogueSystem;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -16,6 +15,7 @@ public class MousePan : MouseManipulator
         });
     }
 
+    [System.Obsolete]
     protected override void RegisterCallbacksOnTarget()
     {
         target.RegisterCallback<MouseDownEvent>(OnMouseDown, TrickleDown.TrickleDown);
@@ -23,6 +23,7 @@ public class MousePan : MouseManipulator
         target.RegisterCallback<MouseUpEvent>(OnMouseUp, TrickleDown.TrickleDown);
     }
 
+    [System.Obsolete]
     protected override void UnregisterCallbacksFromTarget()
     {
         target.UnregisterCallback<MouseDownEvent>(OnMouseDown, TrickleDown.TrickleDown);
@@ -54,6 +55,7 @@ public class MousePan : MouseManipulator
         evt.StopPropagation();
     }
 
+    [System.Obsolete]
     private void OnMouseMove(MouseMoveEvent evt)
     {
         if (!_panning)

@@ -1,5 +1,4 @@
 ﻿using Tools.DialogueSystem.Utilities;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI.Elements
@@ -17,7 +16,7 @@ namespace Tools.DialogueSystem.UI.Elements
             sideBarAsset.CloneTree(this);
             this.style.width = Length.Percent(25);
             resizeElement = this.Q<VisualElement>("ResizeElement");
-            
+
             currentConversationLabel = this.Q<Label>("CurrentConversationLabel");
             tabControl = this.Q<TabView>("TabControl");
 

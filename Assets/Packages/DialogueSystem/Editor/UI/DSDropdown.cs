@@ -71,5 +71,5 @@ namespace Tools.DialogueSystem.UI
 
             ValueChanged?.Invoke(Value);
         }
-    } 
+    }
 }

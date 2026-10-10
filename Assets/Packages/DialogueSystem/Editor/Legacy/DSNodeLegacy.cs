@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Tools.DialogueSystem;
-using Tools.DialogueSystem.Data;
-using Tools.DialogueSystem.Elements;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
@@ -42,10 +39,7 @@ namespace Tools.DialogueSystem.Elements
                 "ds-node__text-field__hidden");
             }
 
-            if (customDataContainer != null)
-            {
-                customDataContainer.Add(textField);
-            }
+            customDataContainer?.Add(textField);
 
             return textField;
         }
@@ -54,10 +48,7 @@ namespace Tools.DialogueSystem.Elements
         {
             Label label = Tools.DialogueSystem.Utilities.DSElementUtility.CreateLabel(text, onValueChanged);
 
-            if (customDataContainer != null)
-            {
-                customDataContainer.Add(label);
-            }
+            customDataContainer?.Add(label);
 
             label.AddClasses("ds-node__text-field",
               "ds-node__quote-text-field");
@@ -65,14 +56,11 @@ namespace Tools.DialogueSystem.Elements
             return label;
         }
 
-        public DropdownField CreateDropdown(List<string> choices, string text = null, VisualElement customDataContainer = null,  EventCallback<ChangeEvent<string>> onValueChanged = null)
+        public DropdownField CreateDropdown(List<string> choices, string text = null, VisualElement customDataContainer = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
         {
             DropdownField dropdown = Tools.DialogueSystem.Utilities.DSElementUtility.CreateDropdown(text, choices, onValueChanged);
 
-            if (customDataContainer != null)
-            {
-                customDataContainer.Add(dropdown);
-            }
+            customDataContainer?.Add(dropdown);
 
             return dropdown;
         }
@@ -139,8 +127,8 @@ namespace Tools.DialogueSystem.Elements
         {
             this.Id = evt.newValue;
 
-            var keys = new List<Port>(Choices.Keys);
-            foreach (var key in keys)
+            List<Port> keys = new(Choices.Keys);
+            foreach (Port key in keys)
             {
                 Choices[key] = evt.newValue;
             }
@@ -148,14 +136,8 @@ namespace Tools.DialogueSystem.Elements
             OnNodeIdChanged?.Invoke(this, evt);
         }
 
-        public void SetErrorStyle(Color color)
-        {
-            mainContainer.style.backgroundColor = color;
-        }
+        public void SetErrorStyle(Color color) => mainContainer.style.backgroundColor = color;
 
-        public void ResetStyle()
-        {
-            mainContainer.style.backgroundColor = defaultBackgroundColor;
-        }
+        public void ResetStyle() => mainContainer.style.backgroundColor = defaultBackgroundColor;
     }
 }

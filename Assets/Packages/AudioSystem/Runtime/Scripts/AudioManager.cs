@@ -1,7 +1,7 @@
 using System.Collections;
+using Tools.Core;
 using UnityEngine;
 using UnityEngine.Audio;
-using Tools.Core;
 
 namespace Tools.AudioSystem
 {
@@ -26,10 +26,10 @@ namespace Tools.AudioSystem
 
         public AudioSource Play(string key, Vector3? position = null)
         {
-            var data = _library.Get(key);
+            SoundData data = _library.Get(key);
             if (data == null) { Debug.LogWarning($"Sound '{key}' not found."); return null; }
 
-            var source = _pool.Get();
+            AudioSource source = _pool.Get();
 
             source.spatialBlend = data.spatialSound;
             source.clip = data.clip;
@@ -62,5 +62,5 @@ namespace Tools.AudioSystem
             yield return Helpers.GetWait(delay);
             if (source.gameObject.activeSelf) _pool.Return(source);
         }
-    } 
+    }
 }

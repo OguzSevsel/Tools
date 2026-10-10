@@ -8,5 +8,5 @@ namespace Tools.TweenSystem.Settings
         public bool Interactable = true;
         public bool Selectable = true;
         public bool OnValueChanged = false;
-    } 
+    }
 }

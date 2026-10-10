@@ -7,7 +7,7 @@ namespace Tools.SaveSystem
     [Serializable]
     public class GameData
     {
-        [SerializeField] public Dictionary<string, object> savedObjects = new Dictionary<string, object>();
+        [SerializeField] public Dictionary<string, object> savedObjects = new();
         [NonSerialized] public SaveMetadata metadata;
     }
 }

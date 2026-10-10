@@ -33,9 +33,9 @@ namespace Tools.DialogueSystem
 
         private void OnDatabaseOpened(DSDatabase database)
         {
-            foreach (var actor in database.Actors)
+            foreach (DSActor actor in database.Actors)
             {
-                var card = CreateCard(cardAsset, actor);
+                VisualElement card = CreateCard(cardAsset, actor);
 
                 AddCard(actorContainer, Actors, actor, card);
             }
@@ -45,8 +45,8 @@ namespace Tools.DialogueSystem
         {
             foreach (KeyValuePair<DSActor, VisualElement> cardPair in Actors)
             {
-                var card = cardPair.Value;
-                var text = cardPair.Key;
+                VisualElement card = cardPair.Value;
+                DSActor text = cardPair.Key;
 
                 actorContainer.Remove(card);
             }
@@ -56,8 +56,8 @@ namespace Tools.DialogueSystem
 
         private void OnCreateActorButtonClicked()
         {
-            DSActor actor = new DSActor("New Actor", "Actor Description", "Actor Background", default);
-            var cardElement = CreateCard(cardAsset, actor);
+            DSActor actor = new("New Actor", "Actor Description", "Actor Background", default);
+            VisualElement cardElement = CreateCard(cardAsset, actor);
             AddCard(actorContainer, Actors, actor, cardElement);
             DSDatabaseManager.Current.Register(actor);
         }
@@ -84,7 +84,8 @@ namespace Tools.DialogueSystem
             actors.Add(actor, cardElement);
 
             Button deleteButton = cardElement.Q<Button>("DeleteButton");
-            deleteButton.clicked += () => {
+            deleteButton.clicked += () =>
+            {
                 container.Remove(cardElement);
                 actors.Remove(actor);
                 DSDatabaseManager.Current.Unregister(actor);
@@ -100,9 +101,10 @@ namespace Tools.DialogueSystem
 
         private VisualElement CreateCard(VisualTreeAsset cardAsset, DSActor actor)
         {
-            VisualElement cardElement = new VisualElement();
+            VisualElement cardElement = new();
             cardAsset.CloneTree(cardElement);
-            cardElement.RegisterCallback<MouseEnterEvent>((evt) => {
+            cardElement.RegisterCallback<MouseEnterEvent>((evt) =>
+            {
                 if (evt.currentTarget is VisualElement element)
                 {
                     element.SetDropShadow();

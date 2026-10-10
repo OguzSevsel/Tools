@@ -8,24 +8,12 @@ namespace Tools.TweenSystem.TooltipSystem
         public string Header;
         public string Content;
 
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            TooltipSystem.Show(Content, Header);
-        }
+        public void OnPointerEnter(PointerEventData eventData) => TooltipSystem.Show(Content, Header);
 
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            TooltipSystem.Hide();
-        }
+        public void OnPointerExit(PointerEventData eventData) => TooltipSystem.Hide();
 
-        private void OnMouseEnter()
-        {
-            TooltipSystem.Show(Content, Header);
-        }
+        private void OnMouseEnter() => TooltipSystem.Show(Content, Header);
 
-        private void OnMouseExit()
-        {
-            TooltipSystem.Hide();
-        }
-    } 
+        private void OnMouseExit() => TooltipSystem.Hide();
+    }
 }

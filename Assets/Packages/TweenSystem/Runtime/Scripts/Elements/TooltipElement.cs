@@ -94,35 +94,24 @@ namespace Tools.TweenSystem.Elements
         {
             Vector2 position = Mouse.current.position.ReadValue();
 
-            var normalizedPosition = new Vector2(position.x / Screen.width, position.y / Screen.height);
-            var pivot = CalculatePivot(normalizedPosition);
+            Vector2 normalizedPosition = new(position.x / Screen.width, position.y / Screen.height);
+            Vector2 pivot = CalculatePivot(normalizedPosition);
             RectTransform.pivot = pivot;
             transform.position = position;
         }
 
         private Vector2 CalculatePivot(Vector2 normalizedPosition)
         {
-            var pivotTopLeft = new Vector2(-0.05f, 1.05f);
-            var pivotTopRight = new Vector2(1.05f, 1.05f);
-            var pivotBottomLeft = new Vector2(-0.05f, -0.05f);
-            var pivotBottomRight = new Vector2(1.05f, -0.05f);
+            Vector2 pivotTopLeft = new(-0.05f, 1.05f);
+            Vector2 pivotTopRight = new(1.05f, 1.05f);
+            Vector2 pivotBottomLeft = new(-0.05f, -0.05f);
+            Vector2 pivotBottomRight = new(1.05f, -0.05f);
 
-            if (normalizedPosition.x < 0.5f && normalizedPosition.y >= 0.5f)
-            {
-                return pivotTopLeft;
-            }
-            else if (normalizedPosition.x > 0.5f && normalizedPosition.y >= 0.5f)
-            {
-                return pivotTopRight;
-            }
-            else if (normalizedPosition.x <= 0.5f && normalizedPosition.y < 0.5f)
-            {
-                return pivotBottomLeft;
-            }
-            else
-            {
-                return pivotBottomRight;
-            }
+            return normalizedPosition.x < 0.5f && normalizedPosition.y >= 0.5f
+                ? pivotTopLeft
+                : normalizedPosition.x > 0.5f && normalizedPosition.y >= 0.5f
+                    ? pivotTopRight
+                    : normalizedPosition.x <= 0.5f && normalizedPosition.y < 0.5f ? pivotBottomLeft : pivotBottomRight;
         }
 
         public void SetText(string content, string header = "")
@@ -142,7 +131,7 @@ namespace Tools.TweenSystem.Elements
             int headerLength = HeaderField.text.Length;
             int contentLength = ContentField.text.Length;
 
-            LayoutElement.enabled = (headerLength > CharacterWrapLimit || contentLength > CharacterWrapLimit) ? true : false;
+            LayoutElement.enabled = headerLength > CharacterWrapLimit || contentLength > CharacterWrapLimit;
         }
 
         #endregion

@@ -14,5 +14,5 @@ namespace Tools.AudioSystem
         public AudioMixerGroup mixerGroup;
         public bool randomizePitch = false;
         [Range(0f, 0.3f)] public float pitchVariance = 0.1f;
-    } 
+    }
 }

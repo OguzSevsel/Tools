@@ -9,29 +9,29 @@ namespace Tools.DialogueSystem.UI
 {
     public class DSEditorWindowLegacy : EditorWindow
     {
-        VisualElement mainView;
-        DSGraphTab graphTab;
-        DSActorsTab actorsTab;
-        DSDatabaseTab databaseTab;
-        DSConversationsTab conversationsTab;
-        DSAudioClipsTab audioClipsTab;
-        DSDialoguesTab dialoguesTab;
-        
-        Button actorsTabButton;
-        Button databaseTabButton;
-        Button graphTabButton;
-        Button conversationsTabButton;
-        Button dialoguesTabButton;
-        Button audioClipsTabButton;
+        private VisualElement mainView;
+        private DSGraphTab graphTab;
+        private DSActorsTab actorsTab;
+        private DSDatabaseTab databaseTab;
+        private DSConversationsTab conversationsTab;
+        private DSAudioClipsTab audioClipsTab;
+        private DSDialoguesTab dialoguesTab;
 
-        Toolbar toolbar;
-        DSDialogElement databaseDialog;
+        private Button actorsTabButton;
+        private Button databaseTabButton;
+        private Button graphTabButton;
+        private Button conversationsTabButton;
+        private Button dialoguesTabButton;
+        private Button audioClipsTabButton;
+
+        private Toolbar toolbar;
+        private DSDialogElement databaseDialog;
 
 
         //[MenuItem("Tools/Dialogue Graph")]
         public static void Open()
         {
-            var window = GetWindow<DSEditorWindowLegacy>();
+            DSEditorWindowLegacy window = GetWindow<DSEditorWindowLegacy>();
             DSDatabaseManager.DatabaseClosed += OnDatabaseClosed;
             DSDatabaseManager.DatabaseOpened += OnDatabaseOpened;
         }
@@ -43,7 +43,7 @@ namespace Tools.DialogueSystem.UI
 
         private static void OnDatabaseOpened(DSDatabase database)
         {
-            var window = GetWindow<DSEditorWindowLegacy>();
+            DSEditorWindowLegacy window = GetWindow<DSEditorWindowLegacy>();
             window.titleContent = new GUIContent(database.name);
         }
 
@@ -92,21 +92,21 @@ namespace Tools.DialogueSystem.UI
             toolbar.Add(actorsTabButton);
             toolbar.Add(audioClipsTabButton);
             toolbar.Add(graphTabButton);
-            
-            rootVisualElement.Insert(0,toolbar);
+
+            rootVisualElement.Insert(0, toolbar);
         }
 
         private void CreateDatabaseDialog()
         {
-            VisualElement dialogRoot = new VisualElement();
+            VisualElement dialogRoot = new();
 
             databaseDialog = new DSDialogElement(dialogRoot);
 
             rootVisualElement.Add(dialogRoot);
-            
+
             databaseDialog.Show("", "", "Create New Database", "Load Database", OnCreateDatabaseButtonClicked, OnLoadDatabaseButtonClicked);
         }
-                                                  
+
         private void OnCreateDatabaseButtonClicked()
         {
             DSDatabase database = OpenDatabaseFileDialog();
@@ -157,11 +157,7 @@ namespace Tools.DialogueSystem.UI
             mainView.Add(audioClipsTab);
         }
 
-        private void OnActorsTabButtonClicked()
-        {
-            mainView.Clear();
-            //mainView.Add(actorsTab);
-        }
+        private void OnActorsTabButtonClicked() => mainView.Clear();//mainView.Add(actorsTab);
 
         private void OnDatabaseTabButtonClicked()
         {
@@ -175,33 +171,22 @@ namespace Tools.DialogueSystem.UI
             mainView.Add(graphTab);
         }
 
-        private void AddStyles()
-        {
-            rootVisualElement.AddStyleSheets("DialogueSystem/DSVariables.uss");
-        }
+        private void AddStyles() => rootVisualElement.AddStyleSheets("DialogueSystem/DSVariables.uss");
 
         public DSDatabase OpenDatabaseFileDialog(bool isLoad = false)
         {
-            string path = "";
-
-            if (isLoad)
-            {
-                path = EditorUtility.OpenFilePanel(
+            string path = isLoad
+                ? EditorUtility.OpenFilePanel(
                     "Load Database",
                     Application.dataPath + "/DialogueSystem/Databases",
                     "asset"
-                );
-            }
-            else
-            {
-                path = EditorUtility.SaveFilePanel(
+                )
+                : EditorUtility.SaveFilePanel(
                     "Create Database",
                     Application.dataPath + "/DialogueSystem/Databases",
                     "NewDatabase",
                     "asset"
                 );
-            }
-
             if (string.IsNullOrEmpty(path))
                 return null;
 
@@ -212,7 +197,7 @@ namespace Tools.DialogueSystem.UI
             }
 
             string relativePath =
-                "Assets" + path.Substring(Application.dataPath.Length);
+                "Assets" + path[Application.dataPath.Length..];
 
             if (isLoad)
             {

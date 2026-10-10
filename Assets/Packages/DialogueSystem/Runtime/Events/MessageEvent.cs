@@ -22,9 +22,6 @@ namespace Tools.DialogueSystem
             this.AudioClip = audioClip;
         }
 
-        public void Advance()
-        {
-            runner.AdvanceToChoices(DialogueId);
-        }
+        public void Advance() => runner.AdvanceToChoices(DialogueId);
     }
 }

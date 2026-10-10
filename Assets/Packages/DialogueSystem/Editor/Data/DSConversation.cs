@@ -14,13 +14,10 @@ namespace Tools.DialogueSystem.Data
 
         public DSConversation(string title, string description) : base(title, description)
         {
-            nodes = new List<DSNode>(); 
+            nodes = new List<DSNode>();
         }
 
-        public List<DSNode> GetNodes()
-        {
-            return nodes;
-        }
+        public List<DSNode> GetNodes() => nodes;
 
         public void AddToNodes(DSNode node)
         {

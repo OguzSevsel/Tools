@@ -1,9 +1,9 @@
 using PrimeTween;
 using System;
 using TMPro;
+using Tools.TweenSystem.Interfaces;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Tools.TweenSystem.Interfaces;
 
 namespace Tools.TweenSystem.Elements
 {
@@ -143,7 +143,7 @@ namespace Tools.TweenSystem.Elements
             Text.SetText(value);
 
             if (!EventSettings.OnValueChanged) return;
-            
+
             OnValueChanged?.Invoke(value);
         }
 
@@ -161,7 +161,7 @@ namespace Tools.TweenSystem.Elements
         {
             Text.SetText(string.Empty);
 
-            if(!EventSettings.OnValueChanged) return;
+            if (!EventSettings.OnValueChanged) return;
 
             OnValueChanged?.Invoke(Text.text);
         }

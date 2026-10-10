@@ -20,7 +20,7 @@ namespace Tools.DialogueSystem.UI.Elements
 
         public virtual void Initialize(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSActor conversant, DSAudioClip audioClip, bool isStartNode)
         {
-            DSDialogueNodeData data = new DSDialogueNodeData(position, type, dialogueText, actor, conversant, audioClip);
+            DSDialogueNodeData data = new(position, type, dialogueText, actor, conversant, audioClip);
             this.Data = data;
             Data.IsStartNode = isStartNode;
 
@@ -49,7 +49,7 @@ namespace Tools.DialogueSystem.UI.Elements
             if (!Data.IsStartNode)
                 CreatePort(portContainer, InputPort, Direction.Input);
 
-            var label = DSElementUtility.CreateLabel("Node");
+            Label label = DSElementUtility.CreateLabel("Node");
 
             titleContainer.Clear();
             titleContainer.Insert(0, label);
@@ -69,7 +69,7 @@ namespace Tools.DialogueSystem.UI.Elements
         {
             port = this.CreatePort("", Orientation.Vertical, direction, Port.Capacity.Multi);
             container.Add(port);
-            var label = port.Q<Label>("type");
+            Label label = port.Q<Label>("type");
             label.SetMargins(0);
             port.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
         }
@@ -90,10 +90,7 @@ namespace Tools.DialogueSystem.UI.Elements
                 "ds-node__text-field__hidden");
             }
 
-            if (customDataContainer != null)
-            {
-                customDataContainer.Add(textField);
-            }
+            customDataContainer?.Add(textField);
 
             return textField;
         }
@@ -102,10 +99,7 @@ namespace Tools.DialogueSystem.UI.Elements
         {
             Label label = Tools.DialogueSystem.Utilities.DSElementUtility.CreateLabel(text, onValueChanged);
 
-            if (customDataContainer != null)
-            {
-                customDataContainer.Add(label);
-            }
+            customDataContainer?.Add(label);
 
             label.AddClasses("ds-node__text-field",
               "ds-node__quote-text-field");
@@ -117,10 +111,7 @@ namespace Tools.DialogueSystem.UI.Elements
         {
             DropdownField dropdown = Tools.DialogueSystem.Utilities.DSElementUtility.CreateDropdown(text, choices, onValueChanged);
 
-            if (customDataContainer != null)
-            {
-                customDataContainer.Add(dropdown);
-            }
+            customDataContainer?.Add(dropdown);
 
             return dropdown;
         }

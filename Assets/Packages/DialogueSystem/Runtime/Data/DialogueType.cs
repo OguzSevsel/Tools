@@ -5,5 +5,5 @@ namespace Tools.DialogueSystem
         Single,
         Multi,
         Group
-    } 
+    }
 }

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine;
-using UnityEngine.UIElements;
-using UnityEditor.UIElements;
-using Tools.DialogueSystem.Utilities;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.UI;
+using Tools.DialogueSystem.Utilities;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
+using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.Elements
 {
@@ -29,7 +29,7 @@ namespace Tools.DialogueSystem.Elements
             this.isLoading = isLoading;
             this.isPasting = isPasting;
 
-            DSDialogueNodeData data = new DSDialogueNodeData(position, type, dialogueText, actor, conversant, audioClip);
+            DSDialogueNodeData data = new(position, type, dialogueText, actor, conversant, audioClip);
             this.Data = data;
 
             SetPosition(new Rect(position, Vector2.zero));
@@ -49,7 +49,7 @@ namespace Tools.DialogueSystem.Elements
             }
             else
             {
-                var label = DSElementUtility.CreateLabel("Start");
+                Label label = DSElementUtility.CreateLabel("Start");
                 titleContainer.Insert(0, label);
                 label.style.unityTextAlign = TextAnchor.MiddleCenter;
                 label.style.fontSize = 15;
@@ -57,11 +57,11 @@ namespace Tools.DialogueSystem.Elements
                 label.style.alignSelf = Align.Center;
                 label.style.alignContent = Align.Center;
                 label.style.flexGrow = 1;
-                
+
                 titleContainer.style.alignItems = Align.Center;
                 titleContainer.style.alignContent = Align.Center;
             }
-            
+
             if (!isLoading && !isPasting)
             {
                 Port port = CreateChoicePort("Next Dialogue", new DSPortData("", this.Id, "Next Dialogue"));
@@ -79,7 +79,7 @@ namespace Tools.DialogueSystem.Elements
 
         private void CreateCustomDataContainer()
         {
-            VisualElement customDataContainer = new VisualElement();
+            VisualElement customDataContainer = new();
             customDataContainer.AddToClassList("ds-node__custom-data-container");
 
             DropdownField dropdown = CreateDropdown(new List<string>(), "Actor");
@@ -97,14 +97,11 @@ namespace Tools.DialogueSystem.Elements
             customDataContainer.Add(dropdown);
             customDataContainer.Add(textFoldout);
 
-            mainContainer.Insert(2,customDataContainer);
-            mainContainer.Insert(1,titleContainer);
+            mainContainer.Insert(2, customDataContainer);
+            mainContainer.Insert(1, titleContainer);
         }
 
-        private void onActorChanged(DSActor newActor)
-        {
-            Data.Actor = newActor;
-        }
+        private void onActorChanged(DSActor newActor) => Data.Actor = newActor;
 
         #endregion
 
@@ -115,10 +112,7 @@ namespace Tools.DialogueSystem.Elements
 
         }
 
-        private void DialogueTextChangedHandler(ChangeEvent<string> evt)
-        {
-            Data.Dialogue.Text = evt.newValue;
-        }
+        private void DialogueTextChangedHandler(ChangeEvent<string> evt) => Data.Dialogue.Text = evt.newValue;
 
         #endregion
 
@@ -137,9 +131,9 @@ namespace Tools.DialogueSystem.Elements
 
         public List<string> GetTextsBetweenCharacters(string text, char startCharacter, char endCharacter)
         {
-            List<int> indexOfStarts = new List<int>();
-            List<int> indexOfEnds = new List<int>();
-            List<string> values = new List<string>();
+            List<int> indexOfStarts = new();
+            List<int> indexOfEnds = new();
+            List<string> values = new();
 
             for (int i = 0; i < text.Length; i++)
             {
@@ -177,8 +171,8 @@ namespace Tools.DialogueSystem.Elements
             {
                 if (evt.keyCode == KeyCode.Backspace)
                 {
-                    List<int> indexesOfLeft = new List<int>();
-                    List<int> indexesOfRight = new List<int>();
+                    List<int> indexesOfLeft = new();
+                    List<int> indexesOfRight = new();
 
                     for (int i = 0; i < dialogueTextField.value.Length; i++)
                     {
@@ -232,14 +226,14 @@ namespace Tools.DialogueSystem.Elements
             string value = field.value ?? "";
 
             field.value =
-                value.Substring(0, start) +
+                value[..start] +
                 text +
-                value.Substring(end);
+                value[end..];
 
             //field.cursorIndex = start + text.Length;
             //field.selectIndex = field.cursorIndex;
         }
 
         #endregion
-    } 
+    }
 }

@@ -1,8 +1,8 @@
+using Tools.DialogueSystem.Data;
+using Tools.DialogueSystem.Utilities;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
-using Tools.DialogueSystem.Utilities;
-using Tools.DialogueSystem.Data;
 
 namespace Tools.DialogueSystem.Elements
 {

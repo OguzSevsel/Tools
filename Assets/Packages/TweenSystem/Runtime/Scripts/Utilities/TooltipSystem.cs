@@ -1,5 +1,5 @@
-using UnityEngine;
 using Tools.TweenSystem.Elements;
+using UnityEngine;
 
 namespace Tools.TweenSystem.TooltipSystem
 {
@@ -45,5 +45,5 @@ namespace Tools.TweenSystem.TooltipSystem
 
             Instance.ToolTip.SetActive(false);
         }
-    } 
+    }
 }

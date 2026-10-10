@@ -4,8 +4,8 @@ using Tools.TweenSystem.Utilities;
 
 namespace Tools.TweenSystem.Extensions
 {
-	public static class UIElementExtensions
-	{
+    public static class UIElementExtensions
+    {
         public static AnimSequence FadeSlideIn(
             this UIElement el,
             SlideDirection? direction = null,
@@ -19,21 +19,21 @@ namespace Tools.TweenSystem.Extensions
             float endDelay = 0f,
             System.Action<UIElement> onComplete = null)
         {
-            var seq = el.Animate()
-                .Begin(el.SlideIn(direction: direction, 
-                slideDistance: slideDistance, 
-                duration: duration, 
-                ease: ease, 
-                startDelay: startDelay, 
-                endDelay: endDelay, 
+            AnimSequence seq = el.Animate()
+                .Begin(el.SlideIn(direction: direction,
+                slideDistance: slideDistance,
+                duration: duration,
+                ease: ease,
+                startDelay: startDelay,
+                endDelay: endDelay,
                 unScaledTime: unScaledTime))
-                .Also(el.FadeIn(endValue: fadeEndValue, 
-                duration: duration, 
-                ease: ease, 
-                startDelay: startDelay, 
-                endDelay: endDelay, 
+                .Also(el.FadeIn(endValue: fadeEndValue,
+                duration: duration,
+                ease: ease,
+                startDelay: startDelay,
+                endDelay: endDelay,
                 unScaledTime: unScaledTime));
-            
+
             seq.SetLoops(cycles);
 
             if (onComplete != null)
@@ -55,19 +55,19 @@ namespace Tools.TweenSystem.Extensions
             float endDelay = 0f,
             System.Action<UIElement> onComplete = null)
         {
-            var seq = el.Animate()
-                .Begin(el.SlideOut(direction: direction, 
-                slideDistance: slideDistance, 
-                duration: duration, 
-                ease: ease, 
-                startDelay: startDelay, 
-                endDelay: endDelay, 
+            AnimSequence seq = el.Animate()
+                .Begin(el.SlideOut(direction: direction,
+                slideDistance: slideDistance,
+                duration: duration,
+                ease: ease,
+                startDelay: startDelay,
+                endDelay: endDelay,
                 unScaledTime: unScaledTime))
-                .Also(el.FadeOut(endValue: fadeEndValue, 
-                duration: duration, 
-                ease: ease, 
-                startDelay: startDelay, 
-                endDelay: endDelay, 
+                .Also(el.FadeOut(endValue: fadeEndValue,
+                duration: duration,
+                ease: ease,
+                startDelay: startDelay,
+                endDelay: endDelay,
                 unScaledTime: unScaledTime));
 
             seq.SetLoops(cycles);
@@ -92,20 +92,20 @@ namespace Tools.TweenSystem.Extensions
             float endDelay = 0f,
             System.Action<UIElement> onComplete = null)
         {
-            var seq = el.Animate()
-                .Begin(el.RollIn(rollStartValue, 
-                rollEndValue, 
-                duration, 
-                ease, 
-                slideDirection, 
-                startDelay: startDelay, 
-                endDelay: endDelay, 
+            AnimSequence seq = el.Animate()
+                .Begin(el.RollIn(rollStartValue,
+                rollEndValue,
+                duration,
+                ease,
+                slideDirection,
+                startDelay: startDelay,
+                endDelay: endDelay,
                 useUnscaledTime: unScaledTime))
-                .Also(el.FadeIn(endValue: fadeEndValue, 
-                duration: duration, 
-                ease: ease, 
-                startDelay: startDelay, 
-                endDelay: endDelay, 
+                .Also(el.FadeIn(endValue: fadeEndValue,
+                duration: duration,
+                ease: ease,
+                startDelay: startDelay,
+                endDelay: endDelay,
                 unScaledTime: unScaledTime));
 
             seq.SetLoops(cycles);
@@ -130,7 +130,7 @@ namespace Tools.TweenSystem.Extensions
             float endDelay = 0f,
             System.Action<UIElement> onComplete = null)
         {
-            var seq = el.Animate()
+            AnimSequence seq = el.Animate()
                 .Begin(el.RollOut(startValue: rollStartValue,
                 endValue: rollEndValue,
                 duration: duration,
@@ -139,13 +139,13 @@ namespace Tools.TweenSystem.Extensions
                 startDelay: startDelay,
                 endDelay: endDelay,
                 useUnscaledTime: unScaledTime))
-                .Also(el.FadeOut(endValue: fadeEndValue, 
-                duration: duration, 
-                ease: ease, 
-                startDelay: startDelay, 
-                endDelay: endDelay, 
+                .Also(el.FadeOut(endValue: fadeEndValue,
+                duration: duration,
+                ease: ease,
+                startDelay: startDelay,
+                endDelay: endDelay,
                 unScaledTime: unScaledTime));
-            
+
             seq.SetLoops(cycles);
 
             if (onComplete != null)
@@ -166,18 +166,18 @@ namespace Tools.TweenSystem.Extensions
             float endDelay = 0f,
             System.Action<UIElement> onComplete = null)
         {
-            var seq = el.Animate()
-                .Begin(el.FadeOut(endValue: fadeOutValue, 
-                duration: duration, 
-                ease: ease, 
-                startDelay: startDelay, 
-                endDelay: endDelay, 
+            AnimSequence seq = el.Animate()
+                .Begin(el.FadeOut(endValue: fadeOutValue,
+                duration: duration,
+                ease: ease,
+                startDelay: startDelay,
+                endDelay: endDelay,
                 unScaledTime: unScaledTime))
-                .Next(el.FadeIn(endValue: fadeInValue, 
-                duration: duration, 
-                ease: ease, 
-                startDelay: startDelay, 
-                endDelay: endDelay, 
+                .Next(el.FadeIn(endValue: fadeInValue,
+                duration: duration,
+                ease: ease,
+                startDelay: startDelay,
+                endDelay: endDelay,
                 unScaledTime: unScaledTime));
 
             seq.SetLoops(cycles);
@@ -187,5 +187,5 @@ namespace Tools.TweenSystem.Extensions
 
             return seq;
         }
-    } 
+    }
 }

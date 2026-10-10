@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.UI.Inspector;
@@ -73,25 +72,13 @@ namespace Tools.DialogueSystem.UI.Elements
             audioDropdown.ValueChanged += OnAudioValueChanged;
         }
 
-        private void OnConversantValueChanged(DSActor conversant)
-        {
-            this.data.Conversant = conversant;
-        }
+        private void OnConversantValueChanged(DSActor conversant) => this.data.Conversant = conversant;
 
-        private void OnDialogueTextChanged(ChangeEvent<string> dialogueText)
-        {
-            this.data.Dialogue.Text = dialogueText.newValue;
-        }
+        private void OnDialogueTextChanged(ChangeEvent<string> dialogueText) => this.data.Dialogue.Text = dialogueText.newValue;
 
-        private void OnAudioValueChanged(DSAudioClip audio)
-        {
-            this.data.AudioClip = audio;
-        }
+        private void OnAudioValueChanged(DSAudioClip audio) => this.data.AudioClip = audio;
 
-        private void OnActorValueChanged(DSActor actor)
-        {
-            this.data.Actor = actor;
-        }
+        private void OnActorValueChanged(DSActor actor) => this.data.Actor = actor;
 
         #endregion
     }
