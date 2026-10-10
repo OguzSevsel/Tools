@@ -25,7 +25,7 @@ namespace Tools.AutoTagSystem
 
         public string SetAutoTags(string textBoxText)
         {
-            foreach (var keyword in keywordsToTag.Keywords)
+            foreach (string keyword in keywordsToTag.Keywords)
             {
                 if (styleSheet.GetStyle(keyword) == null)
                 {

@@ -1,7 +1,7 @@
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using UnityEngine;
-using Newtonsoft.Json;
 
 namespace Tools.SaveSystem
 {
@@ -15,22 +15,24 @@ namespace Tools.SaveSystem
             // TODO: Prompt player to confirm overwrite if save already exists
             if (!SaveExists(slot))
             {
-                var data = new GameData();
-                data.metadata = new SaveMetadata
+                GameData data = new()
                 {
-                    slotName = slot,
-                    lastSaved = DateTime.Now,
-                    sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,
-                    saveSlot = saveSlot
+                    metadata = new SaveMetadata
+                    {
+                        slotName = slot,
+                        lastSaved = DateTime.Now,
+                        sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name,
+                        saveSlot = saveSlot
+                    }
                 };
 
-                foreach (var s in SaveableRegistry.GetAllSaveables())
+                foreach (ISaveable s in SaveableRegistry.GetAllSaveables())
                 {
                     string id = s.GetUniqueId();
                     data.savedObjects[id] = s.CaptureState();
                 }
 
-                JsonSerializerSettings settings = new JsonSerializerSettings
+                JsonSerializerSettings settings = new()
                 {
                     TypeNameHandling = TypeNameHandling.All,
                     Formatting = Formatting.Indented
@@ -55,7 +57,7 @@ namespace Tools.SaveSystem
 
             string json = File.ReadAllText(path);
 
-            JsonSerializerSettings settings = new JsonSerializerSettings
+            JsonSerializerSettings settings = new()
             {
                 TypeNameHandling = TypeNameHandling.All,
                 Formatting = Formatting.Indented
@@ -63,7 +65,7 @@ namespace Tools.SaveSystem
 
             GameData data = JsonConvert.DeserializeObject<GameData>(json, settings);
 
-            foreach (var saveable in SaveableRegistry.GetAllSaveables())
+            foreach (ISaveable saveable in SaveableRegistry.GetAllSaveables())
             {
                 string id = saveable.GetUniqueId();
                 if (data.savedObjects.TryGetValue(id, out object state))
@@ -89,5 +91,5 @@ namespace Tools.SaveSystem
         }
 
         public static bool SaveExists(string slot) => File.Exists(SavePath(slot));
-    } 
+    }
 }

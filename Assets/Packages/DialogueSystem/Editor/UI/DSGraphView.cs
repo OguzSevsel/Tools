@@ -48,7 +48,7 @@ namespace Tools.DialogueSystem.UI
 
         private IManipulator CreateNodeContextualMenu(DialogueType type, string actionTitle)
         {
-            ContextualMenuManipulator manipulator = new ContextualMenuManipulator(
+            ContextualMenuManipulator manipulator = new(
                 menuEvent => menuEvent.menu.AppendAction(actionTitle, actionEvent =>
                 {
                     if (CurrentConversation.GetNodes().Count == 0)
@@ -71,10 +71,10 @@ namespace Tools.DialogueSystem.UI
 
             DSNode node = (DSNode)Activator.CreateInstance(nodeType);
 
-            DSDialogueText text = new DSDialogueText("New Dialogue Text", "Dialogue Description", dialogueText);
-            DSActor actor = new DSActor(actorName, "Actor Description", "Actor Background", actorSprite);
-            DSActor conversant = new DSActor(conversantName, "Conversant Description", "Conversant Background", conversantSprite);
-            DSAudioClip clip = new DSAudioClip("New Audio Clip", "Audio Description", audioClip);
+            DSDialogueText text = new("New Dialogue Text", "Dialogue Description", dialogueText);
+            DSActor actor = new(actorName, "Actor Description", "Actor Background", actorSprite);
+            DSActor conversant = new(conversantName, "Conversant Description", "Conversant Background", conversantSprite);
+            DSAudioClip clip = new("New Audio Clip", "Audio Description", audioClip);
 
             node.Initialize(position, type, text, actor, conversant, clip, isStartNode);
             CurrentConversation.AddToNodes(node);
@@ -83,9 +83,9 @@ namespace Tools.DialogueSystem.UI
 
             node.OnEdgeDeleted += (edge) =>
             {
-                if (this.Contains(edge))
+                if (Contains(edge))
                 {
-                    this.RemoveElement(edge);
+                    RemoveElement(edge);
                 }
             };
 
@@ -94,14 +94,14 @@ namespace Tools.DialogueSystem.UI
 
         private void AddGridBackground()
         {
-            GridBackground gridBackground = new GridBackground();
+            GridBackground gridBackground = new();
             gridBackground.StretchToParentSize();
             Insert(0, gridBackground);
         }
 
         private void AddStyles()
         {
-            this.AddStyleSheets("DialogueSystem/DSGraphViewStyles.uss",
+            _ = this.AddStyleSheets("DialogueSystem/DSGraphViewStyles.uss",
                 "DialogueSystem/DSNodeStyles.uss");
         }
 
@@ -113,10 +113,7 @@ namespace Tools.DialogueSystem.UI
             ToggleMiniMap();
         }
 
-        public void ToggleMiniMap()
-        {
-            miniMap.visible = !miniMap.visible;
-        }
+        public void ToggleMiniMap() => miniMap.visible = !miniMap.visible;
 
         #endregion
 
@@ -173,12 +170,12 @@ namespace Tools.DialogueSystem.UI
         }
 
         #endregion
-        
+
         #region Overrides
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
         {
-            List<Port> compatiblePorts = new List<Port>();
+            List<Port> compatiblePorts = new();
 
             ports.ForEach(port =>
             {

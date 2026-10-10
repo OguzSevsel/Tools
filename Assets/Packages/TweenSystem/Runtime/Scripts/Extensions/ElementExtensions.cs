@@ -1,7 +1,7 @@
 using PrimeTween;
-using UnityEngine;
 using Tools.TweenSystem.Elements;
 using Tools.TweenSystem.Utilities;
+using UnityEngine;
 
 namespace Tools.TweenSystem.Extensions
 {
@@ -20,7 +20,7 @@ namespace Tools.TweenSystem.Extensions
            float endDelay = 0f,
            System.Action<Element> onComplete = null)
         {
-            var seq = el.Animate()
+            AnimSequence seq = el.Animate()
                 .Begin(el.ShakeRotation(strength: rotationStrength,
                 duration: duration,
                 ease: ease,
@@ -35,10 +35,10 @@ namespace Tools.TweenSystem.Extensions
                 endDelay: endDelay,
                 unScaledTime: unScaledTime));
 
-            seq.SetLoops(cycles);
+            _ = seq.SetLoops(cycles);
 
             if (onComplete != null)
-                seq.OnComplete(el, onComplete);
+                _ = seq.OnComplete(el, onComplete);
 
             return seq;
         }
@@ -56,7 +56,7 @@ namespace Tools.TweenSystem.Extensions
             float endDelay = 0f,
             System.Action<Element> onComplete = null)
         {
-            var seq = el.Animate()
+            AnimSequence seq = el.Animate()
                 .Begin(el.SlideIn(direction: direction,
                 slideDistance: slideDistance,
                 duration: duration,
@@ -70,10 +70,10 @@ namespace Tools.TweenSystem.Extensions
                 endDelay: endDelay,
                 unScaledTime: unScaledTime));
 
-            seq.SetLoops(cycles);
+            _ = seq.SetLoops(cycles);
 
             if (onComplete != null)
-                seq.OnComplete(el, onComplete);
+                _ = seq.OnComplete(el, onComplete);
 
             return seq;
         }
@@ -90,25 +90,25 @@ namespace Tools.TweenSystem.Extensions
             float endDelay = 0f,
             System.Action<Element> onComplete = null)
         {
-            var seq = el.Animate()
+            AnimSequence seq = el.Animate()
                 .Begin(el.SlideOut(direction,
                 slideDistance: slideDistance,
-                duration: duration, 
-                ease: ease, 
-                startDelay: startDelay, 
-                endDelay: endDelay, 
+                duration: duration,
+                ease: ease,
+                startDelay: startDelay,
+                endDelay: endDelay,
                 unScaledTime: unScaledTime))
-                .Also(el.Shrink(duration: duration, 
-                ease: ease, 
-                startDelay: startDelay, 
-                endDelay: endDelay, 
+                .Also(el.Shrink(duration: duration,
+                ease: ease,
+                startDelay: startDelay,
+                endDelay: endDelay,
                 unScaledTime: unScaledTime));
 
-            seq.SetLoops(cycles);
+            _ = seq.SetLoops(cycles);
 
             if (onComplete != null)
             {
-                seq.OnComplete(el, onComplete);
+                _ = seq.OnComplete(el, onComplete);
             }
 
             return seq;
@@ -127,7 +127,7 @@ namespace Tools.TweenSystem.Extensions
             float endDelay = 0f,
             System.Action<Element> onComplete = null)
         {
-            var seq = el.Animate()
+            AnimSequence seq = el.Animate()
                 .Begin(el.SlideIn(direction: direction,
                 slideDistance: slideDistance,
                 duration: duration,
@@ -135,18 +135,18 @@ namespace Tools.TweenSystem.Extensions
                 startDelay: startDelay,
                 endDelay: endDelay,
                 unScaledTime: unScaledTime))
-                .Also(el.Rotation(endValue: rotationValue, 
-                duration: duration, 
-                ease: ease, 
-                startDelay: startDelay, 
-                endDelay: endDelay, 
+                .Also(el.Rotation(endValue: rotationValue,
+                duration: duration,
+                ease: ease,
+                startDelay: startDelay,
+                endDelay: endDelay,
                 unScaledTime: unScaledTime));
 
-            seq.SetLoops(cycles);
+            _ = seq.SetLoops(cycles);
 
             if (onComplete != null)
             {
-                seq.OnComplete(el, onComplete);
+                _ = seq.OnComplete(el, onComplete);
             }
 
             return seq;
@@ -165,26 +165,26 @@ namespace Tools.TweenSystem.Extensions
             float endDelay = 0f,
             System.Action<Element> onComplete = null)
         {
-            var seq = el.Animate()
-                .Begin(el.SlideOut(direction: direction, 
-                slideDistance: slideDistance, 
-                duration: duration, 
-                ease: ease, 
-                startDelay: startDelay, 
+            AnimSequence seq = el.Animate()
+                .Begin(el.SlideOut(direction: direction,
+                slideDistance: slideDistance,
+                duration: duration,
+                ease: ease,
+                startDelay: startDelay,
                 endDelay: endDelay,
                 unScaledTime: unScaledTime))
-                .Also(el.Rotation(endValue: rotationValue, 
-                duration: duration, 
-                ease: ease, 
-                startDelay: startDelay, 
-                endDelay: endDelay, 
+                .Also(el.Rotation(endValue: rotationValue,
+                duration: duration,
+                ease: ease,
+                startDelay: startDelay,
+                endDelay: endDelay,
                 unScaledTime: unScaledTime));
 
-            seq.SetLoops(cycles);
+            _ = seq.SetLoops(cycles);
 
             if (onComplete != null)
             {
-                seq.OnComplete(el, onComplete);
+                _ = seq.OnComplete(el, onComplete);
             }
 
             return seq;

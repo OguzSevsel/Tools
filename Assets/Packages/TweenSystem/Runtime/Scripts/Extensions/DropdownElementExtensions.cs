@@ -17,7 +17,7 @@ namespace Tools.TweenSystem.Extensions
             bool unScaledTime = true,
             System.Action<DropdownElement> onComplete = null)
         {
-            var seq = el.Animate()
+            AnimSequence seq = el.Animate()
                 .Begin(el.Color(
                     endValue: endValue,
                     duration: duration,
@@ -33,10 +33,10 @@ namespace Tools.TweenSystem.Extensions
                     endDelay: endDelay,
                     unScaledTime: unScaledTime));
 
-            seq.SetLoops(cycles);
+            _ = seq.SetLoops(cycles);
 
             if (onComplete != null)
-                seq.OnComplete(el, onComplete);
+                _ = seq.OnComplete(el, onComplete);
 
             return seq;
         }
@@ -52,7 +52,7 @@ namespace Tools.TweenSystem.Extensions
             bool unScaledTime = true,
             System.Action<DropdownElement> onComplete = null)
         {
-            var seq = el.Animate()
+            AnimSequence seq = el.Animate()
                 .Begin(el.TextColor(
                     endValue: endValue,
                     duration: duration,
@@ -68,10 +68,10 @@ namespace Tools.TweenSystem.Extensions
                     endDelay: endDelay,
                     unScaledTime: unScaledTime));
 
-            seq.SetLoops(cycles);
+            _ = seq.SetLoops(cycles);
 
             if (onComplete != null)
-                seq.OnComplete(el, onComplete);
+                _ = seq.OnComplete(el, onComplete);
 
             return seq;
         }

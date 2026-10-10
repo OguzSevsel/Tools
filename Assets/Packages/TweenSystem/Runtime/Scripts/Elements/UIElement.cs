@@ -1,11 +1,11 @@
 using PrimeTween;
 using System;
+using Tools.TweenSystem.Interfaces;
+using Tools.TweenSystem.Settings;
+using Tools.TweenSystem.Utilities;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Tools.TweenSystem.Interfaces;
-using Tools.TweenSystem.Utilities;
-using Tools.TweenSystem.Settings;
 
 namespace Tools.TweenSystem.Elements
 {
@@ -33,14 +33,7 @@ namespace Tools.TweenSystem.Elements
             {
                 if (EventSettings.Selectable && gameObject.TryGetComponent<Selectable>(out Selectable selectable))
                 {
-                    if (selectable == null)
-                    {
-                        Selectable = gameObject.AddComponent<Selectable>();
-                    }
-                    else
-                    {
-                        Selectable = selectable;
-                    }
+                    Selectable = selectable == null ? gameObject.AddComponent<Selectable>() : selectable;
                 }
             }
 
@@ -249,40 +242,31 @@ namespace Tools.TweenSystem.Elements
             bool useUnscaledTime = true,
             System.Action<UIElement> onComplete = null)
         {
-            slideDirection = slideDirection ?? AnimationSettings.RollInDirection;
+            slideDirection ??= AnimationSettings.RollInDirection;
 
-            switch (slideDirection)
+            return slideDirection switch
             {
-                case SlideDirection.Left: //To Left
-
-                    return GrowHorizontal(endValue, duration, ease, 1f, cycles, 
-                        startDelay, endDelay, useUnscaledTime)
-                        .OnComplete(this, onComplete);
-
-                case SlideDirection.Right: //To Right
-
-                    return GrowHorizontal(endValue, duration, ease, 0f, cycles,
-                        startDelay, endDelay, useUnscaledTime)
-                        .OnComplete(this, onComplete);
-
-                case SlideDirection.Bottom: //To Bottom
-
-                    return GrowVertical(endValue, duration, ease, 0f, cycles,
-                        startDelay, endDelay, useUnscaledTime)
-                        .OnComplete(this, onComplete);
-
-                case SlideDirection.Top: //To Top
-
-                    return GrowVertical(endValue, duration, ease, 1f, cycles,
-                        startDelay, endDelay, useUnscaledTime)
-                        .OnComplete(this, onComplete);
-
-                default: //To Right
-
-                    return GrowHorizontal(endValue, duration, ease, 0f, cycles,
-                        startDelay, endDelay, useUnscaledTime)
-                        .OnComplete(this, onComplete);
-            }
+                //To Left
+                SlideDirection.Left => GrowHorizontal(endValue, duration, ease, 1f, cycles,
+                                        startDelay, endDelay, useUnscaledTime)
+                                        .OnComplete(this, onComplete),
+                //To Right
+                SlideDirection.Right => GrowHorizontal(endValue, duration, ease, 0f, cycles,
+                                        startDelay, endDelay, useUnscaledTime)
+                                        .OnComplete(this, onComplete),
+                //To Bottom
+                SlideDirection.Bottom => GrowVertical(endValue, duration, ease, 0f, cycles,
+                                        startDelay, endDelay, useUnscaledTime)
+                                        .OnComplete(this, onComplete),
+                //To Top
+                SlideDirection.Top => GrowVertical(endValue, duration, ease, 1f, cycles,
+                                        startDelay, endDelay, useUnscaledTime)
+                                        .OnComplete(this, onComplete),
+                //To Right
+                _ => GrowHorizontal(endValue, duration, ease, 0f, cycles,
+                                        startDelay, endDelay, useUnscaledTime)
+                                        .OnComplete(this, onComplete),
+            };
         }
 
         public Tween RollOut(float? startValue = null,
@@ -296,40 +280,31 @@ namespace Tools.TweenSystem.Elements
             bool useUnscaledTime = true,
             System.Action<UIElement> onComplete = null)
         {
-            slideDirection = slideDirection ?? AnimationSettings.RollOutDirection;  
+            slideDirection ??= AnimationSettings.RollOutDirection;
 
-            switch (slideDirection)
+            return slideDirection switch
             {
-                case SlideDirection.Left: //To Left
-
-                    return ShrinkHorizontal(endValue, duration, ease, 1f, cycles,
-                        startDelay, endDelay, useUnscaledTime)
-                        .OnComplete(this, onComplete);
-
-                case SlideDirection.Right: //To Right
-
-                    return ShrinkHorizontal(endValue, duration, ease, 0f, cycles,
-                        startDelay, endDelay, useUnscaledTime)
-                        .OnComplete(this, onComplete);
-
-                case SlideDirection.Bottom: //To Bottom
-
-                    return ShrinkVertical(endValue, duration, ease, 0f, cycles,
-                        startDelay, endDelay, useUnscaledTime)
-                        .OnComplete(this, onComplete);
-
-                case SlideDirection.Top: //To Top
-
-                    return ShrinkVertical(endValue, duration, ease, 1f, cycles,
-                        startDelay, endDelay, useUnscaledTime)
-                        .OnComplete(this, onComplete);
-
-                default: //To Right
-
-                    return ShrinkHorizontal(endValue, duration, ease, 0f, cycles,
-                        startDelay, endDelay, useUnscaledTime)
-                        .OnComplete(this, onComplete);
-            }
+                //To Left
+                SlideDirection.Left => ShrinkHorizontal(endValue, duration, ease, 1f, cycles,
+                                        startDelay, endDelay, useUnscaledTime)
+                                        .OnComplete(this, onComplete),
+                //To Right
+                SlideDirection.Right => ShrinkHorizontal(endValue, duration, ease, 0f, cycles,
+                                        startDelay, endDelay, useUnscaledTime)
+                                        .OnComplete(this, onComplete),
+                //To Bottom
+                SlideDirection.Bottom => ShrinkVertical(endValue, duration, ease, 0f, cycles,
+                                        startDelay, endDelay, useUnscaledTime)
+                                        .OnComplete(this, onComplete),
+                //To Top
+                SlideDirection.Top => ShrinkVertical(endValue, duration, ease, 1f, cycles,
+                                        startDelay, endDelay, useUnscaledTime)
+                                        .OnComplete(this, onComplete),
+                //To Right
+                _ => ShrinkHorizontal(endValue, duration, ease, 0f, cycles,
+                                        startDelay, endDelay, useUnscaledTime)
+                                        .OnComplete(this, onComplete),
+            };
         }
 
         #endregion
@@ -372,30 +347,23 @@ namespace Tools.TweenSystem.Elements
         {
             if (active)
             {
-                if (!this.gameObject.activeInHierarchy)
+                if (!gameObject.activeInHierarchy)
                 {
                     ChangeNavigationMode(Navigation.Mode.Automatic);
-                    this.gameObject.SetActive(true);
+                    gameObject.SetActive(true);
                 }
             }
             else
             {
-                if (this.gameObject.activeInHierarchy)
+                if (gameObject.activeInHierarchy)
                 {
                     ChangeNavigationMode(Navigation.Mode.None);
-                    this.gameObject.SetActive(false);
+                    gameObject.SetActive(false);
                 }
             }
         }
-        
-        public bool IsVisible()
-        {
-            if (CanvasGroup != null && CanvasGroup.alpha == 1)
-            {
-                return true;
-            }
-            return false;
-        }
+
+        public bool IsVisible() => CanvasGroup != null && CanvasGroup.alpha == 1;
 
         public void Show()
         {

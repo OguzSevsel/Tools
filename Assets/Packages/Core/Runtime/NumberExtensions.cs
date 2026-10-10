@@ -37,5 +37,5 @@ namespace Tools.Core
 
             return shortened.ToString("0.##") + suffixes[i]; // abbreviated with max 2 decimals
         }
-    } 
+    }
 }

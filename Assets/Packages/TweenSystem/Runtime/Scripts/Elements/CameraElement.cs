@@ -1,6 +1,6 @@
 using PrimeTween;
-using UnityEngine;
 using Tools.TweenSystem.Settings;
+using UnityEngine;
 
 namespace Tools.TweenSystem.Elements
 {

@@ -1,7 +1,6 @@
+using Tools.TweenSystem.Settings;
 using UnityEditor;
 using UnityEngine.UIElements;
-using Tools.TweenSystem.Settings;
-using System;
 
 namespace Tools.TweenSystem.EditorTools
 {
@@ -30,8 +29,8 @@ namespace Tools.TweenSystem.EditorTools
             FadeFoldout = Root.Q<Foldout>("FadeFoldout");
             FadeInFloatField = Root.Q<FloatField>("FadeIn");
             FadeOutFloatField = Root.Q<FloatField>("FadeOut");
-            FadeInFloatField.RegisterValueChangedCallback(ValueChangedHandler);
-            FadeOutFloatField.RegisterValueChangedCallback(ValueChangedHandler);
+            _ = FadeInFloatField.RegisterValueChangedCallback(ValueChangedHandler);
+            _ = FadeOutFloatField.RegisterValueChangedCallback(ValueChangedHandler);
         }
 
         private void ValueChangedHandler(ChangeEvent<float> evt)

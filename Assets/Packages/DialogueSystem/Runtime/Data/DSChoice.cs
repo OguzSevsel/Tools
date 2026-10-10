@@ -7,8 +7,8 @@ namespace Tools.DialogueSystem
     {
         public DSChoice(string title, string targetNodeId)
         {
-            this.Title = title;
-            this.TargetNodeId = targetNodeId;
+            Title = title;
+            TargetNodeId = targetNodeId;
         }
 
         public string Title;

@@ -1,5 +1,5 @@
-using Tools.TweenSystem.Elements;
 using PrimeTween;
+using Tools.TweenSystem.Elements;
 using Tools.TweenSystem.Utilities;
 
 namespace Tools.TweenSystem.Extensions
@@ -18,7 +18,7 @@ namespace Tools.TweenSystem.Extensions
             float endDelay = 0f,
             System.Action<SpriteElement> onComplete = null)
         {
-            var seq = el.Animate()
+            AnimSequence seq = el.Animate()
                 .Begin(el.FadeOut(endValue: fadeOutValue,
                 duration: duration,
                 ease: ease,
@@ -32,10 +32,10 @@ namespace Tools.TweenSystem.Extensions
                 endDelay: endDelay,
                 unScaledTime: unScaledTime));
 
-            seq.SetLoops(cycles);
+            _ = seq.SetLoops(cycles);
 
             if (onComplete != null)
-                seq.OnComplete(el, onComplete);
+                _ = seq.OnComplete(el, onComplete);
 
             return seq;
         }
@@ -53,7 +53,7 @@ namespace Tools.TweenSystem.Extensions
             float endDelay = 0f,
             System.Action<SpriteElement> onComplete = null)
         {
-            var seq = el.Animate()
+            AnimSequence seq = el.Animate()
                 .Begin(el.SlideIn(direction: direction,
                 slideDistance: slideDistance,
                 duration: duration,
@@ -68,10 +68,10 @@ namespace Tools.TweenSystem.Extensions
                 endDelay: endDelay,
                 unScaledTime: unScaledTime));
 
-            seq.SetLoops(cycles);
+            _ = seq.SetLoops(cycles);
 
             if (onComplete != null)
-                seq.OnComplete(el, onComplete);
+                _ = seq.OnComplete(el, onComplete);
 
             return seq;
         }
@@ -89,7 +89,7 @@ namespace Tools.TweenSystem.Extensions
             float endDelay = 0f,
             System.Action<SpriteElement> onComplete = null)
         {
-            var seq = el.Animate()
+            AnimSequence seq = el.Animate()
                 .Begin(el.SlideOut(direction: direction,
                 slideDistance: slideDistance,
                 duration: duration,
@@ -104,10 +104,10 @@ namespace Tools.TweenSystem.Extensions
                 endDelay: endDelay,
                 unScaledTime: unScaledTime));
 
-            seq.SetLoops(cycles);
+            _ = seq.SetLoops(cycles);
 
             if (onComplete != null)
-                seq.OnComplete(el, onComplete);
+                _ = seq.OnComplete(el, onComplete);
 
             return seq;
         }
@@ -123,7 +123,7 @@ namespace Tools.TweenSystem.Extensions
             bool unScaledTime = true,
             System.Action<SpriteElement> onComplete = null)
         {
-            var seq = el.Animate()
+            AnimSequence seq = el.Animate()
                 .Begin(el.Color(endValue: endValue,
                 duration: duration,
                 ease: ease,
@@ -137,10 +137,10 @@ namespace Tools.TweenSystem.Extensions
                 endDelay: endDelay,
                 unScaledTime: unScaledTime));
 
-            seq.SetLoops(cycles);
+            _ = seq.SetLoops(cycles);
 
             if (onComplete != null)
-                seq.OnComplete(el, onComplete);
+                _ = seq.OnComplete(el, onComplete);
 
             return seq;
         }

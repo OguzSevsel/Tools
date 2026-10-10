@@ -23,5 +23,5 @@ namespace Tools.SaveSystem
             transform.rotation = new Quaternion(rotation[0], rotation[1], rotation[2], rotation[3]);
             transform.localScale = new Vector3(scale[0], scale[1], scale[2]);
         }
-    } 
+    }
 }

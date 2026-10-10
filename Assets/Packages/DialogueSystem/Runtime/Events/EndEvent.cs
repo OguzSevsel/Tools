@@ -7,8 +7,8 @@ namespace Tools.DialogueSystem
 
         internal EndEvent(string dialogueId, string actorName)
         {
-            this.DialogueId = dialogueId;
-            this.ActorName = actorName;
+            DialogueId = dialogueId;
+            ActorName = actorName;
         }
     }
 }

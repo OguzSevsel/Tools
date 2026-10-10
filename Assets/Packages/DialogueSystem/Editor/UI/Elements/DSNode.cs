@@ -20,8 +20,8 @@ namespace Tools.DialogueSystem.UI.Elements
 
         public virtual void Initialize(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSActor conversant, DSAudioClip audioClip, bool isStartNode)
         {
-            DSDialogueNodeData data = new DSDialogueNodeData(position, type, dialogueText, actor, conversant, audioClip);
-            this.Data = data;
+            DSDialogueNodeData data = new(position, type, dialogueText, actor, conversant, audioClip);
+            Data = data;
             Data.IsStartNode = isStartNode;
 
             SetPosition(new Rect(position, Vector2.zero));
@@ -49,18 +49,18 @@ namespace Tools.DialogueSystem.UI.Elements
             if (!Data.IsStartNode)
                 CreatePort(portContainer, InputPort, Direction.Input);
 
-            var label = DSElementUtility.CreateLabel("Node");
+            Label label = DSElementUtility.CreateLabel("Node");
 
             titleContainer.Clear();
             titleContainer.Insert(0, label);
 
-            label.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
-            label.SetTextSettings(fontStyle: FontStyle.Bold, alignment: TextAnchor.MiddleCenter);
+            _ = label.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
+            _ = label.SetTextSettings(fontStyle: FontStyle.Bold, alignment: TextAnchor.MiddleCenter);
 
             portContainer.Add(titleContainer);
 
             CreatePort(portContainer, OutputPort, Direction.Output);
-            RefreshPorts();
+            _ = RefreshPorts();
         }
 
         #region Creation
@@ -69,31 +69,23 @@ namespace Tools.DialogueSystem.UI.Elements
         {
             port = this.CreatePort("", Orientation.Vertical, direction, Port.Capacity.Multi);
             container.Add(port);
-            var label = port.Q<Label>("type");
-            label.SetMargins(0);
-            port.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
+            Label label = port.Q<Label>("type");
+            _ = label.SetMargins(0);
+            _ = port.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
         }
 
         public TextField CreateTextField(string title = null, string label = null, bool isMultiLine = false, VisualElement customDataContainer = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
         {
             TextField textField = Tools.DialogueSystem.Utilities.DSElementUtility.CreateTextField(title, label, isMultiLine, onValueChanged: onValueChanged);
 
-            if (isMultiLine)
-            {
-                textField.AddClasses("ds-node__text-field",
-              "ds-node__quote-text-field");
-            }
-            else
-            {
-                textField.AddClasses("ds-node__text-field",
+            _ = isMultiLine
+                ? textField.AddClasses("ds-node__text-field",
+              "ds-node__quote-text-field")
+                : textField.AddClasses("ds-node__text-field",
                 "ds-node__filename-text-field",
                 "ds-node__text-field__hidden");
-            }
 
-            if (customDataContainer != null)
-            {
-                customDataContainer.Add(textField);
-            }
+            customDataContainer?.Add(textField);
 
             return textField;
         }
@@ -102,12 +94,9 @@ namespace Tools.DialogueSystem.UI.Elements
         {
             Label label = Tools.DialogueSystem.Utilities.DSElementUtility.CreateLabel(text, onValueChanged);
 
-            if (customDataContainer != null)
-            {
-                customDataContainer.Add(label);
-            }
+            customDataContainer?.Add(label);
 
-            label.AddClasses("ds-node__text-field",
+            _ = label.AddClasses("ds-node__text-field",
               "ds-node__quote-text-field");
 
             return label;
@@ -117,10 +106,7 @@ namespace Tools.DialogueSystem.UI.Elements
         {
             DropdownField dropdown = Tools.DialogueSystem.Utilities.DSElementUtility.CreateDropdown(text, choices, onValueChanged);
 
-            if (customDataContainer != null)
-            {
-                customDataContainer.Add(dropdown);
-            }
+            customDataContainer?.Add(dropdown);
 
             return dropdown;
         }

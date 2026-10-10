@@ -11,8 +11,8 @@ namespace Tools.DialogueSystem.Data
 
         public DSActor(string title, string description, string background, Sprite sprite) : base(title, description)
         {
-            this.Background = background;
-            this.Sprite = sprite;
+            Background = background;
+            Sprite = sprite;
         }
     }
 }

@@ -1,6 +1,5 @@
 using Tools.TweenSystem.Settings;
 using UnityEditor;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tools.TweenSystem.EditorTools

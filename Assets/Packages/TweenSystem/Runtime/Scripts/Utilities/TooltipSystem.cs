@@ -1,5 +1,5 @@
-using UnityEngine;
 using Tools.TweenSystem.Elements;
+using UnityEngine;
 
 namespace Tools.TweenSystem.TooltipSystem
 {
@@ -28,7 +28,7 @@ namespace Tools.TweenSystem.TooltipSystem
 
             if (Instance.useFade)
             {
-                Instance.ToolTip.FadeIn(startDelay: Instance.startDelay);
+                _ = Instance.ToolTip.FadeIn(startDelay: Instance.startDelay);
                 return;
             }
 
@@ -39,11 +39,11 @@ namespace Tools.TweenSystem.TooltipSystem
         {
             if (Instance.useFade)
             {
-                Instance.ToolTip.FadeOut();
+                _ = Instance.ToolTip.FadeOut();
                 return;
             }
 
             Instance.ToolTip.SetActive(false);
         }
-    } 
+    }
 }

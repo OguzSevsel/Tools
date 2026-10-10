@@ -19,14 +19,14 @@ namespace Tools.AudioSystem
         public void Init()
         {
             _lookup = new Dictionary<string, SoundData>();
-            foreach (var entry in sounds)
+            foreach (SoundEntry entry in sounds)
                 _lookup[entry.key] = entry.data;
         }
 
         public SoundData Get(string key)
         {
-            _lookup.TryGetValue(key, out var data);
+            _ = _lookup.TryGetValue(key, out SoundData data);
             return data;
         }
-    } 
+    }
 }

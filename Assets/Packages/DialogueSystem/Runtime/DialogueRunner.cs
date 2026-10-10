@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 namespace Tools.DialogueSystem
 {
@@ -58,5 +57,5 @@ namespace Tools.DialogueSystem
 
             OnDialogueEvent?.Invoke(new MessageEvent(_internal, currentNode.DialogueId, currentNode.ActorName, currentNode.DialogueText, currentNode.ActorSprite, currentNode.AudioClip));
         }
-    } 
+    }
 }

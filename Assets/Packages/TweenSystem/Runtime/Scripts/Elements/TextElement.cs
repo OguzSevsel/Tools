@@ -49,10 +49,10 @@ namespace Tools.TweenSystem.Elements
             bool unscaledTime = true,
             System.Action<TextMeshProUGUI> onComplete = null)
         {
-            if (text.Length == 0) this.Text.text = string.Empty;
+            if (text.Length == 0) Text.text = string.Empty;
 
-            this.Text.text = text;
-            this.Text.maxVisibleCharacters = 0;
+            Text.text = text;
+            Text.maxVisibleCharacters = 0;
 
             if (charCount == 0) charCount = Text.text.Length;
 

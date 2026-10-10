@@ -1,6 +1,6 @@
+using Tools.TweenSystem.Elements;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Tools.TweenSystem.Elements;
 
 public class DialogOptionButton : ButtonElement
 {
@@ -9,8 +9,8 @@ public class DialogOptionButton : ButtonElement
     public override void Awake()
     {
         base.Awake();
-        this.OnMouseEnter += DialogOptionButton_OnMouseEnter;
-        this.OnMouseExit += DialogOptionButton_OnMouseExit;
+        OnMouseEnter += DialogOptionButton_OnMouseEnter;
+        OnMouseExit += DialogOptionButton_OnMouseExit;
 
         if (_indicatorObject != null)
             _indicatorObject.SetActive(false);

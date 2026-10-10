@@ -1,9 +1,9 @@
 using PrimeTween;
 using System;
 using TMPro;
+using Tools.TweenSystem.Interfaces;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using Tools.TweenSystem.Interfaces;
 
 namespace Tools.TweenSystem.Elements
 {
@@ -38,16 +38,16 @@ namespace Tools.TweenSystem.Elements
             bool unscaledTime = true,
             System.Action<TextMeshProUGUI> onComplete = null)
         {
-            if (Text.text.Length == 0) this.Text.text = string.Empty;
+            if (Text.text.Length == 0) Text.text = string.Empty;
 
-            this.Text.text = Text.text;
-            this.Text.maxVisibleCharacters = 0;
+            Text.text = Text.text;
+            Text.maxVisibleCharacters = 0;
 
             if (charCount == 0) charCount = Text.text.Length;
 
             Text.ForceMeshUpdate();
 
-            Tween.TextMaxVisibleCharacters(Text,
+            _ = Tween.TextMaxVisibleCharacters(Text,
                 charCount,
                 duration ?? AnimationSettings.Duration,
                 ease ?? AnimationSettings.Ease,
@@ -143,7 +143,7 @@ namespace Tools.TweenSystem.Elements
             Text.SetText(value);
 
             if (!EventSettings.OnValueChanged) return;
-            
+
             OnValueChanged?.Invoke(value);
         }
 
@@ -161,7 +161,7 @@ namespace Tools.TweenSystem.Elements
         {
             Text.SetText(string.Empty);
 
-            if(!EventSettings.OnValueChanged) return;
+            if (!EventSettings.OnValueChanged) return;
 
             OnValueChanged?.Invoke(Text.text);
         }
