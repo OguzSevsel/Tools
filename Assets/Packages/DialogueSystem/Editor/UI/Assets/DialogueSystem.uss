@@ -124,8 +124,8 @@
     -unity-text-auto-size: best-fit 5px 30px;
     -unity-font-style: bold;
     color: rgb(255, 255, 255);
-    min-height: 40px;
-    min-width: 40px;
+    min-height: 30px;
+    min-width: 30px;
 }
 
 .unity-tab__header > .unity-tab__header-label {
