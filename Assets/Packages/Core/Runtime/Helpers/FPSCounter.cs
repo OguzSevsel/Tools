@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Tools.Core
+namespace Tools.Core.Helpers
 {
     public class FPSCounter : MonoBehaviour
     {

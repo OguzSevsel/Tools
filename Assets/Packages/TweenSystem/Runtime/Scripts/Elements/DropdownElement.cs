@@ -2,7 +2,8 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
-using Tools.Core;
+using Tools.Core.Extensions;
+using Tools.Core.Helpers;
 using Tools.TweenSystem.Extensions;
 using Tools.TweenSystem.Interfaces;
 using UnityEngine;

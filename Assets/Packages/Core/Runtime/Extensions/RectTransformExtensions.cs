@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Tools.Core
+namespace Tools.Core.Extensions
 {
     public static class RectTransformExtensions
     {

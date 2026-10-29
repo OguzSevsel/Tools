@@ -1,9 +1,11 @@
 using UnityEngine;
 
-namespace Tools.Core
+namespace Tools.Core.Singleton
 {
-    public class Singleton<T> : MonoBehaviour where T : Component
+    public class GlobalSingleton<T> : MonoBehaviour where T : Component
     {
+        public bool AutoUnparentOnAwake = true;
+
         protected static T instance;
 
         public static bool HasInstance => instance != null;
@@ -32,11 +34,35 @@ namespace Tools.Core
         /// </summary>
         protected virtual void Awake() => InitializeSingleton();
 
+        protected virtual void OnDestroy()
+        {
+            if (instance == this)
+            {
+                instance = null;
+            }
+        }
+
         protected virtual void InitializeSingleton()
         {
             if (!Application.isPlaying) return;
 
-            instance = this as T;
+            if (AutoUnparentOnAwake)
+            {
+                transform.SetParent(null);
+            }
+
+            if (instance == null)
+            {
+                instance = this as T;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                if (instance != this)
+                {
+                    Destroy(gameObject);
+                }
+            }
         }
     }
 }

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Tools.Core
+namespace Tools.Core.Helpers
 {
     public static class Helpers
     {
