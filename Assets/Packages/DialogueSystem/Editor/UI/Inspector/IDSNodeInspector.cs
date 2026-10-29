@@ -5,6 +5,6 @@ namespace Tools.DialogueSystem.UI.Inspector
     public interface IDSNodeInspector
     {
         void Create();
-        void LoadFields(DSDialogueNodeData data);
+        void LoadFields(DSNodeData data);
     }
 }

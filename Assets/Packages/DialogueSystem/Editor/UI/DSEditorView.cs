@@ -11,18 +11,13 @@ namespace Tools.DialogueSystem.UI
     {
         [SerializeField] private VisualTreeAsset editorWindowAsset;
         [SerializeField] private VisualTreeAsset sideBarAsset;
-
         [SerializeField] private VisualTreeAsset actorsTabAsset;
         [SerializeField] private VisualTreeAsset actorsCardAsset;
-
         [SerializeField] private VisualTreeAsset audioClipsTabAsset;
         [SerializeField] private VisualTreeAsset audioClipCardAsset;
-
         [SerializeField] private VisualTreeAsset databaseTabAsset;
-
         [SerializeField] private VisualTreeAsset dialoguesTabAsset;
         [SerializeField] private VisualTreeAsset dialogueCardAsset;
-
         [SerializeField] private VisualTreeAsset conversationsTabAsset;
         [SerializeField] private VisualTreeAsset conversationCardAsset;
 
@@ -48,14 +43,23 @@ namespace Tools.DialogueSystem.UI
         private void OnEnable()
         {
             CreateDefaultFolders();
+            GetUIElements();
+            CreateTabs();
+            AddTabs();
+            RegisterEvents();
+        }
+
+        private void GetUIElements()
+        {
             editorWindowAsset.CloneTree(rootVisualElement);
             tabView = rootVisualElement.Q<TabView>("TabView");
-            AddTabs();
-            tabView.activeTab = graphTab;
-
             databaseDialogContainer = rootVisualElement.Q<VisualElement>("DatabaseDialogContainer");
             createDatabaseButton = rootVisualElement.Q<Button>("CreateDatabaseButton");
             loadDatabaseButton = rootVisualElement.Q<Button>("LoadDatabaseButton");
+        }
+
+        private void RegisterEvents()
+        {
             createDatabaseButton.clicked += OnCreateDatabaseButtonClicked;
             loadDatabaseButton.clicked += OnLoadDatabaseButtonClicked;
         }
@@ -139,17 +143,21 @@ namespace Tools.DialogueSystem.UI
 
         private void AddTabs()
         {
-            graphTab = new DSGraphTab(conversationsTabAsset, conversationCardAsset, sideBarAsset);
-            actorsTab = new DSActorsTab(actorsTabAsset, actorsCardAsset);
-            audioClipsTab = new DSAudioClipsTab(audioClipsTabAsset, audioClipCardAsset);
-            dialoguesTab = new DSDialoguesTab(dialoguesTabAsset, dialogueCardAsset);
-            databaseTab = new DSDatabaseTab(databaseTabAsset);
-
             tabView.Add(graphTab);
             tabView.Add(actorsTab);
             tabView.Add(audioClipsTab);
             tabView.Add(dialoguesTab);
             tabView.Add(databaseTab);
+            tabView.activeTab = graphTab;
+        }
+
+        private void CreateTabs()
+        {
+            graphTab = new DSGraphTab(conversationsTabAsset, conversationCardAsset, sideBarAsset);
+            actorsTab = new DSActorsTab(actorsTabAsset, actorsCardAsset);
+            audioClipsTab = new DSAudioClipsTab(audioClipsTabAsset, audioClipCardAsset);
+            dialoguesTab = new DSDialoguesTab(dialoguesTabAsset, dialogueCardAsset);
+            databaseTab = new DSDatabaseTab(databaseTabAsset);
         }
 
         #region Utils

@@ -10,9 +10,7 @@ namespace Tools.DialogueSystem
         public List<DSPortData> Connections = new();
 
         public DSNodeSO GetNodeById(string nodeId) => Nodes.Find(node => node.DialogueId == nodeId);
-
         public DSNodeSO GetStartNode() => Nodes.Find(node => node.IsStartNode);
-
         public DSNodeSO GetNextNode(string selectedNodeId) => Nodes.Find(node => node.DialogueId == selectedNodeId);
     }
 }

@@ -8,13 +8,13 @@ namespace Tools.DialogueSystem.UI.Elements
 {
     public class DSNodeInspector : VisualElement, IDSNodeInspector
     {
-        private DSDialogueNodeData data;
+        private DSNodeData data;
         private TextField dialogueText;
         private DSDropdown<DSActor> actorDropdown;
         private DSDropdown<DSActor> conversantDropdown;
         private DSDropdown<DSAudioClip> audioDropdown;
 
-        public DSNodeInspector(DSDialogueNodeData data)
+        public DSNodeInspector(DSNodeData data)
         {
             this.data = data;
             this.SetFlex(flexGrow: 1, flexDirection: FlexDirection.Column, flexWrap: Wrap.NoWrap);
@@ -28,7 +28,7 @@ namespace Tools.DialogueSystem.UI.Elements
             LoadFields(this.data);
         }
 
-        public void LoadFields(DSDialogueNodeData data)
+        public void LoadFields(DSNodeData data)
         {
             this.data = data;
             actorDropdown.SetItems(DSDatabaseManager.Current.Actors);
@@ -51,9 +51,9 @@ namespace Tools.DialogueSystem.UI.Elements
             DropdownField conversantDropdownField = DSElementUtility.CreateDropdown("Conversant", new List<string>());
             DropdownField audioDropdownField = DSElementUtility.CreateDropdown("Audio", new List<string>());
 
-            actorDropdown = new DSDropdown<DSActor>(actorDropdownField, character => character.Title);
-            conversantDropdown = new DSDropdown<DSActor>(conversantDropdownField, character => character.Title);
-            audioDropdown = new DSDropdown<DSAudioClip>(audioDropdownField, audio => audio.Title);
+            actorDropdown = new DSDropdown<DSActor>(actorDropdownField, character => character.Name);
+            conversantDropdown = new DSDropdown<DSActor>(conversantDropdownField, character => character.Name);
+            audioDropdown = new DSDropdown<DSAudioClip>(audioDropdownField, audio => audio.Name);
 
             this.contentContainer.Add(actorDropdownField);
             this.contentContainer.Add(conversantDropdownField);

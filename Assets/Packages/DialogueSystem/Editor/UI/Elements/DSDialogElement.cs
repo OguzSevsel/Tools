@@ -46,12 +46,7 @@ namespace Tools.DialogueSystem.UI
             Hide();
         }
 
-        public void Show(
-            string titleText,
-            string messageText,
-            string confirmText,
-            string cancelText,
-            Action onConfirm,
+        public void Show(string titleText,string messageText,string confirmText,string cancelText,Action onConfirm,
             Action onCancel = null)
         {
             title.text = titleText;

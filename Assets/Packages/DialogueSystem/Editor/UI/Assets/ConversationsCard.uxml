@@ -5,7 +5,7 @@
             <ui:Image source="project://database/Assets/Packages/TweenSystem/Editor/Icons/Dialogue%20Button%20Icon.png?fileID=2779512007517704115&amp;guid=7c5ca9666fd569b46be93404aaa43817&amp;type=3#Dialogue Button Icon_0" name="ConversationImage" scale-mode="ScaleToFit" style="width: 30px; height: 30px;"/>
             <ui:Label text="" name="ConversationCardTitle" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor" class="title" style="flex-grow: 1; flex-shrink: 1;">
                 <Bindings>
-                    <ui:DataBinding property="text" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor" data-source-path="_Title_k__BackingField" binding-mode="ToTarget"/>
+                    <ui:DataBinding property="text" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor" data-source-path="_Name_k__BackingField" binding-mode="ToTarget"/>
                 </Bindings>
             </ui:Label>
             <ui:VisualElement>
@@ -15,7 +15,7 @@
         </ui:VisualElement>
         <ui:TextField label="Name" placeholder-text="Name" name="ConversationName" hide-placeholder-on-focus="true" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor">
             <Bindings>
-                <ui:DataBinding property="value" data-source-path="_Title_k__BackingField" binding-mode="TwoWay"/>
+                <ui:DataBinding property="value" data-source-path="_Name_k__BackingField" binding-mode="TwoWay"/>
             </Bindings>
         </ui:TextField>
         <ui:TextField label="Description" placeholder-text="Description" name="ConversationDescription" hide-placeholder-on-focus="true" multiline="true" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor" focusable="true">
@@ -24,8 +24,8 @@
             </Bindings>
         </ui:TextField>
         <ui:VisualElement name="FooterContainer" class="Spacing" style="align-self: stretch; justify-content: center; flex-direction: row; align-items: center;">
-            <ui:Button text="Button" name="CopyButton" style="flex-grow: 1; align-self: stretch; height: 30px;"/>
-            <ui:Button text="Button" name="OpenButton" style="flex-grow: 1; align-self: stretch; height: 30px;"/>
+            <ui:Button text="Copy" name="CopyButton" style="flex-grow: 1; align-self: stretch; height: 30px;"/>
+            <ui:Button text="Open" name="OpenButton" style="flex-grow: 1; align-self: stretch; height: 30px;"/>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

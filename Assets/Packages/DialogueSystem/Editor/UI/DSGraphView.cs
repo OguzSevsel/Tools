@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tools.DialogueSystem.Data;
+using Tools.DialogueSystem.Elements;
 using Tools.DialogueSystem.UI.Elements;
 using Tools.DialogueSystem.UI.Inspector;
 using Tools.DialogueSystem.Utilities;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -51,7 +54,7 @@ namespace Tools.DialogueSystem.UI
             ContextualMenuManipulator manipulator = new(
                 menuEvent => menuEvent.menu.AppendAction(actionTitle, actionEvent =>
                 {
-                    if (CurrentConversation.GetNodes().Count == 0)
+                    if (CurrentConversation.Nodes.Count == 0)
                     {
                         AddElement(CreateNode(type, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition), isStartNode: true, "Dialogue ID", "Actor Name", "Conversant Name", null, null, null, "Dialogue Text"));
                     }
@@ -77,7 +80,7 @@ namespace Tools.DialogueSystem.UI
             DSAudioClip clip = new("New Audio Clip", "Audio Description", audioClip);
 
             node.Initialize(position, type, text, actor, conversant, clip, isStartNode);
-            CurrentConversation.AddToNodes(node);
+            CurrentConversation.AddToNodes(node.Data);
 
             node.OnNodeSelect += OnNodeSelected;
 
@@ -89,6 +92,25 @@ namespace Tools.DialogueSystem.UI
                 }
             };
 
+            return node;
+        }
+
+        public DSNode LoadNode(DSNodeData data)
+        {
+            Type nodeType = Type.GetType($"Tools.DialogueSystem.UI.Elements.DSNode");
+
+            DSNode node = (DSNode)Activator.CreateInstance(nodeType);
+
+            node.Initialize(data);
+
+            node.OnNodeSelect += OnNodeSelected;
+            node.OnEdgeDeleted += (edge) =>
+            {
+                if (this.Contains(edge))
+                {
+                    this.RemoveElement(edge);
+                }
+            };
             return node;
         }
 
@@ -114,6 +136,43 @@ namespace Tools.DialogueSystem.UI
         }
 
         public void ToggleMiniMap() => miniMap.visible = !miniMap.visible;
+
+        #endregion
+
+        #region Save and Load
+
+        public void Load(DSConversation conversation)
+        {
+            ClearGraph();
+            CurrentConversation = conversation;
+            foreach (var node in conversation.Nodes)
+            {
+                AddElement(LoadNode(node));
+            }
+        }
+
+        public void Save()
+        {
+            if (this.CurrentConversation.NodeCount > 0)
+            {
+                List<DSNode> nodeElementList = this.nodes.OfType<DSNode>().ToList();
+
+                foreach (var node in CurrentConversation.Nodes)
+                {
+                    var nodeElement = nodeElementList.Find(n => n.Data.Guid == node.Guid);
+                    node.SetPosition(nodeElement.GetPosition().position);
+                }
+            }
+
+            this.CurrentConversation = null;
+        }
+
+        public void ClearGraph()
+        {
+            this.DeleteElements(this.edges);
+            this.DeleteElements(this.nodes.ToList());
+            this.CurrentConversation = null;
+        }
 
         #endregion
 

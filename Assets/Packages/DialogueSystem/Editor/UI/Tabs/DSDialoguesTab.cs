@@ -11,7 +11,6 @@ namespace Tools.DialogueSystem.UI
         private Dictionary<DSDialogueText, VisualElement> dialogues;
 
         private VisualTreeAsset cardAsset;
-
         private VisualElement dialogueCardContainer;
         private ScrollView dialogueScrollView;
         private Button createDialogueButton;
@@ -75,7 +74,6 @@ namespace Tools.DialogueSystem.UI
             DSDatabaseManager.DatabaseOpened -= OnDatabaseOpened;
             DSDatabaseManager.DatabaseClosed -= OnDatabaseClosed;
             DSEditorView.OnWindowCloses -= UnRegisterEvents;
-            Debug.Log("Editor Window Closed");
         }
 
         private VisualElement CreateCard(VisualTreeAsset cardAsset, DSDialogueText textObject)

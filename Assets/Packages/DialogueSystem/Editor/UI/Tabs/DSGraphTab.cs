@@ -25,6 +25,13 @@ namespace Tools.DialogueSystem.UI
 
             this.contentContainer.Add(graphView);
             this.contentContainer.Add(sideBar);
+            DSConversationsTab.OnConversationOpened += HandleOnConversationOpen;
+        }
+
+        private void HandleOnConversationOpen(Data.DSConversation conversation)
+        {
+            graphView.Save();
+            graphView.Load(conversation);
         }
 
         private void MiniMapButtonClickHandler() => graphView.ToggleMiniMap();

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Tools.DialogueSystem.UI.Elements;
+using UnityEngine;
 
 namespace Tools.DialogueSystem.Data
 {
@@ -8,20 +9,21 @@ namespace Tools.DialogueSystem.Data
     public class DSConversation : DSData
     {
         //TODO: This is going to be individual graphs of the Conversations and we will show the conversations on database tab.
-        private List<DSNode> nodes;
+        [field: SerializeField] public List<DSNodeData> Nodes { get; private set; }
+        [field: SerializeField] public List<DSPortData> Connections { get; private set; }
+
         public event Action OnNewNodeCreated;
-        public int NodeCount => nodes.Count;
+        public int NodeCount => Nodes.Count;
 
         public DSConversation(string title, string description) : base(title, description)
         {
-            nodes = new List<DSNode>();
+            Nodes = new List<DSNodeData>();
+            Connections = new List<DSPortData>();
         }
 
-        public List<DSNode> GetNodes() => nodes;
-
-        public void AddToNodes(DSNode node)
+        public void AddToNodes(DSNodeData node)
         {
-            this.nodes.Add(node);
+            this.Nodes.Add(node);
             OnNewNodeCreated?.Invoke();
         }
     }

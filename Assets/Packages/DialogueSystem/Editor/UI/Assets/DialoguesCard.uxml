@@ -5,12 +5,12 @@
         <ui:Button name="DeleteButton" icon-image="project://database/Assets/Editor%20Default%20Resources/Icons/delete.png?fileID=2800000&amp;guid=36090787d5284da4abab0c041d0af4f6&amp;type=3#delete" style="position: absolute; right: 0; top: 2px; width: 40px; height: 40px;"/>
         <ui:Label class="title">
             <Bindings>
-                <ui:DataBinding property="text" data-source-type="Tools.DialogueSystem.Data.DSDialogueText, Tools.DialogueSystem.Editor" data-source-path="_Title_k__BackingField" binding-mode="ToTarget"/>
+                <ui:DataBinding property="text" data-source-type="Tools.DialogueSystem.Data.DSDialogueText, Tools.DialogueSystem.Editor" data-source-path="_Name_k__BackingField" binding-mode="ToTarget"/>
             </Bindings>
         </ui:Label>
         <ui:TextField label="Name" name="DialogueName">
             <Bindings>
-                <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSDialogueText, Tools.DialogueSystem.Editor" data-source-path="_Title_k__BackingField" binding-mode="TwoWay"/>
+                <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSDialogueText, Tools.DialogueSystem.Editor" data-source-path="_Name_k__BackingField" binding-mode="TwoWay"/>
             </Bindings>
         </ui:TextField>
         <ui:TextField name="DialogueDescription" label="Description" placeholder-text="Description" multiline="true">

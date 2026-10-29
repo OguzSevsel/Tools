@@ -14,17 +14,29 @@ namespace Tools.DialogueSystem.UI.Elements
         public event Action<Edge> OnEdgeDeleted;
         public Port InputPort { get; set; }
         public Port OutputPort { get; set; }
-        public DSDialogueNodeData Data = null;
+        public DSNodeData Data = null;
         public event Action<DSNode> OnNodeSelect;
         private VisualElement portContainer;
 
         public virtual void Initialize(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSActor conversant, DSAudioClip audioClip, bool isStartNode)
         {
-            DSDialogueNodeData data = new(position, type, dialogueText, actor, conversant, audioClip);
+            DSNodeData data = new(position, type, dialogueText, actor, conversant, audioClip);
             this.Data = data;
             Data.IsStartNode = isStartNode;
 
             SetPosition(new Rect(position, Vector2.zero));
+
+            mainContainer.AddToClassList("ds-node__main-container");
+            extensionContainer.AddToClassList("ds-node__extension-container");
+            Draw();
+        }
+
+        public virtual void Initialize(DSNodeData data)
+        {
+            this.Data = data;
+            Data.IsStartNode = data.IsStartNode;
+
+            SetPosition(new Rect(data.Position, Vector2.zero));
 
             mainContainer.AddToClassList("ds-node__main-container");
             extensionContainer.AddToClassList("ds-node__extension-container");

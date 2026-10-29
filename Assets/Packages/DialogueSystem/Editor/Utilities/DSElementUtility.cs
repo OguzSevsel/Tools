@@ -104,15 +104,6 @@ namespace Tools.DialogueSystem.Utilities
             return port;
         }
 
-        public static Port CreatePort(this DSNodeLegacy node, string portName = "", Orientation orientation = Orientation.Vertical, Direction direction = Direction.Output, Port.Capacity capacity = Port.Capacity.Multi)
-        {
-            Port port = node.InstantiatePort(orientation, direction, capacity, typeof(bool));
-
-            port.portName = portName;
-
-            return port;
-        }
-
         public static TextField CreateTextField(string value = null, string label = null, bool isMultiLine = false, EventCallback<ChangeEvent<string>> onValueChanged = null)
         {
             TextField textField = new()

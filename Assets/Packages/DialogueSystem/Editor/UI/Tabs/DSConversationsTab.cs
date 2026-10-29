@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
 using UnityEngine.UIElements;
@@ -12,7 +13,7 @@ namespace Tools.DialogueSystem.UI
         private ScrollView scrollView;
         private Button createButton;
         private Dictionary<DSConversation, VisualElement> conversations;
-
+        public static event Action<DSConversation> OnConversationOpened;
 
         public DSConversationsTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
         {
@@ -93,6 +94,12 @@ namespace Tools.DialogueSystem.UI
                 conversations.Remove(conversation);
                 DSDatabaseManager.Current.Unregister(conversation);
             };
+
+            Button openButton = cardElement.Q<Button>("OpenButton");
+            openButton.clicked += () =>
+            {
+                OnConversationOpened?.Invoke(conversation);
+            };
         }
 
         private VisualElement CreateCard(VisualTreeAsset cardAsset, DSConversation conversation)
@@ -115,6 +122,7 @@ namespace Tools.DialogueSystem.UI
                     element.SetDropShadow(true);
                 }
             });
+
 
             cardElement.dataSource = conversation;
             return cardElement;
