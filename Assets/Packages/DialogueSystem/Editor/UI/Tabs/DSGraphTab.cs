@@ -30,7 +30,6 @@ namespace Tools.DialogueSystem.UI
 
         private void HandleOnConversationOpen(Data.DSConversation conversation)
         {
-            graphView.Save();
             graphView.Load(conversation);
         }
 

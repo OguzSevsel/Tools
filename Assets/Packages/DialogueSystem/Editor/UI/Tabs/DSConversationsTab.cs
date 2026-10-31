@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
@@ -58,22 +59,22 @@ namespace Tools.DialogueSystem.UI
             DSConversation newConversation = new("New Conversation", "Conversation Description");
             VisualElement cardElement = CreateCard(cardAsset, newConversation);
             AddCard(container, conversations, cardElement, newConversation);
-            DSDatabaseManager.Current.Register(newConversation);
+            DSDatabaseManager.Instance.Current.Register(newConversation);
         }
 
         #region Utils
 
         private void RegisterEvents()
         {
-            DSDatabaseManager.DatabaseOpened += OnDatabaseOpened;
-            DSDatabaseManager.DatabaseClosed += OnDatabaseClosed;
+            DSDatabaseManager.Instance.DatabaseOpened += OnDatabaseOpened;
+            DSDatabaseManager.Instance.DatabaseClosed += OnDatabaseClosed;
             DSEditorView.OnWindowCloses += UnRegisterEvents;
         }
 
         private void UnRegisterEvents()
         {
-            DSDatabaseManager.DatabaseOpened -= OnDatabaseOpened;
-            DSDatabaseManager.DatabaseClosed -= OnDatabaseClosed;
+            DSDatabaseManager.Instance.DatabaseOpened -= OnDatabaseOpened;
+            DSDatabaseManager.Instance.DatabaseClosed -= OnDatabaseClosed;
             DSEditorView.OnWindowCloses -= UnRegisterEvents;
         }
 
@@ -92,13 +93,14 @@ namespace Tools.DialogueSystem.UI
             {
                 container.Remove(cardElement);
                 conversations.Remove(conversation);
-                DSDatabaseManager.Current.Unregister(conversation);
+                DSDatabaseManager.Instance.Current.Unregister(conversation);
             };
 
             Button openButton = cardElement.Q<Button>("OpenButton");
             openButton.clicked += () =>
             {
                 OnConversationOpened?.Invoke(conversation);
+                Debug.Log($"{conversation.Name} opened");
             };
         }
 

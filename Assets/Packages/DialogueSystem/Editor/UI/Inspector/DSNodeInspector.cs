@@ -31,9 +31,9 @@ namespace Tools.DialogueSystem.UI.Elements
         public void LoadFields(DSNodeData data)
         {
             this.data = data;
-            actorDropdown.SetItems(DSDatabaseManager.Current.Actors);
-            conversantDropdown.SetItems(DSDatabaseManager.Current.Actors);
-            audioDropdown.SetItems(DSDatabaseManager.Current.AudioClips);
+            actorDropdown.SetItems(DSDatabaseManager.Instance.Current.Actors);
+            conversantDropdown.SetItems(DSDatabaseManager.Instance.Current.Actors);
+            audioDropdown.SetItems(DSDatabaseManager.Instance.Current.AudioClips);
 
             actorDropdown.SetValue(data.Actor);
             conversantDropdown.SetValue(data.Conversant);

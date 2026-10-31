@@ -28,14 +28,39 @@ namespace Tools.DialogueSystem.UI
         public DSGraphView(DSGraphTab tab)
         {
             this.tab = tab;
-            CurrentConversation = new DSConversation("Oguzun convosu", "Default Conversation");
-            DSDatabaseManager.Open(ScriptableObject.CreateInstance<DSDatabase>());
+            DSDatabaseManager.Instance.Open(ScriptableObject.CreateInstance<DSDatabase>());
 
             AddGridBackground();
             AddMiniMap();
             AddManipulators();
             AddStyles();
+            RegisterEvents();
+        }
+
+        private void UnRegisterEvents()
+        {
+            UnregisterCallback<MouseDownEvent>(OnMouseDown, TrickleDown.TrickleDown);
+            DSDatabaseManager.Instance.DatabaseClosed -= HandleDatabaseClosed;
+            DSDatabaseManager.Instance.DatabaseOpened -= HandleDatabaseOpened;
+            DSEditorView.OnWindowCloses -= UnRegisterEvents;
+        }
+
+        private void RegisterEvents()
+        {
             RegisterCallback<MouseDownEvent>(OnMouseDown, TrickleDown.TrickleDown);
+            DSDatabaseManager.Instance.DatabaseClosed += HandleDatabaseClosed;
+            DSDatabaseManager.Instance.DatabaseOpened += HandleDatabaseOpened;
+            DSEditorView.OnWindowCloses += UnRegisterEvents;
+        }
+
+        private void HandleDatabaseOpened(DSDatabase database)
+        {
+            Load(database.Conversations.FirstOrDefault());
+        }
+
+        private void HandleDatabaseClosed(DSDatabase database)
+        {
+            Save();
         }
 
         #region Initialization
@@ -81,6 +106,7 @@ namespace Tools.DialogueSystem.UI
 
             node.Initialize(position, type, text, actor, conversant, clip, isStartNode);
             CurrentConversation.AddToNodes(node.Data);
+            Debug.Log($"Nodes at creation: {this.nodes.Count()}");
 
             node.OnNodeSelect += OnNodeSelected;
 
@@ -94,7 +120,7 @@ namespace Tools.DialogueSystem.UI
 
             return node;
         }
-
+        
         public DSNode LoadNode(DSNodeData data)
         {
             Type nodeType = Type.GetType($"Tools.DialogueSystem.UI.Elements.DSNode");
@@ -139,16 +165,21 @@ namespace Tools.DialogueSystem.UI
 
         #endregion
 
+        
         #region Save and Load
 
         public void Load(DSConversation conversation)
         {
+            if (conversation == null || conversation == default) return;
+
             ClearGraph();
-            CurrentConversation = conversation;
+
             foreach (var node in conversation.Nodes)
             {
                 AddElement(LoadNode(node));
             }
+
+            CurrentConversation = conversation;
         }
 
         public void Save()
@@ -157,21 +188,21 @@ namespace Tools.DialogueSystem.UI
             {
                 List<DSNode> nodeElementList = this.nodes.OfType<DSNode>().ToList();
 
-                foreach (var node in CurrentConversation.Nodes)
+                foreach (var nodeData in CurrentConversation.Nodes)
                 {
-                    var nodeElement = nodeElementList.Find(n => n.Data.Guid == node.Guid);
-                    node.SetPosition(nodeElement.GetPosition().position);
+                    var node = nodeElementList.Find(nodeElement => nodeElement.Data.Guid == nodeData.Guid);
+                    nodeData.SetPosition(node.GetPosition().position);
                 }
             }
 
+            ClearGraph();
             this.CurrentConversation = null;
         }
 
         public void ClearGraph()
         {
             this.DeleteElements(this.edges);
-            this.DeleteElements(this.nodes.ToList());
-            this.CurrentConversation = null;
+            this.DeleteElements(this.nodes);
         }
 
         #endregion

@@ -59,22 +59,22 @@ namespace Tools.DialogueSystem
             DSActor actor = new("New Actor", "Actor Description", "Actor Background", default);
             VisualElement cardElement = CreateCard(cardAsset, actor);
             AddCard(actorContainer, Actors, actor, cardElement);
-            DSDatabaseManager.Current.Register(actor);
+            DSDatabaseManager.Instance.Current.Register(actor);
         }
 
         #region Utils
 
         private void UnRegisterEvents()
         {
-            DSDatabaseManager.DatabaseClosed -= OnDatabaseClosed;
-            DSDatabaseManager.DatabaseOpened -= OnDatabaseOpened;
+            DSDatabaseManager.Instance.DatabaseClosed -= OnDatabaseClosed;
+            DSDatabaseManager.Instance.DatabaseOpened -= OnDatabaseOpened;
             DSEditorView.OnWindowCloses -= UnRegisterEvents;
         }
 
         private void RegisterEvents()
         {
-            DSDatabaseManager.DatabaseClosed += OnDatabaseClosed;
-            DSDatabaseManager.DatabaseOpened += OnDatabaseOpened;
+            DSDatabaseManager.Instance.DatabaseClosed += OnDatabaseClosed;
+            DSDatabaseManager.Instance.DatabaseOpened += OnDatabaseOpened;
             DSEditorView.OnWindowCloses += UnRegisterEvents;
         }
 
@@ -88,7 +88,7 @@ namespace Tools.DialogueSystem
             {
                 container.Remove(cardElement);
                 actors.Remove(actor);
-                DSDatabaseManager.Current.Unregister(actor);
+                DSDatabaseManager.Instance.Current.Unregister(actor);
             };
 
             Image actorImage = cardElement.Q<Image>("ActorImage");

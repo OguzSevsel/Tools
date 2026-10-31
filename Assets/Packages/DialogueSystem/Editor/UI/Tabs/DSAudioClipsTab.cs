@@ -54,22 +54,22 @@ namespace Tools.DialogueSystem.UI
             DSAudioClip audioClip = new("New Clip", "New Description", null);
             VisualElement cardElement = CreateCard(cardAsset, audioClip);
             AddCard(audioClipContainer, AudioClips, audioClip, cardElement);
-            DSDatabaseManager.Current.Register(audioClip);
+            DSDatabaseManager.Instance.Current.Register(audioClip);
         }
 
         #region Utils
 
         private void RegisterEvents()
         {
-            DSDatabaseManager.DatabaseOpened += OnDatabaseOpened;
-            DSDatabaseManager.DatabaseClosed += OnDatabaseClosed;
+            DSDatabaseManager.Instance.DatabaseOpened += OnDatabaseOpened;
+            DSDatabaseManager.Instance.DatabaseClosed += OnDatabaseClosed;
             DSEditorView.OnWindowCloses += UnRegisterEvents;
         }
 
         private void UnRegisterEvents()
         {
-            DSDatabaseManager.DatabaseOpened -= OnDatabaseOpened;
-            DSDatabaseManager.DatabaseClosed -= OnDatabaseClosed;
+            DSDatabaseManager.Instance.DatabaseOpened -= OnDatabaseOpened;
+            DSDatabaseManager.Instance.DatabaseClosed -= OnDatabaseClosed;
             DSEditorView.OnWindowCloses -= UnRegisterEvents;
         }
 
@@ -104,7 +104,7 @@ namespace Tools.DialogueSystem.UI
             {
                 container.Remove(cardElement);
                 audioClips.Remove(audioClip);
-                DSDatabaseManager.Current.Unregister(audioClip);
+                DSDatabaseManager.Instance.Current.Unregister(audioClip);
             };
         }
 

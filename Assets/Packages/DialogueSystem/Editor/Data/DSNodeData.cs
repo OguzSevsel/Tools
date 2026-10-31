@@ -12,8 +12,7 @@ namespace Tools.DialogueSystem.Data
         public DSAudioClip AudioClip;
         public DSActor Actor;
         public DSActor Conversant;
-
-        public Vector2 Position { get; private set; }
+        [field: SerializeField] public Vector2 Position { get; private set; }
         public DialogueType DialogueType;
         public bool IsStartNode;
 

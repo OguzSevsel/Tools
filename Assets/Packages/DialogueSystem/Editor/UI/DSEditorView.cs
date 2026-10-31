@@ -42,11 +42,20 @@ namespace Tools.DialogueSystem.UI
 
         private void OnEnable()
         {
+            var databaseManager = new DSDatabaseManager();
             CreateDefaultFolders();
             GetUIElements();
             CreateTabs();
             AddTabs();
             RegisterEvents();
+        }
+
+        private void OnDisable()
+        {
+            this.SaveChanges();
+            UnRegisterEvents();
+            DSDatabaseManager.Instance.Close();
+            OnWindowCloses?.Invoke();
         }
 
         private void GetUIElements()
@@ -64,7 +73,11 @@ namespace Tools.DialogueSystem.UI
             loadDatabaseButton.clicked += OnLoadDatabaseButtonClicked;
         }
 
-        private void OnDisable() => OnWindowCloses?.Invoke();
+        private void UnRegisterEvents()
+        {
+            createDatabaseButton.clicked -= OnCreateDatabaseButtonClicked;
+            loadDatabaseButton.clicked -= OnLoadDatabaseButtonClicked;
+        }
 
         private void OnLoadDatabaseButtonClicked()
         {
@@ -72,7 +85,7 @@ namespace Tools.DialogueSystem.UI
 
             if (database != null)
             {
-                DSDatabaseManager.Open(database);
+                DSDatabaseManager.Instance.Open(database);
                 databaseDialogContainer.style.display = DisplayStyle.None;
                 tabView.style.display = DisplayStyle.Flex;
 
@@ -87,7 +100,7 @@ namespace Tools.DialogueSystem.UI
 
             if (database != null)
             {
-                DSDatabaseManager.Open(database);
+                DSDatabaseManager.Instance.Open(database);
                 databaseDialogContainer.style.display = DisplayStyle.None;
                 tabView.style.display = DisplayStyle.Flex;
 

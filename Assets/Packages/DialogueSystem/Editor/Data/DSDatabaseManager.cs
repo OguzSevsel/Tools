@@ -1,29 +1,53 @@
 ﻿using System;
+using UnityEditor;
+using UnityEngine;
 
 namespace Tools.DialogueSystem.Data
 {
     public class DSDatabaseManager
     {
-        private static DSDatabase _current;
+        public static DSDatabaseManager Instance;
+        private DSDatabase _current;
 
-        public static DSDatabase Current => _current;
+        public DSDatabase Current => _current;
 
-        public static event Action<DSDatabase> DatabaseOpened;
-        public static event Action<DSDatabase> DatabaseClosed;
+        public event Action<DSDatabase> DatabaseOpened;
+        public event Action<DSDatabase> DatabaseClosed;
 
-        public static bool HasDatabase =>
+        public bool HasDatabase =>
             _current != null;
 
-        public static void Open(DSDatabase database)
+        public DSDatabaseManager()
+        {
+            Instance = this;
+        }
+
+        public void Open(DSDatabase database)
         {
             _current = database;
             DatabaseOpened?.Invoke(database);
         }
 
-        public static void Close()
+        public void Close()
         {
             DatabaseClosed?.Invoke(_current);
+            Save();
             _current = null;
+        }
+
+        public void Save()
+        {
+            if (_current == null)
+            {
+                Debug.LogError("Current database is NULL!");
+                return;
+            }
+
+            Debug.Log($"Saving database: {_current.name}");
+            Debug.Log($"Database path: {AssetDatabase.GetAssetPath(_current)}");
+
+            EditorUtility.SetDirty(_current);
+            AssetDatabase.SaveAssets();
         }
     }
 }

@@ -57,22 +57,22 @@ namespace Tools.DialogueSystem.UI
             DSDialogueText textObject = new("New Dialogue", "Dialogue Description", "Dialogue Text");
             VisualElement cardElement = CreateCard(cardAsset, textObject);
             AddCard(dialogueCardContainer, dialogues, textObject, cardElement);
-            DSDatabaseManager.Current.Register(textObject);
+            DSDatabaseManager.Instance.Current.Register(textObject);
         }
 
         #region Utils
 
         private void RegisterEvents()
         {
-            DSDatabaseManager.DatabaseOpened += OnDatabaseOpened;
-            DSDatabaseManager.DatabaseClosed += OnDatabaseClosed;
+            DSDatabaseManager.Instance.DatabaseOpened += OnDatabaseOpened;
+            DSDatabaseManager.Instance.DatabaseClosed += OnDatabaseClosed;
             DSEditorView.OnWindowCloses += UnRegisterEvents;
         }
 
         private void UnRegisterEvents()
         {
-            DSDatabaseManager.DatabaseOpened -= OnDatabaseOpened;
-            DSDatabaseManager.DatabaseClosed -= OnDatabaseClosed;
+            DSDatabaseManager.Instance.DatabaseOpened -= OnDatabaseOpened;
+            DSDatabaseManager.Instance.DatabaseClosed -= OnDatabaseClosed;
             DSEditorView.OnWindowCloses -= UnRegisterEvents;
         }
 
@@ -108,7 +108,7 @@ namespace Tools.DialogueSystem.UI
             {
                 container.Remove(cardElement);
                 dialogues.Remove(textObject);
-                DSDatabaseManager.Current.Unregister(textObject);
+                DSDatabaseManager.Instance.Current.Unregister(textObject);
             };
 
             dialogues.Add(textObject, cardElement);
