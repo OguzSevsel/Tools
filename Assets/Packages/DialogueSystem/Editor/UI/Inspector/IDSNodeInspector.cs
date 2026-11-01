@@ -1,4 +1,5 @@
 using Tools.DialogueSystem.Data;
+using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI.Inspector
 {
@@ -6,5 +7,7 @@ namespace Tools.DialogueSystem.UI.Inspector
     {
         void Create();
         void LoadFields(DSNodeData data);
+        VisualElement GetContainer();
+        void Remove();
     }
 }

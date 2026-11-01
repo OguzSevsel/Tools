@@ -22,6 +22,9 @@ namespace Tools.DialogueSystem.UI
         private IDSNodeInspector inspector;
         private MiniMap miniMap;
 
+        public event Action<VisualElement, DSNode> OnInspectorOpened;
+        public event Action OnInspectorClosed;
+
         //Utils
         private DSNode selectedNode;
 
@@ -104,11 +107,15 @@ namespace Tools.DialogueSystem.UI
             DSActor conversant = new(conversantName, "Conversant Description", "Conversant Background", conversantSprite);
             DSAudioClip clip = new("New Audio Clip", "Audio Description", audioClip);
 
-            node.Initialize(position, type, text, actor, conversant, clip, isStartNode);
-            CurrentConversation.AddToNodes(node.Data);
-            Debug.Log($"Nodes at creation: {this.nodes.Count()}");
+            DSNodeData data = new DSNodeData(position, type, text, actor, conversant, clip)
+            {
+                IsStartNode = isStartNode
+            };
 
-            node.OnNodeSelect += OnNodeSelected;
+            node.Initialize(data);
+            CurrentConversation.AddToNodes(node.Data);
+
+            node.OnNodeSelect += HandleNodeSelected;
 
             node.OnEdgeDeleted += (edge) =>
             {
@@ -129,7 +136,7 @@ namespace Tools.DialogueSystem.UI
 
             node.Initialize(data);
 
-            node.OnNodeSelect += OnNodeSelected;
+            node.OnNodeSelect += HandleNodeSelected;
             node.OnEdgeDeleted += (edge) =>
             {
                 if (this.Contains(edge))
@@ -164,7 +171,6 @@ namespace Tools.DialogueSystem.UI
         public void ToggleMiniMap() => miniMap.visible = !miniMap.visible;
 
         #endregion
-
         
         #region Save and Load
 
@@ -220,16 +226,18 @@ namespace Tools.DialogueSystem.UI
             CloseInspector();
         }
 
-        private void OnNodeSelected(DSNode selectedNode)
+        private void HandleNodeSelected(DSNode selectedNode)
         {
             this.selectedNode = selectedNode;
 
             if (selectedNode is DSNode node && inspector == null)
             {
                 inspector = new DSNodeInspector(node.Data);
+                OnInspectorOpened?.Invoke(this.inspector.GetContainer(), this.selectedNode);
                 return;
             }
 
+            OnInspectorOpened?.Invoke(this.inspector.GetContainer(), this.selectedNode);
             inspector.LoadFields(selectedNode.Data);
         }
 
@@ -239,9 +247,10 @@ namespace Tools.DialogueSystem.UI
 
         private void CloseInspector()
         {
+            OnInspectorClosed?.Invoke();
             if (inspector is DSNodeInspector nodeInspector)
             {
-                nodeInspector.RemoveFromHierarchy();
+                nodeInspector.Remove();
             }
         }
 

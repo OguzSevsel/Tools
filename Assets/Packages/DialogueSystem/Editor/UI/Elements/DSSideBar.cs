@@ -1,4 +1,5 @@
-﻿using Tools.DialogueSystem.Utilities;
+﻿using Tools.DialogueSystem.UI.Inspector;
+using Tools.DialogueSystem.Utilities;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI.Elements
@@ -17,6 +18,8 @@ namespace Tools.DialogueSystem.UI.Elements
             this.style.width = Length.Percent(25);
             resizeElement = this.Q<VisualElement>("ResizeElement");
 
+            InspectorTab = this.Q<Tab>("InspectorTab");
+
             currentConversationLabel = this.Q<Label>("CurrentConversationLabel");
             tabControl = this.Q<TabView>("TabControl");
 
@@ -25,6 +28,22 @@ namespace Tools.DialogueSystem.UI.Elements
 
             tabControl.Add(ConversationsTab);
             tabControl.activeTab = ConversationsTab;
+        }
+
+        public void AddInspector(VisualElement inspector)
+        {
+            InspectorTab.Add(inspector);
+        }
+
+        public void ChangeActiveTab(bool isConversations = true)
+        {
+            if (isConversations)
+            {
+                tabControl.activeTab = ConversationsTab;
+                return;
+            }
+
+            tabControl.activeTab = InspectorTab;
         }
     }
 }

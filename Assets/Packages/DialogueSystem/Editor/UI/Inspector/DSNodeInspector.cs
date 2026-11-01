@@ -6,9 +6,10 @@ using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI.Elements
 {
-    public class DSNodeInspector : VisualElement, IDSNodeInspector
+    public class DSNodeInspector : IDSNodeInspector
     {
         private DSNodeData data;
+        private VisualElement container;
         private TextField dialogueText;
         private DSDropdown<DSActor> actorDropdown;
         private DSDropdown<DSActor> conversantDropdown;
@@ -17,7 +18,8 @@ namespace Tools.DialogueSystem.UI.Elements
         public DSNodeInspector(DSNodeData data)
         {
             this.data = data;
-            this.SetFlex(flexGrow: 1, flexDirection: FlexDirection.Column, flexWrap: Wrap.NoWrap);
+            container = new VisualElement();
+            container.SetFlex(flexGrow: 1, flexDirection: FlexDirection.Column, flexWrap: Wrap.NoWrap);
             Create();
         }
 
@@ -55,10 +57,10 @@ namespace Tools.DialogueSystem.UI.Elements
             conversantDropdown = new DSDropdown<DSActor>(conversantDropdownField, character => character.Name);
             audioDropdown = new DSDropdown<DSAudioClip>(audioDropdownField, audio => audio.Name);
 
-            this.contentContainer.Add(actorDropdownField);
-            this.contentContainer.Add(conversantDropdownField);
-            this.contentContainer.Add(audioDropdownField);
-            this.contentContainer.Add(dialogueText);
+            container.Add(actorDropdownField);
+            container.Add(conversantDropdownField);
+            container.Add(audioDropdownField);
+            container.Add(dialogueText);
         }
 
         #endregion
@@ -72,6 +74,13 @@ namespace Tools.DialogueSystem.UI.Elements
             audioDropdown.ValueChanged += OnAudioValueChanged;
         }
 
+        private void UnRegisterEvents()
+        {
+            actorDropdown.ValueChanged -= OnActorValueChanged;
+            conversantDropdown.ValueChanged -= OnConversantValueChanged;
+            audioDropdown.ValueChanged -= OnAudioValueChanged;
+        }
+
         private void OnConversantValueChanged(DSActor conversant) => this.data.Conversant = conversant;
 
         private void OnDialogueTextChanged(ChangeEvent<string> dialogueText) => this.data.Dialogue.Text = dialogueText.newValue;
@@ -79,6 +88,17 @@ namespace Tools.DialogueSystem.UI.Elements
         private void OnAudioValueChanged(DSAudioClip audio) => this.data.AudioClip = audio;
 
         private void OnActorValueChanged(DSActor actor) => this.data.Actor = actor;
+
+        public VisualElement GetContainer()
+        {
+            return container;
+        }
+
+        public void Remove()
+        {
+            container.RemoveFromHierarchy();
+            UnRegisterEvents();
+        }
 
         #endregion
     }
