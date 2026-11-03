@@ -28,6 +28,10 @@ namespace Tools.DialogueSystem.UI
         //Utils
         private DSNode selectedNode;
 
+        private bool _showActors = true;
+        private bool _showConversant = false;
+        private bool _showDialogueText = false;
+
         public DSGraphView(DSGraphTab tab)
         {
             this.tab = tab;
@@ -74,7 +78,65 @@ namespace Tools.DialogueSystem.UI
             this.AddManipulator(new RectangleSelector());
             this.AddManipulator(new ContentDragger());
             this.AddManipulator(CreateNodeContextualMenu(DialogueType.Single, "Add Node"));
+            this.AddManipulator(CreateShowContextMenu(""));
             SetupZoom(0.5f, 3f);
+        }
+
+        private IManipulator CreateShowContextMenu(string actionTitle)
+        {
+            return new ContextualMenuManipulator(menuEvent =>
+            {
+                // Show Actors
+                menuEvent.menu.AppendAction(
+                    "Show/Actors",
+                    action =>
+                    {
+                        _showActors = !_showActors;
+                        RefreshNodes();
+                    },
+                    action => _showActors
+                        ? DropdownMenuAction.Status.Checked
+                        : DropdownMenuAction.Status.Normal
+                );
+
+                // Show Conditions
+                menuEvent.menu.AppendAction(
+                    "Show/Conversant",
+                    action =>
+                    {
+                        _showConversant = !_showConversant;
+                        RefreshNodes();
+                    },
+                    action => _showConversant
+                        ? DropdownMenuAction.Status.Checked
+                        : DropdownMenuAction.Status.Normal
+                );
+
+                // Show Variables
+                menuEvent.menu.AppendAction(
+                    "Show/Dialogue Text",
+                    action =>
+                    {
+                        _showDialogueText = !_showDialogueText;
+                        RefreshNodes();
+                    },
+                    action => _showDialogueText
+                        ? DropdownMenuAction.Status.Checked
+                        : DropdownMenuAction.Status.Normal
+                );
+            });
+        }
+
+        private void RefreshNodes()
+        {
+            foreach (DSNode node in nodes.ToList().OfType<DSNode>())
+            {
+                node.SetInfoVisibility(
+                    _showActors,
+                    _showConversant,
+                    _showDialogueText
+                );
+            }
         }
 
         private IManipulator CreateNodeContextualMenu(DialogueType type, string actionTitle)

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
+using Unity.Properties;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -18,6 +19,10 @@ namespace Tools.DialogueSystem.UI.Elements
         public event Action<Edge> OnEdgeDeleted;
 
         private VisualElement portContainer;
+        private VisualElement infoContainer;
+        private Label actorLabel;
+        private Label conversantLabel;
+        private Label dialogueTextLabel;
 
         public virtual void Initialize(DSNodeData data)
         {
@@ -40,6 +45,10 @@ namespace Tools.DialogueSystem.UI.Elements
         public virtual void Draw()
         {
             portContainer = new VisualElement();
+            infoContainer = new VisualElement();
+
+            infoContainer.SetFlex(flexDirection: FlexDirection.Column);
+            infoContainer.SetAlignment(alignContent: Align.Center, alignItems: Align.Center);
 
             portContainer.style.flexDirection = FlexDirection.Column;
             portContainer.style.alignItems = Align.Center;
@@ -54,10 +63,57 @@ namespace Tools.DialogueSystem.UI.Elements
             titleContainer.Clear();
             titleContainer.Insert(0, label);
 
+            actorLabel = DSElementUtility.CreateLabel(Data.Actor.Name);
+            conversantLabel = DSElementUtility.CreateLabel(Data.Conversant.Name);
+            dialogueTextLabel = DSElementUtility.CreateLabel(Data.Dialogue.Text);
+
+            infoContainer.Add(actorLabel);
+            infoContainer.Add(conversantLabel);
+            infoContainer.Add(dialogueTextLabel);
+
+            actorLabel.SetVisible(false);
+            conversantLabel.SetVisible(false);
+            dialogueTextLabel.SetVisible(false);
+
+            actorLabel.SetBinding(
+                "value",
+                new DataBinding
+                {
+                    dataSource = Data.Actor,
+                    dataSourcePath = new PropertyPath(nameof(Data.Actor.Name)),
+                    bindingMode = BindingMode.ToTarget
+                }
+            );
+
+            conversantLabel.SetBinding(
+                "value",
+                new DataBinding
+                {
+                    dataSource = Data.Conversant,
+                    dataSourcePath = new PropertyPath(nameof(Data.Conversant.Name)),
+                    bindingMode = BindingMode.ToTarget
+                }
+            );
+
+            dialogueTextLabel.SetBinding(
+                "value",
+                new DataBinding
+                {
+                    dataSource = Data.Dialogue,
+                    dataSourcePath = new PropertyPath(nameof(Data.Dialogue.Text)),
+                    bindingMode = BindingMode.ToTarget
+                }
+            );
+
             label.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
             label.SetTextSettings(fontStyle: FontStyle.Bold, alignment: TextAnchor.MiddleCenter);
 
             portContainer.Add(titleContainer);
+            portContainer.Add(infoContainer);
+
+            mainContainer.SetBackgroundColor(Color.red);
+            portContainer.SetBackgroundColor(Color.blue);
+            titleContainer.SetBackgroundColor(Color.green);
 
             OutputPort = CreatePort(portContainer, Direction.Output);
             RefreshPorts();
@@ -75,6 +131,24 @@ namespace Tools.DialogueSystem.UI.Elements
             label.SetMargins(0);
             port.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
             return port;
+        }
+
+        internal void SetInfoVisibility(bool showActor, bool showConversant, bool showDialogueText)
+        {
+            if (showActor)
+            {
+                actorLabel.SetVisible();
+            }
+
+            if (showConversant)
+            {
+                conversantLabel.SetVisible();
+            }
+
+            if (showDialogueText)
+            {
+                dialogueTextLabel.SetVisible();
+            }
         }
 
         //public TextField CreateTextField(string title = null, string label = null, bool isMultiLine = false, VisualElement customDataContainer = null, EventCallback<ChangeEvent<string>> onValueChanged = null)

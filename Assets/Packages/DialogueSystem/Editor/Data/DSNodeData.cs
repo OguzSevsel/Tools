@@ -24,6 +24,7 @@ namespace Tools.DialogueSystem.Data
             this.Dialogue = dialogueText;
             this.AudioClip = audioClip;
             this.Actor = actor;
+            this.Conversant = conversant;
         }
 
         public void SetPosition(Vector2 position) => this.Position = position;
