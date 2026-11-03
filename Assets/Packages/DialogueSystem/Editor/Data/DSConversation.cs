@@ -26,5 +26,10 @@ namespace Tools.DialogueSystem.Data
             this.Nodes.Add(node);
             OnNewNodeCreated?.Invoke();
         }
+
+        public void RemoveFromNodes(DSNodeData node)
+        {
+            this.Nodes.Remove(node);
+        }
     }
 }

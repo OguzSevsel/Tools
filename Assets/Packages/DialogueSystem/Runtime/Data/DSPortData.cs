@@ -1,25 +1,20 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Tools.DialogueSystem
 {
-    public enum PortType
-    {
-        Input,
-        Output
-    }
-
     [Serializable]
     public class DSPortData
     {
-        public string InNodeId;
-        public string OutNodeId;
+        public string NodeId;
+        public List<string> OutputIds;
         public string PortName;
 
-        public DSPortData(string inputNodeId, string outputNodeId, string portId)
+        public DSPortData(string nodeId, string portId)
         {
-            this.InNodeId = inputNodeId;
-            this.OutNodeId = outputNodeId;
+            this.OutputIds = new List<string>();
+            this.NodeId = nodeId;
             this.PortName = portId;
         }
     }

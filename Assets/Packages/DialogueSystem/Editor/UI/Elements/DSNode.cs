@@ -11,11 +11,12 @@ namespace Tools.DialogueSystem.UI.Elements
 {
     public class DSNode : Node
     {
-        public event Action<Edge> OnEdgeDeleted;
         public Port InputPort { get; set; }
         public Port OutputPort { get; set; }
         public DSNodeData Data = null;
         public event Action<DSNode> OnNodeSelect;
+        public event Action<Edge> OnEdgeDeleted;
+
         private VisualElement portContainer;
 
         public virtual void Initialize(DSNodeData data)
@@ -46,7 +47,7 @@ namespace Tools.DialogueSystem.UI.Elements
             mainContainer.Insert(0, portContainer);
 
             if (!Data.IsStartNode)
-                CreatePort(portContainer, InputPort, Direction.Input);
+                InputPort = CreatePort(portContainer, Direction.Input);
 
             Label label = DSElementUtility.CreateLabel("Node");
 
@@ -58,69 +59,72 @@ namespace Tools.DialogueSystem.UI.Elements
 
             portContainer.Add(titleContainer);
 
-            CreatePort(portContainer, OutputPort, Direction.Output);
+            OutputPort = CreatePort(portContainer, Direction.Output);
             RefreshPorts();
         }
 
         #region Creation
 
-        private void CreatePort(VisualElement container, Port port, Direction direction)
+        private Port CreatePort(VisualElement container, Direction direction)
         {
-            port = this.CreatePort("", Orientation.Vertical, direction, Port.Capacity.Multi);
+            Port port = this.CreatePort("", Orientation.Vertical, direction, Port.Capacity.Multi);
+            DSPortData data = new DSPortData(this.Data.Guid, "port");
+            port.userData = data;
             container.Add(port);
             Label label = port.Q<Label>("type");
             label.SetMargins(0);
             port.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
+            return port;
         }
 
-        public TextField CreateTextField(string title = null, string label = null, bool isMultiLine = false, VisualElement customDataContainer = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
-        {
-            TextField textField = Tools.DialogueSystem.Utilities.DSElementUtility.CreateTextField(title, label, isMultiLine, onValueChanged: onValueChanged);
+        //public TextField CreateTextField(string title = null, string label = null, bool isMultiLine = false, VisualElement customDataContainer = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
+        //{
+        //    TextField textField = Tools.DialogueSystem.Utilities.DSElementUtility.CreateTextField(title, label, isMultiLine, onValueChanged: onValueChanged);
 
-            if (isMultiLine)
-            {
-                textField.AddClasses("ds-node__text-field",
-              "ds-node__quote-text-field");
-            }
-            else
-            {
-                textField.AddClasses("ds-node__text-field",
-                "ds-node__filename-text-field",
-                "ds-node__text-field__hidden");
-            }
+        //    if (isMultiLine)
+        //    {
+        //        textField.AddClasses("ds-node__text-field",
+        //      "ds-node__quote-text-field");
+        //    }
+        //    else
+        //    {
+        //        textField.AddClasses("ds-node__text-field",
+        //        "ds-node__filename-text-field",
+        //        "ds-node__text-field__hidden");
+        //    }
 
-            customDataContainer?.Add(textField);
+        //    customDataContainer?.Add(textField);
 
-            return textField;
-        }
+        //    return textField;
+        //}
 
-        public Label CreateLabel(string text = null, VisualElement customDataContainer = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
-        {
-            Label label = Tools.DialogueSystem.Utilities.DSElementUtility.CreateLabel(text, onValueChanged);
+        //public Label CreateLabel(string text = null, VisualElement customDataContainer = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
+        //{
+        //    Label label = Tools.DialogueSystem.Utilities.DSElementUtility.CreateLabel(text, onValueChanged);
 
-            customDataContainer?.Add(label);
+        //    customDataContainer?.Add(label);
 
-            label.AddClasses("ds-node__text-field",
-              "ds-node__quote-text-field");
+        //    label.AddClasses("ds-node__text-field",
+        //      "ds-node__quote-text-field");
 
-            return label;
-        }
+        //    return label;
+        //}
 
-        public DropdownField CreateDropdown(List<string> choices, string text = null, VisualElement customDataContainer = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
-        {
-            DropdownField dropdown = Tools.DialogueSystem.Utilities.DSElementUtility.CreateDropdown(text, choices, onValueChanged);
+        //public DropdownField CreateDropdown(List<string> choices, string text = null, VisualElement customDataContainer = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
+        //{
+        //    DropdownField dropdown = Tools.DialogueSystem.Utilities.DSElementUtility.CreateDropdown(text, choices, onValueChanged);
 
-            customDataContainer?.Add(dropdown);
+        //    customDataContainer?.Add(dropdown);
 
-            return dropdown;
-        }
+        //    return dropdown;
+        //}
 
-        public ObjectField CreateObjectField(string title, string label, Type type, VisualElement customDataContainer, EventCallback<ChangeEvent<UnityEngine.Object>> onValueChanged)
-        {
-            ObjectField objectField = Tools.DialogueSystem.Utilities.DSElementUtility.CreateObjectField(title, type, label, onValueChanged);
-            customDataContainer.Add(objectField);
-            return objectField;
-        }
+        //public ObjectField CreateObjectField(string title, string label, Type type, VisualElement customDataContainer, EventCallback<ChangeEvent<UnityEngine.Object>> onValueChanged)
+        //{
+        //    ObjectField objectField = Tools.DialogueSystem.Utilities.DSElementUtility.CreateObjectField(title, type, label, onValueChanged);
+        //    customDataContainer.Add(objectField);
+        //    return objectField;
+        //}
 
         #endregion
     }

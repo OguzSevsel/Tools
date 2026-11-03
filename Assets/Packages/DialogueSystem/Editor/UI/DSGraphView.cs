@@ -116,18 +116,13 @@ namespace Tools.DialogueSystem.UI
             CurrentConversation.AddToNodes(node.Data);
 
             node.OnNodeSelect += HandleNodeSelected;
-
-            node.OnEdgeDeleted += (edge) =>
-            {
-                if (this.Contains(edge))
-                {
-                    this.RemoveElement(edge);
-                }
-            };
+            node.OnEdgeDeleted += HandleEdgeDeleted;
 
             return node;
         }
+
         
+
         public DSNode LoadNode(DSNodeData data)
         {
             Type nodeType = Type.GetType($"Tools.DialogueSystem.UI.Elements.DSNode");
@@ -186,21 +181,12 @@ namespace Tools.DialogueSystem.UI
             }
 
             CurrentConversation = conversation;
+            DSIOUtility.LoadConnections(conversation, this);
         }
 
         public void Save()
         {
-            if (this.CurrentConversation.NodeCount > 0)
-            {
-                List<DSNode> nodeElementList = this.nodes.OfType<DSNode>().ToList();
-
-                foreach (var nodeData in CurrentConversation.Nodes)
-                {
-                    var node = nodeElementList.Find(nodeElement => nodeElement.Data.Guid == nodeData.Guid);
-                    nodeData.SetPosition(node.GetPosition().position);
-                }
-            }
-
+            DSIOUtility.Save(this, CurrentConversation);
             ClearGraph();
             this.CurrentConversation = null;
         }
@@ -239,6 +225,14 @@ namespace Tools.DialogueSystem.UI
 
             OnInspectorOpened?.Invoke(this.inspector.GetContainer(), this.selectedNode);
             inspector.LoadFields(selectedNode.Data);
+        }
+
+        private void HandleEdgeDeleted(Edge edge)
+        {
+            if (this.Contains(edge))
+            {
+                this.RemoveElement(edge);
+            }
         }
 
         #endregion
