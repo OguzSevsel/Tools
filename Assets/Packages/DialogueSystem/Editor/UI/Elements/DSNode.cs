@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
 using Unity.Properties;
@@ -22,17 +23,43 @@ namespace Tools.DialogueSystem.UI.Elements
         private VisualElement infoContainer;
         private Label actorLabel;
         private Label conversantLabel;
+        private Label audioClipLabel;
         private Label dialogueTextLabel;
+
+        class LabelBinding
+        {
+            public Label Label;
+            public DataBinding Binding;
+            public BindingId Id;
+
+            public LabelBinding(Label label, object dataSource, BindingId id, string path, BindingMode mode)
+            {
+                this.Label = label;
+                this.Id = id;
+
+                this.Binding = new DataBinding()
+                {
+                    dataSource = dataSource,
+                    dataSourcePath = new PropertyPath(path),
+                    bindingMode = mode
+                };
+            }
+
+            public void SetBinding()
+            {
+                this.Label.SetBinding(Id, Binding);
+            }
+        }
 
         public virtual void Initialize(DSNodeData data)
         {
             this.Data = data;
             Data.IsStartNode = data.IsStartNode;
-
             SetPosition(new Rect(data.Position, Vector2.zero));
 
             mainContainer.AddToClassList("ds-node__main-container");
             extensionContainer.AddToClassList("ds-node__extension-container");
+
             Draw();
         }
 
@@ -63,53 +90,16 @@ namespace Tools.DialogueSystem.UI.Elements
             titleContainer.Clear();
             titleContainer.Insert(0, label);
 
-            actorLabel = DSElementUtility.CreateLabel(Data.Actor.Name);
-            conversantLabel = DSElementUtility.CreateLabel(Data.Conversant.Name);
-            dialogueTextLabel = DSElementUtility.CreateLabel(Data.Dialogue.Text);
+            var labels = CreateLabels(actorLabel, conversantLabel, audioClipLabel, dialogueTextLabel);
+            (actorLabel, conversantLabel, audioClipLabel, dialogueTextLabel) = (labels[0], labels[1], labels[2], labels[3]);
 
-            infoContainer.Add(actorLabel);
-            infoContainer.Add(conversantLabel);
-            infoContainer.Add(dialogueTextLabel);
-
-            actorLabel.SetVisible(false);
-            conversantLabel.SetVisible(false);
-            dialogueTextLabel.SetVisible(false);
-
-            actorLabel.SetBinding(
-                "value",
-                new DataBinding
-                {
-                    dataSource = Data.Actor,
-                    dataSourcePath = new PropertyPath(nameof(Data.Actor.Name)),
-                    bindingMode = BindingMode.ToTarget
-                }
-            );
-
-            conversantLabel.SetBinding(
-                "value",
-                new DataBinding
-                {
-                    dataSource = Data.Conversant,
-                    dataSourcePath = new PropertyPath(nameof(Data.Conversant.Name)),
-                    bindingMode = BindingMode.ToTarget
-                }
-            );
-
-            dialogueTextLabel.SetBinding(
-                "value",
-                new DataBinding
-                {
-                    dataSource = Data.Dialogue,
-                    dataSourcePath = new PropertyPath(nameof(Data.Dialogue.Text)),
-                    bindingMode = BindingMode.ToTarget
-                }
-            );
+            AddTo(infoContainer, actorLabel, conversantLabel, audioClipLabel, dialogueTextLabel);
+            SetInfo(false, false, false, false);
 
             label.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
             label.SetTextSettings(fontStyle: FontStyle.Bold, alignment: TextAnchor.MiddleCenter);
 
-            portContainer.Add(titleContainer);
-            portContainer.Add(infoContainer);
+            AddTo(portContainer, titleContainer, infoContainer);
 
             mainContainer.SetBackgroundColor(Color.red);
             portContainer.SetBackgroundColor(Color.blue);
@@ -120,6 +110,24 @@ namespace Tools.DialogueSystem.UI.Elements
         }
 
         #region Creation
+
+        private Label[] CreateLabels(params Label[] labels)
+        {
+            for (int i = 0; i < labels.Length; i++)
+            {
+                labels[i] = DSElementUtility.CreateLabel("");
+            }
+
+            return labels;
+        }
+
+        private void AddTo(VisualElement container, params VisualElement[] elements)
+        {
+            foreach (var element in elements)
+            {
+                container.Add(element);
+            }
+        }
 
         private Port CreatePort(VisualElement container, Direction direction)
         {
@@ -133,21 +141,47 @@ namespace Tools.DialogueSystem.UI.Elements
             return port;
         }
 
-        internal void SetInfoVisibility(bool showActor, bool showConversant, bool showDialogueText)
+        internal void SetInfo(bool showActor, bool showConversant, bool showAudioClip, bool showDialogueText)
         {
-            if (showActor)
-            {
-                actorLabel.SetVisible();
-            }
+            SetInfoVisible(new Dictionary<Label, bool> 
+            { 
+                { actorLabel, showActor },
+                { conversantLabel, showConversant },
+                { dialogueTextLabel, showDialogueText },
+                { audioClipLabel, showAudioClip } 
+            });
 
-            if (showConversant)
+            SetInfoBindings(new Dictionary<LabelBinding, bool>
             {
-                conversantLabel.SetVisible();
-            }
+                { new LabelBinding(actorLabel, this.Data, "text", "Actor.Name", BindingMode.ToTarget), showActor },
+                { new LabelBinding(conversantLabel, this.Data, "text", "Conversant.Name", BindingMode.ToTarget), showConversant },
+                { new LabelBinding(dialogueTextLabel, this.Data, "text", nameof(DSNodeData.DialogueText), BindingMode.ToTarget), showDialogueText },
+                { new LabelBinding(audioClipLabel, this.Data, "text", "AudioClip.Name", BindingMode.ToTarget), showAudioClip }
+            });
 
-            if (showDialogueText)
+            void SetInfoVisible(Dictionary<Label, bool> infoLabels)
             {
-                dialogueTextLabel.SetVisible();
+                foreach (var kvp in infoLabels)
+                {
+                    Label label = kvp.Key;
+                    bool isVisible = kvp.Value;
+                    label.SetVisible(isVisible);
+                }
+            }
+            
+            void SetInfoBindings(Dictionary<LabelBinding, bool> bindings)
+            {
+                foreach (var kvp in bindings)
+                {
+                    LabelBinding binding = kvp.Key;
+                    binding.Label.ClearBinding(binding.Id);
+                    bool isVisible = kvp.Value;
+
+                    if (isVisible)
+                    {
+                        binding.SetBinding();
+                    }
+                }
             }
         }
 

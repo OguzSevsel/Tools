@@ -1,4 +1,5 @@
 using System;
+using Unity.Properties;
 using UnityEngine;
 
 namespace Tools.DialogueSystem.Data

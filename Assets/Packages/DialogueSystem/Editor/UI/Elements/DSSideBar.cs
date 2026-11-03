@@ -24,7 +24,7 @@ namespace Tools.DialogueSystem.UI.Elements
             tabControl = this.Q<TabView>("TabControl");
 
             ConversationsTab = new DSConversationsTab(conversationsTabAsset, conversationsCardAsset);
-            resizeElement.AddManipulator(new ResizeManipulator(this, 15, 35));
+            resizeElement.AddManipulator(new ResizeManipulator(this, 25, 40));
 
             tabControl.Add(ConversationsTab);
             tabControl.activeTab = ConversationsTab;

@@ -28,9 +28,10 @@ namespace Tools.DialogueSystem.UI
         //Utils
         private DSNode selectedNode;
 
-        private bool _showActors = true;
+        private bool _showActors = false;
         private bool _showConversant = false;
         private bool _showDialogueText = false;
+        private bool _showAudioClip = false;
 
         public DSGraphView(DSGraphTab tab)
         {
@@ -78,15 +79,14 @@ namespace Tools.DialogueSystem.UI
             this.AddManipulator(new RectangleSelector());
             this.AddManipulator(new ContentDragger());
             this.AddManipulator(CreateNodeContextualMenu(DialogueType.Single, "Add Node"));
-            this.AddManipulator(CreateShowContextMenu(""));
+            this.AddManipulator(CreateShowContextMenu());
             SetupZoom(0.5f, 3f);
         }
 
-        private IManipulator CreateShowContextMenu(string actionTitle)
+        private IManipulator CreateShowContextMenu()
         {
             return new ContextualMenuManipulator(menuEvent =>
             {
-                // Show Actors
                 menuEvent.menu.AppendAction(
                     "Show/Actors",
                     action =>
@@ -99,7 +99,6 @@ namespace Tools.DialogueSystem.UI
                         : DropdownMenuAction.Status.Normal
                 );
 
-                // Show Conditions
                 menuEvent.menu.AppendAction(
                     "Show/Conversant",
                     action =>
@@ -112,7 +111,18 @@ namespace Tools.DialogueSystem.UI
                         : DropdownMenuAction.Status.Normal
                 );
 
-                // Show Variables
+                menuEvent.menu.AppendAction(
+                    "Show/Audio Clip",
+                    action =>
+                    {
+                        _showAudioClip = !_showAudioClip;
+                        RefreshNodes();
+                    },
+                    action => _showAudioClip
+                        ? DropdownMenuAction.Status.Checked
+                        : DropdownMenuAction.Status.Normal
+                );
+
                 menuEvent.menu.AppendAction(
                     "Show/Dialogue Text",
                     action =>
@@ -131,9 +141,10 @@ namespace Tools.DialogueSystem.UI
         {
             foreach (DSNode node in nodes.ToList().OfType<DSNode>())
             {
-                node.SetInfoVisibility(
+                node.SetInfo(
                     _showActors,
                     _showConversant,
+                    _showAudioClip,
                     _showDialogueText
                 );
             }
@@ -281,8 +292,6 @@ namespace Tools.DialogueSystem.UI
             if (selectedNode is DSNode node && inspector == null)
             {
                 inspector = new DSNodeInspector(node.Data);
-                OnInspectorOpened?.Invoke(this.inspector.GetContainer(), this.selectedNode);
-                return;
             }
 
             OnInspectorOpened?.Invoke(this.inspector.GetContainer(), this.selectedNode);
