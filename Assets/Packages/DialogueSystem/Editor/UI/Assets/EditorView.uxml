@@ -6,5 +6,6 @@
             <ui:Button text="Create New Database" name="CreateDatabaseButton" class="dialogButton Border Spacing"/>
             <ui:Button text="Open Database" name="LoadDatabaseButton" class="dialogButton Border Spacing"/>
         </ui:VisualElement>
+        <ui:Button name="ReturnButton" class="Button"/>
     </ui:VisualElement>
 </ui:UXML>

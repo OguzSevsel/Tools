@@ -146,8 +146,9 @@
     position: absolute;
     bottom: 20px;
     right: 20px;
-    width: 80px;
-    height: 80px;
+    width: 40px;
+    height: 40px;
+    background-image: url("project://database/Assets/Packages/DialogueSystem/Editor/Icons/add.png?fileID=-3479061504300586076&guid=db5a9c0314a477843aba43e09fc19bf0&type=3#add_0");
 }
 
 .Border {
@@ -272,4 +273,40 @@
     transition-property: width, height;
     transition-duration: 0.5s, 0.5s;
     scale: 1 1;
+}
+
+.Button {
+    -unity-text-auto-size: best-fit 10px 30px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    letter-spacing: 3px;
+    word-spacing: 10px;
+    background-color: rgba(55, 55, 55, 0);
+    position: absolute;
+    bottom: 20px;
+    right: auto;
+    width: 40px;
+    height: 40px;
+    background-image: url("project://database/Assets/Packages/TweenSystem/Editor/Icons/Dropdown%20Icon.png?fileID=-8614484880430382219&guid=52990f245e4097e41a47bbd352c1c80c&type=3#Dropdown Icon_0");
+    -unity-background-scale-mode: scale-to-fit;
+    rotate: 90deg;
+    left: 20px;
+    top: auto;
+}
+
+.Button:hover {
+    transition-property: width, height;
+    transition-duration: 0.5s, 0.5s;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+    scale: 1.1 1.1 1.1;
+}
+
+.Button:active {
+    transition-property: width, height;
+    transition-duration: 0.5s, 0.5s;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+    scale: 1.04 1.04 1.04;
 }

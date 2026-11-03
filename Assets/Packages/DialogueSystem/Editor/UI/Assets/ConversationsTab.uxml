@@ -4,6 +4,6 @@
         <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" mode="Vertical" name="ConversationsScrollView">
             <ui:VisualElement name="ConversationsCardContainer" class="flexGrow" style="width: 100%; height: 100%; min-width: 100%; max-width: 100px; min-height: 100%; max-height: 100%;"/>
         </ui:ScrollView>
-        <ui:Button name="ConversationsCreateNewButton" icon-image="project://database/Assets/Packages/DialogueSystem/Editor/Icons/add.png?fileID=-3479061504300586076&amp;guid=db5a9c0314a477843aba43e09fc19bf0&amp;type=3#add_0" class="CreateButton"/>
+        <ui:Button name="ConversationsCreateNewButton" class="CreateButton"/>
     </ui:VisualElement>
 </ui:UXML>

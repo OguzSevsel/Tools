@@ -120,11 +120,6 @@ namespace Tools.DialogueSystem.Utilities
         public static void LoadConnections(DSConversation conversation, DSGraphView graphView)
         {
             Dictionary<string, DSNode> nodeLookUp = graphView.nodes.OfType<DSNode>().ToDictionary(n => n.Data.Guid, n => n);
-            
-            foreach (var item in nodeLookUp)
-            {
-                Debug.Log($"{item.Key}");
-            }
 
             foreach (DSPortData conn in conversation.Connections)
             {

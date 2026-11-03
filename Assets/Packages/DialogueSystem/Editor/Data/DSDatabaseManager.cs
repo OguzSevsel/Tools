@@ -43,8 +43,8 @@ namespace Tools.DialogueSystem.Data
                 return;
             }
 
-            Debug.Log($"Saving database: {_current.name}");
-            Debug.Log($"Database path: {AssetDatabase.GetAssetPath(_current)}");
+            //Debug.Log($"Saving database: {_current.name}");
+            //Debug.Log($"Database path: {AssetDatabase.GetAssetPath(_current)}");
 
             EditorUtility.SetDirty(_current);
             AssetDatabase.SaveAssets();

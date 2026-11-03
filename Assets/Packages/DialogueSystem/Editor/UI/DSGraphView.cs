@@ -36,8 +36,6 @@ namespace Tools.DialogueSystem.UI
         public DSGraphView(DSGraphTab tab)
         {
             this.tab = tab;
-            DSDatabaseManager.Instance.Open(ScriptableObject.CreateInstance<DSDatabase>());
-
             AddGridBackground();
             AddMiniMap();
             AddManipulators();
@@ -63,7 +61,11 @@ namespace Tools.DialogueSystem.UI
 
         private void HandleDatabaseOpened(DSDatabase database)
         {
-            Load(database.Conversations.FirstOrDefault());
+            var conversation = database.Conversations.FirstOrDefault();
+            Load(conversation);
+            _showDialogueText = true;
+            tab.sideBar.ChangeTitleLabel(conversation.Name);
+            RefreshNodes();
         }
 
         private void HandleDatabaseClosed(DSDatabase database)
@@ -155,13 +157,21 @@ namespace Tools.DialogueSystem.UI
             ContextualMenuManipulator manipulator = new(
                 menuEvent => menuEvent.menu.AppendAction(actionTitle, actionEvent =>
                 {
-                    if (CurrentConversation.Nodes.Count == 0)
+                    if (CurrentConversation != null)
                     {
-                        AddElement(CreateNode(type, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition), isStartNode: true, "Dialogue ID", "Actor Name", "Conversant Name", null, null, null, "Dialogue Text"));
-                    }
-                    else
-                    {
-                        AddElement(CreateNode(type, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition), isStartNode: false, "Dialogue ID", "Actor Name", "Conversant Name", null, null, null, "Dialogue Text"));
+                        DSActor actor = new DSActor("", "", "", null);
+                        DSActor conversant = new DSActor("", "", "", null);
+                        DSDialogueText dialogueText = new DSDialogueText("", "", "");
+                        DSAudioClip audioClip = new DSAudioClip("", "", null);
+
+                        if (CurrentConversation.Nodes.Count == 0)
+                        {
+                            AddElement(CreateNode(type, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition), isStartNode: true, actor, conversant, dialogueText, audioClip));
+                        }
+                        else
+                        {
+                            AddElement(CreateNode(type, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition), isStartNode: false, actor, conversant, dialogueText, audioClip));
+                        }
                     }
                 })
             );
@@ -169,18 +179,13 @@ namespace Tools.DialogueSystem.UI
             return manipulator;
         }
 
-        public DSNode CreateNode(DialogueType type, Vector2 position, bool isStartNode, string dialogueId, string actorName, string conversantName, AudioClip audioClip, Sprite actorSprite, Sprite conversantSprite, string dialogueText, bool isPasting = false, bool isLoading = false)
+        public DSNode CreateNode(DialogueType type, Vector2 position, bool isStartNode, DSActor actor, DSActor conversant, DSDialogueText dialogueText, DSAudioClip audioClip, bool isPasting = false)
         {
             Type nodeType = Type.GetType($"Tools.DialogueSystem.UI.Elements.DSNode");
 
             DSNode node = (DSNode)Activator.CreateInstance(nodeType);
 
-            DSDialogueText text = new("New Dialogue Text", "Dialogue Description", dialogueText);
-            DSActor actor = new(actorName, "Actor Description", "Actor Background", actorSprite);
-            DSActor conversant = new(conversantName, "Conversant Description", "Conversant Background", conversantSprite);
-            DSAudioClip clip = new("New Audio Clip", "Audio Description", audioClip);
-
-            DSNodeData data = new DSNodeData(position, type, text, actor, conversant, clip)
+            DSNodeData data = new DSNodeData(position, type, dialogueText, actor, conversant, audioClip)
             {
                 IsStartNode = isStartNode
             };

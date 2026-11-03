@@ -1,4 +1,5 @@
 using System;
+using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.UI.Elements;
 using Tools.DialogueSystem.Utilities;
 using UnityEngine.UIElements;
@@ -44,6 +45,7 @@ namespace Tools.DialogueSystem.UI
         private void HandleOnConversationOpen(Data.DSConversation conversation)
         {
             graphView.Load(conversation);
+            sideBar.ChangeTitleLabel(conversation.Name);
         }
 
         private void MiniMapButtonClickHandler() => graphView.ToggleMiniMap();

@@ -30,6 +30,7 @@ namespace Tools.DialogueSystem.UI
         private VisualElement databaseDialogContainer;
         private Button createDatabaseButton;
         private Button loadDatabaseButton;
+        private Button returnButton;
         public static event Action OnWindowCloses;
 
         [MenuItem("Tools/Dialogue Graph")]
@@ -37,7 +38,7 @@ namespace Tools.DialogueSystem.UI
         {
             DSEditorView window = GetWindow<DSEditorView>();
             window.maximized = true;
-            window.titleContent = new UnityEngine.GUIContent("Database Name");
+            window.titleContent = new UnityEngine.GUIContent("No Database");
         }
 
         private void OnEnable()
@@ -54,7 +55,10 @@ namespace Tools.DialogueSystem.UI
         {
             this.SaveChanges();
             UnRegisterEvents();
-            DSDatabaseManager.Instance.Close();
+            if (DSDatabaseManager.Instance.HasDatabase)
+            {
+                DSDatabaseManager.Instance.Close();
+            }
             OnWindowCloses?.Invoke();
         }
 
@@ -65,18 +69,38 @@ namespace Tools.DialogueSystem.UI
             databaseDialogContainer = rootVisualElement.Q<VisualElement>("DatabaseDialogContainer");
             createDatabaseButton = rootVisualElement.Q<Button>("CreateDatabaseButton");
             loadDatabaseButton = rootVisualElement.Q<Button>("LoadDatabaseButton");
+            returnButton = rootVisualElement.Q<Button>("ReturnButton");
         }
 
         private void RegisterEvents()
         {
             createDatabaseButton.clicked += OnCreateDatabaseButtonClicked;
             loadDatabaseButton.clicked += OnLoadDatabaseButtonClicked;
+            returnButton.clicked += HandleReturnButtonClicked;
         }
 
         private void UnRegisterEvents()
         {
             createDatabaseButton.clicked -= OnCreateDatabaseButtonClicked;
             loadDatabaseButton.clicked -= OnLoadDatabaseButtonClicked;
+            returnButton.clicked -= HandleReturnButtonClicked;
+        }
+
+        private void HandleReturnButtonClicked()
+        {
+            DSDatabaseManager.Instance.Close();
+
+            returnButton.SetVisible(false);
+            databaseDialogContainer.SetVisible(true);
+            tabView.SetVisible(false);
+
+            ChangeWindowTitle("No Database");
+        }
+        
+        private void ChangeWindowTitle(string title)
+        {
+            DSEditorView window = GetWindow<DSEditorView>();
+            window.titleContent = new UnityEngine.GUIContent(title);
         }
 
         private void OnLoadDatabaseButtonClicked()
@@ -86,11 +110,12 @@ namespace Tools.DialogueSystem.UI
             if (database != null)
             {
                 DSDatabaseManager.Instance.Open(database);
-                databaseDialogContainer.style.display = DisplayStyle.None;
-                tabView.style.display = DisplayStyle.Flex;
+                
+                databaseDialogContainer.SetVisible(false);
+                tabView.SetVisible(true);
+                returnButton.SetVisible(true);
 
-                DSEditorView window = GetWindow<DSEditorView>();
-                window.titleContent = new UnityEngine.GUIContent(database.name);
+                ChangeWindowTitle(database.name);
             }
         }
 
@@ -101,11 +126,12 @@ namespace Tools.DialogueSystem.UI
             if (database != null)
             {
                 DSDatabaseManager.Instance.Open(database);
-                databaseDialogContainer.style.display = DisplayStyle.None;
-                tabView.style.display = DisplayStyle.Flex;
 
-                DSEditorView window = GetWindow<DSEditorView>();
-                window.titleContent = new UnityEngine.GUIContent(database.name);
+                databaseDialogContainer.SetVisible(false);
+                tabView.SetVisible(true);
+                returnButton.SetVisible(true);
+
+                ChangeWindowTitle(database.name);
             }
         }
 
@@ -125,7 +151,7 @@ namespace Tools.DialogueSystem.UI
                 );
             if (string.IsNullOrEmpty(path))
                 return null;
-
+            
             if (!path.StartsWith(Application.dataPath))
             {
                 Debug.LogError("Selected file must be inside Assets folder.");

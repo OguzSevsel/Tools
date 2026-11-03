@@ -7,7 +7,7 @@ namespace Tools.DialogueSystem.UI.Elements
     public class DSSideBar : VisualElement
     {
         private VisualElement resizeElement;
-        private Label currentConversationLabel;
+        private Label titleLabel;
         private TabView tabControl;
         private Tab InspectorTab;
         private DSConversationsTab ConversationsTab;
@@ -20,7 +20,7 @@ namespace Tools.DialogueSystem.UI.Elements
 
             InspectorTab = this.Q<Tab>("InspectorTab");
 
-            currentConversationLabel = this.Q<Label>("CurrentConversationLabel");
+            titleLabel = this.Q<Label>("CurrentConversationLabel");
             tabControl = this.Q<TabView>("TabControl");
 
             ConversationsTab = new DSConversationsTab(conversationsTabAsset, conversationsCardAsset);
@@ -44,6 +44,11 @@ namespace Tools.DialogueSystem.UI.Elements
             }
 
             tabControl.activeTab = InspectorTab;
+        }
+
+        public void ChangeTitleLabel(string value)
+        {
+            titleLabel.text = value;
         }
     }
 }

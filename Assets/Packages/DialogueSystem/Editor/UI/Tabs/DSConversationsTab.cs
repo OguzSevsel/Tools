@@ -32,8 +32,9 @@ namespace Tools.DialogueSystem.UI
             RegisterEvents();
         }
 
-        private void OnDatabaseOpened(DSDatabase database)
+        private void AddConversations(DSDatabase database)
         {
+            
             foreach (DSConversation conversation in database.Conversations)
             {
                 VisualElement card = CreateCard(cardAsset, conversation);
@@ -41,17 +42,20 @@ namespace Tools.DialogueSystem.UI
             }
         }
 
+        private void RemoveConversations()
+        {
+            container.Clear();
+            conversations.Clear();
+        }
+
+        private void OnDatabaseOpened(DSDatabase database)
+        {
+            AddConversations(database);
+        }
+
         private void OnDatabaseClosed(DSDatabase database)
         {
-            foreach (KeyValuePair<DSConversation, VisualElement> cardPair in conversations)
-            {
-                VisualElement card = cardPair.Value;
-                DSConversation text = cardPair.Key;
-
-                container.Remove(card);
-            }
-
-            conversations.Clear();
+            RemoveConversations();
         }
 
         private void OnCreateButtonClicked()
@@ -100,7 +104,6 @@ namespace Tools.DialogueSystem.UI
             openButton.clicked += () =>
             {
                 OnConversationOpened?.Invoke(conversation);
-                Debug.Log($"{conversation.Name} opened");
             };
         }
 
