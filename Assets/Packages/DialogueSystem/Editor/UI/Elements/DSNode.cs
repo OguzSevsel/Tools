@@ -16,7 +16,7 @@ namespace Tools.DialogueSystem.UI.Elements
         public Port InputPort { get; set; }
         public Port OutputPort { get; set; }
         public DSNodeData Data = null;
-        public event Action<DSNode> OnNodeSelect;
+        public event Action<DSNode> OnNodeSelected;
         public event Action<Edge> OnEdgeDeleted;
 
         private VisualElement portContainer;
@@ -66,7 +66,7 @@ namespace Tools.DialogueSystem.UI.Elements
         public override void OnSelected()
         {
             base.OnSelected();
-            OnNodeSelect?.Invoke(this);
+            OnNodeSelected?.Invoke(this);
         }
 
         public virtual void Draw()

@@ -1,8 +1,8 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Assets/Packages/DialogueSystem/Editor/UI/Assets/DialogueSystem.uss?fileID=7433441132597879392&amp;guid=d8ee67fa447200445a0b5eb322156409&amp;type=3#DialogueSystem"/>
+    <Style src="project://database/Assets/Editor%20Default%20Resources/DialogueSystem/DialogueSystem.uss?fileID=7433441132597879392&amp;guid=d8ee67fa447200445a0b5eb322156409&amp;type=3#DialogueSystem"/>
     <ui:VisualElement class="flexGrow">
         <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" mode="Vertical" name="AudioClipsScrollView">
-            <ui:VisualElement name="AudioClipsCardContainer" class="flexGrow" style="flex-wrap: wrap; flex-direction: row; width: 1920px; height: 1080px; min-width: 20%; min-height: 20%; max-width: 100%; max-height: 100%;"/>
+            <ui:VisualElement name="AudioClipsCardContainer" class="flexGrow" style="flex-wrap: wrap; flex-direction: row; width: 5000px; height: 5000px; min-width: 20%; min-height: 20%; max-width: 100%; max-height: 100%;"/>
         </ui:ScrollView>
         <ui:Button name="CreateAudioClipButton" class="CreateButton"/>
     </ui:VisualElement>

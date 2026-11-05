@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -72,14 +73,32 @@ namespace Tools.DialogueSystem.UI
         {
             DSDatabaseManager.Instance.DatabaseOpened += OnDatabaseOpened;
             DSDatabaseManager.Instance.DatabaseClosed += OnDatabaseClosed;
+            DSGraphView.OnNodeCreated += HandleOnNodeCreated;
+            DSGraphView.OnNodeDeleted += HandleOnNodeDeleted;
             DSEditorView.OnWindowCloses += UnRegisterEvents;
+        }
+
+        private void HandleOnNodeCreated(DSConversation conversation)
+        {
+            var conversationCard = conversations[conversation];
+            Label nodeCountLabel = conversationCard.Q<Label>("NodeCountLabel");
+            nodeCountLabel.text = $"{conversation.NodeCount} Nodes";
         }
 
         private void UnRegisterEvents()
         {
             DSDatabaseManager.Instance.DatabaseOpened -= OnDatabaseOpened;
             DSDatabaseManager.Instance.DatabaseClosed -= OnDatabaseClosed;
+            DSGraphView.OnNodeCreated -= HandleOnNodeCreated;
+            DSGraphView.OnNodeDeleted -= HandleOnNodeDeleted;
             DSEditorView.OnWindowCloses -= UnRegisterEvents;
+        }
+
+        private void HandleOnNodeDeleted(DSConversation conversation)
+        {
+            var conversationCard = conversations[conversation];
+            Label nodeCountLabel = conversationCard.Q<Label>("NodeCountLabel");
+            nodeCountLabel.text = $"{conversation.NodeCount} Nodes";
         }
 
         private void AddCard(VisualElement container, Dictionary<DSConversation, VisualElement> conversations, VisualElement cardElement, DSConversation conversation)
@@ -87,10 +106,8 @@ namespace Tools.DialogueSystem.UI
             container.Add(cardElement);
 
             Label nodeCountLabel = cardElement.Q<Label>("NodeCountLabel");
-            conversation.OnNewNodeCreated += () =>
-            {
-                nodeCountLabel.text = $"{conversation.NodeCount} Nodes";
-            };
+
+            nodeCountLabel.text = $"{conversation.NodeCount} Nodes";
 
             Button deleteButton = cardElement.Q<Button>("DeleteButton");
             deleteButton.clicked += () =>
@@ -105,6 +122,8 @@ namespace Tools.DialogueSystem.UI
             {
                 OnConversationOpened?.Invoke(conversation);
             };
+
+            conversations.Add(conversation, cardElement);
         }
 
         private VisualElement CreateCard(VisualTreeAsset cardAsset, DSConversation conversation)

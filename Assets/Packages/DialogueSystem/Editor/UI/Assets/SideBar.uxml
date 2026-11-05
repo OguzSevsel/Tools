@@ -3,7 +3,10 @@
     <ui:VisualElement name="SideBar" class="flexGrow sideBar">
         <ui:VisualElement name="ResizeElement" class="flexGrow" style="width: 10px; height: auto; min-width: 10px; max-width: 10px; max-height: none; min-height: auto;"/>
         <ui:VisualElement name="TabContainer" class="flexGrow">
-            <ui:Label text="Label" name="CurrentConversationLabel" class="height50 title"/>
+            <ui:VisualElement name="HeaderContainer" style="flex-direction: row; flex-grow: 0;">
+                <ui:Button text="" name="CloseButton" class="Button" style="position: relative; left: auto; bottom: auto; rotate: -90deg;"/>
+                <ui:Label text="Label" name="CurrentConversationLabel" class="height50 title" style="margin-top: 0; margin-right: 10px; margin-bottom: 0; margin-left: 10px; flex-grow: 1; flex-shrink: 1;"/>
+            </ui:VisualElement>
             <ui:TabView name="TabControl" class="flexGrow">
                 <ui:Tab label="Inspector" name="InspectorTab" class="flexGrow"/>
             </ui:TabView>

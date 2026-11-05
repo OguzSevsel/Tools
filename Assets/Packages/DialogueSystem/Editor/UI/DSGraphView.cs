@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Elements;
 using Tools.DialogueSystem.UI.Elements;
@@ -15,169 +16,234 @@ namespace Tools.DialogueSystem.UI
 {
     public class DSGraphView : GraphView
     {
+        #region Cut/Copy Variables
+
+        private DSNodeData copiedNodeData;
+        private const string ClipboardPrefix = "DSGraphViewClipboard:";
+        private Vector2 _mouseLocation = new Vector2(0, 0);
+
+        [Serializable]
+        public class DSNodeClipboard
+        {
+            public List<DSClipboardNode> Nodes = new();
+
+            public DSNodeClipboard()
+            {
+
+            }
+        }
+
+        [Serializable]
+        public class DSClipboardNode
+        {
+            public string Data;
+            public Vector2 Position;
+            public Vector2 Size;
+        }
+
+        #endregion
+
+        //Utils
         public DSConversation CurrentConversation { get; private set; }
+        private DSNode selectedNode;
 
         //UI Elements
         private DSGraphTab tab;
         private IDSNodeInspector inspector;
         private MiniMap miniMap;
+        public Button OpenSideBarButton;
+        private Button miniMapButton;
 
-        public event Action<VisualElement, DSNode> OnInspectorOpened;
-        public event Action OnInspectorClosed;
-
-        //Utils
-        private DSNode selectedNode;
-
-        private bool _showActors = false;
+        //Info
+        private bool _showActor = false;
         private bool _showConversant = false;
         private bool _showDialogueText = false;
         private bool _showAudioClip = false;
 
+        //Events
+        public event Action<VisualElement, DSNode> OnInspectorOpened;
+        public event Action OnInspectorClosed;
+        public event Action OnSideBarOpened;
+        public static event Action<DSConversation> OnNodeCreated;
+        public static event Action<DSConversation> OnNodeDeleted;
+
         public DSGraphView(DSGraphTab tab)
         {
             this.tab = tab;
+            this.AddStyleSheets("DialogueSystem/DSGraphViewStyles.uss",
+                "DialogueSystem/DSNodeStyles.uss");
+            this.AddStyleSheets("DialogueSystem/DialogueSystem.uss");
             AddGridBackground();
             AddMiniMap();
             AddManipulators();
-            AddStyles();
             RegisterEvents();
+            OpenSideBarButton = DSElementUtility.CreateButton("", HandleOpenSideBarButtonClicked);
+            miniMapButton = DSElementUtility.CreateButton("Minimap", HandleOpenMiniMapButtonClicked);
+
+            Texture2D icon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Editor Default Resources/Icons/Arrow.png");
+
+            OpenSideBarButton.AddClasses("SideBarButton");
+            
+            this.contentContainer.Add(OpenSideBarButton);
+
+            miniMapButton.AddClasses("MiniMapButton");
+
+            this.contentContainer.Add(miniMapButton);
+
+            //openSideBarButton.style.width = 32;
+            //openSideBarButton.style.height = 32;
+
+            //openSideBarButton.style.backgroundImage = new StyleBackground(icon);
+
+            //openSideBarButton.style.backgroundSize = new BackgroundSize(
+            //    BackgroundSizeType.Contain
+            //);
+
+            //openSideBarButton.style.backgroundRepeat = new BackgroundRepeat(
+            //    Repeat.NoRepeat,
+            //    Repeat.NoRepeat
+            //);
+            //openSideBarButton.SetBackgroundColor(Color.clear);
+            //openSideBarButton.style.rotate = new Rotate(90);
         }
 
-        private void UnRegisterEvents()
+        private void HandleOpenMiniMapButtonClicked()
         {
-            UnregisterCallback<MouseDownEvent>(OnMouseDown, TrickleDown.TrickleDown);
-            DSDatabaseManager.Instance.DatabaseClosed -= HandleDatabaseClosed;
-            DSDatabaseManager.Instance.DatabaseOpened -= HandleDatabaseOpened;
-            DSEditorView.OnWindowCloses -= UnRegisterEvents;
+            ToggleMiniMap();
         }
+
+        private void HandleOpenSideBarButtonClicked()
+        {
+            OnSideBarOpened?.Invoke();
+            OpenSideBarButton.SetVisible(false);
+        }
+
+        #region -----INITIALIZATION-----
 
         private void RegisterEvents()
         {
-            RegisterCallback<MouseDownEvent>(OnMouseDown, TrickleDown.TrickleDown);
+            RegisterCallback<MouseDownEvent>(HandleOnMouseDown, TrickleDown.TrickleDown);
+            RegisterCallback<MouseMoveEvent>(HandleMouseMove, TrickleDown.TrickleDown);
+            RegisterCallback<KeyDownEvent>(HandleOnKeyDown);
+            canPasteSerializedData += HandleCanPaste;
+            serializeGraphElements += HandleCutCopyOperation;
+            unserializeAndPaste += HandlePasteOperation;
+            deleteSelection += HandleDeleteSelection;
             DSDatabaseManager.Instance.DatabaseClosed += HandleDatabaseClosed;
             DSDatabaseManager.Instance.DatabaseOpened += HandleDatabaseOpened;
             DSEditorView.OnWindowCloses += UnRegisterEvents;
         }
 
-        private void HandleDatabaseOpened(DSDatabase database)
+        private void UnRegisterEvents()
         {
-            var conversation = database.Conversations.FirstOrDefault();
-            Load(conversation);
-            _showDialogueText = true;
-            tab.sideBar.ChangeTitleLabel(conversation.Name);
-            RefreshNodes();
+            UnregisterCallback<MouseDownEvent>(HandleOnMouseDown, TrickleDown.TrickleDown);
+            DSDatabaseManager.Instance.DatabaseClosed -= HandleDatabaseClosed;
+            DSDatabaseManager.Instance.DatabaseOpened -= HandleDatabaseOpened;
+            canPasteSerializedData -= HandleCanPaste;
+            serializeGraphElements -= HandleCutCopyOperation;
+            unserializeAndPaste -= HandlePasteOperation;
+            deleteSelection -= HandleDeleteSelection;
+            DSEditorView.OnWindowCloses -= UnRegisterEvents;
         }
-
-        private void HandleDatabaseClosed(DSDatabase database)
-        {
-            Save();
-        }
-
-        #region Initialization
 
         private void AddManipulators()
         {
+            this.AddManipulator(CreateNodeContextualMenu(DialogueType.Single, "Add Node"));
+            this.AddManipulator(CreateShowContextMenu());
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
             this.AddManipulator(new ContentDragger());
-            this.AddManipulator(CreateNodeContextualMenu(DialogueType.Single, "Add Node"));
-            this.AddManipulator(CreateShowContextMenu());
             SetupZoom(0.5f, 3f);
+        }
+
+        private IManipulator CreateNodeContextualMenu(DialogueType type, string actionTitle)
+        {
+            ContextualMenuManipulator manipulator = new(
+                menuEvent => AddNodeAction(menuEvent, "Add Node"));
+
+            return manipulator;
         }
 
         private IManipulator CreateShowContextMenu()
         {
             return new ContextualMenuManipulator(menuEvent =>
             {
-                menuEvent.menu.AppendAction(
-                    "Show/Actors",
-                    action =>
-                    {
-                        _showActors = !_showActors;
-                        RefreshNodes();
-                    },
-                    action => _showActors
-                        ? DropdownMenuAction.Status.Checked
-                        : DropdownMenuAction.Status.Normal
-                );
-
-                menuEvent.menu.AppendAction(
-                    "Show/Conversant",
-                    action =>
-                    {
-                        _showConversant = !_showConversant;
-                        RefreshNodes();
-                    },
-                    action => _showConversant
-                        ? DropdownMenuAction.Status.Checked
-                        : DropdownMenuAction.Status.Normal
-                );
-
-                menuEvent.menu.AppendAction(
-                    "Show/Audio Clip",
-                    action =>
-                    {
-                        _showAudioClip = !_showAudioClip;
-                        RefreshNodes();
-                    },
-                    action => _showAudioClip
-                        ? DropdownMenuAction.Status.Checked
-                        : DropdownMenuAction.Status.Normal
-                );
-
-                menuEvent.menu.AppendAction(
-                    "Show/Dialogue Text",
-                    action =>
-                    {
-                        _showDialogueText = !_showDialogueText;
-                        RefreshNodes();
-                    },
-                    action => _showDialogueText
-                        ? DropdownMenuAction.Status.Checked
-                        : DropdownMenuAction.Status.Normal
-                );
+                AddInfoAction(menuEvent,"Show/Actors",() => _showActor,() => _showActor = !_showActor);
+                AddInfoAction(menuEvent,"Show/Conversant",() => _showConversant,() => _showConversant = !_showConversant);
+                AddInfoAction(menuEvent,"Show/Audio Clip", () => _showAudioClip,() => _showAudioClip = !_showAudioClip);
+                AddInfoAction(menuEvent,"Show/Dialogue Text",() => _showDialogueText,() => _showDialogueText = !_showDialogueText);
             });
         }
 
-        private void RefreshNodes()
+        private void AddNodeAction(ContextualMenuPopulateEvent menuEvent, string actionName)
         {
-            foreach (DSNode node in nodes.ToList().OfType<DSNode>())
+            menuEvent.menu.AppendAction(actionName, actionEvent =>
             {
-                node.SetInfo(
-                    _showActors,
-                    _showConversant,
-                    _showAudioClip,
-                    _showDialogueText
-                );
-            }
-        }
-
-        private IManipulator CreateNodeContextualMenu(DialogueType type, string actionTitle)
-        {
-            ContextualMenuManipulator manipulator = new(
-                menuEvent => menuEvent.menu.AppendAction(actionTitle, actionEvent =>
+                if (CurrentConversation != null)
                 {
-                    if (CurrentConversation != null)
+                    DSActor actor = new DSActor("", "", "", null);
+                    DSActor conversant = new DSActor("", "", "", null);
+                    DSDialogueText dialogueText = new DSDialogueText("", "", "");
+                    DSAudioClip audioClip = new DSAudioClip("", "", null);
+
+                    if (CurrentConversation.Nodes.Count == 0)
                     {
-                        DSActor actor = new DSActor("", "", "", null);
-                        DSActor conversant = new DSActor("", "", "", null);
-                        DSDialogueText dialogueText = new DSDialogueText("", "", "");
-                        DSAudioClip audioClip = new DSAudioClip("", "", null);
-
-                        if (CurrentConversation.Nodes.Count == 0)
-                        {
-                            AddElement(CreateNode(type, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition), isStartNode: true, actor, conversant, dialogueText, audioClip));
-                        }
-                        else
-                        {
-                            AddElement(CreateNode(type, GetLocalMousePosition(actionEvent.eventInfo.localMousePosition), isStartNode: false, actor, conversant, dialogueText, audioClip));
-                        }
+                        AddElement(CreateNode(DialogueType.Single, contentViewContainer.WorldToLocal(actionEvent.eventInfo.localMousePosition), isStartNode: true, actor, conversant, dialogueText, audioClip));
                     }
-                })
-            );
-
-            return manipulator;
+                    else
+                    {
+                        AddElement(CreateNode(DialogueType.Single, contentViewContainer.WorldToLocal(actionEvent.eventInfo.localMousePosition), isStartNode: false, actor, conversant, dialogueText, audioClip));
+                    }
+                }
+            });
         }
+
+        private void AddInfoAction(ContextualMenuPopulateEvent menuEvent,string actionName,Func<bool> getValue,Action toggleValue)
+        {
+            menuEvent.menu.AppendAction(
+                actionName,
+                action =>
+                {
+                    toggleValue();
+                    RefreshNodes();
+                },
+                action => getValue()
+                    ? DropdownMenuAction.Status.Checked
+                    : DropdownMenuAction.Status.Normal
+            );
+        }
+
+        #endregion
+
+        #region -----SAVE AND LOAD-----
+
+        public void Load(DSConversation conversation)
+        {
+            if (conversation == null || conversation == default) return;
+
+            this.DeleteElements(this.edges);
+            this.DeleteElements(this.nodes);
+
+            foreach (var node in conversation.Nodes)
+            {
+                AddElement(LoadNode(node));
+            }
+
+            CurrentConversation = conversation;
+            DSIOUtility.LoadConnections(conversation, this);
+        }
+
+        public void Save()
+        {
+            DSIOUtility.Save(this, CurrentConversation);
+            this.DeleteElements(this.edges);
+            this.DeleteElements(this.nodes);
+            this.CurrentConversation = null;
+        }
+
+        #endregion
+
+        #region -----CREATION-----
 
         public DSNode CreateNode(DialogueType type, Vector2 position, bool isStartNode, DSActor actor, DSActor conversant, DSDialogueText dialogueText, DSAudioClip audioClip, bool isPasting = false)
         {
@@ -193,13 +259,15 @@ namespace Tools.DialogueSystem.UI
             node.Initialize(data);
             CurrentConversation.AddToNodes(node.Data);
 
-            node.OnNodeSelect += HandleNodeSelected;
-            node.OnEdgeDeleted += HandleEdgeDeleted;
+            OnNodeCreated?.Invoke(CurrentConversation);
+
+            node.OnNodeSelected += HandleOnNodeSelected;
+            node.OnEdgeDeleted += HandleOnEdgeDeleted;
+
+            RefreshNodes();
 
             return node;
         }
-
-        
 
         public DSNode LoadNode(DSNodeData data)
         {
@@ -209,7 +277,7 @@ namespace Tools.DialogueSystem.UI
 
             node.Initialize(data);
 
-            node.OnNodeSelect += HandleNodeSelected;
+            node.OnNodeSelected += HandleOnNodeSelected;
             node.OnEdgeDeleted += (edge) =>
             {
                 if (this.Contains(edge))
@@ -217,6 +285,8 @@ namespace Tools.DialogueSystem.UI
                     this.RemoveElement(edge);
                 }
             };
+
+            RefreshNodes();
             return node;
         }
 
@@ -227,12 +297,6 @@ namespace Tools.DialogueSystem.UI
             Insert(0, gridBackground);
         }
 
-        private void AddStyles()
-        {
-            this.AddStyleSheets("DialogueSystem/DSGraphViewStyles.uss",
-                "DialogueSystem/DSNodeStyles.uss");
-        }
-
         private void AddMiniMap()
         {
             miniMap = new MiniMap();
@@ -241,45 +305,33 @@ namespace Tools.DialogueSystem.UI
             ToggleMiniMap();
         }
 
-        public void ToggleMiniMap() => miniMap.visible = !miniMap.visible;
-
         #endregion
-        
-        #region Save and Load
 
-        public void Load(DSConversation conversation)
+        #region -----EVENT HANDLERS-----
+
+        private void HandleDatabaseOpened(DSDatabase database)
         {
-            if (conversation == null || conversation == default) return;
-
-            ClearGraph();
-
-            foreach (var node in conversation.Nodes)
+            var conversation = database.Conversations.FirstOrDefault();
+            if (conversation != null)
             {
-                AddElement(LoadNode(node));
+                Load(conversation);
+                tab.sideBar.ChangeTitleLabel(conversation.Name);
             }
-
-            CurrentConversation = conversation;
-            DSIOUtility.LoadConnections(conversation, this);
+            _showDialogueText = true;
+            RefreshNodes();
         }
 
-        public void Save()
+        private void HandleDatabaseClosed(DSDatabase database)
         {
-            DSIOUtility.Save(this, CurrentConversation);
-            ClearGraph();
-            this.CurrentConversation = null;
+            Save();
         }
 
-        public void ClearGraph()
+        private void HandleMouseMove(MouseMoveEvent evt)
         {
-            this.DeleteElements(this.edges);
-            this.DeleteElements(this.nodes);
+            _mouseLocation = evt.mousePosition;
         }
 
-        #endregion
-
-        #region Events
-
-        private void OnMouseDown(MouseDownEvent evt)
+        private void HandleOnMouseDown(MouseDownEvent evt)
         {
             if (evt.button != 0)
                 return;
@@ -290,7 +342,26 @@ namespace Tools.DialogueSystem.UI
             CloseInspector();
         }
 
-        private void HandleNodeSelected(DSNode selectedNode)
+        private void HandleOnKeyDown(KeyDownEvent evt)
+        {
+            if (evt.ctrlKey && evt.shiftKey)
+            {
+                switch (evt.keyCode)
+                {
+                    case KeyCode.C:
+                        CopyNodeData();
+                        evt.StopPropagation();
+                        break;
+
+                    case KeyCode.V:
+                        PasteNodeData();
+                        evt.StopPropagation();
+                        break;
+                }
+            }
+        }
+
+        private void HandleOnNodeSelected(DSNode selectedNode)
         {
             this.selectedNode = selectedNode;
 
@@ -303,7 +374,7 @@ namespace Tools.DialogueSystem.UI
             inspector.LoadFields(selectedNode.Data);
         }
 
-        private void HandleEdgeDeleted(Edge edge)
+        private void HandleOnEdgeDeleted(Edge edge)
         {
             if (this.Contains(edge))
             {
@@ -313,7 +384,25 @@ namespace Tools.DialogueSystem.UI
 
         #endregion
 
-        #region Utils
+        #region -----UTILS-----
+
+        public void ToggleMiniMap()
+        {
+            miniMap.visible = !miniMap.visible;
+        }
+
+        private void RefreshNodes()
+        {
+            foreach (DSNode node in nodes.ToList().OfType<DSNode>())
+            {
+                node.SetInfo(
+                    _showActor,
+                    _showConversant,
+                    _showAudioClip,
+                    _showDialogueText
+                );
+            }
+        }
 
         private void CloseInspector()
         {
@@ -324,23 +413,165 @@ namespace Tools.DialogueSystem.UI
             }
         }
 
-        public Vector2 GetLocalMousePosition(Vector2 mousePosition, bool isSearchWindow = false)
-        {
-            Vector2 worldMousePosition = mousePosition;
+        #endregion
 
-            if (isSearchWindow)
+        #region -----CUT/COPY/DUPLICATE/PASTE/DELETE-----
+
+        private void HandleDeleteSelection(string operationName, AskUser askUser)
+        {
+            if (CurrentConversation == null) return;
+
+            List<DSNode> selectedNodes = selection.OfType<DSNode>().ToList();
+
+            foreach (DSNode node in selectedNodes)
             {
-                worldMousePosition = tab.ChangeCoordinatesTo(tab, mousePosition);
+                CurrentConversation.Nodes.Remove(node.Data);
+                node.OnEdgeDeleted -= HandleOnEdgeDeleted;
+                node.OnNodeSelected -= HandleOnNodeSelected;
             }
 
-            Vector2 localMousePosition = contentViewContainer.WorldToLocal(worldMousePosition);
+            this.DeleteSelection();
+            OnNodeDeleted?.Invoke(CurrentConversation);
+        }
 
-            return localMousePosition;
+        private void CopyNodeData()
+        {
+            DSNode selectedNode = selection
+                .OfType<DSNode>()
+                .FirstOrDefault();
+
+            if (selectedNode == null)
+                return;
+
+            copiedNodeData = JsonUtility.FromJson<DSNodeData>(
+                JsonUtility.ToJson(selectedNode.Data)
+            );
+        }
+
+        private void PasteNodeData()
+        {
+            if (copiedNodeData == null)
+                return;
+
+            DSNode selectedNode = selection
+                .OfType<DSNode>()
+                .FirstOrDefault();
+
+            if (selectedNode == null)
+                return;
+
+            selectedNode.Data.Actor = copiedNodeData.Actor;
+            selectedNode.Data.Conversant = copiedNodeData.Conversant;
+            selectedNode.Data.Dialogue = copiedNodeData.Dialogue;
+            selectedNode.Data.AudioClip = copiedNodeData.AudioClip;
+
+            RefreshNodes();
+        }
+
+        private bool HandleCanPaste(string data)
+        {
+            if (CurrentConversation == null ||
+        string.IsNullOrEmpty(data) ||
+        !data.StartsWith(ClipboardPrefix))
+                return false;
+
+            string json = data.Substring(ClipboardPrefix.Length);
+
+            DSNodeClipboard clipboard =
+                JsonUtility.FromJson<DSNodeClipboard>(json);
+
+            return clipboard?.Nodes != null && clipboard.Nodes.Count > 0;
+        }
+
+        private void HandlePasteOperation(string operationName, string data)
+        {
+            if (string.IsNullOrEmpty(data) ||
+        !data.StartsWith(ClipboardPrefix))
+                return;
+
+            data = data.Substring(ClipboardPrefix.Length);
+
+            DSNodeClipboard clipboard =
+                JsonUtility.FromJson<DSNodeClipboard>(data);
+
+            if (clipboard?.Nodes == null || clipboard.Nodes.Count == 0)
+                return;
+
+            Vector2 min = new Vector2(float.MaxValue, float.MaxValue);
+            Vector2 max = new Vector2(float.MinValue, float.MinValue);
+
+            foreach (var node in clipboard.Nodes)
+            {
+                Vector2 position = node.Position;
+                Vector2 size = node.Size;
+
+                min.x = Mathf.Min(min.x, position.x);
+                min.y = Mathf.Min(min.y, position.y);
+
+                max.x = Mathf.Max(max.x, position.x + size.x);
+                max.y = Mathf.Max(max.y, position.y + size.y);
+            }
+
+            Vector2 center = (min + max) * 0.5f;
+            Vector2 target = contentViewContainer.WorldToLocal(_mouseLocation);
+
+            Vector2 offset = target - center;
+
+            foreach (DSClipboardNode clipboardNode in clipboard.Nodes)
+            {
+                DSNodeData nodeData =
+                    JsonUtility.FromJson<DSNodeData>(clipboardNode.Data);
+
+                if (nodeData == null)
+                    continue;
+
+                nodeData.IsStartNode = false;
+
+                // Preserve the relative position of each node.
+                Vector2 position = clipboardNode.Position + offset;
+
+                DSNode node = CreateNode(
+                    nodeData.DialogueType,
+                    position,
+                    nodeData.IsStartNode,
+                    nodeData.Actor,
+                    nodeData.Conversant,
+                    nodeData.Dialogue,
+                    nodeData.AudioClip,
+                    true
+                );
+
+                AddElement(node);
+                this.AddToSelection(node);
+            }
+
+            RefreshNodes();
+        }
+
+        private string HandleCutCopyOperation(IEnumerable<GraphElement> elements)
+        {
+            DSNodeClipboard clipboard = new();
+
+            List<DSNode> selectedNodes = elements
+                .OfType<DSNode>()
+                .ToList();
+
+            foreach (DSNode node in selectedNodes)
+            {
+                clipboard.Nodes.Add(new DSClipboardNode
+                {
+                    Data = JsonUtility.ToJson(node.Data),
+                    Position = node.GetPosition().position,
+                    Size = node.GetPosition().size
+                });
+            }
+
+            return ClipboardPrefix + JsonUtility.ToJson(clipboard);
         }
 
         #endregion
 
-        #region Overrides
+        #region -----OVERRIDES-----
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
         {

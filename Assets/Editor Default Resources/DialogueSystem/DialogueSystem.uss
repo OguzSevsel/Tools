@@ -93,6 +93,7 @@
 .unity-text-element--inner-input-field-component {
     -unity-text-auto-size: best-fit 10px 14px;
     text-overflow: ellipsis;
+    flex-wrap: wrap;
 }
 
 .unity-base-text-field__input--multiline {
@@ -304,6 +305,74 @@
 }
 
 .Button:active {
+    transition-property: width, height;
+    transition-duration: 0.5s, 0.5s;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+    scale: 1.04 1.04 1.04;
+}
+
+.SideBarButton {
+    -unity-text-auto-size: best-fit 10px 30px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    letter-spacing: 3px;
+    word-spacing: 10px;
+    background-color: rgba(55, 55, 55, 0);
+    position: absolute;
+    bottom: auto;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background-image: url("project://database/Assets/Packages/TweenSystem/Editor/Icons/Dropdown%20Icon.png?fileID=-8614484880430382219&guid=52990f245e4097e41a47bbd352c1c80c&type=3#Dropdown Icon_0");
+    -unity-background-scale-mode: scale-to-fit;
+    rotate: 90deg;
+    left: auto;
+    top: 20px;
+}
+
+.SideBarButton:hover {
+    transition-property: width, height;
+    transition-duration: 0.5s, 0.5s;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+    scale: 1.1 1.1 1.1;
+}
+
+.SideBarButton:active {
+    transition-property: width, height;
+    transition-duration: 0.5s, 0.5s;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+    scale: 1.04 1.04 1.04;
+}
+
+
+
+.MiniMapButton {
+    -unity-text-auto-size: best-fit 10px 18px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    letter-spacing: 3px;
+    word-spacing: 10px;
+    position: absolute;
+    bottom: auto;
+    right: auto;
+    left: 20px;
+    top: 20px;
+}
+
+.MiniMapButton:hover {
+    transition-property: width, height;
+    transition-duration: 0.5s, 0.5s;
+    transition-timing-function: ease, ease;
+    transition-delay: 0s, 0s;
+    scale: 1.1 1.1 1.1;
+}
+
+.MiniMapButton:active {
     transition-property: width, height;
     transition-duration: 0.5s, 0.5s;
     transition-timing-function: ease, ease;

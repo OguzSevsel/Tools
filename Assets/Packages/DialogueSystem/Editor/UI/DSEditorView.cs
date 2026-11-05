@@ -2,6 +2,7 @@ using System;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor;
+using UnityEditor.ShortcutManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -32,13 +33,16 @@ namespace Tools.DialogueSystem.UI
         private Button loadDatabaseButton;
         private Button returnButton;
         public static event Action OnWindowCloses;
+        public static event Action OnToggleSideBarShortcut;
+
+        public static DSEditorView Instance;
 
         [MenuItem("Tools/Dialogue Graph")]
         public static void Open()
         {
-            DSEditorView window = GetWindow<DSEditorView>();
-            window.maximized = true;
-            window.titleContent = new UnityEngine.GUIContent("No Database");
+            Instance = GetWindow<DSEditorView>();
+            Instance.maximized = true;
+            Instance.titleContent = new UnityEngine.GUIContent("No Database");
         }
 
         private void OnEnable()
@@ -49,6 +53,44 @@ namespace Tools.DialogueSystem.UI
             CreateTabs();
             AddTabs();
             RegisterEvents();
+        }
+
+        [Shortcut("Dialogue System/Toggle Side Bar", KeyCode.R, ShortcutModifiers.Action)]
+        private static void ToggleSideBar()
+        {
+            if (Instance == null)
+                return;
+
+            OnToggleSideBarShortcut?.Invoke();
+        }
+
+        [Shortcut("Dialogue System/Next Tab", KeyCode.E, ShortcutModifiers.Action)]
+        private static void NextTab()
+        {
+            if (Instance == null)
+                return;
+
+            Instance.ChangeTab(1);
+        }
+
+        [Shortcut("Dialogue System/Previous Tab", KeyCode.Q, ShortcutModifiers.Action)]
+        private static void PreviousTab()
+        {
+            if (Instance == null)
+                return;
+
+            Instance.ChangeTab(-1);
+        }
+
+        private void ChangeTab(int direction)
+        {
+            int count = tabView.Query<Tab>().ToList().Count;
+
+            if (count == 0)
+                return;
+
+            tabView.selectedTabIndex =
+                (tabView.selectedTabIndex + direction + count) % count;
         }
 
         private void OnDisable()
@@ -70,6 +112,7 @@ namespace Tools.DialogueSystem.UI
             createDatabaseButton = rootVisualElement.Q<Button>("CreateDatabaseButton");
             loadDatabaseButton = rootVisualElement.Q<Button>("LoadDatabaseButton");
             returnButton = rootVisualElement.Q<Button>("ReturnButton");
+            returnButton.SetVisible(false);
         }
 
         private void RegisterEvents()
@@ -99,8 +142,8 @@ namespace Tools.DialogueSystem.UI
         
         private void ChangeWindowTitle(string title)
         {
-            DSEditorView window = GetWindow<DSEditorView>();
-            window.titleContent = new UnityEngine.GUIContent(title);
+            Instance = GetWindow<DSEditorView>();
+            Instance.titleContent = new UnityEngine.GUIContent(title);
         }
 
         private void OnLoadDatabaseButtonClicked()
@@ -210,4 +253,8 @@ namespace Tools.DialogueSystem.UI
 
         #endregion
     }
+
+
 }
+
+

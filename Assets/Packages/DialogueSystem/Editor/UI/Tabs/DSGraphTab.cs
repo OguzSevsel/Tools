@@ -18,17 +18,39 @@ namespace Tools.DialogueSystem.UI
         public DSGraphTab(VisualTreeAsset conversationsTabAsset, VisualTreeAsset conversationsCardAsset, VisualTreeAsset sideBarAsset)
         {
             sideBar = new DSSideBar(sideBarAsset, conversationsTabAsset, conversationsCardAsset);
+            DSSideBar.OnSideBarToggled += HandleOnSideBarToggled;
             label = "Conversations";
 
             graphView = new DSGraphView(this);
+            
             graphView.OnInspectorOpened += HandleInspectorOpened;
             graphView.OnInspectorClosed += HandleInspectorClosed;
+            graphView.OnSideBarOpened += HandleSideBar;
+
             this.contentContainer.SetFlex(flexDirection: FlexDirection.Row);
             graphView.SetFlex(flexGrow: 1, flexShrink: 1);
 
             this.contentContainer.Add(graphView);
             this.contentContainer.Add(sideBar);
             DSConversationsTab.OnConversationOpened += HandleOnConversationOpen;
+            DSEditorView.OnToggleSideBarShortcut += HandleSideBar;
+        }
+
+        private void HandleOnSideBarToggled(bool isVisible)
+        {
+            if (isVisible)
+            {
+                graphView.OpenSideBarButton.SetVisible(false);
+            }
+            else
+            {
+                graphView.OpenSideBarButton.SetVisible(true);
+            }
+        }
+
+        private void HandleSideBar()
+        {
+            sideBar.ToggleSideBar();
         }
 
         private void HandleInspectorClosed()

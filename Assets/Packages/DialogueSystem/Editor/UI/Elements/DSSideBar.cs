@@ -1,4 +1,5 @@
-﻿using Tools.DialogueSystem.UI.Inspector;
+﻿using System;
+using Tools.DialogueSystem.UI.Inspector;
 using Tools.DialogueSystem.Utilities;
 using UnityEngine.UIElements;
 
@@ -11,6 +12,11 @@ namespace Tools.DialogueSystem.UI.Elements
         private TabView tabControl;
         private Tab InspectorTab;
         private DSConversationsTab ConversationsTab;
+        private Button CloseButton;
+
+        public static event Action<bool> OnSideBarToggled;
+
+        private bool isVisible;
 
         public DSSideBar(VisualTreeAsset sideBarAsset, VisualTreeAsset conversationsTabAsset, VisualTreeAsset conversationsCardAsset)
         {
@@ -22,12 +28,24 @@ namespace Tools.DialogueSystem.UI.Elements
 
             titleLabel = this.Q<Label>("CurrentConversationLabel");
             tabControl = this.Q<TabView>("TabControl");
+            CloseButton = this.Q<Button>("CloseButton");
+
+            CloseButton.clicked += ToggleSideBar;
 
             ConversationsTab = new DSConversationsTab(conversationsTabAsset, conversationsCardAsset);
-            resizeElement.AddManipulator(new ResizeManipulator(this, 25, 40));
+            resizeElement.AddManipulator(new ResizeManipulator(this, 20, 30));
 
             tabControl.Add(ConversationsTab);
             tabControl.activeTab = ConversationsTab;
+            isVisible = false;
+            ToggleSideBar();
+        }
+
+        public void ToggleSideBar()
+        {
+            this.SetVisible(isVisible);
+            OnSideBarToggled?.Invoke(isVisible);
+            isVisible = !isVisible;
         }
 
         public void AddInspector(VisualElement inspector)
