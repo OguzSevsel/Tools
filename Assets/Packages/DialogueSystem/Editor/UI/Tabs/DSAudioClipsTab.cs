@@ -38,14 +38,7 @@ namespace Tools.DialogueSystem.UI
 
         private void OnDatabaseClosed(DSDatabase database)
         {
-            foreach (KeyValuePair<DSAudioClip, VisualElement> cardPair in AudioClips)
-            {
-                VisualElement card = cardPair.Value;
-                DSAudioClip text = cardPair.Key;
-
-                audioClipContainer.Remove(card);
-            }
-
+            audioClipContainer.Clear();
             AudioClips.Clear();
         }
 

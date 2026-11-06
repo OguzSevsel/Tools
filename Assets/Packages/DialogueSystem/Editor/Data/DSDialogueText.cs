@@ -29,5 +29,10 @@ namespace Tools.DialogueSystem.Data
         {
             this.Text = text;
         }
+
+        public void SetText(string value)
+        {
+            Text = value;
+        }
     }
 }

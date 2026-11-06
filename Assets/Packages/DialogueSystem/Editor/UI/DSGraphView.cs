@@ -80,31 +80,10 @@ namespace Tools.DialogueSystem.UI
             OpenSideBarButton = DSElementUtility.CreateButton("", HandleOpenSideBarButtonClicked);
             miniMapButton = DSElementUtility.CreateButton("Minimap", HandleOpenMiniMapButtonClicked);
 
-            Texture2D icon = AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Editor Default Resources/Icons/Arrow.png");
-
             OpenSideBarButton.AddClasses("SideBarButton");
-            
             this.contentContainer.Add(OpenSideBarButton);
-
             miniMapButton.AddClasses("MiniMapButton");
-
             this.contentContainer.Add(miniMapButton);
-
-            //openSideBarButton.style.width = 32;
-            //openSideBarButton.style.height = 32;
-
-            //openSideBarButton.style.backgroundImage = new StyleBackground(icon);
-
-            //openSideBarButton.style.backgroundSize = new BackgroundSize(
-            //    BackgroundSizeType.Contain
-            //);
-
-            //openSideBarButton.style.backgroundRepeat = new BackgroundRepeat(
-            //    Repeat.NoRepeat,
-            //    Repeat.NoRepeat
-            //);
-            //openSideBarButton.SetBackgroundColor(Color.clear);
-            //openSideBarButton.style.rotate = new Rotate(90);
         }
 
         private void HandleOpenMiniMapButtonClicked()
@@ -181,18 +160,20 @@ namespace Tools.DialogueSystem.UI
             {
                 if (CurrentConversation != null)
                 {
-                    DSActor actor = new DSActor("", "", "", null);
-                    DSActor conversant = new DSActor("", "", "", null);
-                    DSDialogueText dialogueText = new DSDialogueText("", "", "");
-                    DSAudioClip audioClip = new DSAudioClip("", "", null);
+                    DSActor actor = DSDatabaseManager.Instance.Current.Actors.FirstOrDefault();
+                    DSActor conversant = DSDatabaseManager.Instance.Current.Actors.FirstOrDefault();
+                    DSDialogueText dialogueText = DSDatabaseManager.Instance.Current.DialogueTexts.FirstOrDefault();
+                    DSAudioClip audioClip = DSDatabaseManager.Instance.Current.AudioClips.FirstOrDefault();
 
                     if (CurrentConversation.Nodes.Count == 0)
                     {
                         AddElement(CreateNode(DialogueType.Single, contentViewContainer.WorldToLocal(actionEvent.eventInfo.localMousePosition), isStartNode: true, actor, conversant, dialogueText, audioClip));
+                        RefreshNodes();
                     }
                     else
                     {
                         AddElement(CreateNode(DialogueType.Single, contentViewContainer.WorldToLocal(actionEvent.eventInfo.localMousePosition), isStartNode: false, actor, conversant, dialogueText, audioClip));
+                        RefreshNodes();
                     }
                 }
             });
@@ -231,6 +212,7 @@ namespace Tools.DialogueSystem.UI
 
             CurrentConversation = conversation;
             DSIOUtility.LoadConnections(conversation, this);
+            RefreshNodes();
         }
 
         public void Save()
@@ -264,8 +246,6 @@ namespace Tools.DialogueSystem.UI
             node.OnNodeSelected += HandleOnNodeSelected;
             node.OnEdgeDeleted += HandleOnEdgeDeleted;
 
-            RefreshNodes();
-
             return node;
         }
 
@@ -286,7 +266,6 @@ namespace Tools.DialogueSystem.UI
                 }
             };
 
-            RefreshNodes();
             return node;
         }
 

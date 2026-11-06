@@ -31,14 +31,7 @@ namespace Tools.DialogueSystem.UI
 
         private void OnDatabaseClosed(DSDatabase database)
         {
-            foreach (KeyValuePair<DSDialogueText, VisualElement> cardPair in dialogues)
-            {
-                VisualElement card = cardPair.Value;
-                DSDialogueText text = cardPair.Key;
-
-                dialogueCardContainer.Remove(card);
-            }
-
+            dialogueCardContainer.Clear();
             dialogues.Clear();
         }
 

@@ -43,14 +43,7 @@ namespace Tools.DialogueSystem
 
         private void OnDatabaseClosed(DSDatabase database)
         {
-            foreach (KeyValuePair<DSActor, VisualElement> cardPair in Actors)
-            {
-                VisualElement card = cardPair.Value;
-                DSActor text = cardPair.Key;
-
-                actorContainer.Remove(card);
-            }
-
+            actorContainer.Clear();
             Actors.Clear();
         }
 

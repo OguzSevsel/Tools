@@ -55,7 +55,23 @@ namespace Tools.DialogueSystem.UI
             RegisterEvents();
         }
 
-        [Shortcut("Dialogue System/Toggle Side Bar", KeyCode.R, ShortcutModifiers.Action)]
+        [Shortcut("Dialogue System/Close Database", typeof(DSEditorView), KeyCode.W, ShortcutModifiers.Action)]
+        private static void CloseDatabase()
+        {
+            if (Instance == null)
+                return;
+
+            if (DSDatabaseManager.Instance.HasDatabase)
+            {
+                Instance.HandleCloseDatabase();
+            }
+            else
+            {
+                Instance.Close();
+            }
+        }
+
+        [Shortcut("Dialogue System/Toggle Side Bar", typeof(DSEditorView), KeyCode.R, ShortcutModifiers.Action)]
         private static void ToggleSideBar()
         {
             if (Instance == null)
@@ -64,7 +80,7 @@ namespace Tools.DialogueSystem.UI
             OnToggleSideBarShortcut?.Invoke();
         }
 
-        [Shortcut("Dialogue System/Next Tab", KeyCode.E, ShortcutModifiers.Action)]
+        [Shortcut("Dialogue System/Next Tab", typeof(DSEditorView), KeyCode.E, ShortcutModifiers.Action)]
         private static void NextTab()
         {
             if (Instance == null)
@@ -73,13 +89,24 @@ namespace Tools.DialogueSystem.UI
             Instance.ChangeTab(1);
         }
 
-        [Shortcut("Dialogue System/Previous Tab", KeyCode.Q, ShortcutModifiers.Action)]
+        [Shortcut("Dialogue System/Previous Tab", typeof(DSEditorView), KeyCode.Q, ShortcutModifiers.Action)]
         private static void PreviousTab()
         {
             if (Instance == null)
                 return;
 
             Instance.ChangeTab(-1);
+        }
+
+        private void HandleCloseDatabase()
+        {
+            DSDatabaseManager.Instance.Close();
+
+            Instance.returnButton.SetVisible(false);
+            Instance.databaseDialogContainer.SetVisible(true);
+            Instance.tabView.SetVisible(false);
+
+            Instance.ChangeWindowTitle("No Database");
         }
 
         private void ChangeTab(int direction)

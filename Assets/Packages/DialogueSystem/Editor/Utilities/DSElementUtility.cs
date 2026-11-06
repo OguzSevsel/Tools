@@ -63,6 +63,31 @@ namespace Tools.DialogueSystem.Utilities
             return dropdown;
         }
 
+        public static PopupField<T> CreateDropdown<T>(string title, List<T> choices = null, EventCallback<ChangeEvent<T>> onValueChanged = null)
+        {
+            PopupField<T> popUp = new()
+            {
+                label = title
+            };
+
+            if (choices != null)
+            {
+                popUp.choices = choices;
+            }
+
+            if (popUp.choices.Count > 0)
+            {
+                popUp.value = choices[0];
+            }
+
+            if (onValueChanged != null)
+            {
+                popUp.RegisterValueChangedCallback(onValueChanged);
+            }
+
+            return popUp;
+        }
+
         public static Label CreateLabel(string text, EventCallback<ChangeEvent<string>> onValueChanged = null)
         {
             Label label = new()
@@ -120,6 +145,11 @@ namespace Tools.DialogueSystem.Utilities
             textField.multiline = isMultiLine;
 
             return textField;
+        }
+
+        internal static TextField CreateTextField(string v, bool isMultiLine, object handleDialogueTextChanged)
+        {
+            throw new NotImplementedException();
         }
     }
 }

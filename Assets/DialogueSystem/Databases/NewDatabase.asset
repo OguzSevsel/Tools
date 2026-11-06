@@ -13,44 +13,112 @@ MonoBehaviour:
   m_Name: NewDatabase
   m_EditorClassIdentifier: Tools.DialogueSystem.Editor::Tools.DialogueSystem.Data.DSDatabase
   <Conversations>k__BackingField:
-  - _name: New Conversation
-    Description: Conversation Description
-    <Nodes>k__BackingField: []
-    <Connections>k__BackingField: []
+  - Description: Conversation Description
+    <Nodes>k__BackingField:
+    - <Guid>k__BackingField: 4bb338d85e7d6f540ade52bae5fa1761
+      _dialogue:
+        Description: Dialogue Description 1
+        _text: Selam
+      _audioClip:
+        Description: New Description 1
+        Clip: {fileID: 0}
+      _actor:
+        Description: Actor Description 1
+        Background: Actor Background 1
+        Sprite: {fileID: 0}
+      _conversant:
+        Description: Actor Description 1
+        Background: Actor Background 1
+        Sprite: {fileID: 0}
+      <Position>k__BackingField: {x: 486.33963, y: 299.7736}
+      DialogueType: 0
+      IsStartNode: 1
+    - <Guid>k__BackingField: 15056a6b901a6d34f9d4df6ccf215a5e
+      _dialogue:
+        Description: Dialogue Description 1
+        _text: Selam
+      _audioClip:
+        Description: New Description 1
+        Clip: {fileID: 0}
+      _actor:
+        Description: Actor Description 1
+        Background: Actor Background 1
+        Sprite: {fileID: 0}
+      _conversant:
+        Description: Actor Description 2
+        Background: Actor Background 2
+        Sprite: {fileID: 0}
+      <Position>k__BackingField: {x: 312.45285, y: 451.92456}
+      DialogueType: 0
+      IsStartNode: 0
+    - <Guid>k__BackingField: 16b43e24067c4ac4096a0da6c36da658
+      _dialogue:
+        Description: Dialogue Description 2
+        _text: Deneme
+      _audioClip:
+        Description: New Description 2
+        Clip: {fileID: 0}
+      _actor:
+        Description: Actor Description 2
+        Background: Actor Background 2
+        Sprite: {fileID: 0}
+      _conversant:
+        Description: Actor Description 2
+        Background: Actor Background 2
+        Sprite: {fileID: 0}
+      <Position>k__BackingField: {x: 633.05664, y: 451.92456}
+      DialogueType: 0
+      IsStartNode: 0
+    - <Guid>k__BackingField: 8931a1dae0bfde04991f23e8e9ce6243
+      _dialogue:
+        Description: Dialogue Description 2
+        _text: Deneme
+      _audioClip:
+        Description: New Description 1
+        Clip: {fileID: 0}
+      _actor:
+        Description: Actor Description 1
+        Background: Actor Background 1
+        Sprite: {fileID: 0}
+      _conversant:
+        Description: Actor Description 1
+        Background: Actor Background 1
+        Sprite: {fileID: 0}
+      <Position>k__BackingField: {x: 496.3019, y: 688.3019}
+      DialogueType: 0
+      IsStartNode: 0
+    <Connections>k__BackingField:
+    - NodeId: 4bb338d85e7d6f540ade52bae5fa1761
+      OutputIds:
+      - 15056a6b901a6d34f9d4df6ccf215a5e
+      - 16b43e24067c4ac4096a0da6c36da658
+      PortName: port
+    - NodeId: 15056a6b901a6d34f9d4df6ccf215a5e
+      OutputIds:
+      - 8931a1dae0bfde04991f23e8e9ce6243
+      PortName: port
   <Actors>k__BackingField:
-  - _name: New Actor 1
-    Description: Actor Description 1
+  - Description: Actor Description 1
     Background: Actor Background 1
     Sprite: {fileID: 0}
-  - _name: New Actor 2
-    Description: Actor Description 2
+  - Description: Actor Description 2
     Background: Actor Background 2
     Sprite: {fileID: 0}
-  - _name: New Actor 3
-    Description: Actor Description 3
+  - Description: Actor Description 3
     Background: Actor Background 3
     Sprite: {fileID: 0}
-  - _name: New Actor 4
-    Description: Actor Description 4
+  - Description: Actor Description 4
     Background: Actor Background 4
     Sprite: {fileID: 0}
   <AudioClips>k__BackingField:
-  - _name: New Clip 1
-    Description: New Description 1
+  - Description: New Description 1
     Clip: {fileID: 0}
-  - _name: New Clip 2
-    Description: New Description 2
+  - Description: New Description 2
     Clip: {fileID: 0}
-  - _name: New Clip 3
-    Description: New Description
+  - Description: New Description
     Clip: {fileID: 0}
   <DialogueTexts>k__BackingField:
-  - _name: New Dialogue 1
-    Description: Dialogue Description 1
-    _text: Dialogue Text 1
-  - _name: New Dialogue 2
-    Description: Dialogue Description 2
-    _text: Dialogue Text 2
-  - _name: New Dialogue 3
-    Description: Dialogue Description 3
-    _text: Dialogue Text 3
+  - Description: Dialogue Description 1
+    _text: Selam
+  - Description: Dialogue Description 2
+    _text: Deneme

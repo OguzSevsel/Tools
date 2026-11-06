@@ -9,7 +9,7 @@ namespace Tools.DialogueSystem.Data
     [Serializable]
     public abstract class DSData : INotifyBindablePropertyChanged
     {
-        public string _name = "Name";
+        private string _name = "Name";
 
         [CreateProperty]
         public string Name

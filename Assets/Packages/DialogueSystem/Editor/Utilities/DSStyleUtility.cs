@@ -52,6 +52,41 @@ namespace Tools.DialogueSystem.Utilities
             {
                 element.style.filter = StyleKeyword.Null;
             }
+
+            
+        }
+
+        public static VisualElement Rotate(this VisualElement element, int? rotation = null)
+        {
+            element.style.rotate = new Rotate(rotation ?? element.style.rotate.value.angle);
+
+            return element;
+        }
+
+        public static VisualElement SetBackgroundImage(this VisualElement element, string iconPath)
+        {
+            Texture2D icon = AssetDatabase.LoadAssetAtPath<Texture2D>(iconPath);
+            element.style.backgroundImage = new StyleBackground(icon);
+            element.style.backgroundSize = new BackgroundSize(
+                BackgroundSizeType.Contain
+            );
+            element.style.backgroundRepeat = new BackgroundRepeat(
+                Repeat.NoRepeat,
+                Repeat.NoRepeat
+            );
+
+            return element;
+        }
+
+        public static VisualElement SetAnchor(this VisualElement element, float? top = null, float? bottom = null, float? left = null, float? right = null)
+        {
+            
+            element.style.position = Position.Absolute;
+            element.style.top = top ?? element.style.top;
+            element.style.bottom = bottom ?? element.style.bottom;
+            element.style.left = left ?? element.style.left;
+            element.style.right = right ?? element.style.right;
+            return element;
         }
 
         public static VisualElement SetPaddings(this VisualElement element, int? allPadding = null, int? paddingLeft = null, int? paddingRight = null, int? paddingTop = null, int? paddingBottom = null)

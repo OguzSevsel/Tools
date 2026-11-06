@@ -7,22 +7,29 @@ namespace Tools.DialogueSystem.UI
 {
     public class DSDropdown<T>
     {
-        private readonly DropdownField dropdown;
+        private readonly PopupField<T> dropdown;
 
         private List<T> items = new();
 
-        private Func<T, string> displayNameFunc;
+        private readonly Func<T, string> displayNameFunc;
 
         public T Value { get; private set; }
 
         public event Action<T> ValueChanged;
 
-        public DSDropdown(
-            DropdownField dropdown,
-            Func<T, string> displayNameFunc)
+        public DSDropdown(PopupField<T> dropdown,Func<T, string> displayNameFunc)
         {
-            this.dropdown = dropdown;
-            this.displayNameFunc = displayNameFunc;
+            this.dropdown = dropdown ??
+                throw new ArgumentNullException(nameof(dropdown));
+
+            this.displayNameFunc = displayNameFunc ??
+                throw new ArgumentNullException(nameof(displayNameFunc));
+
+            dropdown.formatListItemCallback = item =>
+                item == null ? string.Empty : displayNameFunc(item);
+
+            dropdown.formatSelectedValueCallback = item =>
+                item == null ? string.Empty : displayNameFunc(item);
 
             dropdown.RegisterValueChangedCallback(OnDropdownChanged);
         }
@@ -31,9 +38,7 @@ namespace Tools.DialogueSystem.UI
         {
             items = newItems.ToList();
 
-            dropdown.choices = items
-                .Select(displayNameFunc)
-                .ToList();
+            dropdown.choices = items;
 
             if (items.Count > 0)
             {
@@ -42,34 +47,29 @@ namespace Tools.DialogueSystem.UI
             else
             {
                 Value = default;
-                dropdown.SetValueWithoutNotify("");
             }
         }
 
         public void SetValue(T value)
         {
-            int index = items.IndexOf(value);
-
-            if (index < 0)
+            if (!items.Contains(value))
                 return;
 
             Value = value;
 
-            dropdown.SetValueWithoutNotify(
-                displayNameFunc(value)
-            );
+            dropdown.SetValueWithoutNotify(value);
         }
 
-        private void OnDropdownChanged(ChangeEvent<string> evt)
+        private void OnDropdownChanged(ChangeEvent<T> evt)
         {
-            int index = dropdown.choices.IndexOf(evt.newValue);
-
-            if (index < 0 || index >= items.Count)
-                return;
-
-            Value = items[index];
+            Value = evt.newValue;
 
             ValueChanged?.Invoke(Value);
+        }
+
+        public int GetItemCount()
+        {
+            return items.Count;
         }
     }
 }
