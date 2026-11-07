@@ -476,12 +476,7 @@ namespace Tools.DialogueSystem.UI
             if (selectedNode == null)
                 return;
 
-            selectedNode.Data.Actor = copiedNodeData.Actor;
-            selectedNode.Data.Conversant = copiedNodeData.Conversant;
-            selectedNode.Data.Dialogue = copiedNodeData.Dialogue;
-            selectedNode.Data.AudioClip = copiedNodeData.AudioClip;
-
-            RefreshNodes();
+            selectedNode.Data.SetAllFields(copiedNodeData.Actor, copiedNodeData.Conversant, copiedNodeData.AudioClip, copiedNodeData.Dialogue);
         }
 
         private bool HandleCanPaste(string data)
