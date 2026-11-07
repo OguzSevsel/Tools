@@ -13,6 +13,7 @@ namespace Tools.DialogueSystem.UI.Elements
     public class DSNodeInspector : IDSNodeInspector
     {
         private DSNodeData data;
+        private DSGraphView GraphView;
         private VisualElement container;
         private TextField dialogueText;
         private DSActorPopUpField actorDropdown;
@@ -20,9 +21,10 @@ namespace Tools.DialogueSystem.UI.Elements
         private DSAudioPopUpField audioDropdown;
         private DSDialoguePopUpField dialogueDropdown;
 
-        public DSNodeInspector(DSNodeData data)
+        public DSNodeInspector(DSNodeData data, DSGraphView graphView)
         {
             this.data = data;
+            this.GraphView = graphView;
             container = new VisualElement();
             container.SetFlex(flexGrow: 1, flexDirection: FlexDirection.Column, flexWrap: Wrap.NoWrap);
             container.SetAlignment(justifyContent: Justify.Center);
@@ -98,16 +100,15 @@ namespace Tools.DialogueSystem.UI.Elements
             dialogueDropdown.RegisterValueChangedCallback<DSDialogueText>(OnDialogueValueChanged);
             DSDatabaseManager.Instance.DatabaseOpened += HandleOnDatabaseOpened;
             DSDatabaseManager.Instance.DatabaseClosed += HandleOnDatabaseClosed;
+            DSEditorView.OnWindowCloses += UnRegisterEvents;
         }
 
         private void HandleOnDatabaseClosed(DSDatabase database)
         {
-            UnRegisterEvents();
         }
 
         private void HandleOnDatabaseOpened(DSDatabase database)
         {
-
         }
 
         private void UnRegisterEvents()
@@ -118,28 +119,40 @@ namespace Tools.DialogueSystem.UI.Elements
             dialogueDropdown.UnregisterValueChangedCallback<DSDialogueText>(OnDialogueValueChanged);
             DSDatabaseManager.Instance.DatabaseOpened -= HandleOnDatabaseOpened;
             DSDatabaseManager.Instance.DatabaseClosed -= HandleOnDatabaseClosed;
+            DSEditorView.OnWindowCloses -= UnRegisterEvents;
         }
 
         private void OnDialogueValueChanged(ChangeEvent<DSDialogueText> evt)
         {
+            Debug.Log($"Dialogue Changed: {(this.data == null ? "Data Null" : "Data Not Null")}");
             this.data.Dialogue = evt?.newValue;
             this.dialogueText.value = evt?.newValue?.Text;
             this.data.Dialogue?.SetText(evt?.newValue?.Text);
+            GraphView.RefreshNodes();
         }
 
         private void OnConversantValueChanged(ChangeEvent<DSActor> evt) 
-        { 
+        {
+            Debug.Log($"Conversant Changed: {(this.data == null ? "Data Null" : "Data Not Null")}");
+
             this.data.Conversant = evt?.newValue;
+            GraphView.RefreshNodes();
         }
 
         private void OnAudioValueChanged(ChangeEvent<DSAudioClip> evt) 
-        { 
+        {
+            Debug.Log($"Audio Changed: {(this.data == null ? "Data Null" : "Data Not Null")}");
+
             this.data.AudioClip = evt?.newValue;
+            GraphView.RefreshNodes();
         }
 
         private void OnActorValueChanged(ChangeEvent<DSActor> evt)
         {
+            Debug.Log($"Actor Changed: {(this.data == null ? "Data Null" : "Data Not Null")}");
+
             this.data.Actor = evt?.newValue;
+            GraphView.RefreshNodes();
         }
 
         public VisualElement GetContainer()

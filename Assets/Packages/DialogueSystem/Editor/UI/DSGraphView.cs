@@ -245,7 +245,10 @@ namespace Tools.DialogueSystem.UI
 
         public void Save()
         {
-            DSIOUtility.Save(this, CurrentConversation);
+            if (CurrentConversation != null)
+            {
+                DSIOUtility.Save(this, CurrentConversation);
+            }
             this.DeleteElements(this.edges);
             this.DeleteElements(this.nodes);
             this.CurrentConversation = null;
@@ -346,6 +349,11 @@ namespace Tools.DialogueSystem.UI
 
             if (evt.target != this)
                 return;
+            
+            foreach (var node in this.nodes.OfType<DSNode>().ToList())
+            {
+                node.Unselect(this);
+            }
 
             CloseInspector();
         }
@@ -375,7 +383,7 @@ namespace Tools.DialogueSystem.UI
 
             if (selectedNode is DSNode node && inspector == null)
             {
-                inspector = new DSNodeInspector(node.Data);
+                inspector = new DSNodeInspector(node.Data, this);
             }
 
             OnInspectorOpened?.Invoke(this.inspector.GetContainer(), this.selectedNode);
@@ -399,7 +407,7 @@ namespace Tools.DialogueSystem.UI
             miniMap.visible = !miniMap.visible;
         }
 
-        private void RefreshNodes()
+        public void RefreshNodes()
         {
             foreach (DSNode node in nodes.ToList().OfType<DSNode>())
             {

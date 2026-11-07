@@ -151,6 +151,33 @@ namespace Tools.DialogueSystem.UI.Elements
 
         internal void SetInfo(bool showActor, bool showConversant, bool showAudioClip, bool showDialogueText)
         {
+            if (this.Data == null)
+            {
+                return;
+            }
+
+            Dictionary<LabelBinding, bool> bindings = new Dictionary<LabelBinding, bool>();
+
+            if (this.Data.Actor != null)
+            {
+                bindings.Add(new LabelBinding(actorLabel, this.Data, "text", "Actor.Name", BindingMode.ToTarget), showActor);
+            }
+
+            if (this.Data.Conversant != null)
+            {
+                bindings.Add(new LabelBinding(conversantLabel, this.Data, "text", "Conversant.Name", BindingMode.ToTarget), showConversant);
+            }
+
+            if (this.Data.AudioClip != null)
+            {
+                bindings.Add(new LabelBinding(audioClipLabel, this.Data, "text", "AudioClip.Name", BindingMode.ToTarget), showAudioClip);
+            }
+            
+            if (this.Data.Dialogue != null)
+            {
+                bindings.Add(new LabelBinding(dialogueTextLabel, this.Data, "text", nameof(DSNodeData.DialogueText), BindingMode.ToTarget), showDialogueText);
+            }
+
             SetInfoVisible(new Dictionary<Label, bool> 
             { 
                 { actorLabel, showActor },
@@ -159,13 +186,7 @@ namespace Tools.DialogueSystem.UI.Elements
                 { audioClipLabel, showAudioClip } 
             });
 
-            SetInfoBindings(new Dictionary<LabelBinding, bool>
-            {
-                { new LabelBinding(actorLabel, this.Data, "text", "Actor.Name", BindingMode.ToTarget), showActor },
-                { new LabelBinding(conversantLabel, this.Data, "text", "Conversant.Name", BindingMode.ToTarget), showConversant },
-                { new LabelBinding(dialogueTextLabel, this.Data, "text", nameof(DSNodeData.DialogueText), BindingMode.ToTarget), showDialogueText },
-                { new LabelBinding(audioClipLabel, this.Data, "text", "AudioClip.Name", BindingMode.ToTarget), showAudioClip }
-            });
+            SetInfoBindings(bindings);
 
             void SetInfoVisible(Dictionary<Label, bool> infoLabels)
             {

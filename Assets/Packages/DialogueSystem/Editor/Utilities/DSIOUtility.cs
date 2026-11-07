@@ -92,7 +92,7 @@ namespace Tools.DialogueSystem.Utilities
             {
                 List<DSPortData> deletedPortDataList = new List<DSPortData>();
 
-                foreach (var nodeData in conversation.Connections)
+                foreach (var nodeData in conversation?.Connections)
                 {
                     var node = graphView.nodes.OfType<DSNode>().Where(n => n.Data.Guid == nodeData.NodeId).FirstOrDefault();
 

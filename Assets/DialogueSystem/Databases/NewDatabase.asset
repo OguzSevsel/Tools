@@ -15,10 +15,10 @@ MonoBehaviour:
   <Conversations>k__BackingField:
   - Description: Conversation Description
     <Nodes>k__BackingField:
-    - <Guid>k__BackingField: cc5da57e12d7ca344a507e518dbe2769
+    - <Guid>k__BackingField: 264718d51165db44983eb1d3e5ae45eb
       _dialogue:
-        Description: 
-        _text: 
+        Description: Dialogue Description
+        _text: Dialogue Text
       _audioClip:
         Description: New Description
         Clip: {fileID: 0}
@@ -30,13 +30,13 @@ MonoBehaviour:
         Description: Actor Description
         Background: Actor Background
         Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 249.9623, y: 283.4717}
+      <Position>k__BackingField: {x: 531.6227, y: 103.24529}
       DialogueType: 0
       IsStartNode: 1
-    - <Guid>k__BackingField: ee24904ebc0a55549add9ce0818b94fe
+    - <Guid>k__BackingField: d71870bb90a586b44a71d104b8090942
       _dialogue:
-        Description: 
-        _text: 
+        Description: Dialogue Description
+        _text: Dialogue Text
       _audioClip:
         Description: New Description
         Clip: {fileID: 0}
@@ -48,11 +48,68 @@ MonoBehaviour:
         Description: Actor Description
         Background: Actor Background
         Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 249.96231, y: 442.86792}
+      <Position>k__BackingField: {x: 562.41516, y: 324.22656}
+      DialogueType: 0
+      IsStartNode: 0
+    - <Guid>k__BackingField: 13df8c386ece5ef4180706c6f529fcb1
+      _dialogue:
+        Description: Dialogue Description
+        _text: Dialogue Text
+      _audioClip:
+        Description: New Description
+        Clip: {fileID: 0}
+      _actor:
+        Description: Actor Description
+        Background: Actor Background
+        Sprite: {fileID: 0}
+      _conversant:
+        Description: Actor Description
+        Background: Actor Background
+        Sprite: {fileID: 0}
+      <Position>k__BackingField: {x: 758.03784, y: 305.20764}
+      DialogueType: 0
+      IsStartNode: 0
+    - <Guid>k__BackingField: 840c6548084639943a6774d22aa2ed6d
+      _dialogue:
+        Description: Dialogue Description
+        _text: Dialogue Text
+      _audioClip:
+        Description: New Description
+        Clip: {fileID: 0}
+      _actor:
+        Description: Actor Description
+        Background: Actor Background
+        Sprite: {fileID: 0}
+      _conversant:
+        Description: Actor Description
+        Background: Actor Background
+        Sprite: {fileID: 0}
+      <Position>k__BackingField: {x: 933.73584, y: 67.92456}
+      DialogueType: 0
+      IsStartNode: 0
+    - <Guid>k__BackingField: 8bbda1b1ed5f5774ab8f0e74456b3cfe
+      _dialogue:
+        Description: Dialogue Description
+        _text: Dialogue Text
+      _audioClip:
+        Description: New Description
+        Clip: {fileID: 0}
+      _actor:
+        Description: Actor Description
+        Background: Actor Background
+        Sprite: {fileID: 0}
+      _conversant:
+        Description: Actor Description
+        Background: Actor Background
+        Sprite: {fileID: 0}
+      <Position>k__BackingField: {x: 933.7359, y: 324.2264}
       DialogueType: 0
       IsStartNode: 0
     <Connections>k__BackingField: []
   <Actors>k__BackingField:
+  - Description: Actor Description
+    Background: Actor Background
+    Sprite: {fileID: 0}
   - Description: Actor Description
     Background: Actor Background
     Sprite: {fileID: 0}
@@ -64,4 +121,8 @@ MonoBehaviour:
     Clip: {fileID: 0}
   - Description: New Description
     Clip: {fileID: 0}
-  <DialogueTexts>k__BackingField: []
+  <DialogueTexts>k__BackingField:
+  - Description: Dialogue Description
+    _text: Dialogue Text
+  - Description: Dialogue Description
+    _text: Dialogue Text

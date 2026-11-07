@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.UI;
 using Tools.DialogueSystem.Utilities;
@@ -27,7 +28,7 @@ namespace Tools.DialogueSystem
             actorContainer = this.Q<VisualElement>("ActorsCardContainer");
             createActorButton = this.Q<Button>("CreateActorButton");
             createActorButton.clicked += HandleOnCreateActorButtonClicked;
-
+            
             RegisterEvents();
         }
 

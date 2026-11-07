@@ -1,5 +1,5 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Assets/Packages/DialogueSystem/Editor/UI/Assets/DialogueSystem.uss?fileID=7433441132597879392&amp;guid=d8ee67fa447200445a0b5eb322156409&amp;type=3#DialogueSystem"/>
+    <Style src="project://database/Assets/Editor Default Resources/DialogueSystem/DialogueSystem.uss?fileID=7433441132597879392&amp;guid=d8ee67fa447200445a0b5eb322156409&amp;type=3#DialogueSystem"/>
     <ui:VisualElement name="SideBar" class="flexGrow sideBar">
         <ui:VisualElement name="ResizeElement" class="flexGrow" style="width: 10px; height: auto; min-width: 10px; max-width: 10px; max-height: none; min-height: auto;"/>
         <ui:VisualElement name="TabContainer" class="flexGrow">
