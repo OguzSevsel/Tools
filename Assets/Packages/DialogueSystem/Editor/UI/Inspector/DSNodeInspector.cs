@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Codice.CM.Common;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.UI.Inspector;
 using Tools.DialogueSystem.Utilities;
@@ -13,10 +15,10 @@ namespace Tools.DialogueSystem.UI.Elements
         private DSNodeData data;
         private VisualElement container;
         private TextField dialogueText;
-        private DSDropdown<DSActor> actorDropdown;
-        private DSDropdown<DSActor> conversantDropdown;
-        private DSDropdown<DSAudioClip> audioDropdown;
-        private DSDropdown<DSDialogueText> dialogueDropdown;
+        private DSActorPopUpField actorDropdown;
+        private DSConversantPopUpField conversantDropdown;
+        private DSAudioPopUpField audioDropdown;
+        private DSDialoguePopUpField dialogueDropdown;
 
         public DSNodeInspector(DSNodeData data)
         {
@@ -32,8 +34,8 @@ namespace Tools.DialogueSystem.UI.Elements
         public void Create()
         {
             CreateUIElements();
-            LoadFields(this.data);
             RegisterEvents();
+            LoadFields(this.data);
         }
 
         public void LoadFields(DSNodeData data)
@@ -48,14 +50,16 @@ namespace Tools.DialogueSystem.UI.Elements
             audioDropdown.SetItems(database.AudioClips);
             dialogueDropdown.SetItems(database.DialogueTexts);
 
-            actorDropdown.SetValue(data.Actor);
-            conversantDropdown.SetValue(data.Conversant);
-            audioDropdown.SetValue(data.AudioClip);
-            dialogueDropdown.SetValue(data.Dialogue);
+            actorDropdown.SetValueWithoutNotify(data.Actor != null && database.Actors.Contains(data.Actor)? data.Actor : null);
 
-            Debug.Log($"Actor Item Count: {actorDropdown.GetItemCount()}");
-            
-            dialogueText.value = this.data.Dialogue.Text;
+            conversantDropdown.SetValueWithoutNotify(data.Conversant != null && database.Actors.Contains(data.Conversant) ? data.Conversant : null);
+
+            audioDropdown.SetValueWithoutNotify(data.AudioClip != null && database.AudioClips.Contains(data.AudioClip) ? data.AudioClip : null);
+
+            dialogueDropdown.SetValueWithoutNotify(data.Dialogue != null && database.DialogueTexts.Contains(data.Dialogue) ? data.Dialogue : null);
+
+            dialogueText.SetValueWithoutNotify(data.Dialogue?.Text);
+
             dialogueText.SetBinding("value", new DataBinding
             {
                 dataSource = this.data,
@@ -68,45 +72,17 @@ namespace Tools.DialogueSystem.UI.Elements
         
         private void CreateUIElements()
         {
-            //PopupField<DSActor> actorDropdownField = DSElementUtility.CreateDropdown<DSActor>("Actor");
-            PopupField<DSActor> conversantDropdownField = DSElementUtility.CreateDropdown<DSActor>("Conversant");
-            PopupField<DSAudioClip> audioDropdownField = DSElementUtility.CreateDropdown<DSAudioClip>("Audio Clips");
-            PopupField<DSDialogueText> dialogueDropdownField = DSElementUtility.CreateDropdown<DSDialogueText>("Dialogue");
+            actorDropdown = new DSActorPopUpField();
+            conversantDropdown = new DSConversantPopUpField();
+            audioDropdown = new DSAudioPopUpField();
+            dialogueDropdown = new DSDialoguePopUpField();
 
+            dialogueText = DSElementUtility.CreateTextField("", isMultiLine: true);
 
-            var actorDropdownField = new PopupField<DSActor>();
-
-            actorDropdownField.formatListItemCallback = actor => {
-                Debug.Log($"{actor.Name}");
-                return actor.Name;
-            };
-
-            actorDropdownField.formatSelectedValueCallback = actor => {
-                Debug.Log($"{actor.Name}");
-                return actor.Name;
-            };
-
-            actorDropdownField.choices = DSDatabaseManager.Instance.Current.Actors;
-            actorDropdownField.index = 0;
-
-            container.Add(actorDropdownField);
-
-            actorDropdown = new DSDropdown<DSActor>(actorDropdownField, character => character.Name);
-            conversantDropdown = new DSDropdown<DSActor>(conversantDropdownField, character => character.Name);
-            audioDropdown = new DSDropdown<DSAudioClip>(audioDropdownField, audio => audio.Name);
-            dialogueDropdown = new DSDropdown<DSDialogueText>(dialogueDropdownField, dialogue => dialogue.Name);
-
-            actorDropdownField.SetMargins(marginTop: 5);
-            conversantDropdownField.SetMargins(marginTop: 5);
-            audioDropdownField.SetMargins(marginTop: 5);
-            dialogueDropdownField.SetMargins(marginTop: 5);
-
-            dialogueText = DSElementUtility.CreateTextField("Dialogue Text", isMultiLine: true);
-
-            container.Add(actorDropdownField);
-            container.Add(conversantDropdownField);
-            container.Add(audioDropdownField);
-            container.Add(dialogueDropdownField);
+            container.Add(actorDropdown);
+            container.Add(conversantDropdown);
+            container.Add(audioDropdown);
+            container.Add(dialogueDropdown);
             container.Add(dialogueText);
         }
 
@@ -116,10 +92,10 @@ namespace Tools.DialogueSystem.UI.Elements
 
         private void RegisterEvents()
         {
-            actorDropdown.ValueChanged += OnActorValueChanged;
-            conversantDropdown.ValueChanged += OnConversantValueChanged;
-            audioDropdown.ValueChanged += OnAudioValueChanged;
-            dialogueDropdown.ValueChanged += OnDialogueValueChanged;
+            actorDropdown.RegisterValueChangedCallback<DSActor>(OnActorValueChanged);
+            conversantDropdown.RegisterValueChangedCallback<DSActor>(OnConversantValueChanged);
+            audioDropdown.RegisterValueChangedCallback<DSAudioClip>(OnAudioValueChanged);
+            dialogueDropdown.RegisterValueChangedCallback<DSDialogueText>(OnDialogueValueChanged);
             DSDatabaseManager.Instance.DatabaseOpened += HandleOnDatabaseOpened;
             DSDatabaseManager.Instance.DatabaseClosed += HandleOnDatabaseClosed;
         }
@@ -136,34 +112,34 @@ namespace Tools.DialogueSystem.UI.Elements
 
         private void UnRegisterEvents()
         {
-            actorDropdown.ValueChanged -= OnActorValueChanged;
-            conversantDropdown.ValueChanged -= OnConversantValueChanged;
-            audioDropdown.ValueChanged -= OnAudioValueChanged;
-            dialogueDropdown.ValueChanged -= OnDialogueValueChanged;
+            actorDropdown.UnregisterValueChangedCallback<DSActor>(OnActorValueChanged);
+            conversantDropdown.UnregisterValueChangedCallback<DSActor>(OnConversantValueChanged);
+            audioDropdown.UnregisterValueChangedCallback<DSAudioClip>(OnAudioValueChanged);
+            dialogueDropdown.UnregisterValueChangedCallback<DSDialogueText>(OnDialogueValueChanged);
             DSDatabaseManager.Instance.DatabaseOpened -= HandleOnDatabaseOpened;
             DSDatabaseManager.Instance.DatabaseClosed -= HandleOnDatabaseClosed;
         }
 
-        private void OnDialogueValueChanged(DSDialogueText dialogue)
+        private void OnDialogueValueChanged(ChangeEvent<DSDialogueText> evt)
         {
-            this.data.Dialogue = dialogue;
-            this.dialogueText.value = dialogue.Text;
-            this.data.Dialogue.SetText(dialogue.Text);
+            this.data.Dialogue = evt?.newValue;
+            this.dialogueText.value = evt?.newValue?.Text;
+            this.data.Dialogue?.SetText(evt?.newValue?.Text);
         }
 
-        private void OnConversantValueChanged(DSActor conversant) 
+        private void OnConversantValueChanged(ChangeEvent<DSActor> evt) 
         { 
-            this.data.Conversant = conversant;
+            this.data.Conversant = evt?.newValue;
         }
 
-        private void OnAudioValueChanged(DSAudioClip audio) 
+        private void OnAudioValueChanged(ChangeEvent<DSAudioClip> evt) 
         { 
-            this.data.AudioClip = audio;
+            this.data.AudioClip = evt?.newValue;
         }
 
-        private void OnActorValueChanged(DSActor actor)
+        private void OnActorValueChanged(ChangeEvent<DSActor> evt)
         {
-            this.data.Actor = actor;
+            this.data.Actor = evt?.newValue;
         }
 
         public VisualElement GetContainer()

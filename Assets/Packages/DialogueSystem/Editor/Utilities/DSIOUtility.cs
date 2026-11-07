@@ -33,14 +33,10 @@ namespace Tools.DialogueSystem.Utilities
                 {
                     var nodeData = conversation.Nodes.Find(n => n.Guid == node.Data.Guid);
 
-                    if (nodeData != null)
+                    if (nodeData == null)
                     {
-                        //exist in DB
-                        nodeData.SetPosition(node.GetPosition().position);
-                        continue;
+                        conversation.AddToNodes(node.Data);
                     }
-
-                    conversation.AddToNodes(nodeData);
                 }
 
                 List<DSNodeData> deletedNodeList = new List<DSNodeData>();

@@ -55,80 +55,20 @@ namespace Tools.DialogueSystem.UI
             RegisterEvents();
         }
 
-        [Shortcut("Dialogue System/Close Database", typeof(DSEditorView), KeyCode.W, ShortcutModifiers.Action)]
-        private static void CloseDatabase()
-        {
-            if (Instance == null)
-                return;
-
-            if (DSDatabaseManager.Instance.HasDatabase)
-            {
-                Instance.HandleCloseDatabase();
-            }
-            else
-            {
-                Instance.Close();
-            }
-        }
-
-        [Shortcut("Dialogue System/Toggle Side Bar", typeof(DSEditorView), KeyCode.R, ShortcutModifiers.Action)]
-        private static void ToggleSideBar()
-        {
-            if (Instance == null)
-                return;
-
-            OnToggleSideBarShortcut?.Invoke();
-        }
-
-        [Shortcut("Dialogue System/Next Tab", typeof(DSEditorView), KeyCode.E, ShortcutModifiers.Action)]
-        private static void NextTab()
-        {
-            if (Instance == null)
-                return;
-
-            Instance.ChangeTab(1);
-        }
-
-        [Shortcut("Dialogue System/Previous Tab", typeof(DSEditorView), KeyCode.Q, ShortcutModifiers.Action)]
-        private static void PreviousTab()
-        {
-            if (Instance == null)
-                return;
-
-            Instance.ChangeTab(-1);
-        }
-
-        private void HandleCloseDatabase()
-        {
-            DSDatabaseManager.Instance.Close();
-
-            Instance.returnButton.SetVisible(false);
-            Instance.databaseDialogContainer.SetVisible(true);
-            Instance.tabView.SetVisible(false);
-
-            Instance.ChangeWindowTitle("No Database");
-        }
-
-        private void ChangeTab(int direction)
-        {
-            int count = tabView.Query<Tab>().ToList().Count;
-
-            if (count == 0)
-                return;
-
-            tabView.selectedTabIndex =
-                (tabView.selectedTabIndex + direction + count) % count;
-        }
-
         private void OnDisable()
         {
-            this.SaveChanges();
+            CloseDatabase();
             UnRegisterEvents();
-            if (DSDatabaseManager.Instance.HasDatabase)
-            {
-                DSDatabaseManager.Instance.Close();
-            }
             OnWindowCloses?.Invoke();
+        }
+
+        #region INITIALIZATION
+
+        private void CreateDefaultFolders()
+        {
+            DSIOUtility.CreateFolderIfNotExists("Assets", "DialogueSystem");
+            DSIOUtility.CreateFolderIfNotExists("Assets/DialogueSystem", "Conversations");
+            DSIOUtility.CreateFolderIfNotExists("Assets/DialogueSystem", "Databases");
         }
 
         private void GetUIElements()
@@ -142,45 +82,60 @@ namespace Tools.DialogueSystem.UI
             returnButton.SetVisible(false);
         }
 
+        private void AddTabs()
+        {
+            tabView.Add(graphTab);
+            tabView.Add(actorsTab);
+            tabView.Add(audioClipsTab);
+            tabView.Add(dialoguesTab);
+            tabView.Add(databaseTab);
+            tabView.activeTab = graphTab;
+        }
+
+        private void CreateTabs()
+        {
+            graphTab = new DSGraphTab(conversationsTabAsset, conversationCardAsset, sideBarAsset);
+            actorsTab = new DSActorsTab(actorsTabAsset, actorsCardAsset);
+            audioClipsTab = new DSAudioClipsTab(audioClipsTabAsset, audioClipCardAsset);
+            dialoguesTab = new DSDialoguesTab(dialoguesTabAsset, dialogueCardAsset);
+            databaseTab = new DSDatabaseTab(databaseTabAsset);
+        }
+
+        #endregion
+
+        #region EVENTS
+
         private void RegisterEvents()
         {
-            createDatabaseButton.clicked += OnCreateDatabaseButtonClicked;
-            loadDatabaseButton.clicked += OnLoadDatabaseButtonClicked;
+            createDatabaseButton.clicked += HandleOnCreateDatabaseButtonClicked;
+            loadDatabaseButton.clicked += HandleOnLoadDatabaseButtonClicked;
             returnButton.clicked += HandleReturnButtonClicked;
         }
 
         private void UnRegisterEvents()
         {
-            createDatabaseButton.clicked -= OnCreateDatabaseButtonClicked;
-            loadDatabaseButton.clicked -= OnLoadDatabaseButtonClicked;
+            createDatabaseButton.clicked -= HandleOnCreateDatabaseButtonClicked;
+            loadDatabaseButton.clicked -= HandleOnLoadDatabaseButtonClicked;
             returnButton.clicked -= HandleReturnButtonClicked;
         }
 
+        #endregion
+
+        #region EVENT HANDLERS
+
         private void HandleReturnButtonClicked()
         {
-            DSDatabaseManager.Instance.Close();
-
-            returnButton.SetVisible(false);
-            databaseDialogContainer.SetVisible(true);
-            tabView.SetVisible(false);
-
-            ChangeWindowTitle("No Database");
-        }
-        
-        private void ChangeWindowTitle(string title)
-        {
-            Instance = GetWindow<DSEditorView>();
-            Instance.titleContent = new UnityEngine.GUIContent(title);
+            CloseDatabase();
         }
 
-        private void OnLoadDatabaseButtonClicked()
+        private void HandleOnLoadDatabaseButtonClicked()
         {
             DSDatabase database = OpenDatabaseFileDialog(true);
 
             if (database != null)
             {
                 DSDatabaseManager.Instance.Open(database);
-                
+
                 databaseDialogContainer.SetVisible(false);
                 tabView.SetVisible(true);
                 returnButton.SetVisible(true);
@@ -189,7 +144,7 @@ namespace Tools.DialogueSystem.UI
             }
         }
 
-        private void OnCreateDatabaseButtonClicked()
+        private void HandleOnCreateDatabaseButtonClicked()
         {
             DSDatabase database = OpenDatabaseFileDialog();
 
@@ -203,6 +158,88 @@ namespace Tools.DialogueSystem.UI
 
                 ChangeWindowTitle(database.name);
             }
+        }
+
+        #endregion
+
+        #region SHORTCUTS
+
+        [Shortcut("Dialogue System/Close Database", typeof(DSEditorView), KeyCode.W, ShortcutModifiers.Action)]
+        private static void CloseDatabaseShortcut()
+        {
+            if (Instance == null)
+                return;
+
+            if (DSDatabaseManager.Instance.HasDatabase)
+            {
+                Instance.CloseDatabase();
+            }
+            else
+            {
+                Instance.Close();
+            }
+        }
+
+        [Shortcut("Dialogue System/Toggle Side Bar", typeof(DSEditorView), KeyCode.R, ShortcutModifiers.Action)]
+        private static void ToggleSideBarShortcut()
+        {
+            if (Instance == null)
+                return;
+
+            OnToggleSideBarShortcut?.Invoke();
+        }
+
+        [Shortcut("Dialogue System/Next Tab", typeof(DSEditorView), KeyCode.E, ShortcutModifiers.Action)]
+        private static void NextTabShortcut()
+        {
+            if (Instance == null)
+                return;
+
+            Instance.ChangeTab(1);
+        }
+
+        [Shortcut("Dialogue System/Previous Tab", typeof(DSEditorView), KeyCode.Q, ShortcutModifiers.Action)]
+        private static void PreviousTabShortcut()
+        {
+            if (Instance == null)
+                return;
+
+            Instance.ChangeTab(-1);
+        }
+
+        #endregion
+
+        #region Utils
+
+        private void ChangeWindowTitle(string title)
+        {
+            Instance = GetWindow<DSEditorView>();
+            Instance.titleContent = new UnityEngine.GUIContent(title);
+        }
+
+        private void CloseDatabase()
+        {
+            if (DSDatabaseManager.Instance.HasDatabase)
+            {
+                ChangeWindowTitle("No Database");
+                returnButton.SetVisible(false);
+                databaseDialogContainer.SetVisible(true);
+                tabView.SetVisible(false);
+                tabView.activeTab = graphTab;
+
+                DSDatabaseManager.Instance.Close();
+            }
+        }
+
+        private void ChangeTab(int direction)
+        {
+            int count = tabView.Query<Tab>().ToList().Count;
+
+            if (count == 0)
+                return;
+
+            tabView.selectedTabIndex =
+                (tabView.selectedTabIndex + direction + count) % count;
         }
 
         public DSDatabase OpenDatabaseFileDialog(bool isLoad = false)
@@ -221,7 +258,7 @@ namespace Tools.DialogueSystem.UI
                 );
             if (string.IsNullOrEmpty(path))
                 return null;
-            
+
             if (!path.StartsWith(Application.dataPath))
             {
                 Debug.LogError("Selected file must be inside Assets folder.");
@@ -250,38 +287,8 @@ namespace Tools.DialogueSystem.UI
             return database;
         }
 
-        private void AddTabs()
-        {
-            tabView.Add(graphTab);
-            tabView.Add(actorsTab);
-            tabView.Add(audioClipsTab);
-            tabView.Add(dialoguesTab);
-            tabView.Add(databaseTab);
-            tabView.activeTab = graphTab;
-        }
-
-        private void CreateTabs()
-        {
-            graphTab = new DSGraphTab(conversationsTabAsset, conversationCardAsset, sideBarAsset);
-            actorsTab = new DSActorsTab(actorsTabAsset, actorsCardAsset);
-            audioClipsTab = new DSAudioClipsTab(audioClipsTabAsset, audioClipCardAsset);
-            dialoguesTab = new DSDialoguesTab(dialoguesTabAsset, dialogueCardAsset);
-            databaseTab = new DSDatabaseTab(databaseTabAsset);
-        }
-
-        #region Utils
-
-        private void CreateDefaultFolders()
-        {
-            DSIOUtility.CreateFolderIfNotExists("Assets", "DialogueSystem");
-            DSIOUtility.CreateFolderIfNotExists("Assets/DialogueSystem", "Conversations");
-            DSIOUtility.CreateFolderIfNotExists("Assets/DialogueSystem", "Databases");
-        }
-
         #endregion
     }
-
-
 }
 
 

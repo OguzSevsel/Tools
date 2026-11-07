@@ -26,18 +26,17 @@ namespace Tools.DialogueSystem.Data
                 if (_dialogue != null) _dialogue.propertyChanged += OnDialogueChanged;
 
                 Notify(nameof(Dialogue));
-                Notify(nameof(DialogueText));   // dropdown switched -> label refreshes
+                Notify(nameof(DialogueText));
             }
         }
 
-        // Read-only convenience property the label binds to
         [CreateProperty]
         public string DialogueText => _dialogue?.Text;
 
         void OnDialogueChanged(object sender, BindablePropertyChangedEventArgs e)
         {
             if (e.propertyName == nameof(DSDialogueText.Text))
-                Notify(nameof(DialogueText));   // text edited -> label refreshes
+                Notify(nameof(DialogueText));
         }
 
         [SerializeField] private DSAudioClip _audioClip;
@@ -90,15 +89,39 @@ namespace Tools.DialogueSystem.Data
         public DialogueType DialogueType;
         public bool IsStartNode;
 
-        public DSNodeData(Vector2 position, DialogueType type, DSDialogueText dialogueText, DSActor actor, DSActor conversant, DSAudioClip audioClip)
+        public DSNodeData(Vector2 position, DialogueType type)
         {
             this.Guid = GUID.Generate().ToString();
             this.Position = position;
             this.DialogueType = type;
-            this.Dialogue = dialogueText;
+        }
+
+        public void SetActor(DSActor actor)
+        {
+            this.Actor = actor;
+        }
+
+        public void SetConversant(DSActor conversant)
+        {
+            this.Conversant = conversant;
+        }
+
+        public void SetAudioClip(DSAudioClip audioClip)
+        {
             this.AudioClip = audioClip;
+        }
+
+        public void SetDialogue(DSDialogueText dialogue)
+        {
+            this.Dialogue = dialogue;
+        }
+
+        public void SetAllFields(DSActor actor, DSActor conversant, DSAudioClip audioClip, DSDialogueText dialogue)
+        {
             this.Actor = actor;
             this.Conversant = conversant;
+            this.AudioClip = audioClip;
+            this.Dialogue = dialogue;
         }
 
         public void SetPosition(Vector2 position) => this.Position = position;

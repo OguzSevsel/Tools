@@ -63,6 +63,14 @@ namespace Tools.DialogueSystem.UI.Elements
             Draw();
         }
 
+        public override void SetPosition(Rect newPos)
+        {
+            base.SetPosition(newPos);
+
+            if (Data != null)
+                Data.SetPosition(newPos.position);
+        }
+
         public override void OnSelected()
         {
             base.OnSelected();

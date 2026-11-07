@@ -26,50 +26,12 @@ namespace Tools.DialogueSystem
             actorScrollView = this.Q<ScrollView>("ActorsScrollView");
             actorContainer = this.Q<VisualElement>("ActorsCardContainer");
             createActorButton = this.Q<Button>("CreateActorButton");
-            createActorButton.clicked += OnCreateActorButtonClicked;
+            createActorButton.clicked += HandleOnCreateActorButtonClicked;
 
             RegisterEvents();
         }
 
-        private void OnDatabaseOpened(DSDatabase database)
-        {
-            foreach (DSActor actor in database.Actors)
-            {
-                VisualElement card = CreateCard(cardAsset, actor);
-
-                AddCard(actorContainer, Actors, actor, card);
-            }
-        }
-
-        private void OnDatabaseClosed(DSDatabase database)
-        {
-            actorContainer.Clear();
-            Actors.Clear();
-        }
-
-        private void OnCreateActorButtonClicked()
-        {
-            DSActor actor = new("New Actor", "Actor Description", "Actor Background", default);
-            VisualElement cardElement = CreateCard(cardAsset, actor);
-            AddCard(actorContainer, Actors, actor, cardElement);
-            DSDatabaseManager.Instance.Current.Register(actor);
-        }
-
-        #region Utils
-
-        private void UnRegisterEvents()
-        {
-            DSDatabaseManager.Instance.DatabaseClosed -= OnDatabaseClosed;
-            DSDatabaseManager.Instance.DatabaseOpened -= OnDatabaseOpened;
-            DSEditorView.OnWindowCloses -= UnRegisterEvents;
-        }
-
-        private void RegisterEvents()
-        {
-            DSDatabaseManager.Instance.DatabaseClosed += OnDatabaseClosed;
-            DSDatabaseManager.Instance.DatabaseOpened += OnDatabaseOpened;
-            DSEditorView.OnWindowCloses += UnRegisterEvents;
-        }
+        #region INITIALIZATION
 
         private void AddCard(VisualElement container, Dictionary<DSActor, VisualElement> actors, DSActor actor, VisualElement cardElement)
         {
@@ -113,6 +75,52 @@ namespace Tools.DialogueSystem
             cardElement.dataSource = actor;
 
             return cardElement;
+        }
+
+        #endregion
+
+        #region EVENTS
+
+        private void UnRegisterEvents()
+        {
+            DSDatabaseManager.Instance.DatabaseClosed -= HandleOnDatabaseClosed;
+            DSDatabaseManager.Instance.DatabaseOpened -= HandleOnDatabaseOpened;
+            DSEditorView.OnWindowCloses -= UnRegisterEvents;
+        }
+
+        private void RegisterEvents()
+        {
+            DSDatabaseManager.Instance.DatabaseClosed += HandleOnDatabaseClosed;
+            DSDatabaseManager.Instance.DatabaseOpened += HandleOnDatabaseOpened;
+            DSEditorView.OnWindowCloses += UnRegisterEvents;
+        }
+
+        #endregion
+
+        #region EVENT HANDLERS
+
+        private void HandleOnDatabaseOpened(DSDatabase database)
+        {
+            foreach (DSActor actor in database.Actors)
+            {
+                VisualElement card = CreateCard(cardAsset, actor);
+
+                AddCard(actorContainer, Actors, actor, card);
+            }
+        }
+
+        private void HandleOnDatabaseClosed(DSDatabase database)
+        {
+            actorContainer.Clear();
+            Actors.Clear();
+        }
+
+        private void HandleOnCreateActorButtonClicked()
+        {
+            DSActor actor = new("New Actor", "Actor Description", "Actor Background", default);
+            VisualElement cardElement = CreateCard(cardAsset, actor);
+            AddCard(actorContainer, Actors, actor, cardElement);
+            DSDatabaseManager.Instance.Current.Register(actor);
         }
 
         #endregion

@@ -14,10 +14,14 @@ namespace Tools.DialogueSystem.Data
         [field: SerializeField] public List<DSDialogueText> DialogueTexts { get; private set; } = new();
         private HashSet<string> _guidLookup;
 
+        public static event Action<DSData> OnDataRemoved;
+
         private void OnEnable()
         {
             Actors ??= new List<DSActor>();
             DialogueTexts ??= new List<DSDialogueText>();
+            Conversations ??= new List<DSConversation>();
+            AudioClips ??= new List<DSAudioClip>();
             BuildLookup();
         }
 
@@ -89,6 +93,7 @@ namespace Tools.DialogueSystem.Data
             }
 
             EditorUtility.SetDirty(this);
+            AssetDatabase.SaveAssets();
             return guid;
         }
 
@@ -132,7 +137,9 @@ namespace Tools.DialogueSystem.Data
             if (removed && _guidLookup.Contains(item.Guid))
             {
                 _guidLookup.Remove(item.Guid);
+                OnDataRemoved?.Invoke(item);
                 EditorUtility.SetDirty(this);
+                AssetDatabase.SaveAssets();
             }
         }
     }

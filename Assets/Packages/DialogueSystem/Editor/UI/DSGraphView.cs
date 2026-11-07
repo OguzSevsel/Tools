@@ -104,6 +104,7 @@ namespace Tools.DialogueSystem.UI
             RegisterCallback<MouseDownEvent>(HandleOnMouseDown, TrickleDown.TrickleDown);
             RegisterCallback<MouseMoveEvent>(HandleMouseMove, TrickleDown.TrickleDown);
             RegisterCallback<KeyDownEvent>(HandleOnKeyDown);
+            DSDatabase.OnDataRemoved += HandleOnDataRemoved;
             canPasteSerializedData += HandleCanPaste;
             serializeGraphElements += HandleCutCopyOperation;
             unserializeAndPaste += HandlePasteOperation;
@@ -113,15 +114,47 @@ namespace Tools.DialogueSystem.UI
             DSEditorView.OnWindowCloses += UnRegisterEvents;
         }
 
+        private void HandleOnDataRemoved(DSData data)
+        {
+            if (CurrentConversation == null)
+                return;
+
+            foreach (var nodeData in CurrentConversation.Nodes)
+            {
+                if (data is DSActor)
+                {
+                    if (nodeData.Actor == data)
+                        nodeData.Actor = null;
+
+                    if (nodeData.Conversant == data)
+                        nodeData.Conversant = null;
+                }
+
+                if (data is DSAudioClip && nodeData.AudioClip == data)
+                    nodeData.AudioClip = null;
+
+                if (data is DSDialogueText && nodeData.Dialogue == data)
+                    nodeData.Dialogue = null;
+            }
+
+            if (selectedNode == null)
+                return;
+
+            inspector?.LoadFields(selectedNode.Data);
+        }
+
         private void UnRegisterEvents()
         {
             UnregisterCallback<MouseDownEvent>(HandleOnMouseDown, TrickleDown.TrickleDown);
-            DSDatabaseManager.Instance.DatabaseClosed -= HandleDatabaseClosed;
-            DSDatabaseManager.Instance.DatabaseOpened -= HandleDatabaseOpened;
+            UnregisterCallback<MouseMoveEvent>(HandleMouseMove, TrickleDown.TrickleDown);
+            UnregisterCallback<KeyDownEvent>(HandleOnKeyDown);
+            DSDatabase.OnDataRemoved -= HandleOnDataRemoved;
             canPasteSerializedData -= HandleCanPaste;
             serializeGraphElements -= HandleCutCopyOperation;
             unserializeAndPaste -= HandlePasteOperation;
             deleteSelection -= HandleDeleteSelection;
+            DSDatabaseManager.Instance.DatabaseClosed -= HandleDatabaseClosed;
+            DSDatabaseManager.Instance.DatabaseOpened -= HandleDatabaseOpened;
             DSEditorView.OnWindowCloses -= UnRegisterEvents;
         }
 
@@ -160,19 +193,14 @@ namespace Tools.DialogueSystem.UI
             {
                 if (CurrentConversation != null)
                 {
-                    DSActor actor = DSDatabaseManager.Instance.Current.Actors.FirstOrDefault();
-                    DSActor conversant = DSDatabaseManager.Instance.Current.Actors.FirstOrDefault();
-                    DSDialogueText dialogueText = DSDatabaseManager.Instance.Current.DialogueTexts.FirstOrDefault();
-                    DSAudioClip audioClip = DSDatabaseManager.Instance.Current.AudioClips.FirstOrDefault();
-
                     if (CurrentConversation.Nodes.Count == 0)
                     {
-                        AddElement(CreateNode(DialogueType.Single, contentViewContainer.WorldToLocal(actionEvent.eventInfo.localMousePosition), isStartNode: true, actor, conversant, dialogueText, audioClip));
+                        AddElement(CreateNode(DialogueType.Single, contentViewContainer.WorldToLocal(actionEvent.eventInfo.localMousePosition), isStartNode: true));
                         RefreshNodes();
                     }
                     else
                     {
-                        AddElement(CreateNode(DialogueType.Single, contentViewContainer.WorldToLocal(actionEvent.eventInfo.localMousePosition), isStartNode: false, actor, conversant, dialogueText, audioClip));
+                        AddElement(CreateNode(DialogueType.Single, contentViewContainer.WorldToLocal(actionEvent.eventInfo.localMousePosition), isStartNode: false));
                         RefreshNodes();
                     }
                 }
@@ -227,13 +255,13 @@ namespace Tools.DialogueSystem.UI
 
         #region -----CREATION-----
 
-        public DSNode CreateNode(DialogueType type, Vector2 position, bool isStartNode, DSActor actor, DSActor conversant, DSDialogueText dialogueText, DSAudioClip audioClip, bool isPasting = false)
+        public DSNode CreateNode(DialogueType type, Vector2 position, bool isStartNode, bool isPasting = false)
         {
             Type nodeType = Type.GetType($"Tools.DialogueSystem.UI.Elements.DSNode");
 
             DSNode node = (DSNode)Activator.CreateInstance(nodeType);
 
-            DSNodeData data = new DSNodeData(position, type, dialogueText, actor, conversant, audioClip)
+            DSNodeData data = new DSNodeData(position, type)
             {
                 IsStartNode = isStartNode
             };
@@ -296,6 +324,7 @@ namespace Tools.DialogueSystem.UI
                 Load(conversation);
                 tab.sideBar.ChangeTitleLabel(conversation.Name);
             }
+
             _showDialogueText = true;
             RefreshNodes();
         }
@@ -506,19 +535,11 @@ namespace Tools.DialogueSystem.UI
 
                 nodeData.IsStartNode = false;
 
-                // Preserve the relative position of each node.
                 Vector2 position = clipboardNode.Position + offset;
 
-                DSNode node = CreateNode(
-                    nodeData.DialogueType,
-                    position,
-                    nodeData.IsStartNode,
-                    nodeData.Actor,
-                    nodeData.Conversant,
-                    nodeData.Dialogue,
-                    nodeData.AudioClip,
-                    true
-                );
+                DSNode node = CreateNode(nodeData.DialogueType, position, nodeData.IsStartNode,true);
+
+                node.Data.SetAllFields(nodeData.Actor, nodeData.Conversant, nodeData.AudioClip, nodeData.Dialogue);
 
                 AddElement(node);
                 this.AddToSelection(node);
