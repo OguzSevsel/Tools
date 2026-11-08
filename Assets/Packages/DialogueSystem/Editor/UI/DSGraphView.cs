@@ -11,6 +11,7 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static Tools.DialogueSystem.UI.DSGraphView;
 
 namespace Tools.DialogueSystem.UI
 {
@@ -77,6 +78,7 @@ namespace Tools.DialogueSystem.UI
             AddMiniMap();
             AddManipulators();
             RegisterEvents();
+
             OpenSideBarButton = DSElementUtility.CreateButton("", HandleOpenSideBarButtonClicked);
             miniMapButton = DSElementUtility.CreateButton("Minimap", HandleOpenMiniMapButtonClicked);
 
@@ -105,9 +107,11 @@ namespace Tools.DialogueSystem.UI
             RegisterCallback<MouseMoveEvent>(HandleMouseMove, TrickleDown.TrickleDown);
             RegisterCallback<KeyDownEvent>(HandleOnKeyDown);
             DSDatabase.OnDataRemoved += HandleOnDataRemoved;
+            
             canPasteSerializedData += HandleCanPaste;
             serializeGraphElements += HandleCutCopyOperation;
             unserializeAndPaste += HandlePasteOperation;
+
             deleteSelection += HandleDeleteSelection;
             DSDatabaseManager.Instance.DatabaseClosed += HandleDatabaseClosed;
             DSDatabaseManager.Instance.DatabaseOpened += HandleDatabaseOpened;
@@ -149,9 +153,11 @@ namespace Tools.DialogueSystem.UI
             UnregisterCallback<MouseMoveEvent>(HandleMouseMove, TrickleDown.TrickleDown);
             UnregisterCallback<KeyDownEvent>(HandleOnKeyDown);
             DSDatabase.OnDataRemoved -= HandleOnDataRemoved;
+
             canPasteSerializedData -= HandleCanPaste;
             serializeGraphElements -= HandleCutCopyOperation;
             unserializeAndPaste -= HandlePasteOperation;
+
             deleteSelection -= HandleDeleteSelection;
             DSDatabaseManager.Instance.DatabaseClosed -= HandleDatabaseClosed;
             DSDatabaseManager.Instance.DatabaseOpened -= HandleDatabaseOpened;
@@ -230,8 +236,7 @@ namespace Tools.DialogueSystem.UI
         {
             if (conversation == null || conversation == default) return;
 
-            this.DeleteElements(this.edges);
-            this.DeleteElements(this.nodes);
+            ClearGraph();
 
             foreach (var node in conversation.Nodes)
             {
@@ -249,8 +254,8 @@ namespace Tools.DialogueSystem.UI
             {
                 DSIOUtility.Save(this, CurrentConversation);
             }
-            this.DeleteElements(this.edges);
-            this.DeleteElements(this.nodes);
+
+            ClearGraph();
             this.CurrentConversation = null;
         }
 
@@ -289,13 +294,7 @@ namespace Tools.DialogueSystem.UI
             node.Initialize(data);
 
             node.OnNodeSelected += HandleOnNodeSelected;
-            node.OnEdgeDeleted += (edge) =>
-            {
-                if (this.Contains(edge))
-                {
-                    this.RemoveElement(edge);
-                }
-            };
+            node.OnEdgeDeleted += HandleOnEdgeDeleted;
 
             return node;
         }
@@ -423,10 +422,27 @@ namespace Tools.DialogueSystem.UI
         private void CloseInspector()
         {
             OnInspectorClosed?.Invoke();
+
             if (inspector is DSNodeInspector nodeInspector)
             {
                 nodeInspector.Remove();
             }
+
+            selectedNode = null;
+        }
+
+        private void ClearGraph()
+        {
+            CloseInspector();
+
+            foreach (DSNode node in nodes.OfType<DSNode>().ToList())
+            {
+                node.OnNodeSelected -= HandleOnNodeSelected;
+                node.OnEdgeDeleted -= HandleOnEdgeDeleted;
+            }
+
+            DeleteElements(edges);
+            DeleteElements(nodes);
         }
 
         #endregion
@@ -477,6 +493,13 @@ namespace Tools.DialogueSystem.UI
                 return;
 
             selectedNode.Data.SetAllFields(copiedNodeData.Actor, copiedNodeData.Conversant, copiedNodeData.AudioClip, copiedNodeData.Dialogue);
+
+            if (inspector != null)
+            {
+                inspector.LoadFields(selectedNode.Data);
+            }
+
+            RefreshNodes();
         }
 
         private bool HandleCanPaste(string data)
@@ -494,6 +517,29 @@ namespace Tools.DialogueSystem.UI
             return clipboard?.Nodes != null && clipboard.Nodes.Count > 0;
         }
 
+        private Vector2 CalculateOffSet(List<DSClipboardNode> nodes)
+        {
+            Vector2 min = new Vector2(float.MaxValue, float.MaxValue);
+            Vector2 max = new Vector2(float.MinValue, float.MinValue);
+
+            foreach (var node in nodes)
+            {
+                Vector2 position = node.Position;
+                Vector2 size = node.Size;
+
+                min.x = Mathf.Min(min.x, position.x);
+                min.y = Mathf.Min(min.y, position.y);
+
+                max.x = Mathf.Max(max.x, position.x + size.x);
+                max.y = Mathf.Max(max.y, position.y + size.y);
+            }
+
+            Vector2 center = (min + max) * 0.5f;
+            Vector2 target = contentViewContainer.WorldToLocal(_mouseLocation);
+            Vector2 offset = target - center;
+            return offset;
+        }
+
         private void HandlePasteOperation(string operationName, string data)
         {
             if (string.IsNullOrEmpty(data) ||
@@ -508,25 +554,7 @@ namespace Tools.DialogueSystem.UI
             if (clipboard?.Nodes == null || clipboard.Nodes.Count == 0)
                 return;
 
-            Vector2 min = new Vector2(float.MaxValue, float.MaxValue);
-            Vector2 max = new Vector2(float.MinValue, float.MinValue);
-
-            foreach (var node in clipboard.Nodes)
-            {
-                Vector2 position = node.Position;
-                Vector2 size = node.Size;
-
-                min.x = Mathf.Min(min.x, position.x);
-                min.y = Mathf.Min(min.y, position.y);
-
-                max.x = Mathf.Max(max.x, position.x + size.x);
-                max.y = Mathf.Max(max.y, position.y + size.y);
-            }
-
-            Vector2 center = (min + max) * 0.5f;
-            Vector2 target = contentViewContainer.WorldToLocal(_mouseLocation);
-
-            Vector2 offset = target - center;
+            Vector2 offset = CalculateOffSet(clipboard.Nodes);
 
             foreach (DSClipboardNode clipboardNode in clipboard.Nodes)
             {
@@ -540,7 +568,7 @@ namespace Tools.DialogueSystem.UI
 
                 Vector2 position = clipboardNode.Position + offset;
 
-                DSNode node = CreateNode(nodeData.DialogueType, position, nodeData.IsStartNode,true);
+                DSNode node = CreateNode(nodeData.DialogueType, position, nodeData.IsStartNode, true);
 
                 node.Data.SetAllFields(nodeData.Actor, nodeData.Conversant, nodeData.AudioClip, nodeData.Dialogue);
 
@@ -561,12 +589,14 @@ namespace Tools.DialogueSystem.UI
 
             foreach (DSNode node in selectedNodes)
             {
-                clipboard.Nodes.Add(new DSClipboardNode
+                var clipboardNode = new DSClipboardNode
                 {
                     Data = JsonUtility.ToJson(node.Data),
                     Position = node.GetPosition().position,
                     Size = node.GetPosition().size
-                });
+                };
+
+                clipboard.Nodes.Add(clipboardNode);
             }
 
             return ClipboardPrefix + JsonUtility.ToJson(clipboard);
@@ -585,7 +615,7 @@ namespace Tools.DialogueSystem.UI
                 if (startPort == port) return;
                 if (startPort.node == port.node) return;
                 if (startPort.direction == port.direction) return;
-
+                
                 compatiblePorts.Add(port);
             });
 

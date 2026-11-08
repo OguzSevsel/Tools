@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.Properties;
 using UnityEngine;
@@ -86,12 +87,14 @@ namespace Tools.DialogueSystem.Data
         }
 
         [field: SerializeField] public Vector2 Position { get; private set; }
+        [field: SerializeField] public List<string> OutputIds { get; set; }
         public DialogueType DialogueType;
         public bool IsStartNode;
 
         public DSNodeData(Vector2 position, DialogueType type)
         {
             this.Guid = GUID.Generate().ToString();
+            this.OutputIds = new List<string>();
             this.Position = position;
             this.DialogueType = type;
         }

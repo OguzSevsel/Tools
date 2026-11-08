@@ -10,7 +10,7 @@
         </ui:Label>
         <ui:TextField label="Name" name="DialogueName">
             <Bindings>
-                <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSDialogueText, Tools.DialogueSystem.Editor" data-source-path="Name" binding-mode="TwoWay"/>
+                <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSDialogueText, Tools.DialogueSystem.Editor" data-source-path="Name" binding-mode="TwoWay" update-trigger="OnSourceChanged"/>
             </Bindings>
         </ui:TextField>
         <ui:TextField name="DialogueDescription" label="Description" placeholder-text="Description" multiline="true">

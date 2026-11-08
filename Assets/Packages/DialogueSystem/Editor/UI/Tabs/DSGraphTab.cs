@@ -35,6 +35,10 @@ namespace Tools.DialogueSystem.UI
             DSConversationsTab.OnConversationOpened += HandleOnConversationOpen;
             DSEditorView.OnToggleSideBarShortcut += HandleSideBar;
         }
+        public void RefreshNodes()
+        {
+            graphView.RefreshNodes();
+        }
 
         private void HandleOnSideBarToggled(bool isVisible)
         {

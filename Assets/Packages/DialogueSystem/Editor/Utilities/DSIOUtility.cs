@@ -23,6 +23,49 @@ namespace Tools.DialogueSystem.Utilities
             }
         }
 
+        //public static void Save(DSGraphView graphView, DSConversation conversation)
+        //{
+        //    List<DSNode> nodeElementList =
+        //        graphView.nodes.OfType<DSNode>().ToList();
+
+        //    foreach (var node in nodeElementList)
+        //    {
+        //        // Clear previous connections before saving current ones.
+        //        node.Data.OutputIds.Clear();
+
+        //        var nodeData = conversation.Nodes.Find(
+        //            n => n.Guid == node.Data.Guid
+        //        );
+
+        //        if (nodeData == null)
+        //        {
+        //            conversation.AddToNodes(node.Data);
+        //        }
+
+        //        foreach (var edge in node.OutputPort.connections)
+        //        {
+        //            if (edge.input.node is not DSNode connectedNode)
+        //                continue;
+
+        //            node.Data.OutputIds.Add(connectedNode.Data.Guid);
+        //        }
+        //    }
+
+        //    List<DSNodeData> deletedNodeList = new();
+
+        //    foreach (var nodeData in conversation.Nodes)
+        //    {
+        //        var node = nodeElementList.Find(
+        //            n => n.Data.Guid == nodeData.Guid
+        //        );
+
+        //        if (node == null)
+        //            deletedNodeList.Add(nodeData);
+        //    }
+
+        //    deletedNodeList.ForEach(conversation.RemoveFromNodes);
+        //}
+
         public static void Save(DSGraphView graphView, DSConversation conversation)
         {
             List<DSNode> nodeElementList = graphView.nodes.OfType<DSNode>().ToList();
@@ -36,6 +79,15 @@ namespace Tools.DialogueSystem.Utilities
                     if (nodeData == null)
                     {
                         conversation.AddToNodes(node.Data);
+                    }
+
+                    node.Data.OutputIds.Clear();
+
+                    foreach (var edge in node.OutputPort.connections)
+                    {
+                        if (edge.input.node is not DSNode connectedNode)
+                            continue;
+                        node.Data.OutputIds.Add(connectedNode.Data.Guid);
                     }
                 }
 
@@ -53,77 +105,19 @@ namespace Tools.DialogueSystem.Utilities
 
                 deletedNodeList.ForEach((item) => conversation.RemoveFromNodes(item));
             }
-
-            SaveConnections(graphView, conversation);
-        }
-
-        public static void SaveConnections(DSGraphView graphView, DSConversation conversation)
-        {
-            foreach (DSNode originNode in graphView.nodes.OfType<DSNode>())
-            {
-                DSPortData portData = (DSPortData)originNode.OutputPort.userData;
-                var dbPortData = conversation.Connections.Find(p => p.NodeId == originNode.Data.Guid);
-
-                if (dbPortData != null)
-                {
-                    dbPortData.OutputIds.Clear();
-                    dbPortData.NodeId = originNode.Data.Guid;
-
-                    foreach (var edge in originNode.OutputPort.connections)
-                    {
-                        if (edge.input.node is not DSNode connectedNode)
-                            continue;
-                        dbPortData.OutputIds.Add(connectedNode.Data.Guid);
-                    }
-                    continue;
-                }
-
-                foreach (var edge in originNode.OutputPort.connections)
-                {
-                    if (edge.input.node is not DSNode connectedNode)
-                        continue;
-                    portData.OutputIds.Add(connectedNode.Data.Guid);
-                }
-                conversation.Connections.Add(portData);
-            }
-
-            SyncConnections(graphView, conversation);
-            static void SyncConnections(DSGraphView graphView, DSConversation conversation)
-            {
-                List<DSPortData> deletedPortDataList = new List<DSPortData>();
-
-                foreach (var nodeData in conversation?.Connections)
-                {
-                    var node = graphView.nodes.OfType<DSNode>().Where(n => n.Data.Guid == nodeData.NodeId).FirstOrDefault();
-
-                    if (node == null)
-                    {
-                        deletedPortDataList.Add(nodeData);
-                    }
-                    else
-                    {
-                        if (node.OutputPort.connections.Count() == 0)
-                        {
-                            deletedPortDataList.Add(nodeData);
-                        }
-                    }
-                }
-
-                deletedPortDataList.ForEach((item) => conversation.Connections.Remove(item));
-            }
         }
 
         public static void LoadConnections(DSConversation conversation, DSGraphView graphView)
         {
             Dictionary<string, DSNode> nodeLookUp = graphView.nodes.OfType<DSNode>().ToDictionary(n => n.Data.Guid, n => n);
 
-            foreach (DSPortData conn in conversation.Connections)
+            foreach (DSNodeData nodeData in conversation.Nodes)
             {
-                if (!nodeLookUp.TryGetValue(conn.NodeId, out DSNode originNode)) continue;
+                if (!nodeLookUp.TryGetValue(nodeData.Guid, out DSNode originNode)) continue;
 
                 Port outputPort = originNode.OutputPort;
 
-                foreach (var nodeId in conn.OutputIds)
+                foreach (var nodeId in nodeData.OutputIds)
                 {
                     if (!nodeLookUp.TryGetValue(nodeId, out DSNode connectedNode)) continue;
 
@@ -133,6 +127,23 @@ namespace Tools.DialogueSystem.Utilities
                     connectedNode.RefreshExpandedState();
                 }
             }
+
+            //foreach (DSPortData conn in conversation.Connections)
+            //{
+            //    if (!nodeLookUp.TryGetValue(conn.NodeId, out DSNode originNode)) continue;
+
+            //    Port outputPort = originNode.OutputPort;
+
+            //    foreach (var nodeId in conn.OutputIds)
+            //    {
+            //        if (!nodeLookUp.TryGetValue(nodeId, out DSNode connectedNode)) continue;
+
+            //        Port inputPort = connectedNode.InputPort;
+            //        Edge edge = outputPort.ConnectTo(inputPort);
+            //        graphView.AddElement(edge);
+            //        connectedNode.RefreshExpandedState();
+            //    }
+            //}
         }
     }
 }

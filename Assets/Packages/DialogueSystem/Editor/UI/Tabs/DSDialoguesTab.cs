@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
 using UnityEngine;
@@ -47,10 +48,10 @@ namespace Tools.DialogueSystem.UI
 
         private void OnCreateDialogueButtonClicked()
         {
-            DSDialogueText textObject = new("New Dialogue", "Dialogue Description", "Dialogue Text");
-            VisualElement cardElement = CreateCard(cardAsset, textObject);
-            AddCard(dialogueCardContainer, dialogues, textObject, cardElement);
-            DSDatabaseManager.Instance.Current.Register(textObject);
+            DSDialogueText dialogue = new("New Dialogue", "Dialogue Description", "Dialogue Text");
+            VisualElement cardElement = CreateCard(cardAsset, dialogue);
+            AddCard(dialogueCardContainer, dialogues, dialogue, cardElement);
+            DSDatabaseManager.Instance.Current.Register(dialogue);
         }
 
         #region Utils

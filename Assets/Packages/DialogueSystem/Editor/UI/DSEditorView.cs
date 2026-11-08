@@ -47,7 +47,9 @@ namespace Tools.DialogueSystem.UI
 
         private void OnEnable()
         {
-            var databaseManager = new DSDatabaseManager();
+            if (DSDatabaseManager.Instance == null)
+                new DSDatabaseManager();
+
             CreateDefaultFolders();
             GetUIElements();
             CreateTabs();
@@ -240,6 +242,11 @@ namespace Tools.DialogueSystem.UI
 
             tabView.selectedTabIndex =
                 (tabView.selectedTabIndex + direction + count) % count;
+
+            if (tabView.activeTab == graphTab)
+            {
+                graphTab.RefreshNodes();
+            }
         }
 
         public DSDatabase OpenDatabaseFileDialog(bool isLoad = false)
