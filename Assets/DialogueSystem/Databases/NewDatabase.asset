@@ -14,591 +14,292 @@ MonoBehaviour:
   m_EditorClassIdentifier: Tools.DialogueSystem.Editor::Tools.DialogueSystem.Data.DSDatabase
   <Conversations>k__BackingField:
   - _name: New Conversation
-    <Guid>k__BackingField: 15752b3c04d04c2ea1a9fa0c633e3a74
+    <Guid>k__BackingField: 74a88180f6d34da7a32f290dd8265dc2
     Description: Conversation Description
     <Nodes>k__BackingField:
-    - <Guid>k__BackingField: 52588aa086e52da4bb02525dc425b990
+    - <Guid>k__BackingField: d8675bf3b0b7b5145b01d67092f70474
       _dialogue:
         _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
+        <Guid>k__BackingField: a96b0d64d89841069a412adfffef2936
         Description: Dialogue Description
         _text: Dialogue Text
       _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
+        _name: Clip 1
+        <Guid>k__BackingField: a7434882bdf44b5cafba5fce506f6668
         Description: New Description
         Clip: {fileID: 0}
       _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
         Sprite: {fileID: 0}
       _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
         Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 526.1887, y: 274.41504}
-      <OutputIds>k__BackingField:
-      - 43e4fcc633cddd84d831f6494a5f833f
-      - 071bf88bbfb919749bac07c3f3f6a27f
-      - 1ca55c69a93fc92418996a506b53793f
+      <Position>k__BackingField: {x: 249.96231, y: 280.75473}
+      <OutputIds>k__BackingField: []
       DialogueType: 0
       IsStartNode: 1
-    - <Guid>k__BackingField: 43e4fcc633cddd84d831f6494a5f833f
+    - <Guid>k__BackingField: 94ff87e762d71a248ac5accf79114bc8
       _dialogue:
         _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
+        <Guid>k__BackingField: a96b0d64d89841069a412adfffef2936
         Description: Dialogue Description
         _text: Dialogue Text
       _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
+        _name: Clip 1
+        <Guid>k__BackingField: a7434882bdf44b5cafba5fce506f6668
         Description: New Description
         Clip: {fileID: 0}
       _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
         Sprite: {fileID: 0}
       _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
         Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 526.1886, y: 606.7925}
-      <OutputIds>k__BackingField:
-      - f42c6852e7154b34b939bafe8a8bf6a1
-      - 84369c75d7eaa534bb66e5e21bb7ffc9
-      - bbed5d00ae9daba4f8f1a53932c84013
-      DialogueType: 0
-      IsStartNode: 0
-    - <Guid>k__BackingField: 071bf88bbfb919749bac07c3f3f6a27f
-      _dialogue:
-        _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
-        Description: Dialogue Description
-        _text: Dialogue Text
-      _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
-        Description: New Description
-        Clip: {fileID: 0}
-      _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 1123.9246, y: 606.79224}
-      <OutputIds>k__BackingField:
-      - c751cf557de404b4e95f51ca29ee99e9
-      - 94910cd4b80fe3c46b9c97e74a509dac
-      - 245eec3a711d87548b220039905dcbcd
-      DialogueType: 0
-      IsStartNode: 0
-    - <Guid>k__BackingField: 1ca55c69a93fc92418996a506b53793f
-      _dialogue:
-        _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
-        Description: Dialogue Description
-        _text: Dialogue Text
-      _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
-        Description: New Description
-        Clip: {fileID: 0}
-      _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: -73.35851, y: 606.7925}
-      <OutputIds>k__BackingField:
-      - 010950454f46eaf4e8845869769b5638
-      - 47c4a588ef926964294f3f039192a1aa
-      - 1ba521ad73862c14c84bab55a90c1fed
-      DialogueType: 0
-      IsStartNode: 0
-    - <Guid>k__BackingField: c751cf557de404b4e95f51ca29ee99e9
-      _dialogue:
-        _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
-        Description: Dialogue Description
-        _text: Dialogue Text
-      _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
-        Description: New Description
-        Clip: {fileID: 0}
-      _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 1123.9246, y: 870.33966}
-      <OutputIds>k__BackingField:
-      - cbd09766a6e1ab54d83069ac8a667de7
-      DialogueType: 0
-      IsStartNode: 0
-    - <Guid>k__BackingField: 245eec3a711d87548b220039905dcbcd
-      _dialogue:
-        _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
-        Description: Dialogue Description
-        _text: Dialogue Text
-      _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
-        Description: New Description
-        Clip: {fileID: 0}
-      _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 1350.3398, y: 870.33966}
-      <OutputIds>k__BackingField:
-      - cbd09766a6e1ab54d83069ac8a667de7
-      DialogueType: 0
-      IsStartNode: 0
-    - <Guid>k__BackingField: 94910cd4b80fe3c46b9c97e74a509dac
-      _dialogue:
-        _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
-        Description: Dialogue Description
-        _text: Dialogue Text
-      _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
-        Description: New Description
-        Clip: {fileID: 0}
-      _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 897.5095, y: 869.434}
-      <OutputIds>k__BackingField:
-      - cbd09766a6e1ab54d83069ac8a667de7
-      DialogueType: 0
-      IsStartNode: 0
-    - <Guid>k__BackingField: cbd09766a6e1ab54d83069ac8a667de7
-      _dialogue:
-        _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
-        Description: Dialogue Description
-        _text: Dialogue Text
-      _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
-        Description: New Description
-        Clip: {fileID: 0}
-      _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 1123.9246, y: 1124.9437}
-      <OutputIds>k__BackingField:
-      - 9086c3a7084a47d4db1ae6694e6b1755
-      DialogueType: 0
-      IsStartNode: 0
-    - <Guid>k__BackingField: f42c6852e7154b34b939bafe8a8bf6a1
-      _dialogue:
-        _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
-        Description: Dialogue Description
-        _text: Dialogue Text
-      _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
-        Description: New Description
-        Clip: {fileID: 0}
-      _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 526.1887, y: 870.33966}
-      <OutputIds>k__BackingField:
-      - 164e7150b202bc44ea3ce072d1bd5f46
-      DialogueType: 0
-      IsStartNode: 0
-    - <Guid>k__BackingField: bbed5d00ae9daba4f8f1a53932c84013
-      _dialogue:
-        _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
-        Description: Dialogue Description
-        _text: Dialogue Text
-      _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
-        Description: New Description
-        Clip: {fileID: 0}
-      _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 752.60376, y: 870.33966}
-      <OutputIds>k__BackingField:
-      - 164e7150b202bc44ea3ce072d1bd5f46
-      DialogueType: 0
-      IsStartNode: 0
-    - <Guid>k__BackingField: 84369c75d7eaa534bb66e5e21bb7ffc9
-      _dialogue:
-        _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
-        Description: Dialogue Description
-        _text: Dialogue Text
-      _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
-        Description: New Description
-        Clip: {fileID: 0}
-      _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 299.77356, y: 869.434}
-      <OutputIds>k__BackingField:
-      - 164e7150b202bc44ea3ce072d1bd5f46
-      DialogueType: 0
-      IsStartNode: 0
-    - <Guid>k__BackingField: 010950454f46eaf4e8845869769b5638
-      _dialogue:
-        _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
-        Description: Dialogue Description
-        _text: Dialogue Text
-      _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
-        Description: New Description
-        Clip: {fileID: 0}
-      _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: -73.35852, y: 868.5284}
-      <OutputIds>k__BackingField:
-      - 7146fa72786c1fd43b1a0e85312776b8
-      DialogueType: 0
-      IsStartNode: 0
-    - <Guid>k__BackingField: 1ba521ad73862c14c84bab55a90c1fed
-      _dialogue:
-        _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
-        Description: Dialogue Description
-        _text: Dialogue Text
-      _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
-        Description: New Description
-        Clip: {fileID: 0}
-      _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 153.05664, y: 868.5284}
-      <OutputIds>k__BackingField:
-      - 7146fa72786c1fd43b1a0e85312776b8
-      DialogueType: 0
-      IsStartNode: 0
-    - <Guid>k__BackingField: 47c4a588ef926964294f3f039192a1aa
-      _dialogue:
-        _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
-        Description: Dialogue Description
-        _text: Dialogue Text
-      _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
-        Description: New Description
-        Clip: {fileID: 0}
-      _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: -299.7736, y: 867.62274}
-      <OutputIds>k__BackingField:
-      - 7146fa72786c1fd43b1a0e85312776b8
-      DialogueType: 0
-      IsStartNode: 0
-    - <Guid>k__BackingField: 164e7150b202bc44ea3ce072d1bd5f46
-      _dialogue:
-        _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
-        Description: Dialogue Description
-        _text: Dialogue Text
-      _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
-        Description: New Description
-        Clip: {fileID: 0}
-      _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 526.1887, y: 1123.9248}
-      <OutputIds>k__BackingField:
-      - 9086c3a7084a47d4db1ae6694e6b1755
-      DialogueType: 0
-      IsStartNode: 0
-    - <Guid>k__BackingField: 7146fa72786c1fd43b1a0e85312776b8
-      _dialogue:
-        _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
-        Description: Dialogue Description
-        _text: Dialogue Text
-      _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
-        Description: New Description
-        Clip: {fileID: 0}
-      _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: -73.358505, y: 1123.9247}
-      <OutputIds>k__BackingField:
-      - 9086c3a7084a47d4db1ae6694e6b1755
-      DialogueType: 0
-      IsStartNode: 0
-    - <Guid>k__BackingField: 9086c3a7084a47d4db1ae6694e6b1755
-      _dialogue:
-        _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
-        Description: Dialogue Description
-        _text: Dialogue Text
-      _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
-        Description: New Description
-        Clip: {fileID: 0}
-      _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 526.1887, y: 1489.8115}
+      <Position>k__BackingField: {x: 384.00003, y: 280.75473}
       <OutputIds>k__BackingField: []
       DialogueType: 0
       IsStartNode: 0
-    - <Guid>k__BackingField: 52e02863beebb644d8fd56aed892a6b1
-      _dialogue:
-        _name: 
-        <Guid>k__BackingField: 
-        Description: 
-        _text: 
-      _audioClip:
-        _name: 
-        <Guid>k__BackingField: 
-        Description: 
-        Clip: {fileID: 0}
-      _actor:
-        _name: 
-        <Guid>k__BackingField: 
-        Description: 
-        Background: 
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: 
-        <Guid>k__BackingField: 
-        Description: 
-        Background: 
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 752.6039, y: 1489.8114}
-      <OutputIds>k__BackingField: []
-      DialogueType: 0
-      IsStartNode: 0
-  - _name: Deneme
-    <Guid>k__BackingField: c881a595bd724b0997e9836097171085
-    Description: Conversation Description
-    <Nodes>k__BackingField:
-    - <Guid>k__BackingField: 823447695bcf22c4d85e67d15459f8c7
-      _dialogue:
-        _name: 
-        <Guid>k__BackingField: 
-        Description: 
-        _text: 
-      _audioClip:
-        _name: 
-        <Guid>k__BackingField: 
-        Description: 
-        Clip: {fileID: 0}
-      _actor:
-        _name: 
-        <Guid>k__BackingField: 
-        Description: 
-        Background: 
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: 
-        <Guid>k__BackingField: 
-        Description: 
-        Background: 
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 710.0377, y: 802.4151}
-      <OutputIds>k__BackingField:
-      - 91920756729c0cb46a49c5c7a9d1d1fc
-      DialogueType: 0
-      IsStartNode: 1
-    - <Guid>k__BackingField: 91920756729c0cb46a49c5c7a9d1d1fc
+    - <Guid>k__BackingField: 2ed30c88013fd4647b1179491c8ef173
       _dialogue:
         _name: New Dialogue
-        <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
+        <Guid>k__BackingField: a96b0d64d89841069a412adfffef2936
         Description: Dialogue Description
         _text: Dialogue Text
       _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
+        _name: Clip 1
+        <Guid>k__BackingField: a7434882bdf44b5cafba5fce506f6668
         Description: New Description
         Clip: {fileID: 0}
       _actor:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
         Sprite: {fileID: 0}
       _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: 19452764067540e283805f041425e65e
-        Description: Actor Description
-        Background: Actor Background
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
         Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 708.22656, y: 963.6226}
+      <Position>k__BackingField: {x: 541.58496, y: 280.75473}
+      <OutputIds>k__BackingField: []
+      DialogueType: 0
+      IsStartNode: 0
+    - <Guid>k__BackingField: 632f39ddb543696438b1395647425111
+      _dialogue:
+        _name: New Dialogue
+        <Guid>k__BackingField: a96b0d64d89841069a412adfffef2936
+        Description: Dialogue Description
+        _text: Dialogue Text
+      _audioClip:
+        _name: Clip 1
+        <Guid>k__BackingField: a7434882bdf44b5cafba5fce506f6668
+        Description: New Description
+        Clip: {fileID: 0}
+      _actor:
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
+        Sprite: {fileID: 0}
+      _conversant:
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
+        Sprite: {fileID: 0}
+      <Position>k__BackingField: {x: 675.6227, y: 280.75473}
+      <OutputIds>k__BackingField: []
+      DialogueType: 0
+      IsStartNode: 0
+    - <Guid>k__BackingField: 6163cb34244d4424780c47bb40a18670
+      _dialogue:
+        _name: New Dialogue
+        <Guid>k__BackingField: a96b0d64d89841069a412adfffef2936
+        Description: Dialogue Description
+        _text: Dialogue Text
+      _audioClip:
+        _name: Clip 1
+        <Guid>k__BackingField: a7434882bdf44b5cafba5fce506f6668
+        Description: New Description
+        Clip: {fileID: 0}
+      _actor:
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
+        Sprite: {fileID: 0}
+      _conversant:
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
+        Sprite: {fileID: 0}
+      <Position>k__BackingField: {x: 336.00003, y: 432.00003}
+      <OutputIds>k__BackingField: []
+      DialogueType: 0
+      IsStartNode: 0
+    - <Guid>k__BackingField: dc3c2f9b1df59d14db78354f87b65d01
+      _dialogue:
+        _name: New Dialogue
+        <Guid>k__BackingField: a96b0d64d89841069a412adfffef2936
+        Description: Dialogue Description
+        _text: Dialogue Text
+      _audioClip:
+        _name: Clip 1
+        <Guid>k__BackingField: a7434882bdf44b5cafba5fce506f6668
+        Description: New Description
+        Clip: {fileID: 0}
+      _actor:
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
+        Sprite: {fileID: 0}
+      _conversant:
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
+        Sprite: {fileID: 0}
+      <Position>k__BackingField: {x: 631.24536, y: 580.5283}
+      <OutputIds>k__BackingField: []
+      DialogueType: 0
+      IsStartNode: 0
+    - <Guid>k__BackingField: 510872a2471eeba49bf420432768beb3
+      _dialogue:
+        _name: New Dialogue
+        <Guid>k__BackingField: a96b0d64d89841069a412adfffef2936
+        Description: Dialogue Description
+        _text: Dialogue Text
+      _audioClip:
+        _name: Clip 1
+        <Guid>k__BackingField: a7434882bdf44b5cafba5fce506f6668
+        Description: New Description
+        Clip: {fileID: 0}
+      _actor:
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
+        Sprite: {fileID: 0}
+      _conversant:
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
+        Sprite: {fileID: 0}
+      <Position>k__BackingField: {x: 765.2831, y: 580.5283}
+      <OutputIds>k__BackingField: []
+      DialogueType: 0
+      IsStartNode: 0
+    - <Guid>k__BackingField: 1a568e240b18a9a4586801ac0c64dd1c
+      _dialogue:
+        _name: New Dialogue
+        <Guid>k__BackingField: a96b0d64d89841069a412adfffef2936
+        Description: Dialogue Description
+        _text: Dialogue Text
+      _audioClip:
+        _name: Clip 1
+        <Guid>k__BackingField: a7434882bdf44b5cafba5fce506f6668
+        Description: New Description
+        Clip: {fileID: 0}
+      _actor:
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
+        Sprite: {fileID: 0}
+      _conversant:
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
+        Sprite: {fileID: 0}
+      <Position>k__BackingField: {x: 922.8679, y: 580.5283}
+      <OutputIds>k__BackingField: []
+      DialogueType: 0
+      IsStartNode: 0
+    - <Guid>k__BackingField: 0a5d74a85fcc6e64f827b503fb75ae15
+      _dialogue:
+        _name: New Dialogue
+        <Guid>k__BackingField: a96b0d64d89841069a412adfffef2936
+        Description: Dialogue Description
+        _text: Dialogue Text
+      _audioClip:
+        _name: Clip 1
+        <Guid>k__BackingField: a7434882bdf44b5cafba5fce506f6668
+        Description: New Description
+        Clip: {fileID: 0}
+      _actor:
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
+        Sprite: {fileID: 0}
+      _conversant:
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
+        Sprite: {fileID: 0}
+      <Position>k__BackingField: {x: 1056.9056, y: 580.5283}
+      <OutputIds>k__BackingField: []
+      DialogueType: 0
+      IsStartNode: 0
+    - <Guid>k__BackingField: 239f366937cbf214eb5fa9f814afc1d8
+      _dialogue:
+        _name: New Dialogue
+        <Guid>k__BackingField: a96b0d64d89841069a412adfffef2936
+        Description: Dialogue Description
+        _text: Dialogue Text
+      _audioClip:
+        _name: Clip 1
+        <Guid>k__BackingField: a7434882bdf44b5cafba5fce506f6668
+        Description: New Description
+        Clip: {fileID: 0}
+      _actor:
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
+        Sprite: {fileID: 0}
+      _conversant:
+        _name: Deneme
+        <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+        Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+        Background: Actor Background Actor Background Actor Background Actor Background Actor Background
+        Sprite: {fileID: 0}
+      <Position>k__BackingField: {x: 717.2831, y: 731.77356}
       <OutputIds>k__BackingField: []
       DialogueType: 0
       IsStartNode: 0
   <Actors>k__BackingField:
-  - _name: New Actor
-    <Guid>k__BackingField: 19452764067540e283805f041425e65e
-    Description: Actor Description
-    Background: Actor Background
+  - _name: Deneme
+    <Guid>k__BackingField: 907892ae04244ec6b2d81b23089efbb6
+    Description: Actor Background Actor Background Actor Background Actor Background Actor BackgroundActor Background Actor Background Actor Background Actor Background Actor Background
+    Background: Actor Background Actor Background Actor Background Actor Background Actor Background
     Sprite: {fileID: 0}
   <AudioClips>k__BackingField:
-  - _name: New Clip
-    <Guid>k__BackingField: 35c10ffb76614a80b74b447da4e23750
+  - _name: Clip 1
+    <Guid>k__BackingField: a7434882bdf44b5cafba5fce506f6668
     Description: New Description
     Clip: {fileID: 0}
   <DialogueTexts>k__BackingField:
   - _name: New Dialogue
-    <Guid>k__BackingField: e1dc98f78a0849dfbe920b34525677db
+    <Guid>k__BackingField: a96b0d64d89841069a412adfffef2936
     Description: Dialogue Description
     _text: Dialogue Text

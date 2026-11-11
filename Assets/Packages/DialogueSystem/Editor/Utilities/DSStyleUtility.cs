@@ -138,6 +138,15 @@ namespace Tools.DialogueSystem.Utilities
             return element;
         }
 
+        public static VisualElement SetBorderRadius(this VisualElement element, float? allRadius = null, float? topLeftRadius = null, float? topRightRadius = null, float? bottomLeftRadius = null, float? bottomRightRadius = null)
+        {
+            element.style.borderBottomLeftRadius = allRadius ??  bottomLeftRadius ?? element.style.borderBottomLeftRadius;
+            element.style.borderBottomRightRadius = allRadius ?? bottomRightRadius ?? element.style.borderBottomRightRadius;
+            element.style.borderTopLeftRadius = allRadius ?? topLeftRadius ?? element.style.borderTopLeftRadius;
+            element.style.borderTopRightRadius = allRadius ?? topRightRadius ?? element.style.borderTopRightRadius;
+            return element;
+        }
+
         public static VisualElement SetBorder(this VisualElement element, Color? borderColor = null, float? allBorder = null, float? borderLeft = null, float? borderRight = null, float? borderTop = null, float? borderBottom = null)
         {
             element.style.borderLeftWidth = allBorder ?? borderLeft ?? element.style.borderLeftWidth;
@@ -149,6 +158,7 @@ namespace Tools.DialogueSystem.Utilities
             element.style.borderRightColor = borderColor ?? element.style.borderRightColor;
             element.style.borderTopColor = borderColor ?? element.style.borderTopColor;
             element.style.borderBottomColor = borderColor ?? element.style.borderBottomColor;
+
             return element;
         }
 
@@ -185,5 +195,24 @@ namespace Tools.DialogueSystem.Utilities
             element.style.cursor = new StyleCursor((UnityEngine.UIElements.Cursor)objCursor);
             return element;
         }
+    }
+
+    public static class DSColors
+    {
+        // Grid
+        public static readonly Color GridLightGrey1 = new Color32(43, 43, 43, 255);
+        public static readonly Color GridLightGrey2 = new Color(51f / 255f, 51f / 255f, 51f / 255f, 0.4f);
+        public static readonly Color GridLightGrey3 = new Color32(51, 51, 51, 255);
+        public static readonly Color GridLightGrey4 = new Color32(70, 70, 70, 255);
+
+        // Window
+        public static readonly Color WindowDarkGrey1 = new Color32(29, 29, 30, 255);
+        public static readonly Color WindowDarkGrey2 = new Color32(43, 45, 47, 255);
+        public static readonly Color WindowDarkGrey3 = new Color32(33, 35, 37, 255);
+        public static readonly Color WindowDarkGrey4 = new Color32(35, 37, 39, 255);
+        public static readonly Color WindowDarkGrey5 = new Color32(37, 39, 41, 255);
+        public static readonly Color WindowDarkGrey6 = new Color32(39, 41, 44, 255);
+
+        public static readonly Color WindowYellow = new Color32(253, 208, 87, 255);
     }
 }

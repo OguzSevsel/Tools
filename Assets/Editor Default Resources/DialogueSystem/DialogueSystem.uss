@@ -378,3 +378,6 @@
     transition-delay: 0s, 0s;
     scale: 1.04 1.04 1.04;
 }
+
+.unity-text-field {
+}

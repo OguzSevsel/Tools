@@ -16,12 +16,12 @@
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:VisualElement name="BodyContainer" style="flex-grow: 1;">
-            <ui:TextField label="Name" placeholder-text="Name" name="ConversationName" hide-placeholder-on-focus="true" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor" style="flex-shrink: 1; flex-grow: 0;">
+            <ui:TextField label="Name" placeholder-text="Name" name="ConversationName" hide-placeholder-on-focus="true" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor" style="flex-shrink: 1; flex-grow: 0; text-overflow: ellipsis;">
                 <Bindings>
                     <ui:DataBinding property="value" data-source-path="Name" binding-mode="TwoWay"/>
                 </Bindings>
             </ui:TextField>
-            <ui:TextField label="Description" placeholder-text="Description" name="ConversationDescription" hide-placeholder-on-focus="true" multiline="true" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor" focusable="true" style="flex-shrink: 1; flex-grow: 1;">
+            <ui:TextField label="Description" placeholder-text="Description" name="ConversationDescription" hide-placeholder-on-focus="true" multiline="true" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor" focusable="true" style="flex-shrink: 1; flex-grow: 1; text-overflow: ellipsis; white-space: normal;">
                 <Bindings>
                     <ui:DataBinding property="value" data-source-path="Description" binding-mode="TwoWay"/>
                 </Bindings>

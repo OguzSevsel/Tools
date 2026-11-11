@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 namespace Tools.DialogueSystem.Data
@@ -67,6 +68,60 @@ namespace Tools.DialogueSystem.Data
             while (_guidLookup.Contains(guid));
 
             return guid;
+        }
+
+        public T Get<T>(string guid) where T : DSData
+        {
+            if (!Contains(guid))
+                return null;
+
+            var type = typeof(T);
+
+            if (typeof(T) == typeof(DSActor))
+            {
+                foreach (DSActor item in Actors)
+                {
+                    if (item.Guid == guid)
+                    {
+                        return item as T;
+                    }
+                }
+            }
+
+            if (typeof(T) == typeof(DSDialogueText))
+            {
+                foreach (DSDialogueText item in DialogueTexts)
+                {
+                    if (item.Guid == guid)
+                    {
+                        return item as T;
+                    }
+                }
+            }
+
+            if (typeof(T) == typeof(DSAudioClip))
+            {
+                foreach (DSAudioClip item in AudioClips)
+                {
+                    if (item.Guid == guid)
+                    {
+                        return item as T;
+                    }
+                }
+            }
+
+            if (typeof(T) == typeof(DSConversation))
+            {
+                foreach (DSConversation item in Conversations)
+                {
+                    if (item.Guid == guid)
+                    {
+                        return item as T;
+                    }
+                }
+            }
+
+            return null;
         }
 
         public string Register<T>(T item) where T : DSData

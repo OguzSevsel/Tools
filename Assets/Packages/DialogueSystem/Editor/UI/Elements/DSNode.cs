@@ -21,6 +21,7 @@ namespace Tools.DialogueSystem.UI.Elements
 
         private VisualElement portContainer;
         private VisualElement infoContainer;
+        private VisualElement container;
         private Label actorLabel;
         private Label conversantLabel;
         private Label audioClipLabel;
@@ -54,12 +55,7 @@ namespace Tools.DialogueSystem.UI.Elements
         public virtual void Initialize(DSNodeData data)
         {
             this.Data = data;
-            Data.IsStartNode = data.IsStartNode;
             SetPosition(new Rect(data.Position, Vector2.zero));
-
-            mainContainer.AddToClassList("ds-node__main-container");
-            extensionContainer.AddToClassList("ds-node__extension-container");
-
             Draw();
         }
 
@@ -79,42 +75,71 @@ namespace Tools.DialogueSystem.UI.Elements
 
         public virtual void Draw()
         {
-            portContainer = new VisualElement();
-            infoContainer = new VisualElement();
+            container = new VisualElement();
+            CreatePortContainer();
+            CreateInfoContainer();
+            CreateTitleLabel();
+            CreateInfoLabels();
+            //ContainerBGColors();
+            AddTo(mainContainer, portContainer);
+            AddTo(portContainer, container);
+            AddTo(container, titleContainer, infoContainer);
+            container.SetFlex(flexGrow: 1,flexDirection: FlexDirection.Column);
+            CreatePorts();
+            RefreshPorts();
+        }
 
-            infoContainer.SetFlex(flexDirection: FlexDirection.Column);
-            infoContainer.SetAlignment(alignContent: Align.Center, alignItems: Align.Center);
-
-            portContainer.style.flexDirection = FlexDirection.Column;
-            portContainer.style.alignItems = Align.Center;
-
-            mainContainer.Insert(0, portContainer);
-
+        private void CreatePorts()
+        {
             if (!Data.IsStartNode)
-                InputPort = CreatePort(portContainer, Direction.Input);
+                InputPort = CreatePort(portContainer, Direction.Input, 0);
+            
+            OutputPort = CreatePort(portContainer, Direction.Output, portContainer.childCount);
+        }
 
+        private void CreateTitleLabel()
+        {
             Label label = DSElementUtility.CreateLabel("Node");
-
+            label.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
+            label.SetTextSettings(fontStyle: FontStyle.Bold, alignment: TextAnchor.MiddleCenter);
+            label.SetFlex(flexGrow: 1);
             titleContainer.Clear();
+            titleContainer.SetBackgroundColor(DSColors.WindowDarkGrey2);
+            titleContainer.SetBorder(DSColors.GridLightGrey4, 2);
+            titleContainer.SetBorderRadius(5);
             titleContainer.Insert(0, label);
+            titleContainer.SetFlex(flexGrow: 1);
+        }
 
-            var labels = CreateLabels(actorLabel, conversantLabel, audioClipLabel, dialogueTextLabel);
-            (actorLabel, conversantLabel, audioClipLabel, dialogueTextLabel) = (labels[0], labels[1], labels[2], labels[3]);
+        private void CreateInfoLabels()
+        {
+            var infoLabels = CreateLabels(actorLabel, conversantLabel, audioClipLabel, dialogueTextLabel);
+            (actorLabel, conversantLabel, audioClipLabel, dialogueTextLabel) = (infoLabels[0], infoLabels[1], infoLabels[2], infoLabels[3]);
 
             AddTo(infoContainer, actorLabel, conversantLabel, audioClipLabel, dialogueTextLabel);
             SetInfo(false, false, false, false);
+        }
 
-            label.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
-            label.SetTextSettings(fontStyle: FontStyle.Bold, alignment: TextAnchor.MiddleCenter);
+        private void CreateInfoContainer()
+        {
+            infoContainer = new VisualElement();
+            infoContainer.SetFlex(flexDirection: FlexDirection.Column, flexGrow: 1);
+            infoContainer.SetAlignment(alignContent: Align.Center, alignItems: Align.Center);
+        }
 
-            AddTo(portContainer, titleContainer, infoContainer);
+        private void CreatePortContainer()
+        {
+            portContainer = new VisualElement();
+            portContainer.style.flexDirection = FlexDirection.Row;
+            portContainer.style.alignItems = Align.Center;
+            portContainer.SetBackgroundColor(DSColors.WindowDarkGrey2);
+        }
 
+        private void ContainerBGColors()
+        {
             mainContainer.SetBackgroundColor(Color.red);
             portContainer.SetBackgroundColor(Color.blue);
             titleContainer.SetBackgroundColor(Color.green);
-
-            OutputPort = CreatePort(portContainer, Direction.Output);
-            RefreshPorts();
         }
 
         #region Creation
@@ -124,6 +149,8 @@ namespace Tools.DialogueSystem.UI.Elements
             for (int i = 0; i < labels.Length; i++)
             {
                 labels[i] = DSElementUtility.CreateLabel("");
+                labels[i].style.whiteSpace = WhiteSpace.Normal;
+                labels[i].SetWidth(maxWidth: 250);
             }
 
             return labels;
@@ -137,12 +164,12 @@ namespace Tools.DialogueSystem.UI.Elements
             }
         }
 
-        private Port CreatePort(VisualElement container, Direction direction)
+        private Port CreatePort(VisualElement container, Direction direction, int index)
         {
-            Port port = this.CreatePort("", Orientation.Vertical, direction, Port.Capacity.Multi);
+            Port port = this.CreatePort("", Orientation.Horizontal, direction, Port.Capacity.Multi);
             DSPortData data = new DSPortData(this.Data.Guid, "port");
             port.userData = data;
-            container.Add(port);
+            container.Insert(index, port);
             Label label = port.Q<Label>("type");
             label.SetMargins(0);
             port.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);

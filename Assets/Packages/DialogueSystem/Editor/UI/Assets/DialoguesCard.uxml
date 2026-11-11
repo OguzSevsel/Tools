@@ -8,17 +8,17 @@
                 <ui:DataBinding property="text" data-source-type="Tools.DialogueSystem.Data.DSDialogueText, Tools.DialogueSystem.Editor" data-source-path="Name" binding-mode="ToTarget"/>
             </Bindings>
         </ui:Label>
-        <ui:TextField label="Name" name="DialogueName">
+        <ui:TextField label="Name" name="DialogueName" style="text-overflow: ellipsis;">
             <Bindings>
                 <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSDialogueText, Tools.DialogueSystem.Editor" data-source-path="Name" binding-mode="TwoWay" update-trigger="OnSourceChanged"/>
             </Bindings>
         </ui:TextField>
-        <ui:TextField name="DialogueDescription" label="Description" placeholder-text="Description" multiline="true">
+        <ui:TextField name="DialogueDescription" label="Description" placeholder-text="Description" multiline="true" style="white-space: normal; text-overflow: ellipsis;">
             <Bindings>
                 <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSDialogueText, Tools.DialogueSystem.Editor" data-source-path="Description" binding-mode="TwoWay"/>
             </Bindings>
         </ui:TextField>
-        <ui:TextField name="DialogueText" placeholder-text="Text" multiline="true" label="Text">
+        <ui:TextField name="DialogueText" placeholder-text="Text" multiline="true" label="Text" style="white-space: normal; text-overflow: ellipsis;">
             <Bindings>
                 <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSDialogueText, Tools.DialogueSystem.Editor" data-source-path="Text" binding-mode="TwoWay"/>
             </Bindings>

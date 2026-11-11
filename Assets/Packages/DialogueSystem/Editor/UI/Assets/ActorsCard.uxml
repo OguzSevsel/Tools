@@ -12,17 +12,17 @@
             </Bindings>
         </ui:Image>
         <ui:Button name="DeleteButton" icon-image="project://database/Assets/Editor%20Default%20Resources/Icons/delete.png?fileID=2800000&amp;guid=36090787d5284da4abab0c041d0af4f6&amp;type=3#delete" style="position: absolute; right: 0; top: 2px; width: 40px; height: 40px;"/>
-        <ui:TextField label="Name" placeholder-text="Name" name="ActorName" hide-placeholder-on-focus="true" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor">
+        <ui:TextField label="Name" placeholder-text="Name" name="ActorName" hide-placeholder-on-focus="true" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" style="text-overflow: ellipsis;">
             <Bindings>
                 <ui:DataBinding property="value" data-source-path="Name" binding-mode="TwoWay"/>
             </Bindings>
         </ui:TextField>
-        <ui:TextField label="Description" placeholder-text="Description" name="ActorDescription" hide-placeholder-on-focus="true" multiline="true" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" focusable="true">
+        <ui:TextField label="Description" placeholder-text="Description" name="ActorDescription" hide-placeholder-on-focus="true" multiline="true" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" focusable="true" style="text-overflow: ellipsis; white-space: normal;">
             <Bindings>
                 <ui:DataBinding property="value" data-source-path="Description" binding-mode="TwoWay"/>
             </Bindings>
         </ui:TextField>
-        <ui:TextField label="Background" placeholder-text="Background" name="ActorBackground" hide-placeholder-on-focus="true" multiline="true" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor">
+        <ui:TextField label="Background" placeholder-text="Background" name="ActorBackground" hide-placeholder-on-focus="true" multiline="true" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" style="white-space: normal; text-overflow: ellipsis;">
             <Bindings>
                 <ui:DataBinding property="value" data-source-path="Background" binding-mode="TwoWay"/>
             </Bindings>

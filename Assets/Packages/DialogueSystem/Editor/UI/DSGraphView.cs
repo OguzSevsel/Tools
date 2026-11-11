@@ -24,9 +24,17 @@ namespace Tools.DialogueSystem.UI
         private Vector2 _mouseLocation = new Vector2(0, 0);
 
         [Serializable]
+        public class DSNodeConnections
+        {
+            public string InputId;
+            public string OutputId;
+        }
+
+        [Serializable]
         public class DSNodeClipboard
         {
             public List<DSClipboardNode> Nodes = new();
+            public List<DSNodeConnections> Connections = new();
 
             public DSNodeClipboard()
             {
@@ -554,7 +562,10 @@ namespace Tools.DialogueSystem.UI
             if (clipboard?.Nodes == null || clipboard.Nodes.Count == 0)
                 return;
 
+            ClearSelection();
             Vector2 offset = CalculateOffSet(clipboard.Nodes);
+
+            Dictionary<string, DSNode> pastedNodes = new();
 
             foreach (DSClipboardNode clipboardNode in clipboard.Nodes)
             {
@@ -564,16 +575,38 @@ namespace Tools.DialogueSystem.UI
                 if (nodeData == null)
                     continue;
 
+                string originalID = nodeData.Guid;
+
                 nodeData.IsStartNode = false;
 
                 Vector2 position = clipboardNode.Position + offset;
 
                 DSNode node = CreateNode(nodeData.DialogueType, position, nodeData.IsStartNode, true);
 
-                node.Data.SetAllFields(nodeData.Actor, nodeData.Conversant, nodeData.AudioClip, nodeData.Dialogue);
+                DSActor actor = DSDatabaseManager.Instance.Current.Get<DSActor>(nodeData.Actor.Guid);
+                DSActor conversant = DSDatabaseManager.Instance.Current.Get<DSActor>(nodeData.Conversant.Guid);
+                DSAudioClip audioClip = DSDatabaseManager.Instance.Current.Get<DSAudioClip>(nodeData.AudioClip.Guid);
+                DSDialogueText dialogue = DSDatabaseManager.Instance.Current.Get<DSDialogueText>(nodeData.Dialogue.Guid);
 
+                node.Data.SetAllFields(actor, conversant, audioClip, dialogue);
+
+                pastedNodes.Add(originalID, node);
                 AddElement(node);
-                this.AddToSelection(node);
+                AddToSelection(node);
+            }
+
+            foreach (var connection in clipboard.Connections)
+            {
+                if (!pastedNodes.TryGetValue(connection.OutputId, out DSNode outputNode))
+                    continue;
+
+                if (!pastedNodes.TryGetValue(connection.InputId, out DSNode inputNode))
+                    continue;
+
+                Edge edge = outputNode.OutputPort.ConnectTo(inputNode.InputPort);
+
+                AddElement(edge);
+                AddToSelection(edge);
             }
 
             RefreshNodes();
@@ -598,6 +631,21 @@ namespace Tools.DialogueSystem.UI
 
                 clipboard.Nodes.Add(clipboardNode);
             }
+
+            var copiedNodeIDs = selectedNodes.Select(node => node.Data.Guid).ToHashSet();
+
+            var connections = edges.Where(edge =>
+                    edge.output?.node is DSNode outputNode &&
+                    edge.input?.node is DSNode inputNode &&
+                    copiedNodeIDs.Contains(outputNode.Data.Guid) &&
+                    copiedNodeIDs.Contains(inputNode.Data.Guid))
+                    .Select(edge => new DSNodeConnections
+                    {
+                        OutputId = ((DSNode)edge.output.node).Data.Guid,
+                        InputId = ((DSNode)edge.input.node).Data.Guid
+                    }).ToList();
+
+            clipboard.Connections = connections;
 
             return ClipboardPrefix + JsonUtility.ToJson(clipboard);
         }

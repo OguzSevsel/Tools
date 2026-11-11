@@ -107,6 +107,16 @@ namespace Tools.DialogueSystem.Utilities
             }
         }
 
+        public static void CreateConnection(DSGraphView graphView, DSNode originNode, DSNode connectedNode)
+        {
+            Port outputPort = originNode.OutputPort;
+            Port inputPort = connectedNode.InputPort;
+
+            Edge edge = outputPort.ConnectTo(inputPort);
+            graphView.AddElement(edge);
+            connectedNode.RefreshExpandedState();
+        }
+
         public static void LoadConnections(DSConversation conversation, DSGraphView graphView)
         {
             Dictionary<string, DSNode> nodeLookUp = graphView.nodes.OfType<DSNode>().ToDictionary(n => n.Data.Guid, n => n);
@@ -121,10 +131,7 @@ namespace Tools.DialogueSystem.Utilities
                 {
                     if (!nodeLookUp.TryGetValue(nodeId, out DSNode connectedNode)) continue;
 
-                    Port inputPort = connectedNode.InputPort;
-                    Edge edge = outputPort.ConnectTo(inputPort);
-                    graphView.AddElement(edge);
-                    connectedNode.RefreshExpandedState();
+                    CreateConnection(graphView, originNode, connectedNode);
                 }
             }
 
