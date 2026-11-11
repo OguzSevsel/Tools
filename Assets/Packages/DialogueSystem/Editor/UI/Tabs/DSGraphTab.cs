@@ -15,13 +15,13 @@ namespace Tools.DialogueSystem.UI
         public DSSideBar sideBar;
         private Button miniMapButton;
 
-        public DSGraphTab(VisualTreeAsset conversationsTabAsset, VisualTreeAsset conversationsCardAsset, VisualTreeAsset sideBarAsset)
+        public DSGraphTab(VisualTreeAsset conversationsTabAsset, VisualTreeAsset conversationsCardAsset, VisualTreeAsset sideBarAsset, VisualTreeAsset nodeInspectorAsset)
         {
             sideBar = new DSSideBar(sideBarAsset, conversationsTabAsset, conversationsCardAsset);
             DSSideBar.OnSideBarToggled += HandleOnSideBarToggled;
             label = "Conversations";
 
-            graphView = new DSGraphView(this);
+            graphView = new DSGraphView(this, nodeInspectorAsset);
             
             graphView.OnInspectorOpened += HandleInspectorOpened;
             graphView.OnInspectorClosed += HandleInspectorClosed;

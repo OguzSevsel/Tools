@@ -52,6 +52,8 @@ namespace Tools.DialogueSystem.UI
 
         #endregion
 
+        private VisualTreeAsset nodeInspectorAsset;
+
         //Utils
         public DSConversation CurrentConversation { get; private set; }
         private DSNode selectedNode;
@@ -76,9 +78,10 @@ namespace Tools.DialogueSystem.UI
         public static event Action<DSConversation> OnNodeCreated;
         public static event Action<DSConversation> OnNodeDeleted;
 
-        public DSGraphView(DSGraphTab tab)
+        public DSGraphView(DSGraphTab tab, VisualTreeAsset nodeInspectorAsset)
         {
             this.tab = tab;
+            this.nodeInspectorAsset = nodeInspectorAsset;
             this.AddStyleSheets("DialogueSystem/DSGraphViewStyles.uss",
                 "DialogueSystem/DSNodeStyles.uss");
             this.AddStyleSheets("DialogueSystem/DialogueSystem.uss");
@@ -390,10 +393,10 @@ namespace Tools.DialogueSystem.UI
 
             if (selectedNode is DSNode node && inspector == null)
             {
-                inspector = new DSNodeInspector(node.Data, this);
+                inspector = new DSNodeInspector(node.Data, this, nodeInspectorAsset);
             }
 
-            OnInspectorOpened?.Invoke(this.inspector.GetContainer(), this.selectedNode);
+            OnInspectorOpened?.Invoke(this.inspector.GetVisualElement(), this.selectedNode);
             inspector.LoadFields(selectedNode.Data);
         }
 
@@ -433,7 +436,7 @@ namespace Tools.DialogueSystem.UI
 
             if (inspector is DSNodeInspector nodeInspector)
             {
-                nodeInspector.Remove();
+                nodeInspector.RemoveFromHierarchy();
             }
 
             selectedNode = null;

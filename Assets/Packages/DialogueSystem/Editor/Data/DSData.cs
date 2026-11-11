@@ -27,8 +27,25 @@ namespace Tools.DialogueSystem.Data
             }
         }
 
+        [SerializeField] private string _description = "Description";
+
+        [CreateProperty]
+        public string Description
+        {
+            get => _description;
+            private set
+            {
+                if (_description == value)
+                {
+                    return;
+                }
+
+                _description = value;
+                Notify();
+            }
+        }
+
         [field: SerializeField] public string Guid { get; internal set; } = "UniqueID";
-        public string Description = "Description";
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
 
         protected DSData(string title, string description)

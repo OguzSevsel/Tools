@@ -21,6 +21,7 @@ namespace Tools.DialogueSystem.UI
         [SerializeField] private VisualTreeAsset dialogueCardAsset;
         [SerializeField] private VisualTreeAsset conversationsTabAsset;
         [SerializeField] private VisualTreeAsset conversationCardAsset;
+        [SerializeField] private VisualTreeAsset nodeInspectorAsset;
 
         private DSGraphTab graphTab;
         private DSActorsTab actorsTab;
@@ -96,7 +97,7 @@ namespace Tools.DialogueSystem.UI
 
         private void CreateTabs()
         {
-            graphTab = new DSGraphTab(conversationsTabAsset, conversationCardAsset, sideBarAsset);
+            graphTab = new DSGraphTab(conversationsTabAsset, conversationCardAsset, sideBarAsset, nodeInspectorAsset);
             actorsTab = new DSActorsTab(actorsTabAsset, actorsCardAsset);
             audioClipsTab = new DSAudioClipsTab(audioClipsTabAsset, audioClipCardAsset);
             dialoguesTab = new DSDialoguesTab(dialoguesTabAsset, dialogueCardAsset);

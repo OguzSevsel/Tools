@@ -7,7 +7,6 @@ namespace Tools.DialogueSystem.UI.Inspector
     {
         void Create();
         void LoadFields(DSNodeData data);
-        VisualElement GetContainer();
-        void Remove();
+        VisualElement GetVisualElement();
     }
 }

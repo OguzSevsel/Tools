@@ -56,6 +56,16 @@ namespace Tools.DialogueSystem.Utilities
             
         }
 
+        public static bool IsVisible(this VisualElement element)
+        {
+            if (element.style.display == DisplayStyle.None)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public static VisualElement Rotate(this VisualElement element, int? rotation = null)
         {
             element.style.rotate = new Rotate(rotation ?? element.style.rotate.value.angle);
