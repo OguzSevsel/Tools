@@ -167,6 +167,15 @@ namespace Tools.DialogueSystem.UI
 
         #region SHORTCUTS
 
+        [Shortcut("Dialogue System/Select All", typeof(DSEditorView), KeyCode.A, ShortcutModifiers.Action)]
+        private static void SelectAll()
+        {
+            if (Instance == null)
+                return;
+
+            Instance.graphTab.SelectAll();
+        }
+
         [Shortcut("Dialogue System/Close Database", typeof(DSEditorView), KeyCode.W, ShortcutModifiers.Action)]
         private static void CloseDatabaseShortcut()
         {

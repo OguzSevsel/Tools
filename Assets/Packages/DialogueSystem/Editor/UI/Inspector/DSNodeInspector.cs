@@ -20,6 +20,9 @@ namespace Tools.DialogueSystem.UI.Elements
         private DSPopUpField<DSAudioClip> audioDropdown;
         private DSPopUpField<DSDialogueText> dialogueDropdown;
 
+        private Label titleLabel;
+        private TextField nodeTitleTextField;
+
         private VisualElement actorContainer;
         private VisualElement actorFieldContainer;
         private VisualElement conversantContainer;
@@ -46,6 +49,17 @@ namespace Tools.DialogueSystem.UI.Elements
         {
             this.data = data;
             this.dataSource = this.data;
+
+            if (this.data.IsStartNode)
+            {
+                nodeTitleTextField.SetVisible(false);
+                titleLabel.text = "Start Node";
+            }
+            else
+            {
+                nodeTitleTextField.SetVisible(true);
+                titleLabel.text = "Node Title";
+            }
 
             DSDatabase database = DSDatabaseManager.Instance.Current;
 
@@ -80,6 +94,9 @@ namespace Tools.DialogueSystem.UI.Elements
             conversantContainer = this.Q<VisualElement>("ConversantDropdownContainer");
             audioClipContainer = this.Q<VisualElement>("AudioClipDropdownContainer");
             dialogueContainer = this.Q<VisualElement>("DialogueDropdownContainer");
+
+            titleLabel = this.Q<Label>("NodeTitleLabel");
+            nodeTitleTextField = this.Q<TextField>("NodeTitleTextField");
 
             actorFieldContainer = this.Q<VisualElement>("ActorFieldContainer");
             conversantFieldContainer = this.Q<VisualElement>("ConversantFieldContainer");

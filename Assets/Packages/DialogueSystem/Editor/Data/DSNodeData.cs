@@ -50,6 +50,11 @@ namespace Tools.DialogueSystem.Data
             this.DialogueType = type;
         }
 
+        public void SetName(string name)
+        {
+            this.Name = name;
+        }
+
         public void SetAllIds(string actorId, string conversantId, string audioClipId, string dialogueId)
         {
             this.ActorId = actorId;

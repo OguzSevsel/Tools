@@ -96,17 +96,6 @@ namespace Tools.DialogueSystem.UI
             this.contentContainer.Add(miniMapButton);
         }
 
-        private void HandleOpenMiniMapButtonClicked()
-        {
-            ToggleMiniMap();
-        }
-
-        private void HandleOpenSideBarButtonClicked()
-        {
-            OnSideBarOpened?.Invoke();
-            OpenSideBarButton.SetVisible(false);
-        }
-
         #region -----INITIALIZATION-----
 
         private void RegisterEvents()
@@ -397,9 +386,33 @@ namespace Tools.DialogueSystem.UI
             RefreshNodes();
         }
 
+        private void HandleOpenMiniMapButtonClicked()
+        {
+            ToggleMiniMap();
+        }
+
+        private void HandleOpenSideBarButtonClicked()
+        {
+            OnSideBarOpened?.Invoke();
+            OpenSideBarButton.SetVisible(false);
+        }
+
         #endregion
 
         #region -----UTILS-----
+
+        public void SelectAll()
+        {
+            foreach (DSNode node in this.nodes.ToList().OfType<DSNode>())
+            {
+                AddToSelection(node);
+            }
+
+            foreach (Edge edge in this.edges)
+            {
+                AddToSelection(edge);
+            }
+        }
 
         public void ToggleMiniMap()
         {
@@ -575,6 +588,8 @@ namespace Tools.DialogueSystem.UI
 
                 node.Data.SetAllIds(nodeData.ActorId, nodeData.ConversantId, nodeData.AudioClipId, nodeData.DialogueId);
 
+                node.Data.SetName(nodeData.Name);
+
                 pastedNodes.Add(originalID, node);
                 AddElement(node);
                 AddToSelection(node);
@@ -591,7 +606,6 @@ namespace Tools.DialogueSystem.UI
                 Edge edge = outputNode.OutputPort.ConnectTo(inputNode.InputPort);
 
                 AddElement(edge);
-                AddToSelection(edge);
             }
 
             RefreshNodes();

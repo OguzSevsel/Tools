@@ -2,8 +2,8 @@
     <Style src="project://database/Assets/Editor%20Default%20Resources/DialogueSystem/DialogueSystem.uss?fileID=7433441132597879392&amp;guid=d8ee67fa447200445a0b5eb322156409&amp;type=3#DialogueSystem"/>
     <ui:VisualElement name="DSNodeInspector" class="flexGrow" style="flex-grow: 1; justify-content: center; align-content: center;">
         <ui:VisualElement name="TitleContainer">
-            <ui:Label text="Node Title" style="-unity-text-align: middle-center; -unity-font-style: bold;"/>
-            <ui:TextField placeholder-text="Title" name="NodeTitleTextField" hide-placeholder-on-focus="true" style="-unity-text-align: middle-center; -unity-font-style: bold;">
+            <ui:Label text="Node Title" name="NodeTitleLabel" style="-unity-text-align: middle-center; -unity-font-style: bold; font-size: 15px; color: rgb(255, 255, 255);"/>
+            <ui:TextField placeholder-text="Title" name="NodeTitleTextField" hide-placeholder-on-focus="true" style="-unity-text-align: middle-center; -unity-font-style: bold; padding-top: 5px;">
                 <Bindings>
                     <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSNodeData, Tools.DialogueSystem.Editor" data-source-path="Name" binding-mode="TwoWay"/>
                 </Bindings>

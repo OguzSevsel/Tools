@@ -40,6 +40,11 @@ namespace Tools.DialogueSystem.UI
             graphView.RefreshNodes();
         }
 
+        public void SelectAll()
+        {
+            graphView.SelectAll();
+        }
+
         private void HandleOnSideBarToggled(bool isVisible)
         {
             if (isVisible)
