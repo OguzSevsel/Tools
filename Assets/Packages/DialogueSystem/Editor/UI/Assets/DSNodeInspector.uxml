@@ -1,94 +1,112 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Assets/Editor%20Default%20Resources/DialogueSystem/DialogueSystem.uss?fileID=7433441132597879392&amp;guid=d8ee67fa447200445a0b5eb322156409&amp;type=3#DialogueSystem"/>
     <ui:VisualElement name="DSNodeInspector" class="flexGrow" style="flex-grow: 1; justify-content: center; align-content: center;">
-        <ui:VisualElement name="ActorContainer" class="Spacing">
-            <ui:Button text="Change Actor" name="ActorButton"/>
-            <ui:VisualElement name="ActorFieldContainer">
-                <ui:TextField label="Name" placeholder-text="Name" name="ActorName" style="text-overflow: ellipsis; white-space: nowrap;">
-                    <Bindings>
-                        <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Name" binding-mode="TwoWay"/>
-                    </Bindings>
-                </ui:TextField>
-                <ui:TextField label="Description" placeholder-text="Description" name="ActorDescription" multiline="true" class="wrapText" style="white-space: normal; text-overflow: ellipsis;">
-                    <Bindings>
-                        <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Description" binding-mode="TwoWay"/>
-                    </Bindings>
-                </ui:TextField>
-                <ui:TextField label="Background" placeholder-text="Background" name="ActorBackground" multiline="true" class="wrapText" style="white-space: normal; text-overflow: ellipsis;">
-                    <Bindings>
-                        <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Background" binding-mode="TwoWay"/>
-                    </Bindings>
-                </ui:TextField>
-                <uie:ObjectField label="Object Field" name="ActorSprite" type="UnityEngine.Sprite, UnityEngine.CoreModule">
-                    <Bindings>
-                        <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Sprite" binding-mode="TwoWay"/>
-                    </Bindings>
-                </uie:ObjectField>
-            </ui:VisualElement>
+        <ui:VisualElement name="TitleContainer">
+            <ui:Label text="Node Title" style="-unity-text-align: middle-center; -unity-font-style: bold;"/>
+            <ui:TextField placeholder-text="Title" name="NodeTitleTextField" hide-placeholder-on-focus="true" style="-unity-text-align: middle-center; -unity-font-style: bold;">
+                <Bindings>
+                    <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSNodeData, Tools.DialogueSystem.Editor" data-source-path="Name" binding-mode="TwoWay"/>
+                </Bindings>
+            </ui:TextField>
         </ui:VisualElement>
-        <ui:VisualElement name="ConversantContainer" class="Spacing">
-            <ui:Button text="Change Conversant" name="ConversantButton"/>
-            <ui:VisualElement name="ConversantFieldContainer">
-                <ui:TextField label="Name" placeholder-text="Name" name="ConversantName" style="text-overflow: ellipsis;">
-                    <Bindings>
-                        <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Name" binding-mode="TwoWay"/>
-                    </Bindings>
-                </ui:TextField>
-                <ui:TextField label="Description" placeholder-text="Description" name="ConversantDescription" multiline="true" class="wrapText" style="white-space: normal; text-overflow: ellipsis;">
-                    <Bindings>
-                        <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Description" binding-mode="TwoWay"/>
-                    </Bindings>
-                </ui:TextField>
-                <ui:TextField label="Background" placeholder-text="Background" name="ConversantBackground" multiline="true" class="wrapText" style="white-space: normal; text-overflow: ellipsis;">
-                    <Bindings>
-                        <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Background" binding-mode="TwoWay"/>
-                    </Bindings>
-                </ui:TextField>
-                <uie:ObjectField label="Object Field" name="ConversantSprite" type="UnityEngine.Sprite, UnityEngine.CoreModule">
-                    <Bindings>
-                        <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Sprite" binding-mode="TwoWay"/>
-                    </Bindings>
-                </uie:ObjectField>
+        <ui:VisualElement name="FieldContainer">
+            <ui:VisualElement name="ActorContainer" class="Spacing">
+                <ui:VisualElement name="ActorDropdownContainer" style="flex-direction: row;">
+                    <ui:Button name="ActorButton" icon-image="project://database/Assets/Editor%20Default%20Resources/Icons/Arrow.png?fileID=-8614484880430382219&amp;guid=1a5d64c67247e4f4aa5d0ca6f1936a7e&amp;type=3#Dropdown Icon_0" class="height25 width25 inspectorButton"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="ActorFieldContainer" style="padding-top: 10px;">
+                    <ui:TextField label="Name" placeholder-text="Name" name="ActorName" style="text-overflow: ellipsis; white-space: nowrap;">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Name" binding-mode="TwoWay"/>
+                        </Bindings>
+                    </ui:TextField>
+                    <ui:TextField label="Description" placeholder-text="Description" name="ActorDescription" multiline="true" class="wrapText" style="white-space: normal; text-overflow: ellipsis;">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Description" binding-mode="TwoWay"/>
+                        </Bindings>
+                    </ui:TextField>
+                    <ui:TextField label="Background" placeholder-text="Background" name="ActorBackground" multiline="true" class="wrapText" style="white-space: normal; text-overflow: ellipsis;">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Background" binding-mode="TwoWay"/>
+                        </Bindings>
+                    </ui:TextField>
+                    <uie:ObjectField label="Object Field" name="ActorSprite" type="UnityEngine.Sprite, UnityEngine.CoreModule">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Sprite" binding-mode="TwoWay"/>
+                        </Bindings>
+                    </uie:ObjectField>
+                </ui:VisualElement>
             </ui:VisualElement>
-        </ui:VisualElement>
-        <ui:VisualElement name="AudioClipContainer" class="Spacing">
-            <ui:Button text="Change AudioClip" name="AudioClipButton"/>
-            <ui:VisualElement name="AudioClipFieldContainer">
-                <ui:TextField label="Name" placeholder-text="Name" name="AudioClipName" style="text-overflow: ellipsis;">
-                    <Bindings>
-                        <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSAudioClip, Tools.DialogueSystem.Editor" data-source-path="Name" binding-mode="TwoWay"/>
-                    </Bindings>
-                </ui:TextField>
-                <ui:TextField label="Description" placeholder-text="Description" name="AudioClipDescription" multiline="true" class="wrapText" style="white-space: normal; text-overflow: ellipsis;">
-                    <Bindings>
-                        <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSAudioClip, Tools.DialogueSystem.Editor" data-source-path="Description" binding-mode="TwoWay"/>
-                    </Bindings>
-                </ui:TextField>
-                <uie:ObjectField label="Object Field" name="AudioClip" type="UnityEngine.AudioClip, UnityEngine.AudioModule">
-                    <Bindings>
-                        <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSAudioClip, Tools.DialogueSystem.Editor" data-source-path="Clip" binding-mode="TwoWay"/>
-                    </Bindings>
-                </uie:ObjectField>
+            <ui:VisualElement name="ConversantContainer" class="Spacing">
+                <ui:VisualElement name="ConversantDropdownContainer" style="flex-direction: row;">
+                    <ui:Button name="ConversantButton" icon-image="project://database/Assets/Editor%20Default%20Resources/Icons/Arrow.png?fileID=-8614484880430382219&amp;guid=1a5d64c67247e4f4aa5d0ca6f1936a7e&amp;type=3#Dropdown Icon_0" class="height25 width25 inspectorButton"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="ConversantFieldContainer" style="padding-top: 10px;">
+                    <ui:TextField label="Name" placeholder-text="Name" name="ConversantName" style="text-overflow: ellipsis;">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Name" binding-mode="TwoWay"/>
+                        </Bindings>
+                    </ui:TextField>
+                    <ui:TextField label="Description" placeholder-text="Description" name="ConversantDescription" multiline="true" class="wrapText" style="white-space: normal; text-overflow: ellipsis;">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Description" binding-mode="TwoWay"/>
+                        </Bindings>
+                    </ui:TextField>
+                    <ui:TextField label="Background" placeholder-text="Background" name="ConversantBackground" multiline="true" class="wrapText" style="white-space: normal; text-overflow: ellipsis;">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Background" binding-mode="TwoWay"/>
+                        </Bindings>
+                    </ui:TextField>
+                    <uie:ObjectField label="Object Field" name="ConversantSprite" type="UnityEngine.Sprite, UnityEngine.CoreModule">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Sprite" binding-mode="TwoWay"/>
+                        </Bindings>
+                    </uie:ObjectField>
+                </ui:VisualElement>
             </ui:VisualElement>
-        </ui:VisualElement>
-        <ui:VisualElement name="DialogueContainer" class="Spacing">
-            <ui:Button text="Change Dialogue" name="DialogueButton"/>
-            <ui:VisualElement name="DialogueFieldContainer">
-                <ui:TextField label="Name" placeholder-text="Name" name="DialogueName" style="text-overflow: ellipsis;">
-                    <Bindings>
-                        <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSDialogueText, Tools.DialogueSystem.Editor" data-source-path="Name" binding-mode="TwoWay"/>
-                    </Bindings>
-                </ui:TextField>
-                <ui:TextField label="Description" placeholder-text="Description" name="DialogueDescription" multiline="true" class="wrapText" style="white-space: normal; text-overflow: ellipsis;">
-                    <Bindings>
-                        <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSDialogueText, Tools.DialogueSystem.Editor" data-source-path="Description" binding-mode="TwoWay"/>
-                    </Bindings>
-                </ui:TextField>
-                <ui:TextField label="Dialogue Text" placeholder-text="Dialogue Text" name="DialogueText" multiline="true" style="white-space: normal; text-overflow: ellipsis;">
-                    <Bindings>
-                        <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSDialogueText, Tools.DialogueSystem.Editor" data-source-path="Text" binding-mode="TwoWay"/>
-                    </Bindings>
-                </ui:TextField>
+            <ui:VisualElement name="AudioClipContainer" class="Spacing">
+                <ui:VisualElement name="AudioClipDropdownContainer" style="flex-direction: row;">
+                    <ui:Button name="AudioClipButton" icon-image="project://database/Assets/Editor%20Default%20Resources/Icons/Arrow.png?fileID=-8614484880430382219&amp;guid=1a5d64c67247e4f4aa5d0ca6f1936a7e&amp;type=3#Dropdown Icon_0" class="height25 width25 inspectorButton"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="AudioClipFieldContainer" style="padding-top: 10px;">
+                    <ui:TextField label="Name" placeholder-text="Name" name="AudioClipName" style="text-overflow: ellipsis;">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSAudioClip, Tools.DialogueSystem.Editor" data-source-path="Name" binding-mode="TwoWay"/>
+                        </Bindings>
+                    </ui:TextField>
+                    <ui:TextField label="Description" placeholder-text="Description" name="AudioClipDescription" multiline="true" class="wrapText" style="white-space: normal; text-overflow: ellipsis;">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSAudioClip, Tools.DialogueSystem.Editor" data-source-path="Description" binding-mode="TwoWay"/>
+                        </Bindings>
+                    </ui:TextField>
+                    <uie:ObjectField label="Object Field" name="AudioClip" type="UnityEngine.AudioClip, UnityEngine.AudioModule">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSAudioClip, Tools.DialogueSystem.Editor" data-source-path="Clip" binding-mode="TwoWay"/>
+                        </Bindings>
+                    </uie:ObjectField>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="DialogueContainer" class="Spacing">
+                <ui:VisualElement name="DialogueDropdownContainer" style="flex-direction: row;">
+                    <ui:Button name="DialogueButton" icon-image="project://database/Assets/Editor%20Default%20Resources/Icons/Arrow.png?fileID=-8614484880430382219&amp;guid=1a5d64c67247e4f4aa5d0ca6f1936a7e&amp;type=3#Dropdown Icon_0" class="height25 width25 inspectorButton"/>
+                </ui:VisualElement>
+                <ui:VisualElement name="DialogueFieldContainer" style="padding-top: 10px;">
+                    <ui:TextField label="Name" placeholder-text="Name" name="DialogueName" style="text-overflow: ellipsis;">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSDialogueText, Tools.DialogueSystem.Editor" data-source-path="Name" binding-mode="TwoWay"/>
+                        </Bindings>
+                    </ui:TextField>
+                    <ui:TextField label="Description" placeholder-text="Description" name="DialogueDescription" multiline="true" class="wrapText" style="white-space: normal; text-overflow: ellipsis;">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSDialogueText, Tools.DialogueSystem.Editor" data-source-path="Description" binding-mode="TwoWay"/>
+                        </Bindings>
+                    </ui:TextField>
+                    <ui:TextField label="Dialogue Text" placeholder-text="Dialogue Text" name="DialogueText" multiline="true" style="white-space: normal; text-overflow: ellipsis;">
+                        <Bindings>
+                            <ui:DataBinding property="value" data-source-type="Tools.DialogueSystem.Data.DSDialogueText, Tools.DialogueSystem.Editor" data-source-path="Text" binding-mode="TwoWay"/>
+                        </Bindings>
+                    </ui:TextField>
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>

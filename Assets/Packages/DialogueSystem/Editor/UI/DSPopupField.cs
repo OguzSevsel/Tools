@@ -42,18 +42,20 @@ namespace Tools.DialogueSystem.UI
 
         public DSPopUpField(string title)
         {
-            style.flexDirection = FlexDirection.Row;
-            style.alignItems = Align.Center;
+            this.SetFlex(flexDirection: FlexDirection.Row, flexGrow: 1, flexShrink: 1, flexWrap: Wrap.NoWrap);
+            this.SetPaddings(allPadding: 0);
+            this.SetAlignment(alignItems: Align.Center);
 
             _label = new Label(title);
-            _label.style.minWidth = 100;
+            _label.SetWidth(minWidth: 100);
 
             _dropdownButton = new Button(OpenDropdown)
             {
                 text = "Click To Select"
             };
 
-            _dropdownButton.style.flexGrow = 1;
+            _dropdownButton.SetFlex(flexGrow: 1);
+            _dropdownButton.SetHeight(minHeight: 25);
 
             Add(_label);
             Add(_dropdownButton);

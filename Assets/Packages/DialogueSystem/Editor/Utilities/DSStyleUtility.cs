@@ -52,8 +52,6 @@ namespace Tools.DialogueSystem.Utilities
             {
                 element.style.filter = StyleKeyword.Null;
             }
-
-            
         }
 
         public static bool IsVisible(this VisualElement element)
@@ -189,11 +187,37 @@ namespace Tools.DialogueSystem.Utilities
             return element;
         }
 
-        public static VisualElement SetTextSettings(this VisualElement element, TextAnchor? alignment = null, FontStyle? fontStyle = null, int? fontSize = null)
+        public static VisualElement SetTextAlign(this VisualElement element, TextAnchor? alignment = null)
         {
             element.style.unityTextAlign = alignment ?? element.style.unityTextAlign;
-            element.style.fontSize = fontSize ?? element.style.fontSize;
+            return element;
+        }
+
+        public static VisualElement SetTextSize(this VisualElement element, int? size = null, float? minSize = null, float? maxSize = null)
+        {
+            element.style.fontSize = size ?? element.style.fontSize;
+
+            if (minSize != null || maxSize != null)
+            {
+                element.style.unityTextAutoSize = new StyleTextAutoSize(new TextAutoSize(TextAutoSizeMode.BestFit, minSize: minSize ?? element.style.fontSize.value, maxSize: maxSize ?? element.style.fontSize.value));
+            }
+
+            return element;
+        }
+
+        public static VisualElement SetTextWeight(this VisualElement element, FontStyle? fontStyle = null)
+        {
             element.style.unityFontStyleAndWeight = fontStyle ?? element.style.unityFontStyleAndWeight;
+
+            return element;
+        }
+
+        public static VisualElement SetOverFlow(this VisualElement element, TextOverflow? textOverflow = null, Overflow? overflow = null, WhiteSpace? whiteSpace = null)
+        {
+            element.style.textOverflow = textOverflow ?? element.style.textOverflow;
+            element.style.overflow = overflow ?? element.style.overflow;
+            element.style.whiteSpace = whiteSpace ?? element.style.whiteSpace;
+
             return element;
         }
 

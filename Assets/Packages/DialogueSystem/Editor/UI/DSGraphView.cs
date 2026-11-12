@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Tools.DialogueSystem.Data;
-using Tools.DialogueSystem.Elements;
 using Tools.DialogueSystem.UI.Elements;
 using Tools.DialogueSystem.UI.Inspector;
 using Tools.DialogueSystem.Utilities;
@@ -11,7 +9,6 @@ using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static Tools.DialogueSystem.UI.DSGraphView;
 
 namespace Tools.DialogueSystem.UI
 {
@@ -138,18 +135,18 @@ namespace Tools.DialogueSystem.UI
             {
                 if (data is DSActor)
                 {
-                    if (nodeData.Actor == data)
-                        nodeData.Actor = null;
+                    if (nodeData.ActorId == data.Guid)
+                        nodeData.SetActorId("");
 
-                    if (nodeData.Conversant == data)
-                        nodeData.Conversant = null;
+                    if (nodeData.ConversantId == data.Guid)
+                        nodeData.SetConversantId("");
                 }
 
-                if (data is DSAudioClip && nodeData.AudioClip == data)
-                    nodeData.AudioClip = null;
+                if (data is DSAudioClip && nodeData.AudioClipId == data.Guid)
+                    nodeData.SetAudioClipId("");
 
-                if (data is DSDialogueText && nodeData.Dialogue == data)
-                    nodeData.Dialogue = null;
+                if (data is DSDialogueText && nodeData.DialogueId == data.Guid)
+                    nodeData.SetDialogueId("");
             }
 
             if (selectedNode == null)
@@ -172,6 +169,7 @@ namespace Tools.DialogueSystem.UI
             deleteSelection -= HandleDeleteSelection;
             DSDatabaseManager.Instance.DatabaseClosed -= HandleDatabaseClosed;
             DSDatabaseManager.Instance.DatabaseOpened -= HandleDatabaseOpened;
+            
             DSEditorView.OnWindowCloses -= UnRegisterEvents;
         }
 
@@ -277,21 +275,14 @@ namespace Tools.DialogueSystem.UI
         public DSNode CreateNode(DialogueType type, Vector2 position, bool isStartNode, bool isPasting = false)
         {
             Type nodeType = Type.GetType($"Tools.DialogueSystem.UI.Elements.DSNode");
-
             DSNode node = (DSNode)Activator.CreateInstance(nodeType);
 
-            DSNodeData data = new DSNodeData(position, type)
-            {
-                IsStartNode = isStartNode
-            };
-
+            DSNodeData data = new DSNodeData(position, type, "New Node", isStartNode);
             node.Initialize(data);
             CurrentConversation.AddToNodes(node.Data);
 
             OnNodeCreated?.Invoke(CurrentConversation);
-
             node.OnNodeSelected += HandleOnNodeSelected;
-            node.OnEdgeDeleted += HandleOnEdgeDeleted;
 
             return node;
         }
@@ -305,7 +296,6 @@ namespace Tools.DialogueSystem.UI
             node.Initialize(data);
 
             node.OnNodeSelected += HandleOnNodeSelected;
-            node.OnEdgeDeleted += HandleOnEdgeDeleted;
 
             return node;
         }
@@ -345,6 +335,12 @@ namespace Tools.DialogueSystem.UI
         private void HandleDatabaseClosed(DSDatabase database)
         {
             Save();
+
+            if (this.inspector != null)
+            {
+                this.inspector.GetVisualElement().RemoveFromHierarchy();
+                this.inspector = null;
+            }
         }
 
         private void HandleMouseMove(MouseMoveEvent evt)
@@ -398,14 +394,7 @@ namespace Tools.DialogueSystem.UI
 
             OnInspectorOpened?.Invoke(this.inspector.GetVisualElement(), this.selectedNode);
             inspector.LoadFields(selectedNode.Data);
-        }
-
-        private void HandleOnEdgeDeleted(Edge edge)
-        {
-            if (this.Contains(edge))
-            {
-                this.RemoveElement(edge);
-            }
+            RefreshNodes();
         }
 
         #endregion
@@ -449,7 +438,6 @@ namespace Tools.DialogueSystem.UI
             foreach (DSNode node in nodes.OfType<DSNode>().ToList())
             {
                 node.OnNodeSelected -= HandleOnNodeSelected;
-                node.OnEdgeDeleted -= HandleOnEdgeDeleted;
             }
 
             DeleteElements(edges);
@@ -469,7 +457,6 @@ namespace Tools.DialogueSystem.UI
             foreach (DSNode node in selectedNodes)
             {
                 CurrentConversation.Nodes.Remove(node.Data);
-                node.OnEdgeDeleted -= HandleOnEdgeDeleted;
                 node.OnNodeSelected -= HandleOnNodeSelected;
             }
 
@@ -503,7 +490,7 @@ namespace Tools.DialogueSystem.UI
             if (selectedNode == null)
                 return;
 
-            selectedNode.Data.SetAllFields(copiedNodeData.Actor, copiedNodeData.Conversant, copiedNodeData.AudioClip, copiedNodeData.Dialogue);
+            selectedNode.Data.SetAllIds(copiedNodeData.ActorId, copiedNodeData.ConversantId, copiedNodeData.AudioClipId, copiedNodeData.DialogueId);
 
             if (inspector != null)
             {
@@ -586,12 +573,7 @@ namespace Tools.DialogueSystem.UI
 
                 DSNode node = CreateNode(nodeData.DialogueType, position, nodeData.IsStartNode, true);
 
-                DSActor actor = DSDatabaseManager.Instance.Current.Get<DSActor>(nodeData.Actor.Guid);
-                DSActor conversant = DSDatabaseManager.Instance.Current.Get<DSActor>(nodeData.Conversant.Guid);
-                DSAudioClip audioClip = DSDatabaseManager.Instance.Current.Get<DSAudioClip>(nodeData.AudioClip.Guid);
-                DSDialogueText dialogue = DSDatabaseManager.Instance.Current.Get<DSDialogueText>(nodeData.Dialogue.Guid);
-
-                node.Data.SetAllFields(actor, conversant, audioClip, dialogue);
+                node.Data.SetAllIds(nodeData.ActorId, nodeData.ConversantId, nodeData.AudioClipId, nodeData.DialogueId);
 
                 pastedNodes.Add(originalID, node);
                 AddElement(node);

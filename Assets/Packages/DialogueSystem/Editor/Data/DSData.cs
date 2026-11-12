@@ -9,7 +9,7 @@ namespace Tools.DialogueSystem.Data
     [Serializable]
     public abstract class DSData : INotifyBindablePropertyChanged
     {
-        [SerializeField] private string _name = "Name";
+        [SerializeField, SerializeReference] private string _name = "Name";
 
         [CreateProperty]
         public string Name
@@ -27,7 +27,7 @@ namespace Tools.DialogueSystem.Data
             }
         }
 
-        [SerializeField] private string _description = "Description";
+        [SerializeField, SerializeReference] private string _description = "Description";
 
         [CreateProperty]
         public string Description
@@ -46,6 +46,7 @@ namespace Tools.DialogueSystem.Data
         }
 
         [field: SerializeField] public string Guid { get; internal set; } = "UniqueID";
+
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
 
         protected DSData(string title, string description)
@@ -54,8 +55,7 @@ namespace Tools.DialogueSystem.Data
             this.Description = description;
         }
 
-        protected void Notify(
-            [CallerMemberName] string propertyName = null)
+        protected void Notify([CallerMemberName] string propertyName = null)
         {
             propertyChanged?.Invoke(
                 this,

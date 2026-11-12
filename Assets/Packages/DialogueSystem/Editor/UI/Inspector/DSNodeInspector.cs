@@ -3,6 +3,8 @@ using System.Linq;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.UI.Inspector;
 using Tools.DialogueSystem.Utilities;
+using Unity.Plastic.Antlr3.Runtime;
+using UnityEditor.Search;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -37,7 +39,6 @@ namespace Tools.DialogueSystem.UI.Elements
             this.data = data;
             this.GraphView = graphView;
             nodeInspectorAsset.CloneTree(this);
-            this.SetBackgroundColor(Color.blue);
             Create();
         }
 
@@ -53,15 +54,15 @@ namespace Tools.DialogueSystem.UI.Elements
             audioDropdown.SetItems(database.AudioClips);
             dialogueDropdown.SetItems(database.DialogueTexts);
 
-            actorDropdown.value = data.Actor;
-            conversantDropdown.value = data.Conversant;
-            audioDropdown.value = data.AudioClip;
-            dialogueDropdown.value = data.Dialogue;
+            actorDropdown.value = database.Get<DSActor>(data.ActorId);
+            conversantDropdown.value = database.Get<DSActor>(data.ConversantId);
+            audioDropdown.value = database.Get<DSAudioClip>(data.AudioClipId);
+            dialogueDropdown.value = database.Get<DSDialogueText>(data.DialogueId);
 
-            this.actorFieldContainer.dataSource = this.data.Actor;
-            this.conversantFieldContainer.dataSource = this.data.Conversant;
-            this.audioClipFieldContainer.dataSource = this.data.AudioClip;
-            this.dialogueFieldContainer.dataSource = this.data.Dialogue;
+            this.actorFieldContainer.dataSource = database.Get<DSActor>(data.ActorId);
+            this.conversantFieldContainer.dataSource = database.Get<DSActor>(data.ConversantId);
+            this.audioClipFieldContainer.dataSource = database.Get<DSAudioClip>(data.AudioClipId);
+            this.dialogueFieldContainer.dataSource = database.Get<DSDialogueText>(data.DialogueId);
         }
 
         #region INITIALIZATION
@@ -75,10 +76,10 @@ namespace Tools.DialogueSystem.UI.Elements
 
         private void CreateUIElements()
         {
-            actorContainer = this.Q<VisualElement>("ActorContainer");
-            conversantContainer = this.Q<VisualElement>("ConversantContainer");
-            audioClipContainer = this.Q<VisualElement>("AudioClipContainer");
-            dialogueContainer = this.Q<VisualElement>("DialogueContainer");
+            actorContainer = this.Q<VisualElement>("ActorDropdownContainer");
+            conversantContainer = this.Q<VisualElement>("ConversantDropdownContainer");
+            audioClipContainer = this.Q<VisualElement>("AudioClipDropdownContainer");
+            dialogueContainer = this.Q<VisualElement>("DialogueDropdownContainer");
 
             actorFieldContainer = this.Q<VisualElement>("ActorFieldContainer");
             conversantFieldContainer = this.Q<VisualElement>("ConversantFieldContainer");
@@ -100,10 +101,10 @@ namespace Tools.DialogueSystem.UI.Elements
             audioClipContainer.Insert(0, audioDropdown);
             dialogueContainer.Insert(0, dialogueDropdown);
 
-            ToggleVisibility(actorFieldContainer);
-            ToggleVisibility(conversantFieldContainer);
-            ToggleVisibility(audioClipFieldContainer);
-            ToggleVisibility(dialogueFieldContainer);
+            FieldVisible(actorFieldContainer, actorButton, false);
+            FieldVisible(conversantFieldContainer, conversantButton, false);
+            FieldVisible(audioClipFieldContainer, audioClipButton, false);
+            FieldVisible(dialogueFieldContainer, dialogueButton, false);
         }
 
         #endregion
@@ -146,54 +147,54 @@ namespace Tools.DialogueSystem.UI.Elements
 
         private void HandleDialogueButtonClicked()
         {
-            ToggleVisibility(dialogueFieldContainer);
+            ToggleFieldVisibility(dialogueFieldContainer, dialogueButton);
         }
 
         private void HandleAudioClipButtonClicked()
         {
-            ToggleVisibility(audioClipFieldContainer);
+            ToggleFieldVisibility(audioClipFieldContainer, audioClipButton);
         }
 
         private void HandleConversantButtonClicked()
         {
-            ToggleVisibility(conversantFieldContainer);
+            ToggleFieldVisibility(conversantFieldContainer, conversantButton);
         }
 
         private void HandleActorButtonClicked()
         {
-            ToggleVisibility(actorFieldContainer);
+            ToggleFieldVisibility(actorFieldContainer, actorButton);
         }
 
         private void HandleOnDialogueValueChanged(DSDialogueText dialogue)
         {
-            this.data.Dialogue = dialogue;
+            this.data.SetDialogueId(dialogue.Guid);
             ChangeSelectionData<DSDialogueText>(dialogue);
+            this.dialogueFieldContainer.dataSource = DSDatabaseManager.Instance.Current.Get<DSDialogueText>(this.data.DialogueId);
             GraphView.RefreshNodes();
-            this.dialogueFieldContainer.dataSource = this.data.Dialogue;
         }
 
         private void HandleOnAudioValueChanged(DSAudioClip clip)
         {
-            this.data.AudioClip = clip;
+            this.data.SetAudioClipId(clip.Guid);
             ChangeSelectionData<DSAudioClip>(clip);
+            this.audioClipFieldContainer.dataSource = DSDatabaseManager.Instance.Current.Get<DSAudioClip>(this.data.AudioClipId);
             GraphView.RefreshNodes();
-            this.audioClipFieldContainer.dataSource = this.data.AudioClip;
         }
 
         private void HandleOnConversantValueChanged(DSActor conversant)
         {
-            this.data.Conversant = conversant;
+            this.data.SetConversantId(conversant.Guid);
             ChangeSelectionData<DSActor>(conversant, false);
+            this.conversantFieldContainer.dataSource = DSDatabaseManager.Instance.Current.Get<DSActor>(this.data.ConversantId);
             GraphView.RefreshNodes();
-            this.conversantFieldContainer.dataSource = this.data.Conversant;
         }
 
         private void HandleOnActorValueChanged(DSActor actor)
         {
-            this.data.Actor = actor;
+            this.data.SetActorId(actor.Guid);
             ChangeSelectionData<DSActor>(actor);
+            this.actorFieldContainer.dataSource = DSDatabaseManager.Instance.Current.Get<DSActor>(this.data.ActorId);
             GraphView.RefreshNodes();
-            this.actorFieldContainer.dataSource = this.data.Actor;
         }
 
         #endregion
@@ -205,14 +206,28 @@ namespace Tools.DialogueSystem.UI.Elements
             return this;
         }
 
-        private void ToggleVisibility(VisualElement element)
+        private void FieldVisible(VisualElement element, Button button, bool isVisible = true)
+        {
+            element.SetVisible(isVisible);
+
+            if (isVisible)
+            {
+                button.Rotate(90);
+                return;
+            }
+            button.Rotate(0);
+        }
+
+        private void ToggleFieldVisibility(VisualElement element, Button button)
         {
             if (element.IsVisible())
             {
                 element.SetVisible(false);
+                button.Rotate(90);
                 return;
             }
             element.SetVisible(true);
+            button.Rotate(0);
         }
 
         private void ChangeSelectionData<T>(T item, bool isActor = true) where T : DSData
@@ -225,7 +240,7 @@ namespace Tools.DialogueSystem.UI.Elements
                 {
                     foreach (var node in selectionList)
                     {
-                        node.Data.AudioClip = clip;
+                        node.Data.SetAudioClipId(clip.Guid);
                     }
                     return;
                 }
@@ -234,7 +249,7 @@ namespace Tools.DialogueSystem.UI.Elements
                 {
                     foreach (var node in selectionList)
                     {
-                        node.Data.Actor = actor;
+                        node.Data.SetActorId(actor.Guid);
                     }
                     return;
                 }
@@ -243,7 +258,7 @@ namespace Tools.DialogueSystem.UI.Elements
                 {
                     foreach (var node in selectionList)
                     {
-                        node.Data.Conversant = conversant;
+                        node.Data.SetConversantId(conversant.Guid);
                     }
                     return;
                 }
@@ -252,7 +267,7 @@ namespace Tools.DialogueSystem.UI.Elements
                 {
                     foreach (var node in selectionList)
                     {
-                        node.Data.Dialogue = dialogue;
+                        node.Data.SetDialogueId(dialogue.Guid);
                     }
                     return;
                 }

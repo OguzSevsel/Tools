@@ -8,123 +8,74 @@ using UnityEngine.UIElements;
 namespace Tools.DialogueSystem.Data
 {
     [Serializable]
-    [GeneratePropertyBag]
+    //[GeneratePropertyBag]
     public class DSNodeData : INotifyBindablePropertyChanged
     {
         [field: SerializeField] public string Guid { get; private set; }
-
-        [SerializeField] private DSDialogueText _dialogue;
-        [CreateProperty]
-        public DSDialogueText Dialogue
-        {
-            get => _dialogue;
-            set
-            {
-                if (_dialogue == value) return;
-
-                if (_dialogue != null) _dialogue.propertyChanged -= OnDialogueChanged;
-                _dialogue = value;
-                if (_dialogue != null) _dialogue.propertyChanged += OnDialogueChanged;
-
-                Notify(nameof(Dialogue));
-                Notify(nameof(DialogueText));
-            }
-        }
-
-        [CreateProperty]
-        public string DialogueText => _dialogue?.Text;
-
-        void OnDialogueChanged(object sender, BindablePropertyChangedEventArgs e)
-        {
-            if (e.propertyName == nameof(DSDialogueText.Text))
-                Notify(nameof(DialogueText));
-        }
-
-        [SerializeField] private DSAudioClip _audioClip;
-        [CreateProperty]
-        public DSAudioClip AudioClip
-        {
-            get => _audioClip;
-            set
-            {
-                if (_audioClip == value)
-                    return;
-
-                _audioClip = value;
-                Notify();
-            }
-        }
-
-        [SerializeField] private DSActor _actor;
-
-        [CreateProperty]
-        public DSActor Actor
-        {
-            get => _actor;
-            set
-            {
-                if (_actor == value)
-                    return;
-
-                _actor = value;
-                Notify();
-            }
-        }
-
-        [SerializeField] private DSActor _conversant;
-        [CreateProperty]
-        public DSActor Conversant
-        {
-            get => _conversant;
-            set
-            {
-                if (_conversant == value)
-                    return;
-
-                _conversant = value;
-                Notify();
-            }
-        }
-
         [field: SerializeField] public Vector2 Position { get; private set; }
         [field: SerializeField] public List<string> OutputIds { get; set; }
         public DialogueType DialogueType;
         public bool IsStartNode;
 
-        public DSNodeData(Vector2 position, DialogueType type)
+        [field: SerializeField] public string ActorId { get; private set; }
+        [field: SerializeField] public string ConversantId { get; private set; }
+        [field: SerializeField] public string AudioClipId { get; private set; }
+        [field: SerializeField] public string DialogueId { get; private set; }
+
+        [SerializeField, SerializeReference] private string _name;
+
+        [CreateProperty]
+        public string Name
+        {
+            get => _name;
+            private set
+            {
+                if (_name == value)
+                {
+                    return;
+                }
+
+                _name = value;
+                Notify();
+            }
+        }
+
+        public DSNodeData(Vector2 position, DialogueType type, string name, bool isStartNode)
         {
             this.Guid = GUID.Generate().ToString();
+            this.Name = name;
+            this.IsStartNode = isStartNode;
             this.OutputIds = new List<string>();
             this.Position = position;
             this.DialogueType = type;
         }
 
-        public void SetActor(DSActor actor)
+        public void SetAllIds(string actorId, string conversantId, string audioClipId, string dialogueId)
         {
-            this.Actor = actor;
+            this.ActorId = actorId;
+            this.ConversantId = conversantId;
+            this.AudioClipId = audioClipId;
+            this.DialogueId = dialogueId;
         }
 
-        public void SetConversant(DSActor conversant)
+        public void SetAudioClipId(string id)
         {
-            this.Conversant = conversant;
+            this.AudioClipId = id;
         }
 
-        public void SetAudioClip(DSAudioClip audioClip)
+        public void SetActorId(string id)
         {
-            this.AudioClip = audioClip;
+            this.ActorId = id;
         }
 
-        public void SetDialogue(DSDialogueText dialogue)
+        public void SetDialogueId(string id)
         {
-            this.Dialogue = dialogue;
+            this.DialogueId = id;
         }
 
-        public void SetAllFields(DSActor actor, DSActor conversant, DSAudioClip audioClip, DSDialogueText dialogue)
+        public void SetConversantId(string id)
         {
-            this.Actor = actor;
-            this.Conversant = conversant;
-            this.AudioClip = audioClip;
-            this.Dialogue = dialogue;
+            this.ConversantId = id;
         }
 
         public void SetPosition(Vector2 position) => this.Position = position;

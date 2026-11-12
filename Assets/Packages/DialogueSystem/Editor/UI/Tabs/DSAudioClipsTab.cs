@@ -44,7 +44,7 @@ namespace Tools.DialogueSystem.UI
 
         private void OnCreateAudioClipsButtonClicked()
         {
-            DSAudioClip audioClip = new("New Clip", "New Description", null);
+            DSAudioClip audioClip = new("New Audio Clip", "Audip Clip Description", null);
             VisualElement cardElement = CreateCard(cardAsset, audioClip);
             AddCard(audioClipContainer, AudioClips, audioClip, cardElement);
             DSDatabaseManager.Instance.Current.Register(audioClip);

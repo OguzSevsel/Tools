@@ -7,7 +7,7 @@ namespace Tools.DialogueSystem.Data
     [Serializable]
     public class DSDialogueText : DSData
     {
-        [SerializeField] private string _text;
+        [SerializeField, SerializeReference] private string _text;
 
         [CreateProperty]
         public string Text

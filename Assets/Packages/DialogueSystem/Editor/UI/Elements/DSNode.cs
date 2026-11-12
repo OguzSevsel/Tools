@@ -17,11 +17,12 @@ namespace Tools.DialogueSystem.UI.Elements
         public Port OutputPort { get; set; }
         public DSNodeData Data = null;
         public event Action<DSNode> OnNodeSelected;
-        public event Action<Edge> OnEdgeDeleted;
 
         private VisualElement portContainer;
         private VisualElement infoContainer;
         private VisualElement container;
+        
+        private Label titleLabel;
         private Label actorLabel;
         private Label conversantLabel;
         private Label audioClipLabel;
@@ -80,7 +81,6 @@ namespace Tools.DialogueSystem.UI.Elements
             CreateInfoContainer();
             CreateTitleLabel();
             CreateInfoLabels();
-            //ContainerBGColors();
             AddTo(mainContainer, portContainer);
             AddTo(portContainer, container);
             AddTo(container, titleContainer, infoContainer);
@@ -99,16 +99,31 @@ namespace Tools.DialogueSystem.UI.Elements
 
         private void CreateTitleLabel()
         {
-            Label label = DSElementUtility.CreateLabel("Node");
-            label.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
-            label.SetTextSettings(fontStyle: FontStyle.Bold, alignment: TextAnchor.MiddleCenter);
-            label.SetFlex(flexGrow: 1);
+            titleLabel = DSElementUtility.CreateLabel("");
+            titleLabel.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
+            titleLabel.SetTextWeight(FontStyle.Bold);
+            titleLabel.SetTextAlign(TextAnchor.MiddleCenter);
+            titleLabel.SetOverFlow(TextOverflow.Ellipsis, Overflow.Hidden, WhiteSpace.NoWrap);
+            titleLabel.SetFlex(flexGrow: 1);
+            
             titleContainer.Clear();
             titleContainer.SetBackgroundColor(DSColors.WindowDarkGrey2);
             titleContainer.SetBorder(DSColors.GridLightGrey4, 2);
             titleContainer.SetBorderRadius(5);
-            titleContainer.Insert(0, label);
+            titleContainer.SetWidth(maxWidth: 200);
+            titleContainer.Insert(0, titleLabel);
             titleContainer.SetFlex(flexGrow: 1);
+
+            if (!this.Data.IsStartNode)
+            {
+                var binding = new LabelBinding(titleLabel, this.Data, "text", nameof(this.Data.Name), BindingMode.ToTarget);
+                binding.Label.ClearBinding(binding.Id);
+                binding.SetBinding();
+                return;
+            }
+
+            titleContainer.SetBackgroundColor(Color.green);
+            titleLabel.text = "Start Node";
         }
 
         private void CreateInfoLabels()
@@ -135,13 +150,6 @@ namespace Tools.DialogueSystem.UI.Elements
             portContainer.SetBackgroundColor(DSColors.WindowDarkGrey2);
         }
 
-        private void ContainerBGColors()
-        {
-            mainContainer.SetBackgroundColor(Color.red);
-            portContainer.SetBackgroundColor(Color.blue);
-            titleContainer.SetBackgroundColor(Color.green);
-        }
-
         #region Creation
 
         private Label[] CreateLabels(params Label[] labels)
@@ -149,8 +157,11 @@ namespace Tools.DialogueSystem.UI.Elements
             for (int i = 0; i < labels.Length; i++)
             {
                 labels[i] = DSElementUtility.CreateLabel("");
-                labels[i].style.whiteSpace = WhiteSpace.Normal;
                 labels[i].SetWidth(maxWidth: 250);
+                labels[i].SetHeight(maxHeight: 150);
+                labels[i].SetOverFlow(TextOverflow.Ellipsis, Overflow.Hidden, WhiteSpace.Normal);
+                labels[i].SetTextAlign(TextAnchor.MiddleCenter);
+                labels[i].SetTextWeight(FontStyle.BoldAndItalic);
             }
 
             return labels;
@@ -176,6 +187,11 @@ namespace Tools.DialogueSystem.UI.Elements
             return port;
         }
 
+        private T GetFromDatabase<T>(string id) where T : DSData
+        {
+            return DSDatabaseManager.Instance.Current.Get<T>(id);
+        }
+
         internal void SetInfo(bool showActor, bool showConversant, bool showAudioClip, bool showDialogueText)
         {
             if (this.Data == null)
@@ -185,24 +201,29 @@ namespace Tools.DialogueSystem.UI.Elements
 
             Dictionary<LabelBinding, bool> bindings = new Dictionary<LabelBinding, bool>();
 
-            if (this.Data.Actor != null)
+            var actor = GetFromDatabase<DSActor>(this.Data.ActorId);
+            var conversant = GetFromDatabase<DSActor>(this.Data.ConversantId);
+            var audioClip = GetFromDatabase<DSAudioClip>(this.Data.AudioClipId);
+            var dialogue = GetFromDatabase<DSDialogueText>(this.Data.DialogueId);
+
+            if (actor != null)
             {
-                bindings.Add(new LabelBinding(actorLabel, this.Data, "text", "Actor.Name", BindingMode.ToTarget), showActor);
+                bindings.Add(new LabelBinding(actorLabel, actor, "text", nameof(actor.Name), BindingMode.ToTarget), showActor);
             }
 
-            if (this.Data.Conversant != null)
+            if(conversant != null)
             {
-                bindings.Add(new LabelBinding(conversantLabel, this.Data, "text", "Conversant.Name", BindingMode.ToTarget), showConversant);
+                bindings.Add(new LabelBinding(conversantLabel, conversant, "text", nameof(conversant.Name), BindingMode.ToTarget), showConversant);
             }
 
-            if (this.Data.AudioClip != null)
+            if (audioClip != null)
             {
-                bindings.Add(new LabelBinding(audioClipLabel, this.Data, "text", "AudioClip.Name", BindingMode.ToTarget), showAudioClip);
+                bindings.Add(new LabelBinding(audioClipLabel, audioClip, "text", nameof(audioClip.Name), BindingMode.ToTarget), showAudioClip);
             }
             
-            if (this.Data.Dialogue != null)
+            if (dialogue != null)
             {
-                bindings.Add(new LabelBinding(dialogueTextLabel, this.Data, "text", nameof(DSNodeData.DialogueText), BindingMode.ToTarget), showDialogueText);
+                bindings.Add(new LabelBinding(dialogueTextLabel, dialogue, "text", nameof(dialogue.Text), BindingMode.ToTarget), showDialogueText);
             }
 
             SetInfoVisible(new Dictionary<Label, bool> 
@@ -240,55 +261,6 @@ namespace Tools.DialogueSystem.UI.Elements
                 }
             }
         }
-
-        //public TextField CreateTextField(string title = null, string label = null, bool isMultiLine = false, VisualElement customDataContainer = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
-        //{
-        //    TextField textField = Tools.DialogueSystem.Utilities.DSElementUtility.CreateTextField(title, label, isMultiLine, onValueChanged: onValueChanged);
-
-        //    if (isMultiLine)
-        //    {
-        //        textField.AddClasses("ds-node__text-field",
-        //      "ds-node__quote-text-field");
-        //    }
-        //    else
-        //    {
-        //        textField.AddClasses("ds-node__text-field",
-        //        "ds-node__filename-text-field",
-        //        "ds-node__text-field__hidden");
-        //    }
-
-        //    customDataContainer?.Add(textField);
-
-        //    return textField;
-        //}
-
-        //public Label CreateLabel(string text = null, VisualElement customDataContainer = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
-        //{
-        //    Label label = Tools.DialogueSystem.Utilities.DSElementUtility.CreateLabel(text, onValueChanged);
-
-        //    customDataContainer?.Add(label);
-
-        //    label.AddClasses("ds-node__text-field",
-        //      "ds-node__quote-text-field");
-
-        //    return label;
-        //}
-
-        //public DropdownField CreateDropdown(List<string> choices, string text = null, VisualElement customDataContainer = null, EventCallback<ChangeEvent<string>> onValueChanged = null)
-        //{
-        //    DropdownField dropdown = Tools.DialogueSystem.Utilities.DSElementUtility.CreateDropdown(text, choices, onValueChanged);
-
-        //    customDataContainer?.Add(dropdown);
-
-        //    return dropdown;
-        //}
-
-        //public ObjectField CreateObjectField(string title, string label, Type type, VisualElement customDataContainer, EventCallback<ChangeEvent<UnityEngine.Object>> onValueChanged)
-        //{
-        //    ObjectField objectField = Tools.DialogueSystem.Utilities.DSElementUtility.CreateObjectField(title, type, label, onValueChanged);
-        //    customDataContainer.Add(objectField);
-        //    return objectField;
-        //}
 
         #endregion
     }

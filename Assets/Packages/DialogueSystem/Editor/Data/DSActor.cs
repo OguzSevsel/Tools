@@ -7,7 +7,7 @@ namespace Tools.DialogueSystem.Data
     [Serializable]
     public class DSActor : DSData
     {
-        [SerializeField] private string _background = "Background";
+        [SerializeField, SerializeReference] private string _background = "Background";
 
         [CreateProperty, TextArea]
         public string Background
@@ -25,7 +25,7 @@ namespace Tools.DialogueSystem.Data
             }
         }
 
-        [SerializeField] private Sprite _sprite;
+        [SerializeField, SerializeReference] private Sprite _sprite;
 
         [CreateProperty]
         public Sprite Sprite

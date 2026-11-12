@@ -14,49 +14,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: Tools.DialogueSystem.Editor::Tools.DialogueSystem.Data.DSDatabase
   <Conversations>k__BackingField:
   - _name: New Conversation
-    <Guid>k__BackingField: 0c20fc0165224f538e6e4f85b401a993
-    Description: Conversation Description
+    _description: Conversation Description
+    <Guid>k__BackingField: 4827d7c3f40e490fb31ece89de236eb7
     <Nodes>k__BackingField:
-    - <Guid>k__BackingField: 0d16651733ce11749ba532777ab38fff
-      _dialogue:
-        _name: New Dialogue
-        <Guid>k__BackingField: 6ba668627e934a55bdf4e0288c4e1a60
-        Description: Dialogue Description
-        _text: 123
-      _audioClip:
-        _name: New Clip
-        <Guid>k__BackingField: 59a210b5811e48e0a34974fdb9c82056
-        Description: New Description
-        Clip: {fileID: 0}
-      _actor:
-        _name: New Actor
-        <Guid>k__BackingField: a559bf372f6b43d5b3877a86271aac29
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      _conversant:
-        _name: New Actor
-        <Guid>k__BackingField: a559bf372f6b43d5b3877a86271aac29
-        Description: Actor Description
-        Background: Actor Background
-        Sprite: {fileID: 0}
-      <Position>k__BackingField: {x: 503.5472, y: 446.10278}
-      <OutputIds>k__BackingField: []
+    - <Guid>k__BackingField: 9ae85ac20323c2744bc1322c3dbc2834
+      <Position>k__BackingField: {x: 667.5111, y: 405.73587}
+      <OutputIds>k__BackingField:
+      - 74070bb136628a444af70ff8448c2f55
       DialogueType: 0
       IsStartNode: 1
+      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
+      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
+      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
+      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
+      _name: Fuck
+    - <Guid>k__BackingField: 74070bb136628a444af70ff8448c2f55
+      <Position>k__BackingField: {x: 840.09863, y: 404.83023}
+      <OutputIds>k__BackingField:
+      - 30c601b99b8285e49b3c63721a977b30
+      DialogueType: 0
+      IsStartNode: 0
+      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
+      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
+      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
+      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
+      _name: Why Not?
+    - <Guid>k__BackingField: 30c601b99b8285e49b3c63721a977b30
+      <Position>k__BackingField: {x: 1129.4304, y: 236.58797}
+      <OutputIds>k__BackingField: []
+      DialogueType: 0
+      IsStartNode: 0
+      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
+      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
+      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
+      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
+      _name: 'Dude you need to do this! '
   <Actors>k__BackingField:
   - _name: New Actor
-    <Guid>k__BackingField: a559bf372f6b43d5b3877a86271aac29
-    Description: Actor Description
-    Background: Actor Background
-    Sprite: {fileID: 0}
+    _description: Deneme
+    <Guid>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
+    _background: Actor Background
+    _sprite: {fileID: -3479061504300586076, guid: db5a9c0314a477843aba43e09fc19bf0, type: 3}
   <AudioClips>k__BackingField:
   - _name: New Clip
-    <Guid>k__BackingField: 59a210b5811e48e0a34974fdb9c82056
-    Description: New Description
-    Clip: {fileID: 0}
+    _description: New Description
+    <Guid>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
+    _clip: {fileID: 0}
   <DialogueTexts>k__BackingField:
   - _name: New Dialogue
-    <Guid>k__BackingField: 6ba668627e934a55bdf4e0288c4e1a60
-    Description: Dialogue Description
-    _text: 123
+    _description: Dialogue Description
+    <Guid>k__BackingField: ba5ea9a6db3c4d07970570c9894e6e32
+    _text: asdf
+  - _name: New Dialogue 1
+    _description: Dialogue Description
+    <Guid>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
+    _text: Deneme
