@@ -18,7 +18,7 @@ MonoBehaviour:
     <Guid>k__BackingField: 4827d7c3f40e490fb31ece89de236eb7
     <Nodes>k__BackingField:
     - <Guid>k__BackingField: 9ae85ac20323c2744bc1322c3dbc2834
-      <Position>k__BackingField: {x: 573.2831, y: 409.35852}
+      <Position>k__BackingField: {x: 541.1457, y: 388.24304}
       <OutputIds>k__BackingField:
       - 74070bb136628a444af70ff8448c2f55
       DialogueType: 0
@@ -29,7 +29,7 @@ MonoBehaviour:
       <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
       _name: Fuck
     - <Guid>k__BackingField: 74070bb136628a444af70ff8448c2f55
-      <Position>k__BackingField: {x: 754.41516, y: 409.35852}
+      <Position>k__BackingField: {x: 731.33435, y: 389.14868}
       <OutputIds>k__BackingField:
       - 30c601b99b8285e49b3c63721a977b30
       DialogueType: 0
@@ -40,7 +40,7 @@ MonoBehaviour:
       <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
       _name: Why Not?
     - <Guid>k__BackingField: 30c601b99b8285e49b3c63721a977b30
-      <Position>k__BackingField: {x: 1043.3208, y: 240.90565}
+      <Position>k__BackingField: {x: 944.1646, y: 389.14868}
       <OutputIds>k__BackingField: []
       DialogueType: 0
       IsStartNode: 0
@@ -48,39 +48,7 @@ MonoBehaviour:
       <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
       <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
       <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: 'Dude you need to do this! '
-    - <Guid>k__BackingField: 03eb8abe2d839ae4f8b1eec12261c1c4
-      <Position>k__BackingField: {x: 1096.3955, y: 633.8601}
-      <OutputIds>k__BackingField:
-      - 96a0629bcad7bdf4abea731c17d33803
-      DialogueType: 0
-      IsStartNode: 0
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: 96a0629bcad7bdf4abea731c17d33803
-      <Position>k__BackingField: {x: 1277.5276, y: 633.8601}
-      <OutputIds>k__BackingField:
-      - b240d9864adca134e87ee934c3380c6c
-      DialogueType: 0
-      IsStartNode: 0
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Why Not?
-    - <Guid>k__BackingField: b240d9864adca134e87ee934c3380c6c
-      <Position>k__BackingField: {x: 1566.4333, y: 465.40726}
-      <OutputIds>k__BackingField: []
-      DialogueType: 0
-      IsStartNode: 0
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: 'Dude you need to do this! '
+      _name: Damn Son
   <Actors>k__BackingField:
   - _name: New Actor
     _description: Deneme
@@ -100,4 +68,4 @@ MonoBehaviour:
   - _name: New Dialogue 1
     _description: Dialogue Description
     <Guid>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-    _text: Deneme
+    _text: Damn Son Why Did You Do It?
