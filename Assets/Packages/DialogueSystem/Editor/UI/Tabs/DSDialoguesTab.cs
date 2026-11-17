@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -94,18 +95,27 @@ namespace Tools.DialogueSystem.UI
             return cardElement;
         }
 
-        private void AddCard(VisualElement container, Dictionary<DSDialogueText, VisualElement> dialogues, DSDialogueText textObject, VisualElement cardElement)
+        private void AddCard(VisualElement container, Dictionary<DSDialogueText, VisualElement> dialogues, DSDialogueText dialogue, VisualElement cardElement)
         {
             container.Add(cardElement);
             Button deleteButton = cardElement.Q<Button>("DeleteButton");
             deleteButton.clicked += () =>
             {
+                bool confirm = EditorUtility.DisplayDialog(
+                    $"Delete {dialogue.Name}",
+                    $"Are you sure you want to delete {dialogue.Name}?",
+                    "Delete",
+                    "Cancel"
+                );
+
+                if (!confirm) return;
+
                 container.Remove(cardElement);
-                dialogues.Remove(textObject);
-                DSDatabaseManager.Instance.Current.Unregister(textObject);
+                dialogues.Remove(dialogue);
+                DSDatabaseManager.Instance.Current.Unregister(dialogue);
             };
 
-            dialogues.Add(textObject, cardElement);
+            dialogues.Add(dialogue, cardElement);
         }
 
         #endregion

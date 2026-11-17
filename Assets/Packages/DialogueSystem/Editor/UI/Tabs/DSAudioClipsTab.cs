@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
+using UnityEditor;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
@@ -95,6 +96,15 @@ namespace Tools.DialogueSystem.UI
             Button deleteButton = cardElement.Q<Button>("DeleteButton");
             deleteButton.clicked += () =>
             {
+                bool confirm = EditorUtility.DisplayDialog(
+                    $"Delete {audioClip.Name}",
+                    $"Are you sure you want to delete {audioClip.Name}?",
+                    "Delete",
+                    "Cancel"
+                );
+
+                if (!confirm) return;
+
                 container.Remove(cardElement);
                 audioClips.Remove(audioClip);
                 DSDatabaseManager.Instance.Current.Unregister(audioClip);

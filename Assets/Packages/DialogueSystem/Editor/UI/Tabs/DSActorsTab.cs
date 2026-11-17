@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.UI;
+using Tools.DialogueSystem.UI.Elements;
 using Tools.DialogueSystem.Utilities;
+using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -42,17 +44,19 @@ namespace Tools.DialogueSystem
             Button deleteButton = cardElement.Q<Button>("DeleteButton");
             deleteButton.clicked += () =>
             {
+                bool confirm = EditorUtility.DisplayDialog(
+                    $"Delete {actor.Name}",
+                    $"Are you sure you want to delete {actor.Name}?",
+                    "Delete",
+                    "Cancel"
+                );
+
+                if (!confirm) return;
+
                 container.Remove(cardElement);
                 actors.Remove(actor);
                 DSDatabaseManager.Instance.Current.Unregister(actor);
             };
-
-            Image actorImage = cardElement.Q<Image>("ActorImage");
-            ObjectField actorSpriteField = cardElement.Q<ObjectField>("SpriteField");
-            actorSpriteField.RegisterValueChangedCallback<Object>((evt) =>
-            {
-                actorImage.sprite = evt.newValue as Sprite;
-            });
         }
 
         private VisualElement CreateCard(VisualTreeAsset cardAsset, DSActor actor)

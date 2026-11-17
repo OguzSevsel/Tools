@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -112,6 +113,15 @@ namespace Tools.DialogueSystem.UI
             Button deleteButton = cardElement.Q<Button>("DeleteButton");
             deleteButton.clicked += () =>
             {
+                bool confirm = EditorUtility.DisplayDialog(
+                    $"Delete {conversation.Name}",
+                    $"Are you sure you want to delete {conversation.Name}?",
+                    "Delete",
+                    "Cancel"
+                );
+
+                if (!confirm) return;
+
                 container.Remove(cardElement);
                 conversations.Remove(conversation);
                 DSDatabaseManager.Instance.Current.Unregister(conversation);

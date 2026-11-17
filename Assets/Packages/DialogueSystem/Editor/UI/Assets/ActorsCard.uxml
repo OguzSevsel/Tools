@@ -6,11 +6,7 @@
                 <ui:DataBinding property="text" data-source-path="Name" binding-mode="ToTarget"/>
             </Bindings>
         </ui:Label>
-        <ui:Image source="project://database/Assets/Packages/DialogueSystem/Editor/Icons/actor.png?fileID=1276598283726642267&amp;guid=22a7d2bf1d52f904eb05d5b598b8ed20&amp;type=3#actor_0" name="ActorImage" style="position: absolute; width: 40px; height: 40px; top: 3px; left: 3px;">
-            <Bindings>
-                <ui:DataBinding property="source" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" data-source-path="Sprite" binding-mode="ToTarget"/>
-            </Bindings>
-        </ui:Image>
+        <ui:Image source="project://database/Assets/Packages/DialogueSystem/Editor/Icons/actor.png?fileID=1276598283726642267&amp;guid=22a7d2bf1d52f904eb05d5b598b8ed20&amp;type=3#actor_0" name="ActorImage" style="position: absolute; width: 40px; height: 40px; top: 3px; left: 3px;"/>
         <ui:Button name="DeleteButton" icon-image="project://database/Assets/Editor%20Default%20Resources/Icons/delete.png?fileID=2800000&amp;guid=36090787d5284da4abab0c041d0af4f6&amp;type=3#delete" style="position: absolute; right: 0; top: 2px; width: 40px; height: 40px;"/>
         <ui:TextField label="Name" placeholder-text="Name" name="ActorName" hide-placeholder-on-focus="true" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" style="text-overflow: ellipsis;">
             <Bindings>

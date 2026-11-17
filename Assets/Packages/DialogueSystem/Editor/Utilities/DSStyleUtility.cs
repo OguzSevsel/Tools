@@ -187,6 +187,12 @@ namespace Tools.DialogueSystem.Utilities
             return element;
         }
 
+        public static VisualElement SetColor(this VisualElement element, Color? color = null)
+        {
+            element.style.color = color ?? element.style.color;
+            return element;
+        }
+
         public static VisualElement SetTextAlign(this VisualElement element, TextAnchor? alignment = null)
         {
             element.style.unityTextAlign = alignment ?? element.style.unityTextAlign;
@@ -238,6 +244,19 @@ namespace Tools.DialogueSystem.Utilities
         public static readonly Color GridLightGrey2 = new Color(51f / 255f, 51f / 255f, 51f / 255f, 0.4f);
         public static readonly Color GridLightGrey3 = new Color32(51, 51, 51, 255);
         public static readonly Color GridLightGrey4 = new Color32(70, 70, 70, 255);
+
+
+        public static readonly Color Transparent = new Color32(0, 0, 0, 0);
+
+        public static readonly Color TextColor = new Color32(17, 19, 20, 255);
+
+        public static readonly Color Orange = new Color32(243, 116, 32, 255);
+        public static readonly Color Green = new Color32(0, 148, 101, 255);
+        public static readonly Color Red = new Color32(227, 31, 38, 255);
+        public static readonly Color Blue = new Color32(0, 110, 184, 255);
+        public static readonly Color Violet = new Color32(163, 106, 165, 255);
+        public static readonly Color Cinnamon = new Color32(238, 167, 140, 255);
+
 
         // Window
         public static readonly Color WindowDarkGrey1 = new Color32(29, 29, 30, 255);

@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Codice.Client.BaseCommands.Download;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.UI.Elements;
 using Tools.DialogueSystem.UI.Inspector;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -86,10 +88,8 @@ namespace Tools.DialogueSystem.UI
             AddMiniMap();
             AddManipulators();
             RegisterEvents();
-
             OpenSideBarButton = DSElementUtility.CreateButton("", HandleOpenSideBarButtonClicked);
             miniMapButton = DSElementUtility.CreateButton("Minimap", HandleOpenMiniMapButtonClicked);
-
             OpenSideBarButton.AddClasses("SideBarButton");
             this.contentContainer.Add(OpenSideBarButton);
             miniMapButton.AddClasses("MiniMapButton");
@@ -108,40 +108,12 @@ namespace Tools.DialogueSystem.UI
             canPasteSerializedData += HandleCanPaste;
             serializeGraphElements += HandleCutCopyOperation;
             unserializeAndPaste += HandlePasteOperation;
+            graphViewChanged += HandleGraphViewChanged;
 
             deleteSelection += HandleDeleteSelection;
             DSDatabaseManager.Instance.DatabaseClosed += HandleDatabaseClosed;
             DSDatabaseManager.Instance.DatabaseOpened += HandleDatabaseOpened;
             DSEditorView.OnWindowCloses += UnRegisterEvents;
-        }
-
-        private void HandleOnDataRemoved(DSData data)
-        {
-            if (CurrentConversation == null)
-                return;
-
-            foreach (var nodeData in CurrentConversation.Nodes)
-            {
-                if (data is DSActor)
-                {
-                    if (nodeData.ActorId == data.Guid)
-                        nodeData.SetActorId("");
-
-                    if (nodeData.ConversantId == data.Guid)
-                        nodeData.SetConversantId("");
-                }
-
-                if (data is DSAudioClip && nodeData.AudioClipId == data.Guid)
-                    nodeData.SetAudioClipId("");
-
-                if (data is DSDialogueText && nodeData.DialogueId == data.Guid)
-                    nodeData.SetDialogueId("");
-            }
-
-            if (selectedNode == null)
-                return;
-
-            inspector?.LoadFields(selectedNode.Data);
         }
 
         private void UnRegisterEvents()
@@ -154,11 +126,12 @@ namespace Tools.DialogueSystem.UI
             canPasteSerializedData -= HandleCanPaste;
             serializeGraphElements -= HandleCutCopyOperation;
             unserializeAndPaste -= HandlePasteOperation;
+            graphViewChanged -= HandleGraphViewChanged;
 
             deleteSelection -= HandleDeleteSelection;
             DSDatabaseManager.Instance.DatabaseClosed -= HandleDatabaseClosed;
             DSDatabaseManager.Instance.DatabaseOpened -= HandleDatabaseOpened;
-            
+
             DSEditorView.OnWindowCloses -= UnRegisterEvents;
         }
 
@@ -266,7 +239,7 @@ namespace Tools.DialogueSystem.UI
             Type nodeType = Type.GetType($"Tools.DialogueSystem.UI.Elements.DSNode");
             DSNode node = (DSNode)Activator.CreateInstance(nodeType);
 
-            DSNodeData data = new DSNodeData(position, type, "New Node", isStartNode);
+            DSNodeData data = new DSNodeData(position, type, "New Node", isStartNode, false);
             node.Initialize(data);
             CurrentConversation.AddToNodes(node.Data);
 
@@ -307,6 +280,35 @@ namespace Tools.DialogueSystem.UI
         #endregion
 
         #region -----EVENT HANDLERS-----
+
+        private void HandleOnDataRemoved(DSData data)
+        {
+            if (CurrentConversation == null)
+                return;
+
+            foreach (var nodeData in CurrentConversation.Nodes)
+            {
+                if (data is DSActor)
+                {
+                    if (nodeData.ActorId == data.Guid)
+                        nodeData.SetActorId("");
+
+                    if (nodeData.ConversantId == data.Guid)
+                        nodeData.SetConversantId("");
+                }
+
+                if (data is DSAudioClip && nodeData.AudioClipId == data.Guid)
+                    nodeData.SetAudioClipId("");
+
+                if (data is DSDialogueText && nodeData.DialogueId == data.Guid)
+                    nodeData.SetDialogueId("");
+            }
+
+            if (selectedNode == null)
+                return;
+
+            inspector?.LoadFields(selectedNode.Data);
+        }
 
         private void HandleDatabaseOpened(DSDatabase database)
         {
@@ -386,6 +388,13 @@ namespace Tools.DialogueSystem.UI
             RefreshNodes();
         }
 
+        private GraphViewChange HandleGraphViewChanged(GraphViewChange graphViewChange)
+        {
+            schedule.Execute(UpdateEndNodes).ExecuteLater(0);
+
+            return graphViewChange;
+        }
+
         private void HandleOpenMiniMapButtonClicked()
         {
             ToggleMiniMap();
@@ -457,6 +466,75 @@ namespace Tools.DialogueSystem.UI
             DeleteElements(nodes);
         }
 
+        private void UpdateEndNodes()
+        {
+            List<DSNode> nodes = this.nodes.OfType<DSNode>().ToList();
+
+            HashSet<DSNode> reachableNodes = GetReachableNodes(nodes);
+
+            foreach (DSNode node in nodes)
+            {
+                if (node.InputPort == null || node.OutputPort == null)
+                    continue;
+
+                bool isReachable = reachableNodes.Contains(node);
+                bool hasOutgoing = node.OutputPort.connections.Any();
+
+                bool isEndNode = isReachable
+                                 && !node.Data.IsStartNode
+                                 && !hasOutgoing;
+
+                node.SetEndNode(isEndNode);
+            }
+        }
+
+        private HashSet<DSNode> GetReachableNodes(List<DSNode> nodes)
+        {
+            HashSet<DSNode> visited = new();
+            Stack<DSNode> stack = new();
+
+            DSNode startNode = nodes.FirstOrDefault(n => n.Data.IsStartNode);
+
+            if (startNode == null)
+                return visited;
+
+            stack.Push(startNode);
+            visited.Add(startNode);
+
+            while (stack.Count > 0)
+            {
+                DSNode currentNode = stack.Pop();
+
+                foreach (Edge edge in currentNode.OutputPort.connections)
+                {
+                    DSNode nextNode = edge.input.node as DSNode;
+
+                    if (nextNode != null && visited.Add(nextNode))
+                    {
+                        stack.Push(nextNode);
+                    }
+                }
+            }
+
+            return visited;
+        }
+
+        public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
+        {
+            List<Port> compatiblePorts = new();
+
+            ports.ForEach(port =>
+            {
+                if (startPort == port) return;
+                if (startPort.node == port.node) return;
+                if (startPort.direction == port.direction) return;
+
+                compatiblePorts.Add(port);
+            });
+
+            return compatiblePorts;
+        }
+
         #endregion
 
         #region -----CUT/COPY/DUPLICATE/PASTE/DELETE-----
@@ -467,14 +545,42 @@ namespace Tools.DialogueSystem.UI
 
             List<DSNode> selectedNodes = selection.OfType<DSNode>().ToList();
 
-            foreach (DSNode node in selectedNodes)
+            if (selectedNodes.Count == 0)
             {
-                CurrentConversation.Nodes.Remove(node.Data);
-                node.OnNodeSelected -= HandleOnNodeSelected;
+                DeleteSelection();
+                return;
             }
 
-            this.DeleteSelection();
+            foreach (DSNode node in selectedNodes)
+            {
+                if (!node.Data.IsStartNode)
+                {
+                    CurrentConversation.Nodes.Remove(node.Data);
+                    node.OnNodeSelected -= HandleOnNodeSelected;
+
+                    foreach (var edge in node.InputPort.connections)
+                    {
+                        this.RemoveElement(edge);
+                        edge.output.Disconnect(edge);
+                    }
+
+                    foreach (var edge in node.OutputPort.connections)
+                    {
+                        this.RemoveElement(edge);
+                        edge.input.Disconnect(edge);
+                    }
+                }
+                else
+                {
+                    RemoveFromSelection(node);
+                }
+
+                
+            }
+
+            DeleteSelection();
             OnNodeDeleted?.Invoke(CurrentConversation);
+            schedule.Execute(UpdateEndNodes).ExecuteLater(0);
         }
 
         private void CopyNodeData()
@@ -647,26 +753,6 @@ namespace Tools.DialogueSystem.UI
             clipboard.Connections = connections;
 
             return ClipboardPrefix + JsonUtility.ToJson(clipboard);
-        }
-
-        #endregion
-
-        #region -----OVERRIDES-----
-
-        public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
-        {
-            List<Port> compatiblePorts = new();
-
-            ports.ForEach(port =>
-            {
-                if (startPort == port) return;
-                if (startPort.node == port.node) return;
-                if (startPort.direction == port.direction) return;
-                
-                compatiblePorts.Add(port);
-            });
-
-            return compatiblePorts;
         }
 
         #endregion

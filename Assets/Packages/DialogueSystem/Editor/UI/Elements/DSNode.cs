@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
 using Unity.Properties;
+using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -23,20 +25,35 @@ namespace Tools.DialogueSystem.UI.Elements
         private VisualElement container;
         
         private Label titleLabel;
-        private Label actorLabel;
-        private Label conversantLabel;
-        private Label audioClipLabel;
-        private Label dialogueTextLabel;
 
-        class LabelBinding
+        #region Info UI Elements
+
+        private VisualElement actorInfoContainer;
+        private VisualElement conversantInfoContainer;
+        private VisualElement audioClipInfoContainer;
+        private VisualElement dialogueInfoContainer;
+        
+        private Image actorInfoImage;
+        private Image conversantInfoImage;
+        private Image audioClipInfoImage;
+        private Image dialogueInfoImage;
+
+        private Label actorInfoLabel;
+        private Label conversantInfoLabel;
+        private Label audioClipInfoLabel;
+        private Label dialogueTextInfoLabel;
+
+        #endregion
+
+        class ElementBinding
         {
-            public Label Label;
+            public VisualElement Element;
             public DataBinding Binding;
             public BindingId Id;
 
-            public LabelBinding(Label label, object dataSource, BindingId id, string path, BindingMode mode)
+            public ElementBinding(VisualElement element, object dataSource, BindingId id, string path, BindingMode mode)
             {
-                this.Label = label;
+                this.Element = element;
                 this.Id = id;
 
                 this.Binding = new DataBinding()
@@ -49,7 +66,7 @@ namespace Tools.DialogueSystem.UI.Elements
 
             public void SetBinding()
             {
-                this.Label.SetBinding(Id, Binding);
+                this.Element.SetBinding(Id, Binding);
             }
         }
 
@@ -99,47 +116,105 @@ namespace Tools.DialogueSystem.UI.Elements
 
         private void CreateTitleLabel()
         {
-            titleLabel = DSElementUtility.CreateLabel("");
-            titleLabel.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
-            titleLabel.SetTextWeight(FontStyle.Bold);
-            titleLabel.SetTextAlign(TextAnchor.MiddleCenter);
-            titleLabel.SetOverFlow(TextOverflow.Ellipsis, Overflow.Hidden, WhiteSpace.NoWrap);
-            titleLabel.SetFlex(flexGrow: 1);
-            
+            CreateTitle();
+            StyleTitleContainer();
+
+            if (!this.Data.IsStartNode)
+            {
+                var binding = new ElementBinding(titleLabel, this.Data, "text", nameof(this.Data.Name), BindingMode.ToTarget);
+                binding.Element.ClearBinding(binding.Id);
+                binding.SetBinding();
+                return;
+            }
+
+            titleContainer.SetBackgroundColor(DSColors.Green);
+            titleLabel.text = "Start Node";
+        }
+
+        #region -----STYLING-----
+
+        private void SetImage(Image image, string path)
+        {
+            Texture2D texture = AssetDatabase.LoadAssetAtPath<Texture2D>(path);
+            image.image = texture;
+        }
+
+        private void SetInfoContainerFlex(int flexGrow, FlexDirection flexDirection, params VisualElement[] elements)
+        {
+            foreach (var element in elements)
+            {
+                element.SetFlex(flexGrow: flexGrow, flexDirection: flexDirection);
+            }
+        }
+
+        private void SetInfoImageSize(float size, float padding, params VisualElement[] elements)
+        {
+            foreach (var element in elements)
+            {
+                element.SetWidth(maxWidth: 25);
+                element.SetHeight(maxHeight: 25);
+                element.SetPaddings(paddingRight: 5);
+            }
+        }
+
+        private void StyleTitleContainer()
+        {
             titleContainer.Clear();
-            titleContainer.SetBackgroundColor(DSColors.WindowDarkGrey2);
+            titleContainer.SetBackgroundColor(DSColors.Transparent);
             titleContainer.SetBorder(DSColors.GridLightGrey4, 2);
             titleContainer.SetBorderRadius(5);
             titleContainer.SetWidth(maxWidth: 200);
             titleContainer.Insert(0, titleLabel);
             titleContainer.SetFlex(flexGrow: 1);
+        }
 
-            if (!this.Data.IsStartNode)
+        public void SetEndNode(bool isEndNode)
+        {
+            this.Data.IsEndNode = isEndNode;
+
+            if (isEndNode)
             {
-                var binding = new LabelBinding(titleLabel, this.Data, "text", nameof(this.Data.Name), BindingMode.ToTarget);
-                binding.Label.ClearBinding(binding.Id);
-                binding.SetBinding();
+                titleLabel.ClearBindings();
+                titleLabel.SetText("End Node");
+                titleContainer.SetBackgroundColor(DSColors.Red);
                 return;
             }
 
-            titleContainer.SetBackgroundColor(Color.green);
-            titleLabel.text = "Start Node";
+            var binding = new ElementBinding(titleLabel, this.Data, "text", nameof(this.Data.Name), BindingMode.ToTarget);
+            binding.Element.ClearBinding(binding.Id);
+            binding.SetBinding();
+            titleContainer.SetBackgroundColor(DSColors.Transparent);
         }
 
-        private void CreateInfoLabels()
-        {
-            var infoLabels = CreateLabels(actorLabel, conversantLabel, audioClipLabel, dialogueTextLabel);
-            (actorLabel, conversantLabel, audioClipLabel, dialogueTextLabel) = (infoLabels[0], infoLabels[1], infoLabels[2], infoLabels[3]);
+        #endregion
 
-            AddTo(infoContainer, actorLabel, conversantLabel, audioClipLabel, dialogueTextLabel);
-            SetInfo(false, false, false, false);
+        #region -----CREATION-----
+
+        private Image[] CreateImages(params Image[] images)
+        {
+            for (int i = 0; i < images.Length; i++)
+            {
+                images[i] = new Image();
+            }
+
+            return images;
+        }
+
+        private VisualElement[] CreateVisualElements(params VisualElement[] elements)
+        {
+            for (int i = 0; i < elements.Length; i++)
+            {
+                elements[i] = new VisualElement();
+            }
+
+            return elements;
         }
 
         private void CreateInfoContainer()
         {
             infoContainer = new VisualElement();
             infoContainer.SetFlex(flexDirection: FlexDirection.Column, flexGrow: 1);
-            infoContainer.SetAlignment(alignContent: Align.Center, alignItems: Align.Center);
+            infoContainer.SetAlignment(alignContent: Align.Center, alignItems: Align.FlexStart);
         }
 
         private void CreatePortContainer()
@@ -150,7 +225,56 @@ namespace Tools.DialogueSystem.UI.Elements
             portContainer.SetBackgroundColor(DSColors.WindowDarkGrey2);
         }
 
-        #region Creation
+        private void CreateTitle()
+        {
+            titleLabel = DSElementUtility.CreateLabel("");
+            titleLabel.SetAlignment(Align.Center, Align.Center, Align.Center, Justify.Center);
+            titleLabel.SetTextWeight(FontStyle.Bold);
+            titleLabel.SetTextAlign(TextAnchor.MiddleCenter);
+            titleLabel.SetOverFlow(TextOverflow.Ellipsis, Overflow.Hidden, WhiteSpace.NoWrap);
+            titleLabel.SetFlex(flexGrow: 1);
+        }
+
+        private void CreateInfoLabels()
+        {
+            var infoLabels = CreateLabels(actorInfoLabel, conversantInfoLabel, audioClipInfoLabel, dialogueTextInfoLabel);
+            (actorInfoLabel, conversantInfoLabel, audioClipInfoLabel, dialogueTextInfoLabel) = (infoLabels[0], infoLabels[1], infoLabels[2], infoLabels[3]);
+
+            var infoContainers = CreateVisualElements(actorInfoContainer, conversantInfoContainer, audioClipInfoContainer, dialogueInfoContainer);
+            (actorInfoContainer, conversantInfoContainer, audioClipInfoContainer, dialogueInfoContainer) = (infoContainers[0], infoContainers[1], infoContainers[2], infoContainers[3]);
+
+            var infoImages = CreateImages(actorInfoImage, conversantInfoImage, audioClipInfoImage, dialogueInfoImage);
+            (actorInfoImage, conversantInfoImage, audioClipInfoImage, dialogueInfoImage) = (infoImages[0], infoImages[1], infoImages[2], infoImages[3]);
+
+            SetImage(actorInfoImage, "Assets/Packages/DialogueSystem/Editor/Icons/actor.png");
+            SetImage(conversantInfoImage, "Assets/Packages/DialogueSystem/Editor/Icons/actor.png");
+            SetImage(audioClipInfoImage, "Assets/Packages/DialogueSystem/Editor/Icons/audio.png");
+            SetImage(dialogueInfoImage, "Assets/Packages/DialogueSystem/Editor/Icons/dialogue.png");
+
+            SetInfoImageSize(25, 5, audioClipInfoImage, dialogueInfoImage, actorInfoImage, conversantInfoImage);
+
+            var actorLabel = new Label("Actor: ");
+            var conversantLabel = new Label("Conversant: ");
+            var audioClipLabel = new Label("Audio Clip: ");
+
+            SetInfoContainerFlex(1, FlexDirection.Row, actorInfoContainer, conversantInfoContainer, audioClipInfoContainer, dialogueInfoContainer);
+
+            AddTo(actorInfoContainer, actorInfoImage, actorLabel, actorInfoLabel);
+            AddTo(conversantInfoContainer, conversantInfoImage, conversantLabel, conversantInfoLabel);
+            AddTo(audioClipInfoContainer, audioClipInfoImage, audioClipLabel, audioClipInfoLabel);
+            AddTo(dialogueInfoContainer, dialogueInfoImage, dialogueTextInfoLabel);
+            AddTo(infoContainer, actorInfoContainer, conversantInfoContainer, audioClipInfoContainer, dialogueInfoContainer);
+
+            SetInfo(false, false, false, false);
+        }
+
+        private void SetColors(Color color, params VisualElement[] elements)
+        {
+            foreach (var element in elements)
+            {
+                element.SetColor(color);
+            }
+        }
 
         private Label[] CreateLabels(params Label[] labels)
         {
@@ -199,7 +323,7 @@ namespace Tools.DialogueSystem.UI.Elements
                 return;
             }
 
-            Dictionary<LabelBinding, bool> bindings = new Dictionary<LabelBinding, bool>();
+            Dictionary<ElementBinding, bool> bindings = new Dictionary<ElementBinding, bool>();
 
             var actor = GetFromDatabase<DSActor>(this.Data.ActorId);
             var conversant = GetFromDatabase<DSActor>(this.Data.ConversantId);
@@ -208,50 +332,52 @@ namespace Tools.DialogueSystem.UI.Elements
 
             if (actor != null)
             {
-                bindings.Add(new LabelBinding(actorLabel, actor, "text", nameof(actor.Name), BindingMode.ToTarget), showActor);
+                bindings.Add(new ElementBinding(actorInfoLabel, actor, "text", nameof(actor.Name), BindingMode.ToTarget), showActor);
+                bindings.Add(new ElementBinding(actorInfoImage, actor, "sprite", nameof(actor.Sprite), BindingMode.ToTarget),showActor);
             }
 
             if(conversant != null)
             {
-                bindings.Add(new LabelBinding(conversantLabel, conversant, "text", nameof(conversant.Name), BindingMode.ToTarget), showConversant);
+                bindings.Add(new ElementBinding(conversantInfoLabel, conversant, "text", nameof(conversant.Name), BindingMode.ToTarget), showConversant);
+                bindings.Add(new ElementBinding(conversantInfoImage, conversant, "sprite", nameof(conversant.Sprite), BindingMode.ToTarget), showConversant);
             }
 
             if (audioClip != null)
             {
-                bindings.Add(new LabelBinding(audioClipLabel, audioClip, "text", nameof(audioClip.Name), BindingMode.ToTarget), showAudioClip);
+                bindings.Add(new ElementBinding(audioClipInfoLabel, audioClip, "text", nameof(audioClip.Name), BindingMode.ToTarget), showAudioClip);
             }
             
             if (dialogue != null)
             {
-                bindings.Add(new LabelBinding(dialogueTextLabel, dialogue, "text", nameof(dialogue.Text), BindingMode.ToTarget), showDialogueText);
+                bindings.Add(new ElementBinding(dialogueTextInfoLabel, dialogue, "text", nameof(dialogue.Text), BindingMode.ToTarget), showDialogueText);
             }
 
-            SetInfoVisible(new Dictionary<Label, bool> 
+            SetInfoVisible(new Dictionary<VisualElement, bool> 
             { 
-                { actorLabel, showActor },
-                { conversantLabel, showConversant },
-                { dialogueTextLabel, showDialogueText },
-                { audioClipLabel, showAudioClip } 
+                { actorInfoContainer, showActor },
+                { conversantInfoContainer, showConversant },
+                { dialogueInfoContainer, showDialogueText },
+                { audioClipInfoContainer, showAudioClip } 
             });
 
             SetInfoBindings(bindings);
 
-            void SetInfoVisible(Dictionary<Label, bool> infoLabels)
+            void SetInfoVisible(Dictionary<VisualElement, bool> infoLabels)
             {
                 foreach (var kvp in infoLabels)
                 {
-                    Label label = kvp.Key;
+                    VisualElement element = kvp.Key;
                     bool isVisible = kvp.Value;
-                    label.SetVisible(isVisible);
+                    element.SetVisible(isVisible);
                 }
             }
             
-            void SetInfoBindings(Dictionary<LabelBinding, bool> bindings)
+            void SetInfoBindings(Dictionary<ElementBinding, bool> bindings)
             {
                 foreach (var kvp in bindings)
                 {
-                    LabelBinding binding = kvp.Key;
-                    binding.Label.ClearBinding(binding.Id);
+                    ElementBinding binding = kvp.Key;
+                    binding.Element.ClearBinding(binding.Id);
                     bool isVisible = kvp.Value;
 
                     if (isVisible)
