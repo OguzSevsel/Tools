@@ -32,7 +32,7 @@ namespace Tools.DialogueSystem
                     OnDialogueEvent?.Invoke(new EndEvent(selectedId, string.Empty));
                     return;
                 }
-
+                
                 OnDialogueEvent?.Invoke(new MessageEvent(this, currentNode.DialogueId, currentNode.ActorName, currentNode.DialogueText, currentNode.ActorSprite, currentNode.AudioClip));
             }
         }
