@@ -5,19 +5,22 @@ using Tools.DialogueSystem.UI;
 using Tools.DialogueSystem.UI.Elements;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor;
+using UnityEditor.ShortcutManagement;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem
 {
-    public class DSActorsTab : Tab
+    public class DSActorsTab : Tab, IShortcutContext
     {
         private ScrollView actorScrollView;
         private VisualElement actorContainer;
         private VisualTreeAsset cardAsset;
         private Button createActorButton;
         public Dictionary<DSActor, VisualElement> Actors { get; set; }
+
+        public bool active => EditorWindow.focusedWindow is DSEditorView window && window.IsActorsTabActive;
 
         public DSActorsTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
         {
@@ -32,6 +35,14 @@ namespace Tools.DialogueSystem
             createActorButton.clicked += HandleOnCreateActorButtonClicked;
             
             RegisterEvents();
+        }
+
+        public void CreateActor()
+        {
+            DSActor actor = new("New Actor", "Actor Description", "Actor Background", default);
+            VisualElement cardElement = CreateCard(cardAsset, actor);
+            AddCard(actorContainer, Actors, actor, cardElement);
+            DSDatabaseManager.Instance.Current.Register(actor);
         }
 
         #region INITIALIZATION
@@ -122,10 +133,7 @@ namespace Tools.DialogueSystem
 
         private void HandleOnCreateActorButtonClicked()
         {
-            DSActor actor = new("New Actor", "Actor Description", "Actor Background", default);
-            VisualElement cardElement = CreateCard(cardAsset, actor);
-            AddCard(actorContainer, Actors, actor, cardElement);
-            DSDatabaseManager.Instance.Current.Register(actor);
+            CreateActor();
         }
 
         #endregion

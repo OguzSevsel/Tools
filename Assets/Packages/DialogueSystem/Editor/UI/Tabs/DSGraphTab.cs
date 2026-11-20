@@ -35,6 +35,7 @@ namespace Tools.DialogueSystem.UI
             DSConversationsTab.OnConversationOpened += HandleOnConversationOpen;
             DSEditorView.OnToggleSideBarShortcut += HandleSideBar;
         }
+
         public void RefreshNodes()
         {
             graphView.RefreshNodes();
@@ -75,8 +76,8 @@ namespace Tools.DialogueSystem.UI
 
         private void HandleOnConversationOpen(Data.DSConversation conversation)
         {
+            graphView.Save();
             graphView.Load(conversation);
-            sideBar.ChangeTitleLabel(conversation.Name);
         }
 
         private void MiniMapButtonClickHandler() => graphView.ToggleMiniMap();

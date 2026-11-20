@@ -1,17 +1,19 @@
 using System.Collections.Generic;
-using Tools.DialogueSystem;
+using System.Linq;
+using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Elements;
 using UnityEngine;
 
-namespace Tools
+namespace Tools.DialogueSystem
 {
     public class DSDialogueManager : MonoBehaviour
     {
-        [SerializeField] private List<DSGraphSO> dialogues;
         public static DSDialogueManager Instance { get; private set; }
-        private DialogueElement dialogUI;
-        private DialogueRunner runner;
-        private DSGraphSO currentGraph;
+        [SerializeField] private DSDatabase database;
+        [SerializeField] private DialogueElement panel;
+
+        private DSDialogueRunner runner;
+        private DSConversation currentConversation;
 
         private void Awake()
         {
@@ -27,51 +29,56 @@ namespace Tools
 
         private void Start()
         {
-            dialogUI = GameObject.FindGameObjectWithTag("Dialogue Element").GetComponent<DialogueElement>();
-            StartDialogueByName("Deneme");
+            StartDialogue("Deneme");
         }
 
-        public void StartDialogueByName(string name)
+        public void StartDialogue(string name)
         {
-            currentGraph = null;
-            currentGraph = dialogues.Find(d => d.name == name);
-            if (currentGraph == null)
+            currentConversation = null;
+            currentConversation = database.Conversations.FirstOrDefault();
+            if (currentConversation == null)
                 return;
-            runner = new DialogueRunner(currentGraph);
+            runner = new DSDialogueRunner(currentConversation, database);
             runner.OnDialogueEvent += DialogueEventHandler;
             runner.StartDialogue();
         }
 
-        public void StartDialogue(DSGraphSO graph)
+        public void StartDialogue(DSConversation conversation)
         {
-            currentGraph = null;
-            currentGraph = dialogues.Find(d => d == graph);
-            if (currentGraph == null)
+            currentConversation = null;
+            currentConversation = database.Get<DSConversation>(conversation.Guid);
+            if (currentConversation == null)
                 return;
-            runner = new DialogueRunner(currentGraph);
+            runner = new DSDialogueRunner(currentConversation, database);
             runner.OnDialogueEvent += DialogueEventHandler;
             runner.StartDialogue();
         }
 
-        private void DialogueEventHandler(IDialogueEvent e)
+        private void DialogueEventHandler(IDialogueSystemEvent e)
         {
             switch (e)
             {
-                case MessageEvent:
-                    MessageEvent messageEvent = (MessageEvent)e;
-                    dialogUI.ShowDialogText(messageEvent.DialogueText, messageEvent.ActorName, messageEvent.ActorSprite, (e) => messageEvent.Advance());
+                case DSMessageEvent:
+                    DSMessageEvent messageEvent = (DSMessageEvent)e;
+
+                    DSActor actor = database.Get<DSActor>(messageEvent.Node.ActorId);
+                    DSActor conversant = database.Get<DSActor>(messageEvent.Node.ConversantId);
+                    DSAudioClip audioClip = database.Get<DSAudioClip>(messageEvent.Node.AudioClipId);
+                    DSDialogueText dialogue = database.Get<DSDialogueText>(messageEvent.Node.DialogueId);
+
+                    panel.ShowDialogText(dialogue.Text, actor.Name, actor.Sprite, (e) => messageEvent.Advance());
                     break;
-                case ChoiceEvent:
-                    ChoiceEvent choiceEvent = (ChoiceEvent)e;
-                    dialogUI.ShowChoicesText(choiceEvent.Choices, (evt) => choiceEvent.Advance(evt));
+                case DSChoiceEvent:
+                    DSChoiceEvent choiceEvent = (DSChoiceEvent)e;
+                    panel.ShowChoicesText(choiceEvent.Choices, (evt) => choiceEvent.Advance(evt));
                     break;
-                case EndEvent:
-                    EndEvent endEvent = (EndEvent)e;
+                case DSEndEvent:
+                    DSEndEvent endEvent = (DSEndEvent)e;
                     runner.OnDialogueEvent -= DialogueEventHandler;
-                    StartDialogueByName(endEvent.DialogueId);
-                    if (currentGraph == null)
+                    StartDialogue(endEvent.Node.Guid);
+                    if (currentConversation == null)
                     {
-                        dialogUI.EndDialog();
+                        panel.EndDialog();
                     }
                     break;
                 default:

@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Codice.Client.BaseCommands.Download;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.UI.Elements;
 using Tools.DialogueSystem.UI.Inspector;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -137,7 +135,7 @@ namespace Tools.DialogueSystem.UI
 
         private void AddManipulators()
         {
-            this.AddManipulator(CreateNodeContextualMenu(DialogueType.Single, "Add Node"));
+            this.AddManipulator(CreateNodeContextualMenu("Add Node"));
             this.AddManipulator(CreateShowContextMenu());
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
@@ -145,7 +143,7 @@ namespace Tools.DialogueSystem.UI
             SetupZoom(0.5f, 3f);
         }
 
-        private IManipulator CreateNodeContextualMenu(DialogueType type, string actionTitle)
+        private IManipulator CreateNodeContextualMenu(string actionTitle)
         {
             ContextualMenuManipulator manipulator = new(
                 menuEvent => AddNodeAction(menuEvent, "Add Node"));
@@ -172,12 +170,12 @@ namespace Tools.DialogueSystem.UI
                 {
                     if (CurrentConversation.Nodes.Count == 0)
                     {
-                        AddElement(CreateNode(DialogueType.Single, contentViewContainer.WorldToLocal(actionEvent.eventInfo.localMousePosition), isStartNode: true));
+                        AddElement(CreateNode(contentViewContainer.WorldToLocal(actionEvent.eventInfo.localMousePosition), isStartNode: true));
                         RefreshNodes();
                     }
                     else
                     {
-                        AddElement(CreateNode(DialogueType.Single, contentViewContainer.WorldToLocal(actionEvent.eventInfo.localMousePosition), isStartNode: false));
+                        AddElement(CreateNode(contentViewContainer.WorldToLocal(actionEvent.eventInfo.localMousePosition), isStartNode: false));
                         RefreshNodes();
                     }
                 }
@@ -234,12 +232,12 @@ namespace Tools.DialogueSystem.UI
 
         #region -----CREATION-----
 
-        public DSNode CreateNode(DialogueType type, Vector2 position, bool isStartNode, bool isPasting = false)
+        public DSNode CreateNode(Vector2 position, bool isStartNode, bool isPasting = false)
         {
             Type nodeType = Type.GetType($"Tools.DialogueSystem.UI.Elements.DSNode");
             DSNode node = (DSNode)Activator.CreateInstance(nodeType);
 
-            DSNodeData data = new DSNodeData(position, type, "New Node", isStartNode, false);
+            DSNodeData data = new DSNodeData(position, "New Node", isStartNode, false);
             node.Initialize(data);
             CurrentConversation.AddToNodes(node.Data);
 
@@ -281,7 +279,7 @@ namespace Tools.DialogueSystem.UI
 
         #region -----EVENT HANDLERS-----
 
-        private void HandleOnDataRemoved(DSData data)
+        private void HandleOnDataRemoved(IDSData data)
         {
             if (CurrentConversation == null)
                 return;
@@ -313,10 +311,11 @@ namespace Tools.DialogueSystem.UI
         private void HandleDatabaseOpened(DSDatabase database)
         {
             var conversation = database.Conversations.FirstOrDefault();
+
             if (conversation != null)
             {
                 Load(conversation);
-                tab.sideBar.ChangeTitleLabel(conversation.Name);
+                DSConversationsTab.InvokeConversationOpened(conversation);
             }
 
             _showDialogueText = true;
@@ -690,7 +689,7 @@ namespace Tools.DialogueSystem.UI
 
                 Vector2 position = clipboardNode.Position + offset;
 
-                DSNode node = CreateNode(nodeData.DialogueType, position, nodeData.IsStartNode, true);
+                DSNode node = CreateNode(position, nodeData.IsStartNode, true);
 
                 node.Data.SetAllIds(nodeData.ActorId, nodeData.ConversantId, nodeData.AudioClipId, nodeData.DialogueId);
 

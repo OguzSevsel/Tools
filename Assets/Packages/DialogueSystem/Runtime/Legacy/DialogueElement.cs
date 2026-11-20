@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using Tools.AutoTagSystem;
+using Tools.DialogueSystem.Data;
 using Tools.TweenSystem.Elements;
 using Tools.TweenSystem.Interfaces;
 using UnityEngine;

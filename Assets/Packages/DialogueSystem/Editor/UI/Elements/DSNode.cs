@@ -302,8 +302,6 @@ namespace Tools.DialogueSystem.UI.Elements
         private Port CreatePort(VisualElement container, Direction direction, int index)
         {
             Port port = this.CreatePort("", Orientation.Horizontal, direction, Port.Capacity.Multi);
-            DSPortData data = new DSPortData(this.Data.Guid, "port");
-            port.userData = data;
             container.Insert(index, port);
             Label label = port.Q<Label>("type");
             label.SetMargins(0);

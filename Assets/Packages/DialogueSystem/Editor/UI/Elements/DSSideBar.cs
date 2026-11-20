@@ -1,6 +1,9 @@
 ﻿using System;
+using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.UI.Inspector;
 using Tools.DialogueSystem.Utilities;
+using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI.Elements
@@ -30,15 +33,35 @@ namespace Tools.DialogueSystem.UI.Elements
             tabControl = this.Q<TabView>("TabControl");
             CloseButton = this.Q<Button>("CloseButton");
 
-            CloseButton.clicked += ToggleSideBar;
-
             ConversationsTab = new DSConversationsTab(conversationsTabAsset, conversationsCardAsset);
             resizeElement.AddManipulator(new ResizeManipulator(this, 20, 30));
+
+            RegisterEvents();
 
             tabControl.Add(ConversationsTab);
             tabControl.activeTab = ConversationsTab;
             isVisible = false;
             ToggleSideBar();
+        }
+
+        private void RegisterEvents()
+        {
+            CloseButton.clicked += ToggleSideBar;
+            DSConversationsTab.OnConversationOpened += HandleOnConversationOpened;
+            DSEditorView.OnWindowCloses += UnRegisterEvents;
+        }
+
+        private void UnRegisterEvents()
+        {
+            CloseButton.clicked -= ToggleSideBar;
+            DSConversationsTab.OnConversationOpened -= HandleOnConversationOpened;
+            DSEditorView.OnWindowCloses -= UnRegisterEvents;
+        }
+
+        private void HandleOnConversationOpened(DSConversation conversation)
+        {
+            SerializedObject serializedConversation = new SerializedObject(conversation);
+            titleLabel.BindProperty(serializedConversation.FindProperty("<Name>k__BackingField"));
         }
 
         public void ToggleSideBar()
@@ -62,11 +85,6 @@ namespace Tools.DialogueSystem.UI.Elements
             }
 
             tabControl.activeTab = InspectorTab;
-        }
-
-        public void ChangeTitleLabel(string value)
-        {
-            titleLabel.text = value;
         }
     }
 }

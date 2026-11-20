@@ -6,7 +6,7 @@
             <ui:VisualElement style="flex-grow: 1;">
                 <ui:Label text="" name="ConversationCardTitle" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor" class="title" style="flex-grow: 1; flex-shrink: 1;">
                     <Bindings>
-                        <ui:DataBinding property="text" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor" data-source-path="Name" binding-mode="ToTarget"/>
+                        <ui:DataBinding property="text" data-source-path="_Name_k__BackingField" binding-mode="ToTarget"/>
                     </Bindings>
                 </ui:Label>
                 <ui:Label name="NodeCountLabel" data-source-type="Tools.DialogueSystem.Data.DSActor, Tools.DialogueSystem.Editor" text="" style="-unity-text-align: lower-center; color: rgb(255, 255, 255); -unity-text-auto-size: best-fit 5px 10px; flex-shrink: 1;"/>
@@ -18,12 +18,12 @@
         <ui:VisualElement name="BodyContainer" style="flex-grow: 1;">
             <ui:TextField label="Name" placeholder-text="Name" name="ConversationName" hide-placeholder-on-focus="true" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor" style="flex-shrink: 1; flex-grow: 0; text-overflow: ellipsis;">
                 <Bindings>
-                    <ui:DataBinding property="value" data-source-path="Name" binding-mode="TwoWay"/>
+                    <ui:DataBinding property="value" data-source-path="_Name_k__BackingField" binding-mode="TwoWay"/>
                 </Bindings>
             </ui:TextField>
             <ui:TextField label="Description" placeholder-text="Description" name="ConversationDescription" hide-placeholder-on-focus="true" multiline="true" data-source-type="Tools.DialogueSystem.Data.DSConversation, Tools.DialogueSystem.Editor" focusable="true" style="flex-shrink: 1; flex-grow: 1; text-overflow: ellipsis; white-space: normal;">
                 <Bindings>
-                    <ui:DataBinding property="value" data-source-path="Description" binding-mode="TwoWay"/>
+                    <ui:DataBinding property="value" data-source-path="_Description_k__BackingField" binding-mode="TwoWay"/>
                 </Bindings>
             </ui:TextField>
         </ui:VisualElement>

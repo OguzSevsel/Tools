@@ -14,7 +14,6 @@ namespace Tools.DialogueSystem.Data
         [field: SerializeField] public string Guid { get; private set; }
         [field: SerializeField] public Vector2 Position { get; private set; }
         [field: SerializeField] public List<string> OutputIds { get; set; }
-        public DialogueType DialogueType;
         public bool IsStartNode;
         public bool IsEndNode;
 
@@ -41,7 +40,7 @@ namespace Tools.DialogueSystem.Data
             }
         }
 
-        public DSNodeData(Vector2 position, DialogueType type, string name, bool isStartNode, bool isEndNode)
+        public DSNodeData(Vector2 position, string name, bool isStartNode, bool isEndNode)
         {
             this.Guid = GUID.Generate().ToString();
             this.Name = name;
@@ -49,7 +48,6 @@ namespace Tools.DialogueSystem.Data
             this.IsEndNode = isEndNode;
             this.OutputIds = new List<string>();
             this.Position = position;
-            this.DialogueType = type;
         }
 
         public void SetName(string name)

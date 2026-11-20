@@ -1,5 +1,42 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4230137441550306477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8af8263d517835d43a99f2b35fbe288e, type: 3}
+  m_Name: Bizim Cocuklar
+  m_EditorClassIdentifier: Tools.DialogueSystem.Editor::Tools.DialogueSystem.Data.DSConversation
+  <Nodes>k__BackingField:
+  - <Guid>k__BackingField: 9a6c9a1edf374794d96d3a8af1105db9
+    <Position>k__BackingField: {x: 300.67926, y: 81.50943}
+    <OutputIds>k__BackingField:
+    - 92585ca95c6acf341ad0657df8def749
+    IsStartNode: 1
+    IsEndNode: 0
+    <ActorId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
+    <ConversantId>k__BackingField: ac43acb350574f139f3775eaaeba327d
+    <AudioClipId>k__BackingField: 04e9b7b721174ce59f43aaae6399fe55
+    <DialogueId>k__BackingField: af792f53fb604304b4a44f2baebf6d0a
+    _name: New Node
+  - <Guid>k__BackingField: 92585ca95c6acf341ad0657df8def749
+    <Position>k__BackingField: {x: 508.9812, y: 81.50943}
+    <OutputIds>k__BackingField: []
+    IsStartNode: 0
+    IsEndNode: 1
+    <ActorId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
+    <ConversantId>k__BackingField: ac43acb350574f139f3775eaaeba327d
+    <AudioClipId>k__BackingField: 04e9b7b721174ce59f43aaae6399fe55
+    <DialogueId>k__BackingField: af792f53fb604304b4a44f2baebf6d0a
+    _name: New Node
+  <Guid>k__BackingField: 18b34b14dac54d72934cb33068a36012
+  <Name>k__BackingField: Bizim Cocuklar
+  <Description>k__BackingField: Conversation Description
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13,257 +50,130 @@ MonoBehaviour:
   m_Name: NewDatabase
   m_EditorClassIdentifier: Tools.DialogueSystem.Editor::Tools.DialogueSystem.Data.DSDatabase
   <Conversations>k__BackingField:
-  - _name: New Conversation
-    _description: Conversation Description
-    <Guid>k__BackingField: 4827d7c3f40e490fb31ece89de236eb7
-    <Nodes>k__BackingField:
-    - <Guid>k__BackingField: 9ae85ac20323c2744bc1322c3dbc2834
-      <Position>k__BackingField: {x: 574.65265, y: 307.01886}
-      <OutputIds>k__BackingField:
-      - 52368c9b21d911d43a0afb951154d1fa
-      - 323e2746cc12e5348a09597083a06518
-      - f0ebb97c971f9914aa99e871030f42d6
-      DialogueType: 0
-      IsStartNode: 1
-      IsEndNode: 0
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: b77e33594e2b4ff2a9649516819dd7a7
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: 323e2746cc12e5348a09597083a06518
-      <Position>k__BackingField: {x: 841.35846, y: 307.01886}
-      <OutputIds>k__BackingField:
-      - 4467863dd2a02ca43ac83845f55e6eab
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 0
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: f0ebb97c971f9914aa99e871030f42d6
-      <Position>k__BackingField: {x: 841.35846, y: 450.11322}
-      <OutputIds>k__BackingField:
-      - fc85b43009e387449977d2aedec739ac
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 0
-      <ActorId>k__BackingField: b77e33594e2b4ff2a9649516819dd7a7
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: 52368c9b21d911d43a0afb951154d1fa
-      <Position>k__BackingField: {x: 841.35846, y: 163.9245}
-      <OutputIds>k__BackingField:
-      - 8d0b5884103b69249b022564014cb807
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 0
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: 8d0b5884103b69249b022564014cb807
-      <Position>k__BackingField: {x: 1091.3208, y: 163.9245}
-      <OutputIds>k__BackingField:
-      - fb19b5169478a2e47847bd9c435bf6a6
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 0
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: 4467863dd2a02ca43ac83845f55e6eab
-      <Position>k__BackingField: {x: 1091.3208, y: 307.01886}
-      <OutputIds>k__BackingField:
-      - fb19b5169478a2e47847bd9c435bf6a6
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 0
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: fc85b43009e387449977d2aedec739ac
-      <Position>k__BackingField: {x: 1091.3208, y: 450.11322}
-      <OutputIds>k__BackingField:
-      - fb19b5169478a2e47847bd9c435bf6a6
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 0
-      <ActorId>k__BackingField: b77e33594e2b4ff2a9649516819dd7a7
-      <ConversantId>k__BackingField: b77e33594e2b4ff2a9649516819dd7a7
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: fb19b5169478a2e47847bd9c435bf6a6
-      <Position>k__BackingField: {x: 1381.644, y: 307.01886}
-      <OutputIds>k__BackingField:
-      - a894a94aaa7080c4695c5f2e14a9911c
-      - ab30bfc4d338d5d4ca8926a61b5655be
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 0
-      <ActorId>k__BackingField: 0c759302e1d44702b185e74ae81d653a
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: a894a94aaa7080c4695c5f2e14a9911c
-      <Position>k__BackingField: {x: 1666.0645, y: 235.47168}
-      <OutputIds>k__BackingField:
-      - 81f63fd1066d06a4da457bf97b8c1951
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 0
-      <ActorId>k__BackingField: 7b692df05dae4552bd7afebbc5df5489
-      <ConversantId>k__BackingField: ca13fd7b31c64da28a06c7f1d2bb8e26
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: ab30bfc4d338d5d4ca8926a61b5655be
-      <Position>k__BackingField: {x: 1666.0645, y: 378.56598}
-      <OutputIds>k__BackingField:
-      - 81f63fd1066d06a4da457bf97b8c1951
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 0
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: 81f63fd1066d06a4da457bf97b8c1951
-      <Position>k__BackingField: {x: 1964.7874, y: 307.0189}
-      <OutputIds>k__BackingField:
-      - 7a996fb628c185d4ca7adc3df6d1f471
-      - 7aec4fc33a9ca4a419d67a55e1409f04
-      - e40cb1a363cd79a4794d683a4abd7443
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 0
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: 488944ea1019f6847be343ce609cf33f
-      <Position>k__BackingField: {x: 2269.585, y: -124.07547}
-      <OutputIds>k__BackingField: []
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 0
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: 0fa9c14a9da5bb7479261d8cfcee0f86
-      <Position>k__BackingField: {x: 2270.4905, y: 19.92453}
-      <OutputIds>k__BackingField: []
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 0
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: 7aec4fc33a9ca4a419d67a55e1409f04
-      <Position>k__BackingField: {x: 2270.4905, y: 163.92456}
-      <OutputIds>k__BackingField: []
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 1
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: e40cb1a363cd79a4794d683a4abd7443
-      <Position>k__BackingField: {x: 2271.3962, y: 450.11322}
-      <OutputIds>k__BackingField: []
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 1
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: c29819ec88cf21044928b3200f4333ad
-      <Position>k__BackingField: {x: 2270.4905, y: 594.1132}
-      <OutputIds>k__BackingField: []
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 0
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: 3fd32de43d6b0a1498b724183fbfd9b8
-      <Position>k__BackingField: {x: 2270.4905, y: 738.11316}
-      <OutputIds>k__BackingField: []
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 0
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
-    - <Guid>k__BackingField: 7a996fb628c185d4ca7adc3df6d1f471
-      <Position>k__BackingField: {x: 2271.3962, y: 307.01886}
-      <OutputIds>k__BackingField: []
-      DialogueType: 0
-      IsStartNode: 0
-      IsEndNode: 1
-      <ActorId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <ConversantId>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-      <AudioClipId>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
-      <DialogueId>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-      _name: Fuck
+  - {fileID: 4011098812008157125}
+  - {fileID: -4230137441550306477}
   <Actors>k__BackingField:
-  - _name: Ates Senturk
-    _description: Ates Senturk
-    <Guid>k__BackingField: 11c9dda35af44dc48a4fe8e355e51c32
-    _background: Ates Senturk
-    _sprite: {fileID: -1387151819714550007, guid: cdfb9623ac07a4448b9616c68820695d, type: 3}
   - _name: Oguz Sevsel
     _description: Oguz Sevsel
-    <Guid>k__BackingField: b77e33594e2b4ff2a9649516819dd7a7
+    <Guid>k__BackingField: ac43acb350574f139f3775eaaeba327d
     _background: Oguz Sevsel
-    _sprite: {fileID: -744358598092503433, guid: 77963cb65f4fa464b9466affe34b4082, type: 3}
-  - _name: Emre Cihanoglu
-    _description: Emre Cihanoglu
-    <Guid>k__BackingField: ca13fd7b31c64da28a06c7f1d2bb8e26
-    _background: Emre Cihanoglu
-    _sprite: {fileID: -4634849540970965534, guid: aba86c7ffcee7e349b5a58de88d39997, type: 3}
-  - _name: Kaan Mural
-    _description: Kaan Mural
-    <Guid>k__BackingField: 0c759302e1d44702b185e74ae81d653a
-    _background: Kaan Mural
-    _sprite: {fileID: 2703173093434824891, guid: 36090787d5284da4abab0c041d0af4f6, type: 3}
-  - _name: Ismet Mert Celik
-    _description: Ismet Mert Celik
-    <Guid>k__BackingField: 7b692df05dae4552bd7afebbc5df5489
-    _background: Ismet Mert Celik
-    _sprite: {fileID: 1340442107928082101, guid: 8bbb6cfb284da944895eabfcc9fca998, type: 3}
+    _sprite: {fileID: -1387151819714550007, guid: cdfb9623ac07a4448b9616c68820695d, type: 3}
+  - _name: Ates Senturk
+    _description: Ates Senturk
+    <Guid>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
+    _background: Ates Senturk
+    _sprite: {fileID: 2779512007517704115, guid: 7c5ca9666fd569b46be93404aaa43817, type: 3}
   <AudioClips>k__BackingField:
-  - _name: New Clip
-    _description: New Description
-    <Guid>k__BackingField: c81ebd27b06f4295ad20f0df93c0630b
+  - _name: Oguz Audio Clip
+    _description: Oguz Audio Clip
+    <Guid>k__BackingField: ae38efffe3804feca6e044398c381265
+    _clip: {fileID: 0}
+  - _name: Ates Audio Clip
+    _description: Ates Audio Clip
+    <Guid>k__BackingField: 04e9b7b721174ce59f43aaae6399fe55
     _clip: {fileID: 0}
   <DialogueTexts>k__BackingField:
-  - _name: New Dialogue 1
-    _description: Dialogue Description
-    <Guid>k__BackingField: a63d3716ee5f4ba4851a6fef04a27d91
-    _text: Damn Son Why Did You Do It?
+  - _name: Oguzun Konusmasi
+    _description: "\tOguzun Konusmasi"
+    <Guid>k__BackingField: 4cd5081b83ac4aa0a454cfb8ea3dc472
+    _text: Oguzun Konusmasi
+  - _name: Atesin Konusmasi
+    _description: Atesin Konusmasi
+    <Guid>k__BackingField: af792f53fb604304b4a44f2baebf6d0a
+    _text: Atesin Konusmasi
+  - _name: Oguzun Atese Comebacki
+    _description: Oguzun Atese Comebacki
+    <Guid>k__BackingField: 98a3c2a123d545c2a3fe750d16e486f2
+    _text: Oguzun Atese Comebacki
+--- !u!114 &4011098812008157125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8af8263d517835d43a99f2b35fbe288e, type: 3}
+  m_Name: Deneme
+  m_EditorClassIdentifier: Tools.DialogueSystem.Editor::Tools.DialogueSystem.Data.DSConversation
+  <Nodes>k__BackingField:
+  - <Guid>k__BackingField: f735f08110628554ca2d43665d1820b6
+    <Position>k__BackingField: {x: 179.32076, y: 186.56607}
+    <OutputIds>k__BackingField:
+    - 36be248edb797c241ba3dbf48cc8fa0e
+    - 48d2c32617230454e9e31ba66979c7eb
+    - ff199d098c1569c47a6eb40217a12404
+    IsStartNode: 1
+    IsEndNode: 0
+    <ActorId>k__BackingField: ac43acb350574f139f3775eaaeba327d
+    <ConversantId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
+    <AudioClipId>k__BackingField: ae38efffe3804feca6e044398c381265
+    <DialogueId>k__BackingField: 4cd5081b83ac4aa0a454cfb8ea3dc472
+    _name: New Node
+  - <Guid>k__BackingField: 36be248edb797c241ba3dbf48cc8fa0e
+    <Position>k__BackingField: {x: 378.56604, y: 187.47171}
+    <OutputIds>k__BackingField:
+    - 23cae1cc9b398064b900e3a9bacaada0
+    IsStartNode: 0
+    IsEndNode: 0
+    <ActorId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
+    <ConversantId>k__BackingField: ac43acb350574f139f3775eaaeba327d
+    <AudioClipId>k__BackingField: 04e9b7b721174ce59f43aaae6399fe55
+    <DialogueId>k__BackingField: af792f53fb604304b4a44f2baebf6d0a
+    _name: Atesin Cevabi
+  - <Guid>k__BackingField: 23cae1cc9b398064b900e3a9bacaada0
+    <Position>k__BackingField: {x: 589.58496, y: 187.47171}
+    <OutputIds>k__BackingField: []
+    IsStartNode: 0
+    IsEndNode: 1
+    <ActorId>k__BackingField: ac43acb350574f139f3775eaaeba327d
+    <ConversantId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
+    <AudioClipId>k__BackingField: ae38efffe3804feca6e044398c381265
+    <DialogueId>k__BackingField: 98a3c2a123d545c2a3fe750d16e486f2
+    _name: Atesin Cevabi
+  - <Guid>k__BackingField: ff199d098c1569c47a6eb40217a12404
+    <Position>k__BackingField: {x: 378.56604, y: 255.39626}
+    <OutputIds>k__BackingField:
+    - 6b2c2724af3a434449b4b30f35ec5a59
+    IsStartNode: 0
+    IsEndNode: 0
+    <ActorId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
+    <ConversantId>k__BackingField: ac43acb350574f139f3775eaaeba327d
+    <AudioClipId>k__BackingField: 04e9b7b721174ce59f43aaae6399fe55
+    <DialogueId>k__BackingField: af792f53fb604304b4a44f2baebf6d0a
+    _name: Atesin Cevabi
+  - <Guid>k__BackingField: 48d2c32617230454e9e31ba66979c7eb
+    <Position>k__BackingField: {x: 378.56604, y: 117.73588}
+    <OutputIds>k__BackingField:
+    - b264d6fedfe3c3643925bbf6fb341443
+    IsStartNode: 0
+    IsEndNode: 0
+    <ActorId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
+    <ConversantId>k__BackingField: ac43acb350574f139f3775eaaeba327d
+    <AudioClipId>k__BackingField: 04e9b7b721174ce59f43aaae6399fe55
+    <DialogueId>k__BackingField: af792f53fb604304b4a44f2baebf6d0a
+    _name: Atesin Cevabi
+  - <Guid>k__BackingField: 6b2c2724af3a434449b4b30f35ec5a59
+    <Position>k__BackingField: {x: 589.5849, y: 255.39624}
+    <OutputIds>k__BackingField: []
+    IsStartNode: 0
+    IsEndNode: 1
+    <ActorId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
+    <ConversantId>k__BackingField: ac43acb350574f139f3775eaaeba327d
+    <AudioClipId>k__BackingField: 04e9b7b721174ce59f43aaae6399fe55
+    <DialogueId>k__BackingField: af792f53fb604304b4a44f2baebf6d0a
+    _name: Atesin Cevabi
+  - <Guid>k__BackingField: b264d6fedfe3c3643925bbf6fb341443
+    <Position>k__BackingField: {x: 589.5849, y: 117.73584}
+    <OutputIds>k__BackingField: []
+    IsStartNode: 0
+    IsEndNode: 1
+    <ActorId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
+    <ConversantId>k__BackingField: ac43acb350574f139f3775eaaeba327d
+    <AudioClipId>k__BackingField: 04e9b7b721174ce59f43aaae6399fe55
+    <DialogueId>k__BackingField: af792f53fb604304b4a44f2baebf6d0a
+    _name: Atesin Cevabi
+  <Guid>k__BackingField: 27fdf5811b6a48a0809cd03253cc2198
+  <Name>k__BackingField: Deneme
+  <Description>k__BackingField: Conversation Description

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
+using Unity.ProjectAuditor.Editor;
 using UnityEditor;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -29,14 +29,17 @@ namespace Tools.DialogueSystem.UI
             container = this.Q<VisualElement>("ConversationsCardContainer");
             scrollView = this.Q<ScrollView>("ConversationsScrollView");
             createButton = this.Q<Button>("ConversationsCreateNewButton");
-            createButton.clicked += OnCreateButtonClicked;
 
             RegisterEvents();
         }
 
+        public static void InvokeConversationOpened(DSConversation conversation)
+        {
+            OnConversationOpened?.Invoke(conversation);
+        }
+
         private void AddConversations(DSDatabase database)
         {
-            
             foreach (DSConversation conversation in database.Conversations)
             {
                 VisualElement card = CreateCard(cardAsset, conversation);
@@ -62,16 +65,21 @@ namespace Tools.DialogueSystem.UI
 
         private void OnCreateButtonClicked()
         {
-            DSConversation newConversation = new("New Conversation", "Conversation Description");
-            VisualElement cardElement = CreateCard(cardAsset, newConversation);
-            AddCard(container, conversations, cardElement, newConversation);
-            DSDatabaseManager.Instance.Current.Register(newConversation);
+            DSConversation conversation = ScriptableObject.CreateInstance<DSConversation>();
+            conversation.Name = "New Conversation";
+            conversation.Description = "Conversation Description";
+            conversation.Nodes = new List<DSNodeData>();
+            conversation.name = conversation.Name;
+            VisualElement cardElement = CreateCard(cardAsset, conversation);
+            AddCard(container, conversations, cardElement, conversation);
+            DSDatabaseManager.Instance.Current.Register(conversation);
         }
 
         #region Utils
 
         private void RegisterEvents()
         {
+            createButton.clicked += OnCreateButtonClicked;
             DSDatabaseManager.Instance.DatabaseOpened += OnDatabaseOpened;
             DSDatabaseManager.Instance.DatabaseClosed += OnDatabaseClosed;
             DSGraphView.OnNodeCreated += HandleOnNodeCreated;
@@ -88,6 +96,7 @@ namespace Tools.DialogueSystem.UI
 
         private void UnRegisterEvents()
         {
+            createButton.clicked -= OnCreateButtonClicked;
             DSDatabaseManager.Instance.DatabaseOpened -= OnDatabaseOpened;
             DSDatabaseManager.Instance.DatabaseClosed -= OnDatabaseClosed;
             DSGraphView.OnNodeCreated -= HandleOnNodeCreated;
@@ -107,8 +116,16 @@ namespace Tools.DialogueSystem.UI
             container.Add(cardElement);
 
             Label nodeCountLabel = cardElement.Q<Label>("NodeCountLabel");
+            Label conversationTitleLabel = cardElement.Q<Label>("ConversationCardTitle");
 
             nodeCountLabel.text = $"{conversation.NodeCount} Nodes";
+
+            EventCallback<ChangeEvent<string>> valueChanged = (evt) =>
+            {
+                conversation.name = evt.newValue;
+            };
+
+            conversationTitleLabel.RegisterValueChangedCallback(valueChanged);
 
             Button deleteButton = cardElement.Q<Button>("DeleteButton");
             deleteButton.clicked += () =>
@@ -122,6 +139,8 @@ namespace Tools.DialogueSystem.UI
 
                 if (!confirm) return;
 
+                conversationTitleLabel.UnregisterValueChangedCallback(valueChanged);
+
                 container.Remove(cardElement);
                 conversations.Remove(conversation);
                 DSDatabaseManager.Instance.Current.Unregister(conversation);
@@ -130,7 +149,7 @@ namespace Tools.DialogueSystem.UI
             Button openButton = cardElement.Q<Button>("OpenButton");
             openButton.clicked += () =>
             {
-                OnConversationOpened?.Invoke(conversation);
+                InvokeConversationOpened(conversation);
             };
 
             conversations.Add(conversation, cardElement);

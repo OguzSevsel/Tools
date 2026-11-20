@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor;
+using UnityEditor.ShortcutManagement;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
 {
-    public class DSDialoguesTab : Tab
+    public class DSDialoguesTab : Tab, IShortcutContext
     {
         private Dictionary<DSDialogueText, VisualElement> dialogues;
 
@@ -16,6 +17,8 @@ namespace Tools.DialogueSystem.UI
         private VisualElement dialogueCardContainer;
         private ScrollView dialogueScrollView;
         private Button createDialogueButton;
+
+        public bool active => EditorWindow.focusedWindow is DSEditorView window && window.IsDialoguesTabActive;
 
         public DSDialoguesTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
         {
@@ -29,6 +32,14 @@ namespace Tools.DialogueSystem.UI
             dialogueScrollView = this.Q<ScrollView>("DialogueScrollView");
             createDialogueButton.clicked += OnCreateDialogueButtonClicked;
             RegisterEvents();
+        }
+
+        public void CreateDialogue()
+        {
+            DSDialogueText dialogue = new("New Dialogue", "Dialogue Description", "Dialogue Text");
+            VisualElement cardElement = CreateCard(cardAsset, dialogue);
+            AddCard(dialogueCardContainer, dialogues, dialogue, cardElement);
+            DSDatabaseManager.Instance.Current.Register(dialogue);
         }
 
         private void OnDatabaseClosed(DSDatabase database)
@@ -49,10 +60,7 @@ namespace Tools.DialogueSystem.UI
 
         private void OnCreateDialogueButtonClicked()
         {
-            DSDialogueText dialogue = new("New Dialogue", "Dialogue Description", "Dialogue Text");
-            VisualElement cardElement = CreateCard(cardAsset, dialogue);
-            AddCard(dialogueCardContainer, dialogues, dialogue, cardElement);
-            DSDatabaseManager.Instance.Current.Register(dialogue);
+            CreateDialogue();
         }
 
         #region Utils

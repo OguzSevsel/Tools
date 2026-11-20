@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 namespace Tools.DialogueSystem.Data
 {
     [Serializable]
-    public abstract class DSData : INotifyBindablePropertyChanged
+    public abstract class DSData : IDSData, INotifyBindablePropertyChanged
     {
         [SerializeField, SerializeReference] private string _name = "Name";
 
@@ -45,7 +45,7 @@ namespace Tools.DialogueSystem.Data
             }
         }
 
-        [field: SerializeField] public string Guid { get; internal set; } = "UniqueID";
+        [field: SerializeField] public string Guid { get; set; } = "UniqueID";
 
         public event EventHandler<BindablePropertyChangedEventArgs> propertyChanged;
 
@@ -64,5 +64,16 @@ namespace Tools.DialogueSystem.Data
         }
 
         public void SetName(string name) => this.Name = name;
+        public void SetDescription(string description) => this.Description = description;
+    }
+
+    public interface IDSData
+    {
+        public string Guid { get; set; }
+        public string Name { get; }
+        public string Description { get; }
+
+        public void SetName(string name);
+        public void SetDescription(string description);
     }
 }

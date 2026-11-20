@@ -2,17 +2,20 @@
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor;
+using UnityEditor.ShortcutManagement;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
 {
-    public class DSAudioClipsTab : Tab
+    public class DSAudioClipsTab : Tab, IShortcutContext
     {
         private VisualElement audioClipContainer;
         private Button createAudioClipButton;
         private ScrollView audioClipScrollView;
         private VisualTreeAsset cardAsset;
         public Dictionary<DSAudioClip, VisualElement> AudioClips { get; set; }
+
+        public bool active => EditorWindow.focusedWindow is DSEditorView window && window.IsAudioClipsTabActive;
 
         public DSAudioClipsTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
         {
@@ -26,6 +29,14 @@ namespace Tools.DialogueSystem.UI
             createAudioClipButton = this.Q<Button>("CreateAudioClipButton");
             createAudioClipButton.clicked += OnCreateAudioClipsButtonClicked;
             RegisterEvents();
+        }
+
+        public void CreateAudioClip()
+        {
+            DSAudioClip audioClip = new("New Audio Clip", "Audip Clip Description", null);
+            VisualElement cardElement = CreateCard(cardAsset, audioClip);
+            AddCard(audioClipContainer, AudioClips, audioClip, cardElement);
+            DSDatabaseManager.Instance.Current.Register(audioClip);
         }
 
         private void OnDatabaseOpened(DSDatabase database)
@@ -42,13 +53,10 @@ namespace Tools.DialogueSystem.UI
             audioClipContainer.Clear();
             AudioClips.Clear();
         }
-
+        
         private void OnCreateAudioClipsButtonClicked()
         {
-            DSAudioClip audioClip = new("New Audio Clip", "Audip Clip Description", null);
-            VisualElement cardElement = CreateCard(cardAsset, audioClip);
-            AddCard(audioClipContainer, AudioClips, audioClip, cardElement);
-            DSDatabaseManager.Instance.Current.Register(audioClip);
+            CreateAudioClip();
         }
 
         #region Utils

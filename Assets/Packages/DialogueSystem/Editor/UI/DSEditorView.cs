@@ -36,6 +36,10 @@ namespace Tools.DialogueSystem.UI
         public static event Action OnWindowCloses;
         public static event Action OnToggleSideBarShortcut;
 
+        public bool IsActorsTabActive => tabView != null && tabView.activeTab == actorsTab;
+        public bool IsAudioClipsTabActive => tabView != null && tabView.activeTab == audioClipsTab;
+        public bool IsDialoguesTabActive => tabView != null && tabView.activeTab == dialoguesTab;
+
         public static DSEditorView Instance;
 
         [MenuItem("Tools/Dialogue Graph")]
@@ -55,6 +59,9 @@ namespace Tools.DialogueSystem.UI
             GetUIElements();
             CreateTabs();
             AddTabs();
+            ShortcutManager.RegisterContext(actorsTab);
+            ShortcutManager.RegisterContext(audioClipsTab);
+            ShortcutManager.RegisterContext(dialoguesTab);
             RegisterEvents();
         }
 
@@ -174,6 +181,33 @@ namespace Tools.DialogueSystem.UI
                 return;
 
             Instance.graphTab.SelectAll();
+        }
+
+        [Shortcut("Dialogue System/Create Actor", typeof(DSActorsTab), KeyCode.D, ShortcutModifiers.Action)]
+        private static void CreateActor()
+        {
+            if (Instance == null)
+                return;
+
+            Instance.actorsTab.CreateActor();
+        }
+
+        [Shortcut("Dialogue System/Create Audio Clip", typeof(DSAudioClipsTab), KeyCode.D, ShortcutModifiers.Action)]
+        private static void CreateAudio()
+        {
+            if (Instance == null)
+                return;
+
+            Instance.audioClipsTab.CreateAudioClip();
+        }
+
+        [Shortcut("Dialogue System/Create Dialogue", typeof(DSDialoguesTab), KeyCode.D, ShortcutModifiers.Action)]
+        private static void CreateDialogue()
+        {
+            if (Instance == null)
+                return;
+
+            Instance.dialoguesTab.CreateDialogue();
         }
 
         [Shortcut("Dialogue System/Close Database", typeof(DSEditorView), KeyCode.W, ShortcutModifiers.Action)]

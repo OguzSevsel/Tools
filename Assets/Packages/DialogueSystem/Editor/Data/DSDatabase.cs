@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace Tools.DialogueSystem.Data
         [field: SerializeField] public List<DSDialogueText> DialogueTexts { get; private set; } = new();
         private HashSet<string> _guidLookup;
 
-        public static event Action<DSData> OnDataRemoved;
+        public static event Action<IDSData> OnDataRemoved;
 
         private void OnEnable()
         {
@@ -70,61 +71,80 @@ namespace Tools.DialogueSystem.Data
             return guid;
         }
 
-        public T Get<T>(string guid) where T : DSData
+        public T Get<T>(string guid) where T : IDSData
         {
-            if (!Contains(guid))
-                return null;
-
-            var type = typeof(T);
-
-            if (typeof(T) == typeof(DSActor))
+            IEnumerable<IDSData> collection = typeof(T) switch
             {
-                foreach (DSActor item in Actors)
-                {
-                    if (item.Guid == guid)
-                    {
-                        return item as T;
-                    }
-                }
-            }
+                var t when t == typeof(DSActor) => Actors,
+                var t when t == typeof(DSDialogueText) => DialogueTexts,
+                var t when t == typeof(DSAudioClip) => AudioClips,
+                var t when t == typeof(DSConversation) => Conversations,
+                _ => null
+            };
 
-            if (typeof(T) == typeof(DSDialogueText))
-            {
-                foreach (DSDialogueText item in DialogueTexts)
-                {
-                    if (item.Guid == guid)
-                    {
-                        return item as T;
-                    }
-                }
-            }
-
-            if (typeof(T) == typeof(DSAudioClip))
-            {
-                foreach (DSAudioClip item in AudioClips)
-                {
-                    if (item.Guid == guid)
-                    {
-                        return item as T;
-                    }
-                }
-            }
-
-            if (typeof(T) == typeof(DSConversation))
-            {
-                foreach (DSConversation item in Conversations)
-                {
-                    if (item.Guid == guid)
-                    {
-                        return item as T;
-                    }
-                }
-            }
-
-            return null;
+            return collection
+                .OfType<T>()
+                .FirstOrDefault(item => item.Guid == guid);
         }
 
-        public string Register<T>(T item) where T : DSData
+        //public T Get<T>(string guid) where T : IDSData
+        //{
+        //    if (!Contains(guid))
+        //        return null;
+
+        //    var type = typeof(T);
+
+        //    if (typeof(T) == typeof(DSActor))
+        //    {
+        //        DSActor actor = Actors.Find(actor => actor.Guid == guid);
+        //        return actor as T;
+
+        //        foreach (DSActor item in Actors)
+        //        {
+        //            if (item.Guid == guid)
+        //            {
+        //                return item;
+        //            }
+        //        }
+        //    }
+
+        //    if (typeof(T) == typeof(DSDialogueText))
+        //    {
+        //        foreach (DSDialogueText item in DialogueTexts)
+        //        {
+        //            if (item.Guid == guid)
+        //            {
+        //                return item as T;
+        //            }
+        //        }
+        //    }
+
+        //    if (typeof(T) == typeof(DSAudioClip))
+        //    {
+        //        foreach (DSAudioClip item in AudioClips)
+        //        {
+        //            if (item.Guid == guid)
+        //            {
+        //                return item as T;
+        //            }
+        //        }
+        //    }
+
+        //    if (typeof(T) == typeof(DSConversation))
+        //    {
+        //        foreach (DSConversation item in Conversations)
+        //        {
+        //            if (item.Guid == guid)
+        //            {
+        //                return item as T;
+        //            }
+        //        }
+        //    }
+
+        //    return null;
+        //}
+
+        public string Register<T>(T item) where T : IDSData
         {
             string guid = GenerateUniqueGuid();
             item.Guid = guid;
@@ -145,6 +165,9 @@ namespace Tools.DialogueSystem.Data
             else if (item is DSConversation conversation)
             {
                 Conversations.Add(conversation);
+
+                AssetDatabase.AddObjectToAsset(conversation, this);
+                EditorUtility.SetDirty(conversation);
             }
 
             EditorUtility.SetDirty(this);
@@ -152,7 +175,7 @@ namespace Tools.DialogueSystem.Data
             return guid;
         }
 
-        public void Unregister<T>(T item) where T : DSData
+        public void Unregister<T>(T item) where T : IDSData
         {
             bool removed = false;
 
@@ -185,6 +208,13 @@ namespace Tools.DialogueSystem.Data
                 if (Conversations.Contains(conversation))
                 {
                     Conversations.Remove(conversation);
+
+                    AssetDatabase.RemoveObjectFromAsset(conversation);
+                    DestroyImmediate(conversation, true);
+
+                    EditorUtility.SetDirty(this);
+                    AssetDatabase.SaveAssets();
+
                     removed = true;
                 }
             }
