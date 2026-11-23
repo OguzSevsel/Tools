@@ -89,7 +89,7 @@ namespace Tools.DialogueSystem
             cardAsset.CloneTree(cardElement);
 
             var checkBox = cardElement.Q<Toggle>("SelectionCheckBox");
-            var image = cardElement.Q<Image>("ActorImage");
+            var image = cardElement.Q<Image>("Image");
 
             cardElement.RegisterCallback<MouseEnterEvent>((evt) =>
             {
@@ -213,7 +213,7 @@ namespace Tools.DialogueSystem
                     var card = kvp.Value;
 
                     var checkBox = card.Q<Toggle>("SelectionCheckBox");
-                    var image = card.Q<Image>("ActorImage");
+                    var image = card.Q<Image>("Image");
 
                     checkBox.value = false;
 
@@ -236,7 +236,7 @@ namespace Tools.DialogueSystem
                     var card = kvp.Value;
 
                     var checkBox = card.Q<Toggle>("SelectionCheckBox");
-                    var image = card.Q<Image>("ActorImage");
+                    var image = card.Q<Image>("Image");
 
                     checkBox.value = true;
 
@@ -274,7 +274,7 @@ namespace Tools.DialogueSystem
                 var card = kvp.Value;
 
                 var checkBox = card.Q<Toggle>("SelectionCheckBox");
-                var image = card.Q<Image>("ActorImage");
+                var image = card.Q<Image>("Image");
 
                 checkBox.value = false;
 

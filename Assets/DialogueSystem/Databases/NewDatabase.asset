@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Tools.DialogueSystem.Editor::Tools.DialogueSystem.Data.DSConversation
   <Nodes>k__BackingField:
   - <Guid>k__BackingField: cc1da20bf7522134689dd470f3e6af95
-    <Position>k__BackingField: {x: 367.69812, y: 468.2264}
+    <Position>k__BackingField: {x: 249.96228, y: 526.1887}
     <OutputIds>k__BackingField: []
     IsStartNode: 1
     IsEndNode: 0
-    <ActorId>k__BackingField: 
-    <ConversantId>k__BackingField: 
+    <ActorId>k__BackingField: 19d28f49cdaf4b8ab0c506ca9619d482
+    <ConversantId>k__BackingField: 19d28f49cdaf4b8ab0c506ca9619d482
     <AudioClipId>k__BackingField: 
-    <DialogueId>k__BackingField: 
+    <DialogueId>k__BackingField: a104fef01ef54133b5d1f7151f328e35
     _name: New Node
   <Guid>k__BackingField: bc343e5e006d4d03b712d55ee0a879bb
   <Name>k__BackingField: New Conversation
@@ -46,11 +46,7 @@ MonoBehaviour:
     <Guid>k__BackingField: 19d28f49cdaf4b8ab0c506ca9619d482
     _background: Actor Background
     _sprite: {fileID: 0}
-  <AudioClips>k__BackingField:
-  - _name: New Audio Clip
-    _description: Audip Clip Description
-    <Guid>k__BackingField: 916fe28550d544f4a9fd74a881528f58
-    _clip: {fileID: 0}
+  <AudioClips>k__BackingField: []
   <DialogueTexts>k__BackingField:
   - _name: New Dialogue
     _description: Dialogue Description

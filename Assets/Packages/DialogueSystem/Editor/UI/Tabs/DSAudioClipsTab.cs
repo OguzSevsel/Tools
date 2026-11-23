@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Tools.DialogueSystem.Data;
+using Tools.DialogueSystem.UI.Elements;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor;
 using UnityEditor.ShortcutManagement;
@@ -7,116 +8,53 @@ using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
 {
-    public class DSAudioClipsTab : Tab, IShortcutContext
+    public class DSAudioClipsTab : DSTab, IShortcutContext
     {
-        private VisualElement audioClipContainer;
-        private Button createAudioClipButton;
-        private ScrollView audioClipScrollView;
-        private VisualTreeAsset cardAsset;
-        public Dictionary<DSAudioClip, VisualElement> AudioClips { get; set; }
-
         public bool active => EditorWindow.focusedWindow is DSEditorView window && window.IsAudioClipsTabActive;
 
-        public DSAudioClipsTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
+        public DSAudioClipsTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset) : base(tabAsset, cardAsset) 
         {
-            AudioClips = new Dictionary<DSAudioClip, VisualElement>();
             tabAsset.CloneTree(this);
             label = "Audio Clips";
-            this.cardAsset = cardAsset;
 
-            audioClipContainer = this.Q<VisualElement>("AudioClipsCardContainer");
-            audioClipScrollView = this.Q<ScrollView>("AudioClipsScrollView");
-            createAudioClipButton = this.Q<Button>("CreateAudioClipButton");
-            createAudioClipButton.clicked += OnCreateAudioClipsButtonClicked;
+            cardContainer = this.Q<VisualElement>("AudioClipsCardContainer");
+            scrollView = this.Q<ScrollView>("AudioClipsScrollView");
+            createButton = this.Q<Button>("CreateAudioClipButton");
+            buttonContainer = this.Q<VisualElement>("ButtonContainer");
+            deleteAllButton = this.Q<Button>("DeleteSelectedButton");
+            selectAllButton = this.Q<Button>("SelectAllButton");
+
             RegisterEvents();
         }
 
         public void CreateAudioClip()
         {
-            DSAudioClip audioClip = new("New Audio Clip", "Audip Clip Description", null);
-            VisualElement cardElement = CreateCard(cardAsset, audioClip);
-            AddCard(audioClipContainer, AudioClips, audioClip, cardElement);
-            DSDatabaseManager.Instance.Current.Register(audioClip);
-        }
-
-        private void OnDatabaseOpened(DSDatabase database)
-        {
-            foreach (DSAudioClip audioClip in database.AudioClips)
-            {
-                VisualElement card = CreateCard(cardAsset, audioClip);
-                AddCard(audioClipContainer, AudioClips, audioClip, card);
-            }
-        }
-
-        private void OnDatabaseClosed(DSDatabase database)
-        {
-            audioClipContainer.Clear();
-            AudioClips.Clear();
+            DSAudioClip clip = new DSAudioClip("New Audio Clip", "Audio Clip Description", null);
+            CreateItem(clip);
         }
         
         private void OnCreateAudioClipsButtonClicked()
         {
-            CreateAudioClip();
+            DSAudioClip clip = new DSAudioClip("New Audio Clip", "Audio Clip Description", null);
+            CreateItem(clip);
         }
 
         #region Utils
 
         private void RegisterEvents()
         {
-            DSDatabaseManager.Instance.DatabaseOpened += OnDatabaseOpened;
-            DSDatabaseManager.Instance.DatabaseClosed += OnDatabaseClosed;
+            deleteAllButton.clicked += HandleDeleteSelectedButtonClicked;
+            selectAllButton.clicked += HandleSelectAllButtonClicked;
+            createButton.clicked += OnCreateAudioClipsButtonClicked;
             DSEditorView.OnWindowCloses += UnRegisterEvents;
         }
 
         private void UnRegisterEvents()
         {
-            DSDatabaseManager.Instance.DatabaseOpened -= OnDatabaseOpened;
-            DSDatabaseManager.Instance.DatabaseClosed -= OnDatabaseClosed;
+            deleteAllButton.clicked -= HandleDeleteSelectedButtonClicked;
+            selectAllButton.clicked -= HandleSelectAllButtonClicked;
+            createButton.clicked -= OnCreateAudioClipsButtonClicked;
             DSEditorView.OnWindowCloses -= UnRegisterEvents;
-        }
-
-        private VisualElement CreateCard(VisualTreeAsset cardAsset, DSAudioClip audioClip)
-        {
-            VisualElement cardElement = new();
-            cardAsset.CloneTree(cardElement);
-            cardElement.RegisterCallback<MouseEnterEvent>((evt) =>
-            {
-                if (evt.currentTarget is VisualElement element)
-                {
-                    element.SetDropShadow();
-                }
-            });
-            cardElement.RegisterCallback<MouseLeaveEvent>((evt) =>
-            {
-                if (evt.currentTarget is VisualElement element)
-                {
-                    element.SetDropShadow(true);
-                }
-            });
-
-            cardElement.dataSource = audioClip;
-            return cardElement;
-        }
-
-        private void AddCard(VisualElement container, Dictionary<DSAudioClip, VisualElement> audioClips, DSAudioClip audioClip, VisualElement cardElement)
-        {
-            container.Add(cardElement);
-            Button deleteButton = cardElement.Q<Button>("DeleteButton");
-            deleteButton.clicked += () =>
-            {
-                bool confirm = EditorUtility.DisplayDialog(
-                    $"Delete {audioClip.Name}",
-                    $"Are you sure you want to delete {audioClip.Name}?",
-                    "Delete",
-                    "Cancel"
-                );
-
-                if (!confirm) return;
-
-                container.Remove(cardElement);
-                audioClips.Remove(audioClip);
-                DSDatabaseManager.Instance.Current.Unregister(audioClip);
-            };
         }
 
         #endregion
