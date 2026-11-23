@@ -87,63 +87,6 @@ namespace Tools.DialogueSystem.Data
                 .FirstOrDefault(item => item.Guid == guid);
         }
 
-        //public T Get<T>(string guid) where T : IDSData
-        //{
-        //    if (!Contains(guid))
-        //        return null;
-
-        //    var type = typeof(T);
-
-        //    if (typeof(T) == typeof(DSActor))
-        //    {
-        //        DSActor actor = Actors.Find(actor => actor.Guid == guid);
-        //        return actor as T;
-
-        //        foreach (DSActor item in Actors)
-        //        {
-        //            if (item.Guid == guid)
-        //            {
-        //                return item;
-        //            }
-        //        }
-        //    }
-
-        //    if (typeof(T) == typeof(DSDialogueText))
-        //    {
-        //        foreach (DSDialogueText item in DialogueTexts)
-        //        {
-        //            if (item.Guid == guid)
-        //            {
-        //                return item as T;
-        //            }
-        //        }
-        //    }
-
-        //    if (typeof(T) == typeof(DSAudioClip))
-        //    {
-        //        foreach (DSAudioClip item in AudioClips)
-        //        {
-        //            if (item.Guid == guid)
-        //            {
-        //                return item as T;
-        //            }
-        //        }
-        //    }
-
-        //    if (typeof(T) == typeof(DSConversation))
-        //    {
-        //        foreach (DSConversation item in Conversations)
-        //        {
-        //            if (item.Guid == guid)
-        //            {
-        //                return item as T;
-        //            }
-        //        }
-        //    }
-
-        //    return null;
-        //}
-
         public string Register<T>(T item) where T : IDSData
         {
             string guid = GenerateUniqueGuid();

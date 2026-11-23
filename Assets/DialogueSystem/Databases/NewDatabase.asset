@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4230137441550306477
+--- !u!114 &-2963398345317281086
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,32 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8af8263d517835d43a99f2b35fbe288e, type: 3}
-  m_Name: Bizim Cocuklar
+  m_Name: New Conversation
   m_EditorClassIdentifier: Tools.DialogueSystem.Editor::Tools.DialogueSystem.Data.DSConversation
   <Nodes>k__BackingField:
-  - <Guid>k__BackingField: 9a6c9a1edf374794d96d3a8af1105db9
-    <Position>k__BackingField: {x: 300.67926, y: 81.50943}
-    <OutputIds>k__BackingField:
-    - 92585ca95c6acf341ad0657df8def749
+  - <Guid>k__BackingField: cc1da20bf7522134689dd470f3e6af95
+    <Position>k__BackingField: {x: 367.69812, y: 468.2264}
+    <OutputIds>k__BackingField: []
     IsStartNode: 1
     IsEndNode: 0
-    <ActorId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
-    <ConversantId>k__BackingField: ac43acb350574f139f3775eaaeba327d
-    <AudioClipId>k__BackingField: 04e9b7b721174ce59f43aaae6399fe55
-    <DialogueId>k__BackingField: af792f53fb604304b4a44f2baebf6d0a
+    <ActorId>k__BackingField: 
+    <ConversantId>k__BackingField: 
+    <AudioClipId>k__BackingField: 
+    <DialogueId>k__BackingField: 
     _name: New Node
-  - <Guid>k__BackingField: 92585ca95c6acf341ad0657df8def749
-    <Position>k__BackingField: {x: 508.9812, y: 81.50943}
-    <OutputIds>k__BackingField: []
-    IsStartNode: 0
-    IsEndNode: 1
-    <ActorId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
-    <ConversantId>k__BackingField: ac43acb350574f139f3775eaaeba327d
-    <AudioClipId>k__BackingField: 04e9b7b721174ce59f43aaae6399fe55
-    <DialogueId>k__BackingField: af792f53fb604304b4a44f2baebf6d0a
-    _name: New Node
-  <Guid>k__BackingField: 18b34b14dac54d72934cb33068a36012
-  <Name>k__BackingField: Bizim Cocuklar
+  <Guid>k__BackingField: bc343e5e006d4d03b712d55ee0a879bb
+  <Name>k__BackingField: New Conversation
   <Description>k__BackingField: Conversation Description
 --- !u!114 &11400000
 MonoBehaviour:
@@ -50,130 +39,20 @@ MonoBehaviour:
   m_Name: NewDatabase
   m_EditorClassIdentifier: Tools.DialogueSystem.Editor::Tools.DialogueSystem.Data.DSDatabase
   <Conversations>k__BackingField:
-  - {fileID: 4011098812008157125}
-  - {fileID: -4230137441550306477}
+  - {fileID: -2963398345317281086}
   <Actors>k__BackingField:
-  - _name: Oguz Sevsel
-    _description: Oguz Sevsel
-    <Guid>k__BackingField: ac43acb350574f139f3775eaaeba327d
-    _background: Oguz Sevsel
-    _sprite: {fileID: -1387151819714550007, guid: cdfb9623ac07a4448b9616c68820695d, type: 3}
-  - _name: Ates Senturk
-    _description: Ates Senturk
-    <Guid>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
-    _background: Ates Senturk
-    _sprite: {fileID: 2779512007517704115, guid: 7c5ca9666fd569b46be93404aaa43817, type: 3}
+  - _name: New Actor
+    _description: Actor Description
+    <Guid>k__BackingField: 19d28f49cdaf4b8ab0c506ca9619d482
+    _background: Actor Background
+    _sprite: {fileID: 0}
   <AudioClips>k__BackingField:
-  - _name: Oguz Audio Clip
-    _description: Oguz Audio Clip
-    <Guid>k__BackingField: ae38efffe3804feca6e044398c381265
-    _clip: {fileID: 0}
-  - _name: Ates Audio Clip
-    _description: Ates Audio Clip
-    <Guid>k__BackingField: 04e9b7b721174ce59f43aaae6399fe55
+  - _name: New Audio Clip
+    _description: Audip Clip Description
+    <Guid>k__BackingField: 916fe28550d544f4a9fd74a881528f58
     _clip: {fileID: 0}
   <DialogueTexts>k__BackingField:
-  - _name: Oguzun Konusmasi
-    _description: "\tOguzun Konusmasi"
-    <Guid>k__BackingField: 4cd5081b83ac4aa0a454cfb8ea3dc472
-    _text: Oguzun Konusmasi
-  - _name: Atesin Konusmasi
-    _description: Atesin Konusmasi
-    <Guid>k__BackingField: af792f53fb604304b4a44f2baebf6d0a
-    _text: Atesin Konusmasi
-  - _name: Oguzun Atese Comebacki
-    _description: Oguzun Atese Comebacki
-    <Guid>k__BackingField: 98a3c2a123d545c2a3fe750d16e486f2
-    _text: Oguzun Atese Comebacki
---- !u!114 &4011098812008157125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8af8263d517835d43a99f2b35fbe288e, type: 3}
-  m_Name: Deneme
-  m_EditorClassIdentifier: Tools.DialogueSystem.Editor::Tools.DialogueSystem.Data.DSConversation
-  <Nodes>k__BackingField:
-  - <Guid>k__BackingField: f735f08110628554ca2d43665d1820b6
-    <Position>k__BackingField: {x: 179.32076, y: 186.56607}
-    <OutputIds>k__BackingField:
-    - 36be248edb797c241ba3dbf48cc8fa0e
-    - 48d2c32617230454e9e31ba66979c7eb
-    - ff199d098c1569c47a6eb40217a12404
-    IsStartNode: 1
-    IsEndNode: 0
-    <ActorId>k__BackingField: ac43acb350574f139f3775eaaeba327d
-    <ConversantId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
-    <AudioClipId>k__BackingField: ae38efffe3804feca6e044398c381265
-    <DialogueId>k__BackingField: 4cd5081b83ac4aa0a454cfb8ea3dc472
-    _name: New Node
-  - <Guid>k__BackingField: 36be248edb797c241ba3dbf48cc8fa0e
-    <Position>k__BackingField: {x: 378.56604, y: 187.47171}
-    <OutputIds>k__BackingField:
-    - 23cae1cc9b398064b900e3a9bacaada0
-    IsStartNode: 0
-    IsEndNode: 0
-    <ActorId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
-    <ConversantId>k__BackingField: ac43acb350574f139f3775eaaeba327d
-    <AudioClipId>k__BackingField: 04e9b7b721174ce59f43aaae6399fe55
-    <DialogueId>k__BackingField: af792f53fb604304b4a44f2baebf6d0a
-    _name: Atesin Cevabi
-  - <Guid>k__BackingField: 23cae1cc9b398064b900e3a9bacaada0
-    <Position>k__BackingField: {x: 589.58496, y: 187.47171}
-    <OutputIds>k__BackingField: []
-    IsStartNode: 0
-    IsEndNode: 1
-    <ActorId>k__BackingField: ac43acb350574f139f3775eaaeba327d
-    <ConversantId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
-    <AudioClipId>k__BackingField: ae38efffe3804feca6e044398c381265
-    <DialogueId>k__BackingField: 98a3c2a123d545c2a3fe750d16e486f2
-    _name: Atesin Cevabi
-  - <Guid>k__BackingField: ff199d098c1569c47a6eb40217a12404
-    <Position>k__BackingField: {x: 378.56604, y: 255.39626}
-    <OutputIds>k__BackingField:
-    - 6b2c2724af3a434449b4b30f35ec5a59
-    IsStartNode: 0
-    IsEndNode: 0
-    <ActorId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
-    <ConversantId>k__BackingField: ac43acb350574f139f3775eaaeba327d
-    <AudioClipId>k__BackingField: 04e9b7b721174ce59f43aaae6399fe55
-    <DialogueId>k__BackingField: af792f53fb604304b4a44f2baebf6d0a
-    _name: Atesin Cevabi
-  - <Guid>k__BackingField: 48d2c32617230454e9e31ba66979c7eb
-    <Position>k__BackingField: {x: 378.56604, y: 117.73588}
-    <OutputIds>k__BackingField:
-    - b264d6fedfe3c3643925bbf6fb341443
-    IsStartNode: 0
-    IsEndNode: 0
-    <ActorId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
-    <ConversantId>k__BackingField: ac43acb350574f139f3775eaaeba327d
-    <AudioClipId>k__BackingField: 04e9b7b721174ce59f43aaae6399fe55
-    <DialogueId>k__BackingField: af792f53fb604304b4a44f2baebf6d0a
-    _name: Atesin Cevabi
-  - <Guid>k__BackingField: 6b2c2724af3a434449b4b30f35ec5a59
-    <Position>k__BackingField: {x: 589.5849, y: 255.39624}
-    <OutputIds>k__BackingField: []
-    IsStartNode: 0
-    IsEndNode: 1
-    <ActorId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
-    <ConversantId>k__BackingField: ac43acb350574f139f3775eaaeba327d
-    <AudioClipId>k__BackingField: 04e9b7b721174ce59f43aaae6399fe55
-    <DialogueId>k__BackingField: af792f53fb604304b4a44f2baebf6d0a
-    _name: Atesin Cevabi
-  - <Guid>k__BackingField: b264d6fedfe3c3643925bbf6fb341443
-    <Position>k__BackingField: {x: 589.5849, y: 117.73584}
-    <OutputIds>k__BackingField: []
-    IsStartNode: 0
-    IsEndNode: 1
-    <ActorId>k__BackingField: 8f59e1b4b20c4ca5b2ce8ecc5b429719
-    <ConversantId>k__BackingField: ac43acb350574f139f3775eaaeba327d
-    <AudioClipId>k__BackingField: 04e9b7b721174ce59f43aaae6399fe55
-    <DialogueId>k__BackingField: af792f53fb604304b4a44f2baebf6d0a
-    _name: Atesin Cevabi
-  <Guid>k__BackingField: 27fdf5811b6a48a0809cd03253cc2198
-  <Name>k__BackingField: Deneme
-  <Description>k__BackingField: Conversation Description
+  - _name: New Dialogue
+    _description: Dialogue Description
+    <Guid>k__BackingField: a104fef01ef54133b5d1f7151f328e35
+    _text: Dialogue Text

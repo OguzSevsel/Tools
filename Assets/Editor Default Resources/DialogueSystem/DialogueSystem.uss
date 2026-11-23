@@ -417,10 +417,45 @@
     scale: 1.04 1.04 1.04;
 }
 
-
-
-
-
 .unity-text-element {
     -unity-text-align: middle-center;
+}
+
+.unity-toggle__checkmark {
+    width: 25px;
+    height: 25px;
+}
+
+.selectButtons {
+    background-color: rgb(0, 0, 0);
+    font-size: 20px;
+    -unity-font-style: bold;
+    -unity-text-auto-size: best-fit 10px 40px;
+    -unity-text-align: middle-center;
+    margin-right: 10px;
+    margin-left: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.selectButtons:hover {
+    transition-property: border-bottom-width;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+    border-bottom-width: 3px;
+    border-left-color: rgb(83, 83, 83);
+    border-right-color: rgb(83, 83, 83);
+    border-top-color: rgb(83, 83, 83);
+    border-bottom-color: rgb(83, 83, 83);
+}
+
+.selectButtons:active {
+    transition-property: border-bottom-width;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+    border-bottom-width: 0;
 }

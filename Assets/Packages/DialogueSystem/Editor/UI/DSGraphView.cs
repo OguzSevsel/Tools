@@ -281,6 +281,14 @@ namespace Tools.DialogueSystem.UI
 
         private void HandleOnDataRemoved(IDSData data)
         {
+            if (data is DSConversation conversation)
+            {
+                if (conversation == CurrentConversation)
+                {
+                    ClearGraph();
+                }
+            }
+
             if (CurrentConversation == null)
                 return;
 

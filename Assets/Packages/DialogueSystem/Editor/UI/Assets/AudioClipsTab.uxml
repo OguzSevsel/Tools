@@ -1,5 +1,9 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Assets/Editor%20Default%20Resources/DialogueSystem/DialogueSystem.uss?fileID=7433441132597879392&amp;guid=d8ee67fa447200445a0b5eb322156409&amp;type=3#DialogueSystem"/>
+    <ui:VisualElement name="ButtonContainer" style="height: 50px; flex-direction: row; display: flex; padding-top: 3px; padding-right: 3px; padding-bottom: 3px; padding-left: 3px;">
+        <ui:Button text="Select All" name="SelectAllButton" class="selectButtons" style="flex-grow: 1;"/>
+        <ui:Button text="Delete" name="DeleteSelectedButton" class="selectButtons" style="flex-grow: 1;"/>
+    </ui:VisualElement>
     <ui:ScrollView horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Hidden" mode="Vertical" name="AudioClipsScrollView" style="width: 100%; height: 100%; flex-grow: 1;">
         <ui:VisualElement name="AudioClipsCardContainer" class="flexGrow" style="flex-wrap: wrap; flex-direction: row;"/>
     </ui:ScrollView>

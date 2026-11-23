@@ -108,6 +108,11 @@ namespace Tools.DialogueSystem.UI.Elements
             audioClipButton = this.Q<Button>("AudioClipButton");
             dialogueButton = this.Q<Button>("DialogueButton");
 
+            actorButton.Rotate(0);
+            conversantButton.Rotate(0);
+            audioClipButton.Rotate(0);
+            dialogueButton.Rotate(0);
+
             actorDropdown = new DSPopUpField<DSActor>("Actor");
             conversantDropdown = new DSPopUpField<DSActor>("Conversant");
             audioDropdown = new DSPopUpField<DSAudioClip>("Audio");
@@ -229,10 +234,10 @@ namespace Tools.DialogueSystem.UI.Elements
 
             if (isVisible)
             {
-                button.Rotate(90);
+                button.Rotate(0);
                 return;
             }
-            button.Rotate(0);
+            button.Rotate(90);
         }
 
         private void ToggleFieldVisibility(VisualElement element, Button button)

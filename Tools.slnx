@@ -1,6 +1,6 @@
 ﻿<Solution>
-  <Project Path="Tools.SaveSystem.Runtime.csproj" />
   <Project Path="Tools.DialogueSystem.Editor.csproj" />
+  <Project Path="Tools.SaveSystem.Runtime.csproj" />
   <Project Path="Tools.DialogueSystem.Runtime.csproj" />
   <Project Path="Tools.TweenSystem.Runtime.csproj" />
   <Project Path="Tools.Core.Runtime.csproj" />
