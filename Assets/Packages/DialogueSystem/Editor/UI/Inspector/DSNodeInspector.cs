@@ -1,12 +1,7 @@
-using System;
 using System.Linq;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.UI.Inspector;
 using Tools.DialogueSystem.Utilities;
-using Unity.Plastic.Antlr3.Runtime;
-using UnityEditor.Search;
-using UnityEditor.UIElements;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI.Elements
@@ -37,6 +32,14 @@ namespace Tools.DialogueSystem.UI.Elements
         private Button audioClipButton;
         private Button dialogueButton;
 
+        private static readonly DSActor EmptyActor = new DSActor(string.Empty, string.Empty, string.Empty, null);
+
+        private static readonly DSActor EmptyConversant = new DSActor(string.Empty, string.Empty, string.Empty, null);
+
+        private static readonly DSAudioClip EmptyAudioClip = new DSAudioClip(string.Empty, string.Empty, null);
+
+        private static readonly DSDialogueText EmptyDialogue = new DSDialogueText(string.Empty, string.Empty, string.Empty);
+
         public DSNodeInspector(DSNodeData data, DSGraphView graphView, VisualTreeAsset nodeInspectorAsset)
         {
             this.data = data;
@@ -60,23 +63,28 @@ namespace Tools.DialogueSystem.UI.Elements
                 nodeTitleTextField.SetVisible(true);
                 titleLabel.text = "Node Title";
             }
-
+            
             DSDatabase database = DSDatabaseManager.Instance.Current;
+
+            var actor = database.Get<DSActor>(data.ActorId);
+            var conversant = database.Get<DSActor>(data.ConversantId);
+            var audioClip = database.Get<DSAudioClip>(data.AudioClipId);
+            var dialogue = database.Get<DSDialogueText>(data.DialogueId);
 
             actorDropdown.SetItems(database.Actors);
             conversantDropdown.SetItems(database.Actors);
             audioDropdown.SetItems(database.AudioClips);
             dialogueDropdown.SetItems(database.DialogueTexts);
 
-            actorDropdown.value = database.Get<DSActor>(data.ActorId);
-            conversantDropdown.value = database.Get<DSActor>(data.ConversantId);
-            audioDropdown.value = database.Get<DSAudioClip>(data.AudioClipId);
-            dialogueDropdown.value = database.Get<DSDialogueText>(data.DialogueId);
+            actorDropdown.Value = actor;
+            conversantDropdown.Value = conversant;
+            audioDropdown.Value = audioClip;
+            dialogueDropdown.Value = dialogue;
 
-            this.actorFieldContainer.dataSource = database.Get<DSActor>(data.ActorId);
-            this.conversantFieldContainer.dataSource = database.Get<DSActor>(data.ConversantId);
-            this.audioClipFieldContainer.dataSource = database.Get<DSAudioClip>(data.AudioClipId);
-            this.dialogueFieldContainer.dataSource = database.Get<DSDialogueText>(data.DialogueId);
+            this.actorFieldContainer.dataSource = actor ?? EmptyActor;
+            this.conversantFieldContainer.dataSource = conversant ?? EmptyConversant;
+            this.audioClipFieldContainer.dataSource = audioClip ?? EmptyAudioClip;
+            this.dialogueFieldContainer.dataSource = dialogue ?? EmptyDialogue;
         }
 
         #region INITIALIZATION
@@ -191,7 +199,9 @@ namespace Tools.DialogueSystem.UI.Elements
         {
             this.data.SetDialogueId(dialogue.Guid);
             ChangeSelectionData<DSDialogueText>(dialogue);
-            this.dialogueFieldContainer.dataSource = DSDatabaseManager.Instance.Current.Get<DSDialogueText>(this.data.DialogueId);
+
+            var databaseDialogue = DSDatabaseManager.Instance.Current.Get<DSDialogueText>(this.data.DialogueId);
+            this.dialogueFieldContainer.dataSource = databaseDialogue;
             GraphView.RefreshNodes();
         }
 

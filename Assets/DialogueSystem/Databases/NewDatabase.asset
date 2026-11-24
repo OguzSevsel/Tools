@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2963398345317281086
+--- !u!114 &-5043861865766776892
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -13,17 +13,27 @@ MonoBehaviour:
   m_Name: New Conversation
   m_EditorClassIdentifier: Tools.DialogueSystem.Editor::Tools.DialogueSystem.Data.DSConversation
   <Nodes>k__BackingField:
-  - <Guid>k__BackingField: cc1da20bf7522134689dd470f3e6af95
-    <Position>k__BackingField: {x: 303.39627, y: 377.6604}
+  - <Guid>k__BackingField: 50e5fd624196e5548928fa7dc5ef2909
+    <Position>k__BackingField: {x: 335.09436, y: 285.28302}
     <OutputIds>k__BackingField: []
     IsStartNode: 1
+    IsEndNode: 0
+    <ActorId>k__BackingField: f95f36721e59403aab2b65851d67a9ec
+    <ConversantId>k__BackingField: f95f36721e59403aab2b65851d67a9ec
+    <AudioClipId>k__BackingField: 
+    <DialogueId>k__BackingField: e2687ace70714423906217bb9368031c
+    _name: New Node
+  - <Guid>k__BackingField: 3f1f6e3c464df044b828f120ed43f0d0
+    <Position>k__BackingField: {x: 504.45282, y: 285.28302}
+    <OutputIds>k__BackingField: []
+    IsStartNode: 0
     IsEndNode: 0
     <ActorId>k__BackingField: 
     <ConversantId>k__BackingField: 
     <AudioClipId>k__BackingField: 
     <DialogueId>k__BackingField: 
     _name: New Node
-  <Guid>k__BackingField: bc343e5e006d4d03b712d55ee0a879bb
+  <Guid>k__BackingField: 4f3036f6f6754f7790991bb7f3f1b46a
   <Name>k__BackingField: New Conversation
   <Description>k__BackingField: Conversation Description
 --- !u!114 &11400000
@@ -39,7 +49,20 @@ MonoBehaviour:
   m_Name: NewDatabase
   m_EditorClassIdentifier: Tools.DialogueSystem.Editor::Tools.DialogueSystem.Data.DSDatabase
   <Conversations>k__BackingField:
-  - {fileID: -2963398345317281086}
-  <Actors>k__BackingField: []
-  <AudioClips>k__BackingField: []
-  <DialogueTexts>k__BackingField: []
+  - {fileID: -5043861865766776892}
+  <Actors>k__BackingField:
+  - _name: New Actor
+    _description: Actor Description
+    <Guid>k__BackingField: f95f36721e59403aab2b65851d67a9ec
+    _background: Actor Background
+    _sprite: {fileID: 0}
+  <AudioClips>k__BackingField:
+  - _name: New Audio Clip
+    _description: Audio Clip Description
+    <Guid>k__BackingField: ac1a5bb649a94eb8ac2434d5b86a0254
+    _clip: {fileID: 0}
+  <DialogueTexts>k__BackingField:
+  - _name: New Dialogue
+    _description: Dialogue Description
+    <Guid>k__BackingField: e2687ace70714423906217bb9368031c
+    _text: Dialogue Text

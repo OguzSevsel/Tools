@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor;
@@ -10,17 +8,17 @@ namespace Tools.DialogueSystem.UI
 {
     public class DSTab : Tab
     {
-        public ScrollView scrollView;
-        public VisualElement cardContainer;
-        public VisualElement buttonContainer;
-        public Button deleteAllButton;
-        public Button selectAllButton;
+        internal ScrollView scrollView;
+        internal VisualElement cardContainer;
+        internal VisualElement buttonContainer;
+        internal Button deleteAllButton;
+        internal Button selectAllButton;
 
-        public VisualTreeAsset cardAsset;
-        public Button createButton;
+        internal VisualTreeAsset cardAsset;
+        internal Button createButton;
 
-        public Dictionary<IDSData, VisualElement> Items { get; set; }
-        public List<IDSData> selectedItems { get; }
+        internal Dictionary<IDSData, VisualElement> Items { get; set; }
+        internal List<IDSData> selectedItems { get; }
 
         public DSTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
         {
@@ -30,14 +28,14 @@ namespace Tools.DialogueSystem.UI
             RegisterEvents();
         }
 
-        public void CreateItem(IDSData item)
+        internal void CreateItem(IDSData item)
         {
             VisualElement cardElement = CreateCard(cardAsset, item);
             AddCard(cardContainer, Items, item, cardElement);
             DSDatabaseManager.Instance.Current.Register(item);
         }
 
-        public void DeleteItem(IDSData item, VisualElement container)
+        internal void DeleteItem(IDSData item, VisualElement container)
         {
             var cardElement = Items[item];
             container.Remove(cardElement);
@@ -143,7 +141,7 @@ namespace Tools.DialogueSystem.UI
             return cardElement;
         }
 
-        public void HandleDeleteSelectedButtonClicked()
+        internal void HandleDeleteSelectedButtonClicked()
         {
             var deletedItems = new List<IDSData>();
 
@@ -172,7 +170,7 @@ namespace Tools.DialogueSystem.UI
             buttonContainer.SetVisible(false);
         }
 
-        public void HandleSelectAllButtonClicked()
+        internal void HandleSelectAllButtonClicked()
         {
             if (selectedItems.Count >= Items.Count)
             {

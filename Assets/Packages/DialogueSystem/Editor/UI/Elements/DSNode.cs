@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
 using Unity.Properties;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -23,7 +20,6 @@ namespace Tools.DialogueSystem.UI.Elements
         private VisualElement portContainer;
         private VisualElement infoContainer;
         private VisualElement container;
-        
         private Label titleLabel;
 
         #region Info UI Elements

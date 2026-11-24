@@ -18,7 +18,7 @@ namespace Tools.DialogueSystem.UI
 
         private VisualElement _popupLayer;
 
-        public T value
+        public T Value
         {
             get => _value;
             set
@@ -28,7 +28,7 @@ namespace Tools.DialogueSystem.UI
             }
         }
 
-        public List<T> choices
+        public List<T> Choices
         {
             get => _choices;
             set
@@ -63,7 +63,7 @@ namespace Tools.DialogueSystem.UI
 
         public void SetItems(List<T> items)
         {
-            choices = items;
+            Choices = items;
         }
 
         private void UpdateDisplay()
@@ -131,7 +131,7 @@ namespace Tools.DialogueSystem.UI
 
         private void SelectItem(T item)
         {
-            value = item;
+            Value = item;
             OnValueChanged?.Invoke(item);
 
             CloseDropdown();

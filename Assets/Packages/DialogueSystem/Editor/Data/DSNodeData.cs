@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 namespace Tools.DialogueSystem.Data
 {
     [Serializable]
-    //[GeneratePropertyBag]
+    [GeneratePropertyBag]
     public class DSNodeData : INotifyBindablePropertyChanged
     {
         [field: SerializeField] public string Guid { get; private set; }
