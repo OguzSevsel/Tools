@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Tools.DialogueSystem.Data;
 using Tools.DialogueSystem.Utilities;
 using UnityEditor;
@@ -43,36 +45,40 @@ namespace Tools.DialogueSystem.UI
             DSDatabaseManager.Instance.Current.Unregister(item);
         }
 
-        private void OnDatabaseOpened(DSDatabase database)
-        {
-            foreach (DSAudioClip audioClip in database.AudioClips)
-            {
-                VisualElement card = CreateCard(cardAsset, audioClip);
-                AddCard(cardContainer, Items, audioClip, card);
-            }
-        }
-
         private void OnDatabaseClosed(DSDatabase database)
         {
+            foreach (var kvp in Items)
+            {
+                var actor = kvp.Key;
+                var card = kvp.Value;
+
+                var checkBox = card.Q<Toggle>("SelectionCheckBox");
+                var image = card.Q<Image>("Image");
+
+                checkBox.value = false;
+
+                image.SetVisible(true);
+                checkBox.SetVisible(false);
+            }
+
             cardContainer.Clear();
             Items.Clear();
+            selectedItems.Clear();
         }
 
         private void RegisterEvents()
         {
-            DSDatabaseManager.Instance.DatabaseOpened += OnDatabaseOpened;
             DSDatabaseManager.Instance.DatabaseClosed += OnDatabaseClosed;
             DSEditorView.OnWindowCloses += UnRegisterEvents;
         }
 
         private void UnRegisterEvents()
         {
-            DSDatabaseManager.Instance.DatabaseOpened -= OnDatabaseOpened;
             DSDatabaseManager.Instance.DatabaseClosed -= OnDatabaseClosed;
             DSEditorView.OnWindowCloses -= UnRegisterEvents;
         }
 
-        private VisualElement CreateCard(VisualTreeAsset cardAsset, IDSData item)
+        internal VisualElement CreateCard(VisualTreeAsset cardAsset, IDSData item)
         {
             VisualElement cardElement = new();
             cardAsset.CloneTree(cardElement);
@@ -213,7 +219,7 @@ namespace Tools.DialogueSystem.UI
             }
         }
 
-        private void AddCard(VisualElement container, Dictionary<IDSData, VisualElement> items, IDSData item, VisualElement cardElement)
+        internal void AddCard(VisualElement container, Dictionary<IDSData, VisualElement> items, IDSData item, VisualElement cardElement)
         {
             container.Add(cardElement);
             items.Add(item, cardElement);

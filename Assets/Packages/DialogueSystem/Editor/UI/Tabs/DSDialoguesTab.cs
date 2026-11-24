@@ -1,51 +1,50 @@
-﻿using System;
-using System.Collections.Generic;
-using Tools.DialogueSystem.Data;
-using Tools.DialogueSystem.Utilities;
+﻿using Tools.DialogueSystem.Data;
 using UnityEditor;
 using UnityEditor.ShortcutManagement;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace Tools.DialogueSystem.UI
 {
-    public class DSDialoguesTab : Tab, IShortcutContext
+    public class DSDialoguesTab : DSTab, IShortcutContext
     {
-        private Dictionary<DSDialogueText, VisualElement> dialogues;
-
-        private VisualTreeAsset cardAsset;
-        private VisualElement dialogueCardContainer;
-        private ScrollView dialogueScrollView;
-        private Button createDialogueButton;
-
         public bool active => EditorWindow.focusedWindow is DSEditorView window && window.IsDialoguesTabActive;
 
-        public DSDialoguesTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset)
+        public DSDialoguesTab(VisualTreeAsset tabAsset, VisualTreeAsset cardAsset) : base(tabAsset, cardAsset)
         {
-            dialogues = new Dictionary<DSDialogueText, VisualElement>();
             tabAsset.CloneTree(this);
             label = "Dialogues";
-            this.cardAsset = cardAsset;
 
-            createDialogueButton = this.Q<Button>("CreateDialogueButton");
-            dialogueCardContainer = this.Q<VisualElement>("DialogueCardContainer");
-            dialogueScrollView = this.Q<ScrollView>("DialogueScrollView");
-            createDialogueButton.clicked += OnCreateDialogueButtonClicked;
+            createButton = this.Q<Button>("CreateDialogueButton");
+            cardContainer = this.Q<VisualElement>("DialogueCardContainer");
+            scrollView = this.Q<ScrollView>("DialogueScrollView");
+            buttonContainer = this.Q<VisualElement>("ButtonContainer");
+            deleteAllButton = this.Q<Button>("DeleteSelectedButton");
+            selectAllButton = this.Q<Button>("SelectAllButton");
             RegisterEvents();
+        }
+
+        private void RegisterEvents()
+        {
+            deleteAllButton.clicked += HandleDeleteSelectedButtonClicked;
+            selectAllButton.clicked += HandleSelectAllButtonClicked;
+            createButton.clicked += CreateDialogue;
+            DSDatabaseManager.Instance.DatabaseOpened += OnDatabaseOpened;
+            DSEditorView.OnWindowCloses += UnRegisterEvents;
+        }
+
+        private void UnRegisterEvents()
+        {
+            deleteAllButton.clicked -= HandleDeleteSelectedButtonClicked;
+            selectAllButton.clicked -= HandleSelectAllButtonClicked;
+            createButton.clicked -= CreateDialogue;
+            DSDatabaseManager.Instance.DatabaseOpened -= OnDatabaseOpened;
+            DSEditorView.OnWindowCloses -= UnRegisterEvents;
         }
 
         public void CreateDialogue()
         {
             DSDialogueText dialogue = new("New Dialogue", "Dialogue Description", "Dialogue Text");
-            VisualElement cardElement = CreateCard(cardAsset, dialogue);
-            AddCard(dialogueCardContainer, dialogues, dialogue, cardElement);
-            DSDatabaseManager.Instance.Current.Register(dialogue);
-        }
-
-        private void OnDatabaseClosed(DSDatabase database)
-        {
-            dialogueCardContainer.Clear();
-            dialogues.Clear();
+            CreateItem(dialogue);
         }
 
         private void OnDatabaseOpened(DSDatabase database)
@@ -53,79 +52,8 @@ namespace Tools.DialogueSystem.UI
             foreach (DSDialogueText text in database.DialogueTexts)
             {
                 VisualElement card = CreateCard(cardAsset, text);
-
-                AddCard(dialogueCardContainer, dialogues, text, card);
+                AddCard(cardContainer, Items, text, card);
             }
         }
-
-        private void OnCreateDialogueButtonClicked()
-        {
-            CreateDialogue();
-        }
-
-        #region Utils
-
-        private void RegisterEvents()
-        {
-            DSDatabaseManager.Instance.DatabaseOpened += OnDatabaseOpened;
-            DSDatabaseManager.Instance.DatabaseClosed += OnDatabaseClosed;
-            DSEditorView.OnWindowCloses += UnRegisterEvents;
-        }
-
-        private void UnRegisterEvents()
-        {
-            DSDatabaseManager.Instance.DatabaseOpened -= OnDatabaseOpened;
-            DSDatabaseManager.Instance.DatabaseClosed -= OnDatabaseClosed;
-            DSEditorView.OnWindowCloses -= UnRegisterEvents;
-        }
-
-        private VisualElement CreateCard(VisualTreeAsset cardAsset, DSDialogueText textObject)
-        {
-            VisualElement cardElement = new();
-            cardAsset.CloneTree(cardElement);
-            cardElement.RegisterCallback<MouseEnterEvent>((evt) =>
-            {
-                if (evt.currentTarget is VisualElement element)
-                {
-                    element.SetDropShadow();
-                }
-            });
-            cardElement.RegisterCallback<MouseLeaveEvent>((evt) =>
-            {
-                if (evt.currentTarget is VisualElement element)
-                {
-                    element.SetDropShadow(true);
-                }
-            });
-
-            cardElement.dataSource = textObject;
-
-            return cardElement;
-        }
-
-        private void AddCard(VisualElement container, Dictionary<DSDialogueText, VisualElement> dialogues, DSDialogueText dialogue, VisualElement cardElement)
-        {
-            container.Add(cardElement);
-            Button deleteButton = cardElement.Q<Button>("DeleteButton");
-            deleteButton.clicked += () =>
-            {
-                bool confirm = EditorUtility.DisplayDialog(
-                    $"Delete {dialogue.Name}",
-                    $"Are you sure you want to delete {dialogue.Name}?",
-                    "Delete",
-                    "Cancel"
-                );
-
-                if (!confirm) return;
-
-                container.Remove(cardElement);
-                dialogues.Remove(dialogue);
-                DSDatabaseManager.Instance.Current.Unregister(dialogue);
-            };
-
-            dialogues.Add(dialogue, cardElement);
-        }
-
-        #endregion
     }
 }

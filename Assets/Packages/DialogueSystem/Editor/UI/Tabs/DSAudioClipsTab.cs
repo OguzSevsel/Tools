@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Tools.DialogueSystem.Data;
-using Tools.DialogueSystem.UI.Elements;
-using Tools.DialogueSystem.Utilities;
+﻿using Tools.DialogueSystem.Data;
 using UnityEditor;
 using UnityEditor.ShortcutManagement;
 using UnityEngine.UIElements;
@@ -27,25 +24,12 @@ namespace Tools.DialogueSystem.UI
             RegisterEvents();
         }
 
-        public void CreateAudioClip()
-        {
-            DSAudioClip clip = new DSAudioClip("New Audio Clip", "Audio Clip Description", null);
-            CreateItem(clip);
-        }
-        
-        private void OnCreateAudioClipsButtonClicked()
-        {
-            DSAudioClip clip = new DSAudioClip("New Audio Clip", "Audio Clip Description", null);
-            CreateItem(clip);
-        }
-
-        #region Utils
-
         private void RegisterEvents()
         {
             deleteAllButton.clicked += HandleDeleteSelectedButtonClicked;
             selectAllButton.clicked += HandleSelectAllButtonClicked;
-            createButton.clicked += OnCreateAudioClipsButtonClicked;
+            createButton.clicked += CreateAudioClip;
+            DSDatabaseManager.Instance.DatabaseOpened += OnDatabaseOpened;
             DSEditorView.OnWindowCloses += UnRegisterEvents;
         }
 
@@ -53,10 +37,24 @@ namespace Tools.DialogueSystem.UI
         {
             deleteAllButton.clicked -= HandleDeleteSelectedButtonClicked;
             selectAllButton.clicked -= HandleSelectAllButtonClicked;
-            createButton.clicked -= OnCreateAudioClipsButtonClicked;
+            createButton.clicked -= CreateAudioClip;
+            DSDatabaseManager.Instance.DatabaseOpened -= OnDatabaseOpened;
             DSEditorView.OnWindowCloses -= UnRegisterEvents;
         }
 
-        #endregion
+        public void CreateAudioClip()
+        {
+            DSAudioClip clip = new DSAudioClip("New Audio Clip", "Audio Clip Description", null);
+            CreateItem(clip);
+        }
+
+        private void OnDatabaseOpened(DSDatabase database)
+        {
+            foreach (DSAudioClip audioClip in database.AudioClips)
+            {
+                VisualElement card = CreateCard(cardAsset, audioClip);
+                AddCard(cardContainer, Items, audioClip, card);
+            }
+        }
     }
 }
